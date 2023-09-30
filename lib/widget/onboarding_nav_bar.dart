@@ -20,7 +20,8 @@ class OnboardingNavBar extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Text(
           name,
-          style: kEncodeSansMedium.copyWith(color: kWhite),
+          
+          style: kEncodeSansMedium.copyWith(color: kBlack),
         ),
       ),
     );

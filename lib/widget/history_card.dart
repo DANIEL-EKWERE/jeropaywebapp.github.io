@@ -67,6 +67,7 @@ class HistoryCard extends StatelessWidget {
             ),
             Row(
               children: [
+                
                 Text('inital Bal:$initialBal',
                     style: const TextStyle(
                       color: Colors.red,

@@ -16,7 +16,7 @@ class RechargeCard extends StatefulWidget {
 }
 
 class _RechargeCardState extends State<RechargeCard> {
-  TextEditingController _controller = TextEditingController();
+ final TextEditingController _controller = TextEditingController();
   bool _nameInputIsValid = true;
   final RegExp nameExp = RegExp(r'^[A-Za-z]+$');
   @override

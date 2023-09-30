@@ -43,7 +43,15 @@ dependencies:
   google_fonts: ^5.1.0
   intl: ^0.18.1
   cool_alert: ^2.0.1
-  font_awesome_flutter: ^10.5.0
+  # google_ml_kit: ^0.16.2
+  image_picker: ^1.0.4
+  transparent_image: ^2.0.1
+  animated_text_kit: ^4.2.2
+  animated_radial_menu: ^0.0.1
+  firebase_core: ^2.16.0
+  firebase_auth: ^4.10.0
+  firebase_analytics: ^10.5.0
+  cloud_firestore: ^4.9.2
   
 
 dev_dependencies:

@@ -1,6 +1,8 @@
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/views/app_layout.dart';
 import 'package:databank/views/log_in.dart';
+import 'package:databank/views/password_reset.dart';
+import 'package:databank/views/register.dart';
 import 'package:databank/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +10,8 @@ import 'package:flutter/services.dart';
 import 'views/electric_bill_expanded.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,overlays: [
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
     SystemUiOverlay.bottom,
     SystemUiOverlay.top,
   ]);
@@ -23,23 +26,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    //  openDrawer();
-  }
 
-  late double xOffset;
-
-  late double yOffset;
-
-  late double scaleFactor = 0.6;
-//  late VoidCallback openDrawer;
-  // void openDrawer() => setState(() {
-  //       xOffset = 230;
-  //       yOffset = 150;
-  //       scaleFactor = 0.6;
-  //     });
 
   // This widget is the root of your application.
   @override
@@ -61,7 +48,9 @@ class _MyAppState extends State<MyApp> {
         //  "/Profile": (context) => const ProfileScreen(),
         //  "/Favorites": (context) => const RewardScreen(),
         "/App_Layout": (context) => const AppLayout(),
+        "/Register": (context) => const Register(),
         "/ElectricExpanded": (context) => const ElectricExpanded(),
+        "/PasswordReset": (context) => const PasswordReset(),
       },
     );
   }

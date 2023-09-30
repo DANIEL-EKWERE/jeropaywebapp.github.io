@@ -1,10 +1,10 @@
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/widget/onboarding_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../customizations/size_config.dart';
 import '../model/onborading.dart';
-import 'app_layout.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -56,98 +56,158 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.only(left: 20),
                         child: Row(
                           children: [
                             OnboardingNavBar(
                               name: 'Skip',
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          const AppLayout())),
-                                );
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    "/Login", (route) => false);
                               },
-                              buttonColor: kBlack,
+                              buttonColor: kYellow,
                             ),
                           ],
                         ),
                       ),
                       SizedBox(height: sizeVertical * 1),
                       SizedBox(
-                        height: sizeVertical * 1,
-                        child: Image.asset(onboardingContents[index].img,
+                        height: sizeVertical * 50,
+                        child: SvgPicture.asset(onboardingContents[index].img,
                             fit: BoxFit.contain),
                       ),
-                      SizedBox(height: sizeVertical * 1),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
-                            onboardingContents[index].subTitle,
+                            onboardingContents[index].title,
+                            overflow: TextOverflow.ellipsis,
                             maxLines: 3,
                             style: kEncodeSansBold.copyWith(
-                                color: kBlack, fontSize: sizeVertical * 1.5),
+                                color: kBlack, fontSize: sizeVertical * 3),
                           ),
                         ),
-                      )
+                      ),
+                      SizedBox(height: sizeVertical * 2),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            onboardingContents[index].miniTitle,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                            style: kEncodeSansBold.copyWith(
+                                color: kGrey, fontSize: sizeVertical * 2.25),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: sizeVertical * 2),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.auto_awesome,
+                                color: kYellow,
+                              ),
+                              SizedBox(width: sizeVertical * 1.5),
+                              Text(
+                                onboardingContents[index].subTitle,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                                style: kEncodeSansBold.copyWith(
+                                    color: kBlack,
+                                    fontSize: sizeVertical * 1.7),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: sizeVertical * 2),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            onboardingContents[index].desc,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                            style: kEncodeSansSemiBold.copyWith(
+                                color: kGrey, fontSize: sizeVertical * 1.5),
+                          ),
+                        ),
+                      ),
                     ],
                   );
                 }),
           ),
           Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    currentPage == onboardingContents.length - 1
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: List.generate(
-                                  onboardingContents.length,
-                                  (index) => AnimatedContainer(
-                                    margin: const EdgeInsets.only(right: 8),
-                                    duration: const Duration(milliseconds: 400),
-                                    width: 8,
-                                    decoration: BoxDecoration(
-                                      color: kYellow,
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              OnboardingNavBar(
-                                  name: 'Get Started',
-                                  onPressed: () {
-                                    _pageController.nextPage(
-                                        duration:
-                                            const Duration(milliseconds: 400),
-                                        curve: Curves.easeOut);
-                                  },
-                                  buttonColor: kGrey)
-                            ],
-                          )
-                        : Row(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  currentPage == onboardingContents.length - 1
+                      ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                            children: List.generate(onboardingContents.length, (index) => dotIndicator(index)),
+                              children: List.generate(
+                                onboardingContents.length,
+                                (index) => AnimatedContainer(
+                                  margin: const EdgeInsets.only(right: 8),
+                                  height: 8,
+                                  width: 8,
+                                  decoration: BoxDecoration(
+                                    color: kYellow,
+                                    borderRadius: BorderRadius.circular(8),
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  duration: const Duration(milliseconds: 400),
+                                ),
+                              ),
                             ),
-                            OnboardingNavBar(name: 'Next', onPressed: (){_pageController.nextPage(
-                                        duration:
-                                            const Duration(milliseconds: 400),
-                                        curve: Curves.easeOut);}, buttonColor:kYellow)
+                            OnboardingNavBar(
+                                name: 'Get Stared',
+                                onPressed: () {
+                                  //   _pageController.nextPage(
+                                  //       duration:
+                                  //           const Duration(milliseconds: 400),
+                                  //       curve: Curves.easeOut);
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      "/Register", (route) => false);
+                                },
+                                buttonColor: kYellow)
                           ],
                         )
-                  ],
-                ),
-              ))
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: List.generate(
+                                onboardingContents.length,
+                                (index) => dotIndicator(index),
+                              ),
+                            ),
+                            OnboardingNavBar(
+                                name: 'Next',
+                                onPressed: () {
+                                  _pageController.nextPage(
+                                      duration:
+                                          const Duration(milliseconds: 400),
+                                      curve: Curves.easeOut);
+                                },
+                                buttonColor: kYellow)
+                          ],
+                        ),
+                ],
+              ),
+            ),
+          )
         ],
       )),
     );

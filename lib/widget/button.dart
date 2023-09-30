@@ -7,7 +7,7 @@ import '../customizations/app_style.dart';
 Padding button(text1) {
   String text = text1;
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
     child: Row(
       children: [
         Expanded(

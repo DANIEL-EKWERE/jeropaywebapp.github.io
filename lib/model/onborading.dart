@@ -14,24 +14,31 @@ class Onboarding {
 
 List<Onboarding> onboardingContents = <Onboarding>[
   Onboarding(
-      img: 'assets/images/blog-4_ScP3mze.jpg',
+      img: 'assets/images/1.png',
       title: 'DataBank',
       miniTitle: 'Africa\'s favourite app for airtime purchase',
       subTitle: 'Why choose us for your airtime purchase',
       desc:
           'why choose us, our airtime offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
   Onboarding(
-      img: 'assets/images/pic-5.png',
+      img: 'assets/images/2.png',
       title: 'DataBank',
       miniTitle: 'Africa\'s favourite app for data purchase',
       subTitle: 'Why choose us for your bill payments',
       desc:
           'why choose us, our bill payment offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
   Onboarding(
-      img: 'assets/images/about-img.jpg',
+      img: 'assets/images/Buzz.png',
       title: 'DataBank',
       miniTitle: 'Africa\'s favourite app for data purchase',
       subTitle: 'Why choose us for your data purchase',
       desc:
           'why choose us, our data offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
+  // Onboarding(
+  //     img: 'assets/images/blog-4_ScP3mze.jpg',
+  //     title: 'DataBank',
+  //     miniTitle: 'Africa\'s favourite app for airtime purchase',
+  //     subTitle: 'Why choose us for your airtime purchase',
+  //     desc:
+  //         'why choose us, our airtime offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
 ];

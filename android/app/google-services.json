@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "284920895387",
+    "project_id": "databank-6f630",
+    "storage_bucket": "databank-6f630.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284920895387:android:06e3f957a47046cfed333e",
+        "android_client_info": {
+          "package_name": "com.daniel.databank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw3Lqn3KgPepRArhcbvAnw8Lkr0CJ84YA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

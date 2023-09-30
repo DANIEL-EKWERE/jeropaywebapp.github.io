@@ -1,9 +1,11 @@
+import 'package:animated_radial_menu/animated_radial_menu.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/views/add_money.dart';
 import 'package:databank/views/airtime_top_up.dart';
 import 'package:databank/views/cable_subscription.dart';
 import 'package:databank/views/history.dart';
 import 'package:databank/views/result_checker.dart';
+import 'package:databank/views/scan_to_load.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -11,17 +13,23 @@ import '../customizations/size_config.dart';
 import '../model/electric_bill.dart';
 import '../model/vtu_operations.dart';
 import '../widget/drawer_widget.dart';
-import 'animated_drawer.dart';
 import 'data_pin.dart';
 import 'data_top_up.dart';
 import 'electric_bill_expanded.dart';
 import 'electric_bill_payment.dart';
+import 'log_in.dart';
 import 'onboarding_page.dart';
 import 'recharge_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key, required this.openDrawer});
   final VoidCallback openDrawer;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<ElectricBills> opeSvg = <ElectricBills>[
     ElectricBills(image: 'assets/images/AEDC.png', name: 'AEDC'),
     ElectricBills(image: 'assets/images/EEDC.png', name: 'EEDC'),
@@ -65,7 +73,21 @@ class HomeScreen extends StatelessWidget {
         svg: 'assets/images/graduation-cap.png',
         name: 'Result Checker',
         screen: const ResultChecker()),
+    VtuOperations(
+        svg: 'assets/images/data-pin.png',
+        name: 'Scan to Load Card',
+        screen: const ScanToLoad()),
+    VtuOperations(
+        svg: 'assets/images/metaverse.png',
+        name: 'Airtime To Cash',
+        screen: const ResultChecker()),
+    VtuOperations(
+        svg: 'assets/images/metaverse.png',
+        name: 'Bulk SMS',
+        screen: const ResultChecker()),
   ];
+
+  bool _showBal = true;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +96,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(.99),
       appBar: AppBar(
         leading: DrawerMenueWidget(
-          onClicked: openDrawer,
+          onClicked: widget.openDrawer,
           color: Colors.white,
         ),
         iconTheme: const IconThemeData(color: kWhite),
@@ -90,6 +112,13 @@ class HomeScreen extends StatelessWidget {
         backgroundColor:
             const Color.fromARGB(0, 255, 255, 255).withOpacity(0.9),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.support_agent_outlined,
+              color: kWhite,
+            ),
+          ),
           IconButton(
             onPressed: () {},
             icon: const Icon(
@@ -116,7 +145,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.only(top: 0),
               child: Container(
                 width: double.infinity,
-                height: SizeConfig.blockSizeVertical! * 55,
+                height: SizeConfig.blockSizeVertical! * 63,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(40),
@@ -153,26 +182,40 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 100,
+                      top: 50,
                       right: SizeConfig.blockSizeHorizontal! * 20,
-                      // left: 115,
+                      left: SizeConfig.blockSizeHorizontal! * 20,
                       child: Column(
                         children: [
-                          Container(
-                            child: Row(
+                          SizedBox(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                IconButton(
+                                  color: kWhite,
+                                  icon: _showBal
+                                      ? const Icon(
+                                          Icons.visibility_off,
+                                          size: 20,
+                                        )
+                                      : const Icon(Icons.remove_red_eye),
+                                  onPressed: () {
+                                    setState(() {
+                                      _showBal = !_showBal;
+                                    });
+                                  },
+                                ),
                                 RichText(
                                   text: TextSpan(
-                                      text: '#',
+                                      text: _showBal ? '#' : null,
                                       style: kEncodeSansBold.copyWith(
                                           color: kWhite,
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *
-                                                  1.8),
+                                                  2.5),
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text: '500.0',
+                                          text: _showBal ? '500.0' : '*****',
                                           style: kEncodeSansBold.copyWith(
                                               color: kWhite,
                                               fontSize: SizeConfig
@@ -184,11 +227,6 @@ class HomeScreen extends StatelessWidget {
                                 const SizedBox(
                                   width: 8,
                                 ),
-                                const Icon(
-                                  Icons.remove_red_eye,
-                                  color: kWhite,
-                                  size: 20,
-                                )
                               ],
                             ),
                           ),
@@ -203,15 +241,139 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 170,
-                      right: 24,
-                      child: Text(
-                        'DANIEL EKWERE',
-                        style: kEncodeSansMedium.copyWith(
-                            color: kWhite,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 1.6),
-                      ),
-                    ),
+                        right: 24,
+                        left: 24,
+                        bottom: SizeConfig.blockSizeVertical! * 22,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          child: Container(
+                            color: Colors.transparent,
+                            width: double.infinity,
+                            height: SizeConfig.blockSizeVertical! * 17.5,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Anouncement!',
+                                  style: kEncodeSansMedium.copyWith(
+                                      color: kWhite,
+                                      fontSize:
+                                          SizeConfig.blockSizeVertical! * 2.2),
+                                ),
+                                const Divider(
+                                  color: kYellow,
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.notifications,
+                                      color: kYellow,
+                                    ),
+                                    Text(
+                                      'MTN Network is now back online you can now resume transactions!!!',
+                                      style: kEncodeSansRegular.copyWith(
+                                        color: kWhite,
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! *
+                                                1.5,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(
+                                  color: kYellow,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Active Networks:',
+                                      style: kEncodeSansMedium.copyWith(
+                                          color: kWhite,
+                                          fontSize:
+                                              SizeConfig.blockSizeVertical! *
+                                                  2),
+                                    ),
+                                    Stack(
+                                      clipBehavior: Clip.none,
+                                      // alignment: AlignmentDirectional.topEnd,
+                                      children: [
+                                        SizedBox(
+                                          width:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  6,
+                                          height:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  6,
+                                          child: Image.asset(
+                                              'assets/images/glo.png'),
+                                        ),
+                                        Positioned(
+                                          right: 20,
+                                          child: SizedBox(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                6,
+                                            height: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                6,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.white,
+                                                child: Image.asset(
+                                                    'assets/images/9mobile.png'),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 40,
+                                          child: SizedBox(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                6,
+                                            height: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                6,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: Image.asset(
+                                                  'assets/images/airtel.png'),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 55,
+                                          child: SizedBox(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                6,
+                                            height: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                6,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.green,
+                                                child: Image.asset(
+                                                    'assets/images/mtn.png'),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),),
                     Positioned(
                       top: 38,
                       left: 25,
@@ -221,52 +383,6 @@ class HomeScreen extends StatelessWidget {
                         height: SizeConfig.blockSizeVertical! * 17,
                         scale: 0.1,
                         fit: BoxFit.cover,
-                      ),
-                    ),
-                    Positioned(
-                      top: 195,
-                      right: 24,
-                      child: Text(
-                        '50: charge',
-                        style: kEncodeSansMedium.copyWith(
-                            color: kWhite,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 1.6),
-                      ),
-                    ),
-                    Positioned(
-                      top: 158,
-                      left: 24,
-                      child: Row(
-                        children: [
-                          Text(
-                            'Acct No:1234567890.',
-                            style: kEncodeSansMedium.copyWith(
-                                color: kWhite,
-                                fontSize:
-                                    SizeConfig.blockSizeHorizontal! * 1.6),
-                          ),
-                          const SizedBox(
-                            width: 1,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.copy,
-                              color: kWhite,
-                              size: 18,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 195,
-                      left: 24,
-                      child: Text(
-                        'GT Bank',
-                        style: kEncodeSansMedium.copyWith(
-                            color: kWhite,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 1.6),
                       ),
                     ),
                     Positioned(
@@ -344,31 +460,98 @@ class HomeScreen extends StatelessWidget {
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(
-                                          builder: (context) => HistoryScreen(
-                                            openDrawer: openDrawer,
-                                          ),
+                                          builder: (context) =>
+                                              const OnboardingPage(),
                                         ));
                                       },
                                       child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal! * 7,
-                                        height:
-                                            SizeConfig.blockSizeVertical! * 7,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: kWhite,
-                                        ),
-                                        child: const Icon(
-                                          Icons.history,
-                                          color: kYellow,
-                                        ),
-                                      ),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  7,
+                                          height:
+                                              SizeConfig.blockSizeVertical! * 7,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: kWhite,
+                                          ),
+                                          child: RadialMenu(children: [
+                                            RadialButton(
+                                              icon: const Icon(
+                                                Icons.ac_unit,
+                                                color: kYellow,
+                                              ),
+                                              onPress: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return const LoginScreen();
+                                                }));
+                                              },
+                                            ),
+                                            RadialButton(
+                                              icon: const Icon(
+                                                Icons.camera_alt,
+                                                color: kYellow,
+                                              ),
+                                              onPress: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return const LoginScreen();
+                                                }));
+                                              },
+                                            ),
+                                            RadialButton(
+                                              icon: const Icon(
+                                                Icons.map,
+                                                color: kYellow,
+                                              ),
+                                              onPress: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return const LoginScreen();
+                                                }));
+                                              },
+                                            ),
+                                            RadialButton(
+                                              icon: const Icon(
+                                                Icons.access_alarm,
+                                                color: kYellow,
+                                              ),
+                                              onPress: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return const LoginScreen();
+                                                }));
+                                              },
+                                            ),
+                                            RadialButton(
+                                              icon: const Icon(
+                                                Icons.watch,
+                                                color: kYellow,
+                                              ),
+                                              onPress: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return const LoginScreen();
+                                                }));
+                                              },
+                                            ),
+                                          ],),
+                                          //const Icon(
+                                          //   Icons.support_agent,
+                                          //   color: kYellow,
+                                          // ),
+                                          ),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
-                                      'history',
+                                      'More...',
                                       style: kEncodeSansRegular.copyWith(
                                           color: kBrown,
                                           fontSize:
@@ -383,8 +566,9 @@ class HomeScreen extends StatelessWidget {
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              const OnboardingPage(),
+                                          builder: (context) => HistoryScreen(
+                                            openDrawer: widget.openDrawer,
+                                          ),
                                         ));
                                       },
                                       child: Container(
@@ -397,7 +581,7 @@ class HomeScreen extends StatelessWidget {
                                           color: kWhite,
                                         ),
                                         child: const Icon(
-                                          Icons.support_agent_outlined,
+                                          Icons.history,
                                           color: kBlue,
                                         ),
                                       ),
@@ -406,7 +590,7 @@ class HomeScreen extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Text(
-                                      'Chat Us',
+                                      'History',
                                       style: kEncodeSansRegular.copyWith(
                                           color: kBrown,
                                           fontSize:
