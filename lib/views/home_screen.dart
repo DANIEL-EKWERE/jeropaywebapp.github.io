@@ -1,4 +1,5 @@
 import 'package:animated_radial_menu/animated_radial_menu.dart';
+// import 'package: marquee/marquee.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/views/add_money.dart';
 import 'package:databank/views/airtime_top_up.dart';
@@ -9,6 +10,7 @@ import 'package:databank/views/scan_to_load.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:marquee/marquee.dart';
 import '../customizations/size_config.dart';
 import '../model/electric_bill.dart';
 import '../model/vtu_operations.dart';
@@ -183,8 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Positioned(
                       top: 50,
-                      right: SizeConfig.blockSizeHorizontal! * 20,
-                      left: SizeConfig.blockSizeHorizontal! * 20,
+                      right: SizeConfig.blockSizeHorizontal! * 10,
+                      left: SizeConfig.blockSizeHorizontal! * 10,
                       child: Column(
                         children: [
                           SizedBox(
@@ -220,12 +222,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               color: kWhite,
                                               fontSize: SizeConfig
                                                       .blockSizeHorizontal! *
-                                                  3.5),
+                                                  2.5),
                                         ),
                                       ]),
                                 ),
                                 const SizedBox(
-                                  width: 8,
+                                  width: 15,
                                 ),
                               ],
                             ),
@@ -241,35 +243,51 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Positioned(
-                        right: 24,
-                        left: 24,
-                        bottom: SizeConfig.blockSizeVertical! * 22,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2),
-                          child: Container(
-                            color: Colors.transparent,
-                            width: double.infinity,
-                            height: SizeConfig.blockSizeVertical! * 17.5,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Anouncement!',
-                                  style: kEncodeSansMedium.copyWith(
-                                      color: kWhite,
-                                      fontSize:
-                                          SizeConfig.blockSizeVertical! * 2.2),
-                                ),
-                                const Divider(
-                                  color: kYellow,
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.notifications,
-                                      color: kYellow,
-                                    ),
-                                    Text(
-                                      'MTN Network is now back online you can now resume transactions!!!',
+                      right: 24,
+                      left: 24,
+                      bottom: SizeConfig.blockSizeVertical! * 22,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: SizeConfig.blockSizeVertical! * 17.5,
+                          child: Column(
+                            children: [
+                              Text(
+                                'Anouncement!',
+                                style: kEncodeSansMedium.copyWith(
+                                    color: kWhite,
+                                    fontSize:
+                                        SizeConfig.blockSizeVertical! * 2.2),
+                              ),
+                              const Divider(
+                                color: kYellow,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.notifications,
+                                    color: kYellow,
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal! * 48,
+                                    height: SizeConfig.blockSizeHorizontal! * 2,
+                                    child: Marquee(
+                                      scrollAxis: Axis.horizontal,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      blankSpace: 30.0,
+                                      velocity: 50.0,
+                                      startPadding: 42.0,
+                                      accelerationDuration:
+                                          const Duration(seconds: 1),
+                                      accelerationCurve: Curves.linear,
+                                      decelerationDuration:
+                                          const Duration(milliseconds: 500),
+                                      decelerationCurve: Curves.easeOut,
+                                      text:
+                                          'MTN Network is now back online you can now resume transactions!!!',
                                       style: kEncodeSansRegular.copyWith(
                                         color: kWhite,
                                         fontSize:
@@ -278,102 +296,102 @@ class _HomeScreenState extends State<HomeScreen> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                const Divider(
-                                  color: kYellow,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Active Networks:',
-                                      style: kEncodeSansMedium.copyWith(
-                                          color: kWhite,
-                                          fontSize:
-                                              SizeConfig.blockSizeVertical! *
-                                                  2),
-                                    ),
-                                    Stack(
-                                      clipBehavior: Clip.none,
-                                      // alignment: AlignmentDirectional.topEnd,
-                                      children: [
-                                        SizedBox(
+                                  ),
+                                ],
+                              ),
+                              const Divider(
+                                color: kYellow,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Active Networks:',
+                                    style: kEncodeSansMedium.copyWith(
+                                        color: kWhite,
+                                        fontSize:
+                                            SizeConfig.blockSizeVertical! *
+                                                1.5),
+                                  ),
+                                  Stack(
+                                    clipBehavior: Clip.none,
+                                    // alignment: AlignmentDirectional.topEnd,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            SizeConfig.blockSizeHorizontal! * 6,
+                                        height:
+                                            SizeConfig.blockSizeHorizontal! * 6,
+                                        child: Image.asset(
+                                            'assets/images/glo.png'),
+                                      ),
+                                      Positioned(
+                                        right: 30,
+                                        child: SizedBox(
                                           width:
                                               SizeConfig.blockSizeHorizontal! *
                                                   6,
                                           height:
                                               SizeConfig.blockSizeHorizontal! *
                                                   6,
-                                          child: Image.asset(
-                                              'assets/images/glo.png'),
-                                        ),
-                                        Positioned(
-                                          right: 20,
-                                          child: SizedBox(
-                                            width: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                6,
-                                            height: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                6,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: CircleAvatar(
-                                                backgroundColor: Colors.white,
-                                                child: Image.asset(
-                                                    'assets/images/9mobile.png'),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          right: 40,
-                                          child: SizedBox(
-                                            width: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                6,
-                                            height: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                6,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.white,
                                               child: Image.asset(
-                                                  'assets/images/airtel.png'),
+                                                  'assets/images/9mobile.png'),
                                             ),
                                           ),
                                         ),
-                                        Positioned(
-                                          right: 55,
-                                          child: SizedBox(
-                                            width: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                6,
-                                            height: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                6,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: CircleAvatar(
-                                                backgroundColor: Colors.green,
-                                                child: Image.asset(
-                                                    'assets/images/mtn.png'),
-                                              ),
+                                      ),
+                                      Positioned(
+                                        right: 60,
+                                        child: SizedBox(
+                                          width:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  6,
+                                          height:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  6,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                'assets/images/airtel.png'),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 85,
+                                        child: SizedBox(
+                                          width:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  6,
+                                          height:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  6,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.green,
+                                              child: Image.asset(
+                                                  'assets/images/mtn.png'),
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                        ),),
+                        ),
+                      ),
+                    ),
                     Positioned(
                       top: 38,
                       left: 25,
@@ -445,12 +463,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 10,
                                     ),
                                     Text(
-                                      'add Fund',
-                                      style: kEncodeSansRegular.copyWith(
+                                      'Add Fund',
+                                      style: kEncodeSansMedium.copyWith(
                                           color: kBrown,
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *
-                                                  2.1),
+                                                  1.5),
                                     ),
                                   ],
                                 ),
@@ -465,98 +483,102 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ));
                                       },
                                       child: Container(
-                                          width:
-                                              SizeConfig.blockSizeHorizontal! *
-                                                  7,
-                                          height:
-                                              SizeConfig.blockSizeVertical! * 7,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: kWhite,
-                                          ),
-                                          child: RadialMenu(children: [
-                                            RadialButton(
-                                              icon: const Icon(
-                                                Icons.ac_unit,
-                                                color: kYellow,
-                                              ),
-                                              onPress: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return const LoginScreen();
-                                                }));
-                                              },
-                                            ),
-                                            RadialButton(
-                                              icon: const Icon(
-                                                Icons.camera_alt,
-                                                color: kYellow,
-                                              ),
-                                              onPress: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return const LoginScreen();
-                                                }));
-                                              },
-                                            ),
-                                            RadialButton(
-                                              icon: const Icon(
-                                                Icons.map,
-                                                color: kYellow,
-                                              ),
-                                              onPress: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return const LoginScreen();
-                                                }));
-                                              },
-                                            ),
-                                            RadialButton(
-                                              icon: const Icon(
-                                                Icons.access_alarm,
-                                                color: kYellow,
-                                              ),
-                                              onPress: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return const LoginScreen();
-                                                }));
-                                              },
-                                            ),
-                                            RadialButton(
-                                              icon: const Icon(
-                                                Icons.watch,
-                                                color: kYellow,
-                                              ),
-                                              onPress: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return const LoginScreen();
-                                                }));
-                                              },
-                                            ),
-                                          ],),
-                                          //const Icon(
-                                          //   Icons.support_agent,
-                                          //   color: kYellow,
-                                          // ),
-                                          ),
+                                        width:
+                                            SizeConfig.blockSizeHorizontal! * 7,
+                                        height:
+                                            SizeConfig.blockSizeVertical! * 7,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kWhite,
+                                        ),
+                                        // child: RadialMenu(
+                                        //   centerButtonAlignment:
+                                        //       Alignment.topRight,
+                                        //   children: [
+                                        //     // RadialButton(
+                                        //     //   icon: const Icon(
+                                        //     //     Icons.ac_unit,
+                                        //     //     color: kYellow,
+                                        //     //   ),
+                                        //     //   onPress: () {
+                                        //     //     Navigator.push(context,
+                                        //     //         MaterialPageRoute(
+                                        //     //             builder: (context) {
+                                        //     //       return const LoginScreen();
+                                        //     //     }));
+                                        //     //   },
+                                        //     // ),
+                                        //     // RadialButton(
+                                        //     //   icon: const Icon(
+                                        //     //     Icons.camera_alt,
+                                        //     //     color: kYellow,
+                                        //     //   ),
+                                        //     //   onPress: () {
+                                        //     //     Navigator.push(context,
+                                        //     //         MaterialPageRoute(
+                                        //     //             builder: (context) {
+                                        //     //       return const LoginScreen();
+                                        //     //     }));
+                                        //     //   },
+                                        //     // ),
+                                        //     RadialButton(
+                                        //       buttonColor: Colors.pink,
+                                        //       icon: const Icon(
+                                        //         Icons.map,
+                                        //         color: kYellow,
+                                        //       ),
+                                        //       onPress: () {
+                                        //         Navigator.push(context,
+                                        //             MaterialPageRoute(
+                                        //                 builder: (context) {
+                                        //           return const LoginScreen();
+                                        //         }));
+                                        //       },
+                                        //     ),
+                                        //     RadialButton(
+                                        //       icon: const Icon(
+                                        //         Icons.access_alarm,
+                                        //         color: kYellow,
+                                        //       ),
+                                        //       onPress: () {
+                                        //         Navigator.push(context,
+                                        //             MaterialPageRoute(
+                                        //                 builder: (context) {
+                                        //           return const LoginScreen();
+                                        //         }));
+                                        //       },
+                                        //     ),
+                                        //     // RadialButton(
+                                        //     //   icon: const Icon(
+                                        //     //     Icons.watch,
+                                        //     //     color: kYellow,
+                                        //     //   ),
+                                        //     //   onPress: () {
+                                        //     //     Navigator.push(context,
+                                        //     //         MaterialPageRoute(
+                                        //     //             builder: (context) {
+                                        //     //       return const LoginScreen();
+                                        //     //     }));
+                                        //     //   },
+                                        //     // ),
+                                        //   ],
+                                        // ),
+                                        //const Icon(
+                                        //   Icons.support_agent,
+                                        //   color: kYellow,
+                                        // ),
+                                      ),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       'More...',
-                                      style: kEncodeSansRegular.copyWith(
+                                      style: kEncodeSansMedium.copyWith(
                                           color: kBrown,
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *
-                                                  2.1),
+                                                  1.5),
                                     ),
                                   ],
                                 ),
@@ -591,11 +613,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Text(
                                       'History',
-                                      style: kEncodeSansRegular.copyWith(
+                                      style: kEncodeSansMedium.copyWith(
                                           color: kBrown,
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *
-                                                  2.1),
+                                                  1.5),
                                     ),
                                   ],
                                 ),

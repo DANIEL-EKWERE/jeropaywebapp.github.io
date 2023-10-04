@@ -11,7 +11,7 @@ class BuildDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 32, 200, 0),
+      padding: const EdgeInsets.fromLTRB(16, 32, 180, 0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class BuildDrawer extends StatelessWidget {
                   e.name,
                   style: kEncodeSansSemiBold.copyWith(
                       color: kWhite,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                      fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                 ),
               ),
             )

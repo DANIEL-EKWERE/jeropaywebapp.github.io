@@ -149,12 +149,12 @@ class RewardScreen extends StatelessWidget {
                   title: Text(
                     'Daily Reward',
                     style: kEncodeSansMedium.copyWith(
-                        color: kDarkBrown, fontSize: sizeHorizontal * 2.5),
+                        color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
                   ),
                   subtitle: Text(
                     'Check in and get #1-#20 \n Reward to be used at Random',
                     style: kEncodeSansRegular.copyWith(
-                        color: kGrey, fontSize: sizeVertical * 2.0),
+                        color: kGrey, fontSize: sizeVertical * 1.8),
                   ),
                   trailing: const Icon(Icons.chevron_right),
                 ),
@@ -219,12 +219,12 @@ class RewardScreen extends StatelessWidget {
                       title: Text(
                         x.title,
                         style: kEncodeSansMedium.copyWith(
-                            color: kDarkBrown, fontSize: sizeHorizontal * 2.5),
+                            color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
                       ),
                       subtitle: Text(
                         x.subTitle,
                         style: kEncodeSansRegular.copyWith(
-                            color: kGrey, fontSize: sizeVertical * 2.0),
+                            color: kGrey, fontSize: sizeVertical * 1.8),
                       ),
                       trailing: const Icon(Icons.diamond),
                     ),

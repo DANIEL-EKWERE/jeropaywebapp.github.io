@@ -39,11 +39,11 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  'Personal Info',
-                  style: kEncodeSansMedium.copyWith(
-                      color: kGrey, fontSize: sizeVertical * 2.5),
-                ),
+                // Text(
+                //   'Personal Info',
+                //   style: kEncodeSansMedium.copyWith(
+                //       color: kGrey, fontSize: sizeVertical * 1.8),
+                // ),
                 const Spacer(),
                 const CircleAvatar(
                   radius: 60,
@@ -74,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             Text(
               'User Infomation',
-              style: kEncodeSansMedium.copyWith(
+              style: kEncodeSansSemiBold.copyWith(
                   color: kGrey, fontSize: sizeVertical * 2.3),
             ),
             SizedBox(
@@ -94,13 +94,13 @@ class ProfileScreen extends StatelessWidget {
                       text: 'First Name: ',
                       style: kEncodeSansMedium.copyWith(
                           color: kGrey,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 2.2),
+                          fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Daniel',
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.8),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
                 ),
@@ -123,13 +123,13 @@ class ProfileScreen extends StatelessWidget {
                       text: 'Last Name: ',
                       style: kEncodeSansMedium.copyWith(
                           color: kGrey,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 2.2),
+                          fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Ekwere',
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.8),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
                 ),
@@ -152,13 +152,13 @@ class ProfileScreen extends StatelessWidget {
                       text: 'User Name: ',
                       style: kEncodeSansMedium.copyWith(
                           color: kGrey,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 2.2),
+                          fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Daniel Ekwere',
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.8),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
                 ),
@@ -181,13 +181,13 @@ class ProfileScreen extends StatelessWidget {
                       text: 'Email: ',
                       style: kEncodeSansMedium.copyWith(
                           color: kGrey,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 2.2),
+                          fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'ekweredaniel8@gmail.com',
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.8),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
                 ),
@@ -210,13 +210,13 @@ class ProfileScreen extends StatelessWidget {
                       text: 'Phone Number: ',
                       style: kEncodeSansMedium.copyWith(
                           color: kGrey,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 2.2),
+                          fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: '07043194111',
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.8),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
                 ),
@@ -348,8 +348,10 @@ class ProfileScreen extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.open_in_browser_outlined),
                   color: kGrey,
-                  onPressed: () {Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ContactDataBank()));},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ContactDataBank()));
+                  },
                 ),
               ],
             ),

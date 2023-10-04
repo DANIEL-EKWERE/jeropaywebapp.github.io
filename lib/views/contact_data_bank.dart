@@ -47,7 +47,7 @@ class ContactDataBank extends StatelessWidget {
                           'Customer Care services.... 8am\n to 10pm',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),
@@ -68,7 +68,7 @@ class ContactDataBank extends StatelessWidget {
                           '07013116710',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),
@@ -89,7 +89,7 @@ class ContactDataBank extends StatelessWidget {
                           'N0. 13 Brooke Str uyo,aks',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),
@@ -110,7 +110,7 @@ class ContactDataBank extends StatelessWidget {
                           'databank8@gmail.com',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),

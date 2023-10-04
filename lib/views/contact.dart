@@ -13,7 +13,8 @@ class ContactDataBank extends StatelessWidget {
     double sizeVertical = SizeConfig.blockSizeVertical!;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: openDrawer, icon: const Icon(Icons.menu)),
+        leading:
+            IconButton(onPressed: openDrawer, icon: const Icon(Icons.menu)),
         centerTitle: true,
         title: Text(
           'Contact Data Bank',
@@ -49,7 +50,7 @@ class ContactDataBank extends StatelessWidget {
                           'Customer Care services.... 8am\n to 10pm',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),
@@ -70,7 +71,7 @@ class ContactDataBank extends StatelessWidget {
                           '07013116710',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),
@@ -91,7 +92,7 @@ class ContactDataBank extends StatelessWidget {
                           'N0. 13 Brooke Str uyo,aks',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),
@@ -112,7 +113,7 @@ class ContactDataBank extends StatelessWidget {
                           'databank8@gmail.com',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                         ),
                       ],
                     ),

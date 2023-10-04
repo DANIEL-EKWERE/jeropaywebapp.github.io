@@ -328,10 +328,10 @@ class _RegisterState extends State<Register> {
                       SizedBox(
                         width: 200,
                         child: Text(
-                          'By contuning you agree to the DataBank Privacy Policy',
+                          'By Proceeding you agree to the DataBank Privacy Policy',
                           style: kEncodeSansMedium.copyWith(
                             color: kDarkGrey,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 2.0,
+                            fontSize: SizeConfig.blockSizeHorizontal! * 1.8,
                           ),
                         ),
                       )
@@ -385,7 +385,7 @@ class _RegisterState extends State<Register> {
                                     type: CoolAlertType.error,
                                     animType: CoolAlertAnimType.rotate,
                                   );
-                                } else if (_isCheck) {
+                                } else if (!_isCheck) {
                                   CoolAlert.show(
                                     backgroundColor: kGrey,
                                     confirmBtnColor: Colors.green,
@@ -414,6 +414,8 @@ class _RegisterState extends State<Register> {
                                   // Navigator.of(context).pushNamedAndRemoveUntil(
                                   //     "/App_Layout", (route) => false);
                                   print(userCredentials);
+                                 await FirebaseAuth.instance.currentUser
+                                      ?.sendEmailVerification();
                                 }
                               },
                               style: ElevatedButton.styleFrom(

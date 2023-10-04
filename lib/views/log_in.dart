@@ -1,11 +1,14 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:databank/views/password_reset.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
+import '../firebase_options.dart';
 import '../widget/textField.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -162,7 +165,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   end: Alignment.bottomRight,
                                 )),
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                await Firebase.initializeApp(
+                                  options:
+                                      DefaultFirebaseOptions.currentPlatform,
+                                );
                                 if (_emailController.text == '' ||
                                     _passwordController.text == '') {
                                   CoolAlert.show(
@@ -175,6 +182,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     animType: CoolAlertAnimType.rotate,
                                   );
                                 }
+                                await FirebaseAuth.instance.currentUser
+                                    ?.sendEmailVerification();
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     "/App_Layout", (route) => false);
                               },
