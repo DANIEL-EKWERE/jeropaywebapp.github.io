@@ -19,12 +19,12 @@ class DrawerItems {
   static const logout = DrawerItem(name: 'Logout', icon: Icons.logout);
 
   static final List<DrawerItem> all = [
-    data,
-    airtime,
-    card,
-    dataPin,
-    cable,
-    result,
+    // data,
+    // airtime,
+    // card,
+    // dataPin,
+    // cable,
+    // result,
     home,
     profile,
     reward,

@@ -50,14 +50,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Sign In',
                     style: kEncodeSansBold.copyWith(
                         color: kBlack,
-                        fontSize: SizeConfig.blockSizeHorizontal! * 4),
+                        fontSize: SizeConfig.blockSizeHorizontal! * 3),
                   ),
                   SizedBox(
-                    height: sizeHorizontal * 1,
+                    height: sizeHorizontal * 5,
                   ),
-                  SvgPicture.asset('assets/images/data bank logo.svg'),
+                  SvgPicture.asset('assets/images/logo-1.svg'),
                   SizedBox(
-                    height: sizeHorizontal * 1,
+                    height: sizeHorizontal * 5,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,

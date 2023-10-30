@@ -1,17 +1,11 @@
 import 'package:databank/customizations/app_style.dart';
+import 'package:databank/views/about_us.dart';
 import 'package:databank/views/profile.dart';
-import 'package:databank/views/recharge_card.dart';
-import 'package:databank/views/result_checker.dart';
 import 'package:databank/views/reward.dart';
 import 'package:flutter/material.dart';
-
 import '../model/drawer_item.dart';
 import '../model/drawer_items.dart';
-import 'airtime_top_up.dart';
-import 'cable_subscription.dart';
 import 'contact.dart';
-import 'data_pin.dart';
-import 'data_top_up.dart';
 import 'drawer_widget.dart';
 import 'history.dart';
 import 'home_screen.dart';
@@ -135,18 +129,8 @@ class _RewardScreen1State extends State<RewardScreen1> {
         return HistoryScreen(openDrawer: openDrawer);
       case DrawerItems.contact:
         return ContactDataBank(openDrawer: openDrawer);
-        case DrawerItems.airtime:
-        return const AirtimeTopUp();
-      case DrawerItems.data:
-        return const DataTopUp();
-      case DrawerItems.dataPin:
-        return const DataPin();
-      case DrawerItems.cable:
-        return const CableSubscriptiopn();
-      case DrawerItems.result:
-        return const ResultChecker();
-      case DrawerItems.card:
-        return const RechargeCard();
+      case DrawerItems.about:
+        return const AboutUs();
       default:
         return HomeScreen(openDrawer: openDrawer);
     }

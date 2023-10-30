@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+// import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
@@ -82,23 +82,23 @@ class _ScanToLoadState extends State<ScanToLoad> {
       return;
     }
     String result = '';
-    final InputImage inputImage = InputImage.fromFile(_imageFile!);
-    final TextRecognizer textDetector = GoogleMlKit.vision.textRecognizer();
-    final RecognizedText recognizerText =
-        await textDetector.processImage(inputImage);
-    final String text = recognizerText.text;
-    debugPrint('Recognized text: $text');
-    result += 'Detected ${recognizerText.blocks.length} text blocks. \n';
-    for (final TextBlock block in recognizerText.blocks) {
-      final Rect boundingBox = block.boundingBox;
-      final List<Point<int>> cornerPoints = block.cornerPoints;
-      final String text = block.text;
-      final List<String> languages = block.recognizedLanguages;
-      result += '\n# Text block: \n '
-          'bbox=$boundingBox\n '
-          'cornerPoints=$cornerPoints\n '
-          'text=$text\n languages=$languages';
-    }
+    // final InputImage inputImage = InputImage.fromFile(_imageFile!);
+    // final TextRecognizer textDetector = GoogleMlKit.vision.textRecognizer();
+    // final RecognizedText recognizerText =
+    //     await textDetector.processImage(inputImage);
+    // final String text = recognizerText.text;
+    // debugPrint('Recognized text: $text');
+    // result += 'Detected ${recognizerText.blocks.length} text blocks. \n';
+    // for (final TextBlock block in recognizerText.blocks) {
+    //   final Rect boundingBox = block.boundingBox;
+    //   final List<Point<int>> cornerPoints = block.cornerPoints;
+    //   final String text = block.text;
+    //   final List<String> languages = block.recognizedLanguages;
+    //   result += '\n# Text block: \n '
+    //       'bbox=$boundingBox\n '
+    //       'cornerPoints=$cornerPoints\n '
+    //       'text=$text\n languages=$languages';
+    // }
     if (result.isNotEmpty) {
       setState(() {
         this._mlResult = result;

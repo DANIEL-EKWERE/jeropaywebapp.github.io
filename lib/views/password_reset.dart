@@ -1,4 +1,4 @@
-import 'package:flutter/gestures.dart';
+// import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -36,7 +36,7 @@ class _PasswordResetState extends State<PasswordReset> {
         title: Text(
           'Forget Password',
           style: kEncodeSansBold.copyWith(
-              color: kBlack, fontSize: SizeConfig.blockSizeHorizontal! * 4),
+              color: kBlack, fontSize: SizeConfig.blockSizeHorizontal! * 3),
         ),
       ),
       backgroundColor: Colors.white,
@@ -48,11 +48,11 @@ class _PasswordResetState extends State<PasswordReset> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: sizeHorizontal * 1,
+                    height: sizeHorizontal * 5,
                   ),
-                  SvgPicture.asset('assets/images/data bank logo.svg'),
+                  SvgPicture.asset('assets/images/logo-1.svg'),
                   SizedBox(
-                    height: sizeHorizontal * 1,
+                    height: sizeHorizontal * 5,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,

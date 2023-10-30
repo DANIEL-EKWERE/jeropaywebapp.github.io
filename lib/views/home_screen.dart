@@ -1,4 +1,4 @@
-import 'package:animated_radial_menu/animated_radial_menu.dart';
+// import 'package:animated_radial_menu/animated_radial_menu.dart';
 // import 'package: marquee/marquee.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/views/add_money.dart';
@@ -19,7 +19,7 @@ import 'data_pin.dart';
 import 'data_top_up.dart';
 import 'electric_bill_expanded.dart';
 import 'electric_bill_payment.dart';
-import 'log_in.dart';
+// import 'log_in.dart';
 import 'onboarding_page.dart';
 import 'recharge_card.dart';
 
@@ -483,97 +483,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ));
                                       },
                                       child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal! * 7,
-                                        height:
-                                            SizeConfig.blockSizeVertical! * 7,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: kWhite,
-                                        ),
-                                        // child: RadialMenu(
-                                        //   centerButtonAlignment:
-                                        //       Alignment.topRight,
-                                        //   children: [
-                                        //     // RadialButton(
-                                        //     //   icon: const Icon(
-                                        //     //     Icons.ac_unit,
-                                        //     //     color: kYellow,
-                                        //     //   ),
-                                        //     //   onPress: () {
-                                        //     //     Navigator.push(context,
-                                        //     //         MaterialPageRoute(
-                                        //     //             builder: (context) {
-                                        //     //       return const LoginScreen();
-                                        //     //     }));
-                                        //     //   },
-                                        //     // ),
-                                        //     // RadialButton(
-                                        //     //   icon: const Icon(
-                                        //     //     Icons.camera_alt,
-                                        //     //     color: kYellow,
-                                        //     //   ),
-                                        //     //   onPress: () {
-                                        //     //     Navigator.push(context,
-                                        //     //         MaterialPageRoute(
-                                        //     //             builder: (context) {
-                                        //     //       return const LoginScreen();
-                                        //     //     }));
-                                        //     //   },
-                                        //     // ),
-                                        //     RadialButton(
-                                        //       buttonColor: Colors.pink,
-                                        //       icon: const Icon(
-                                        //         Icons.map,
-                                        //         color: kYellow,
-                                        //       ),
-                                        //       onPress: () {
-                                        //         Navigator.push(context,
-                                        //             MaterialPageRoute(
-                                        //                 builder: (context) {
-                                        //           return const LoginScreen();
-                                        //         }));
-                                        //       },
-                                        //     ),
-                                        //     RadialButton(
-                                        //       icon: const Icon(
-                                        //         Icons.access_alarm,
-                                        //         color: kYellow,
-                                        //       ),
-                                        //       onPress: () {
-                                        //         Navigator.push(context,
-                                        //             MaterialPageRoute(
-                                        //                 builder: (context) {
-                                        //           return const LoginScreen();
-                                        //         }));
-                                        //       },
-                                        //     ),
-                                        //     // RadialButton(
-                                        //     //   icon: const Icon(
-                                        //     //     Icons.watch,
-                                        //     //     color: kYellow,
-                                        //     //   ),
-                                        //     //   onPress: () {
-                                        //     //     Navigator.push(context,
-                                        //     //         MaterialPageRoute(
-                                        //     //             builder: (context) {
-                                        //     //       return const LoginScreen();
-                                        //     //     }));
-                                        //     //   },
-                                        //     // ),
-                                        //   ],
-                                        // ),
-                                        //const Icon(
-                                        //   Icons.support_agent,
-                                        //   color: kYellow,
-                                        // ),
-                                      ),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  7,
+                                          height:
+                                              SizeConfig.blockSizeVertical! * 7,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: kWhite,
+                                          ),
+                                          child: const Icon(
+                                              Icons.line_weight_outlined)),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
-                                      'More...',
+                                      'Upgrade To Reseller',
                                       style: kEncodeSansMedium.copyWith(
                                           color: kBrown,
                                           fontSize:

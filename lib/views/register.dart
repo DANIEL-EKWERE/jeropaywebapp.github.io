@@ -1,13 +1,13 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/widget/textField.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import '../customizations/size_config.dart';
-import '../firebase_options.dart';
+// import '../firebase_options.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -18,7 +18,9 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final RegExp nameExp = RegExp(r'^[A-Za-z]+$');
+  final RegExp usernameExp = RegExp(r'^[a-zA-Z0-9*\-_@/\\]+$');
   bool _nameInputIsValid = true;
+  bool _usernameInputIsValid = true;
   bool _passwordVisible = true;
   bool _numberInputIsValid = true;
   bool _isCheck = false;
@@ -62,14 +64,14 @@ class _RegisterState extends State<Register> {
                     'Register',
                     style: kEncodeSansBold.copyWith(
                         color: kBlack,
-                        fontSize: SizeConfig.blockSizeHorizontal! * 4),
+                        fontSize: SizeConfig.blockSizeHorizontal! * 3),
                   ),
                   SizedBox(
-                    height: sizeHorizontal * 1,
+                    height: sizeHorizontal * 5,
                   ),
-                  SvgPicture.asset('assets/images/data bank logo.svg'),
+                  SvgPicture.asset('assets/images/logo-1.svg'),
                   SizedBox(
-                    height: sizeHorizontal * 1,
+                    height: sizeHorizontal * 5,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -88,6 +90,49 @@ class _RegisterState extends State<Register> {
                           color: kDarkGrey,
                           fontSize: SizeConfig.blockSizeHorizontal! * 2),
                     ),
+                  ),
+                  SizedBox(
+                    height: sizeHorizontal * 3,
+                  ),
+                  TextField(
+                    controller: _firstNameController,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      prefixIcon: const IconTheme(
+                          data: IconThemeData(color: kDarkGrey),
+                          child: Icon(Icons.person)),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 18),
+                      hintText: 'Enter User Name',
+                      label: Text(
+                        'Enter User Name',
+                        style: kEncodeSansSemiBold.copyWith(
+                            color: kDarkGrey,
+                            fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+                      ),
+                      errorText: _usernameInputIsValid
+                          ? null
+                          : 'Enter alphanumeric and special character(e.g */\\_-) etc!',
+                      focusedBorder: kInputBorder,
+                      border: kInputBorder,
+                      filled: true,
+                      fillColor: kLightGrey,
+                    ),
+                    onChanged: (value) {
+                      if (value.isEmpty) {
+                        setState(() {
+                          _usernameInputIsValid = false;
+                        });
+                      } else if (!usernameExp.hasMatch(value)) {
+                        setState(() {
+                          _usernameInputIsValid = false;
+                        });
+                      } else {
+                        setState(() {
+                          _usernameInputIsValid = true;
+                        });
+                      }
+                    },
                   ),
                   SizedBox(
                     height: sizeHorizontal * 3,
@@ -178,11 +223,11 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),
-                  textFieldeName(
-                      'Enter Username', 'Enter Username', _userNameController),
-                  SizedBox(
-                    height: sizeHorizontal * 3,
-                  ),
+                  // textFieldeName(
+                  //     'Enter Username', 'Enter Username', _userNameController),
+                  // SizedBox(
+                  //   height: sizeHorizontal * 3,
+                  // ),
                   TextField(
                     controller: _phoneController,
                     maxLength: 11,
@@ -360,10 +405,10 @@ class _RegisterState extends State<Register> {
                                 )),
                             child: ElevatedButton(
                               onPressed: () async {
-                                await Firebase.initializeApp(
-                                  options:
-                                      DefaultFirebaseOptions.currentPlatform,
-                                );
+                                // await Firebase.initializeApp(
+                                //   options:
+                                //       DefaultFirebaseOptions.currentPlatform,
+                                // );
                                 final email = _emailController.text;
                                 final password = _passwordController.text;
                                 if (
@@ -407,15 +452,15 @@ class _RegisterState extends State<Register> {
                                     animType: CoolAlertAnimType.rotate,
                                   );
                                 } else {
-                                  final userCredentials = await FirebaseAuth
-                                      .instance
-                                      .createUserWithEmailAndPassword(
-                                          email: email, password: password);
-                                  // Navigator.of(context).pushNamedAndRemoveUntil(
-                                  //     "/App_Layout", (route) => false);
-                                  print(userCredentials);
-                                 await FirebaseAuth.instance.currentUser
-                                      ?.sendEmailVerification();
+                                  // final userCredentials = await FirebaseAuth
+                                  //     .instance
+                                  //     .createUserWithEmailAndPassword(
+                                  //         email: email, password: password);
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      "/App_Layout", (route) => false);
+
+                                  // await FirebaseAuth.instance.currentUser
+                                  //     ?.sendEmailVerification();
                                 }
                               },
                               style: ElevatedButton.styleFrom(

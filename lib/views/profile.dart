@@ -1,7 +1,7 @@
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/reset_password.dart';
-import 'package:databank/views/reset_pin.dart';
+import 'package:databank/views/create_profile.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/drawer_widget.dart';
@@ -285,7 +285,7 @@ class ProfileScreen extends StatelessWidget {
                   color: kGrey,
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ResetPin()));
+                        MaterialPageRoute(builder: (context) => CreatUserProfile()));
                   },
                 )
               ],

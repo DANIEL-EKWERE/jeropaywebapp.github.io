@@ -1,18 +1,12 @@
 import 'package:databank/customizations/app_style.dart';
-import 'package:databank/views/airtime_top_up.dart';
-import 'package:databank/views/cable_subscription.dart';
-import 'package:databank/views/data_pin.dart';
-import 'package:databank/views/data_top_up.dart';
 import 'package:databank/views/history.dart';
 import 'package:databank/views/home_screen.dart';
 import 'package:databank/views/profile.dart';
-import 'package:databank/views/recharge_card.dart';
-import 'package:databank/views/result_checker.dart';
 import 'package:databank/views/reward.dart';
 import 'package:flutter/material.dart';
-
 import '../model/drawer_item.dart';
 import '../model/drawer_items.dart';
+import 'about_us.dart';
 import 'contact.dart';
 import 'drawer_widget.dart';
 
@@ -129,20 +123,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
         return RewardScreen(openDrawer: openDrawer);
       case DrawerItems.history:
         return HistoryScreen(openDrawer: openDrawer);
-        case DrawerItems.contact:
+      case DrawerItems.contact:
         return ContactDataBank(openDrawer: openDrawer);
-        case DrawerItems.airtime:
-        return const AirtimeTopUp();
-      case DrawerItems.data:
-        return const DataTopUp();
-      case DrawerItems.dataPin:
-        return const DataPin();
-      case DrawerItems.cable:
-        return const CableSubscriptiopn();
-      case DrawerItems.result:
-        return const ResultChecker();
-      case DrawerItems.card:
-        return const RechargeCard();
+      case DrawerItems.about:
+        return const AboutUs();
       default:
         return HomeScreen(openDrawer: openDrawer);
     }
