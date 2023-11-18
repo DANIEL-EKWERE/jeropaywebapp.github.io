@@ -1,12 +1,15 @@
-import 'package:cool_alert/cool_alert.dart';
+import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/widget/textField.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import '../customizations/size_config.dart';
+import '../widget/button.dart';
+import '../widget/snackbar.dart';
 // import '../firebase_options.dart';
 
 class Register extends StatefulWidget {
@@ -22,7 +25,7 @@ class _RegisterState extends State<Register> {
   bool _nameInputIsValid = true;
   bool _usernameInputIsValid = true;
   bool _passwordVisible = true;
-  bool _numberInputIsValid = true;
+  // bool _numberInputIsValid = true;
   bool _isCheck = false;
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -220,53 +223,53 @@ class _RegisterState extends State<Register> {
                       }
                     },
                   ),
-                  SizedBox(
-                    height: sizeHorizontal * 3,
-                  ),
-                  // textFieldeName(
-                  //     'Enter Username', 'Enter Username', _userNameController),
                   // SizedBox(
                   //   height: sizeHorizontal * 3,
                   // ),
-                  TextField(
-                    controller: _phoneController,
-                    maxLength: 11,
-                    // scrollPhysics: const BouncingScrollPhysics(),
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
-                          child: Icon(Icons.phone)),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 18),
-                      hintText: 'Enter Phone',
-                      label: Text(
-                        'Enter Phone',
-                        style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
-                      ),
-                      errorText: _numberInputIsValid
-                          ? null
-                          : 'please enter a valid phone number!',
-                      focusedBorder: kInputBorder,
-                      border: kInputBorder,
-                      filled: true,
-                      fillColor: kLightGrey,
-                    ),
-                    onChanged: (value) {
-                      final v = int.tryParse(value);
-                      if (v == null) {
-                        setState(() {
-                          _numberInputIsValid = false;
-                        });
-                      } else {
-                        setState(() {
-                          _numberInputIsValid = true;
-                        });
-                      }
-                    },
-                  ),
+                  // // textFieldeName(
+                  // //     'Enter Username', 'Enter Username', _userNameController),
+                  // // SizedBox(
+                  // //   height: sizeHorizontal * 3,
+                  // // ),
+                  // TextField(
+                  //   controller: _phoneController,
+                  //   maxLength: 11,
+                  //   // scrollPhysics: const BouncingScrollPhysics(),
+                  //   keyboardType: TextInputType.phone,
+                  //   decoration: InputDecoration(
+                  //     prefixIcon: const IconTheme(
+                  //         data: IconThemeData(color: kDarkGrey),
+                  //         child: Icon(Icons.phone)),
+                  //     contentPadding: const EdgeInsets.symmetric(
+                  //         horizontal: 15, vertical: 18),
+                  //     hintText: 'Enter Phone',
+                  //     label: Text(
+                  //       'Enter Phone',
+                  //       style: kEncodeSansSemiBold.copyWith(
+                  //           color: kDarkGrey,
+                  //           fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+                  //     ),
+                  //     errorText: _numberInputIsValid
+                  //         ? null
+                  //         : 'please enter a valid phone number!',
+                  //     focusedBorder: kInputBorder,
+                  //     border: kInputBorder,
+                  //     filled: true,
+                  //     fillColor: kLightGrey,
+                  //   ),
+                  //   onChanged: (value) {
+                  //     final v = int.tryParse(value);
+                  //     if (v == null) {
+                  //       setState(() {
+                  //         _numberInputIsValid = false;
+                  //       });
+                  //     } else {
+                  //       setState(() {
+                  //         _numberInputIsValid = true;
+                  //       });
+                  //     }
+                  //   },
+                  // ),
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),
@@ -387,95 +390,48 @@ class _RegisterState extends State<Register> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xff373737),
-                                    Color(0xff6A6A6A),
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                )),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                // await Firebase.initializeApp(
-                                //   options:
-                                //       DefaultFirebaseOptions.currentPlatform,
-                                // );
-                                final email = _emailController.text;
-                                final password = _passwordController.text;
-                                if (
-                                    // _firstNameController.text == '' ||
-                                    //   _lastNameController.text == '' ||
-                                    //   _userNameController.text == '' ||
-                                    //   _phoneController.text == '' ||
-                                    _emailController.text == '' ||
-                                        _passwordController.text == '' ||
-                                        // ignore: unrelated_type_equality_checks
-                                        _confirmPasswordController == '') {
-                                  CoolAlert.show(
-                                    backgroundColor: kGrey,
-                                    confirmBtnColor: Colors.green,
-                                    context: context,
-                                    title: 'Empty Selections!!!',
-                                    text:
-                                        'input fields cannot be empty,please fill in the fields and try again!',
-                                    type: CoolAlertType.error,
-                                    animType: CoolAlertAnimType.rotate,
-                                  );
-                                } else if (!_isCheck) {
-                                  CoolAlert.show(
-                                    backgroundColor: kGrey,
-                                    confirmBtnColor: Colors.green,
-                                    context: context,
-                                    title: 'Privacy Policy!!!',
-                                    text: 'Agree to our terms and conditions!',
-                                    type: CoolAlertType.error,
-                                    animType: CoolAlertAnimType.rotate,
-                                  );
-                                } else if (_passwordController.text !=
-                                    _confirmPasswordController.text) {
-                                  CoolAlert.show(
-                                    backgroundColor: kGrey,
-                                    confirmBtnColor: Colors.green,
-                                    context: context,
-                                    title: 'Password Not Same!!!',
-                                    text: 'Password not the same',
-                                    type: CoolAlertType.error,
-                                    animType: CoolAlertAnimType.rotate,
-                                  );
-                                } else {
-                                  // final userCredentials = await FirebaseAuth
-                                  //     .instance
-                                  //     .createUserWithEmailAndPassword(
-                                  //         email: email, password: password);
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      "/App_Layout", (route) => false);
+                    child: Consumer<AuthenticationProvider>(
+                        builder: (context, value, child) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (value.reqMessage != '') {
+                          successMessage(message: value.reqMessage,x:value.color, context: context);
 
-                                  // await FirebaseAuth.instance.currentUser
-                                  //     ?.sendEmailVerification();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  foregroundColor: kWhite,
-                                  backgroundColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                              child: const Text('Register'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                          value.clear();
+                        }
+                      });
+                      return button(
+                        text1: 'Log In',
+                        isLoading1: value.isLoading,
+                        tap: () {
+                          if (_firstNameController.text.isEmpty ||
+                              _lastNameController.text.isEmpty ||
+                              _userNameController.text.isEmpty ||
+                              // _phoneController.text.isEmpty ||
+                              _emailController.text.isEmpty ||
+                              _passwordController.text.isEmpty ||
+                              _confirmPasswordController.text.isEmpty) {
+                            warning(
+                                message: 'fields cant\'t be empty',
+                                context: context);
+                          } else if (_passwordController.text !=
+                              _confirmPasswordController.text) {
+                            warning(
+                                message: 'password not the same!',
+                                context: context);
+                          } else {
+                            value.RegisterUser(
+                                first_name: _firstNameController.text.trim(),
+                                last_name: _lastNameController.text.trim(),
+                                // phone:  _phoneController.text.trim(),
+                                email: _emailController.text.trim(),
+                                username: _userNameController.text.trim(),
+                                password: _passwordController.text.trim(),
+                                context: context);
+                            successMessage(message: value.reqMessage, x: value.color, context: context);
+                          }
+                        },
+                      );
+                    }),
                   ),
                   SizedBox(
                     height: sizeHorizontal * 3,

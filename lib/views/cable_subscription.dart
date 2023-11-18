@@ -1,21 +1,25 @@
+import 'package:databank/backend/provider/purchase_provider/purchases_provider.dart';
+import 'package:databank/widget/button.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cool_alert/cool_alert.dart';
+// import 'package:cool_alert/cool_alert.dart';
+import 'package:provider/provider.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 import '../widget/fab.dart';
 import '../widget/textField.dart';
 
-class CableSubscriptiopn extends StatefulWidget {
-  const CableSubscriptiopn({
+class CableSubscription extends StatefulWidget {
+  const CableSubscription({
     super.key,
   });
 
   @override
-  State<CableSubscriptiopn> createState() => _CableSubscriptiopnState();
+  State<CableSubscription> createState() => _CableSubscriptionState();
 }
 
-class _CableSubscriptiopnState extends State<CableSubscriptiopn> {
+class _CableSubscriptionState extends State<CableSubscription> {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
@@ -76,13 +80,54 @@ class _CableSubscriptiopnState extends State<CableSubscriptiopn> {
     ],
   };
 
+  Map<String, String> cable_uuid = {
+    'Nova-1 Month - #1500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Basic-1 Month - #2600': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Smart - #3500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Classic - #3800': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Super - #6500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Nova Weekly - #400': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Basic Weekly - #400': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Basic Weekly - #700': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Smart Weekly - #700': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Smart weekly - #900': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Classic weekly - #1200': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Super weekly - #1800': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Nova daily - #100': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Basic daily - #200': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Smart daily - #250': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Super daily - #500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Classic daily - #320': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'GOtv joli - #3300': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'GOtv Max - #4850': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'GOtv jingja - #2250': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'GOtv Smallie - Monthly - #1100': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'GOtv Smallie - quaterly - #2900': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'GOtv Smallie - yearly - #8600': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'GOtv Supa - #6400': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'Padi - #2500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Confam - #6200': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Yanga - #3500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Compact - #10500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Premium - #24500': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Compact Plus - #16600': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Confam + ExtraView - #9600': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV + Yanga + Extra - #5850': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Padi extra - #5900': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Compact Extra - #20000': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Premium extra - #24900': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'ExtraView Access - #3400': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'DSTV Compact + Extra View - #1380':
+        'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+  };
+
   bool _numberInputIsValid = true;
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
-    double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+    // double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
     return Scaffold(
       floatingActionButton: fab(),
       appBar: AppBar(
@@ -452,90 +497,63 @@ class _CableSubscriptiopnState extends State<CableSubscriptiopn> {
                               SizedBox(
                                 height: sizeVertical * 3.5,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 24.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff373737),
-                                                Color(0xff6A6A6A),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            )),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            if (selectedCategory == '' ||
-                                                selectedSubCategory == '' ||
-                                                _controller.text == '' ||
-                                                _phoneController.text == '') {
-                                              CoolAlert.show(
-                                                backgroundColor: kGrey,
-                                                confirmBtnColor: Colors.green,
-                                                context: context,
-                                                title: 'Empty Selections!!!',
-                                                text:
-                                                    'input fields cannot be empty,please fill in the fields and try again!',
-                                                type: CoolAlertType.error,
-                                                animType:
-                                                    CoolAlertAnimType.rotate,
-                                              );
-                                            } else {
-                                              CoolAlert.show(
-                                                backgroundColor: kGrey,
-                                                confirmBtnColor: Colors.green,
-                                                context: context,
-                                                type: CoolAlertType.confirm,
-                                                title: 'Confirm Purchase!!!',
-                                                text:
-                                                    'your about to make purchase of $selectedCategory $selectedSubCategory airtime to the number ${_controller.text}',
-                                                onConfirmBtnTap: () async {
-                                                  print(
-                                                      'loading please wait...');
 
-                                                  const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: Colors.red,
-                                                    ),
-                                                  );
-                                                },
+                              Consumer<PurchaseProvider>(
+                                builder: (context, value, child) {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    if (value.regMessage != '') {
+                                      successMessage(
+                                          message: value.regMessage,
+                                          x: value.color,
+                                          context: context);
+
+                                      value.clear();
+                                    }
+                                  });
+                                  return button(
+                                    text1: 'VALIDATE AND PURCHASE',
+                                    isLoading1: value.isLoading,
+                                    tap: () {
+                                      if (selectedCategory == '' ||
+                                          selectedSubCategory == '' ||
+                                          _controller.text == '' ||
+                                          _phoneController.text == '') {
+                                        warning(
+                                            message: 'fields can\'t be empty',
+                                            context: context);
+                                      } else {
+                                        showDialog<bool>(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                    'Confirm Purchase'),
+                                                content: Text(
+                                                    'Your about to make a purchase for ${_controller.text} with a cable provider of $selectedCategory for a plan of $selectedSubCategory'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      final cableUuid = cable_uuid[
+                                                          selectedSubCategory];
+                                                      value.validateCableNumber(
+                                                          iuc: _controller.text
+                                                              .trim(),
+                                                          cable_provider:
+                                                              selectedCategory!,
+                                                          cable_uuid:
+                                                              cableUuid!,
+                                                          context: context);
+                                                    },
+                                                    child: const Text('Ok'),
+                                                  ),
+                                                ],
                                               );
-                                            }
-                                            const Center(
-                                              child: CircularProgressIndicator(
-                                                color: Colors.red,
-                                              ),
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: Text(
-                                            'VALIDATE',
-                                            style: kEncodeSansMedium.copyWith(
-                                                color: kWhite,
-                                                fontSize: sizeHorizontal * 2.5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                            });
+                                      }
+                                    },
+                                  );
+                                },
                               ),
                               SizedBox(
                                 height: sizeVertical * 3.5,
@@ -544,7 +562,7 @@ class _CableSubscriptiopnState extends State<CableSubscriptiopn> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 24.0),
                                 child: Container(
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                   width: double.infinity,
                                   height: sizeVertical * 20.0,
                                   decoration: BoxDecoration(

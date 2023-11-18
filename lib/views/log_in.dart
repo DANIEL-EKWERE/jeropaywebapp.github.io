@@ -1,15 +1,22 @@
-import 'package:cool_alert/cool_alert.dart';
+// import 'package:cool_alert/cool_alert.dart';
+import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/views/password_reset.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'dart:js';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
-import '../firebase_options.dart';
+// import '../firebase_options.dart';
+import '../widget/button.dart';
+import '../widget/snackbar.dart';
 import '../widget/textField.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -129,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(CupertinoPageRoute(
                             builder: ((context) => const PasswordReset())));
                       },
                       child: Text(
@@ -148,58 +155,89 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xff373737),
-                                    Color(0xff6A6A6A),
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                )),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await Firebase.initializeApp(
-                                  options:
-                                      DefaultFirebaseOptions.currentPlatform,
-                                );
-                                if (_emailController.text == '' ||
-                                    _passwordController.text == '') {
-                                  CoolAlert.show(
-                                    backgroundColor: kGrey,
-                                    confirmBtnColor: Colors.green,
-                                    context: context,
-                                    title: 'Empty Selection!!!',
-                                    text: 'Agree to our terms and conditions!',
-                                    type: CoolAlertType.error,
-                                    animType: CoolAlertAnimType.rotate,
-                                  );
-                                }
-                                await FirebaseAuth.instance.currentUser
-                                    ?.sendEmailVerification();
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    "/App_Layout", (route) => false);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  foregroundColor: kWhite,
-                                  backgroundColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                              child: const Text('Register'),
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Consumer<AuthenticationProvider>(
+                      builder: (context, value, child) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (value.reqMessage != '') {
+                            successMessage(
+                                message: value.reqMessage,x: value.color, context: context);
+
+                            value.clear();
+                          }
+                        });
+                        return button(
+                          text1: 'Log In',
+                          isLoading1: value.isLoading,
+                          tap: () {
+                            if (_emailController.text.isEmpty ||
+                                _passwordController.text.isEmpty) {
+                              warning(
+                                  message: 'fields cant\'t be empty',
+                                  context: context);
+                            } else {
+                              value.LoginUser(
+                                  username: _emailController.text.trim(),
+                                  password: _passwordController.text.trim(),
+                                  context: context);
+                            }
+                          },
+                        );
+                      },
                     ),
+                    //
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       flex: 2,
+                    //       child: Container(
+                    //         decoration: const BoxDecoration(
+                    //             borderRadius:
+                    //                 BorderRadius.all(Radius.circular(10)),
+                    //             gradient: LinearGradient(
+                    //               colors: [
+                    //                 Color(0xff373737),
+                    //                 Color(0xff6A6A6A),
+                    //               ],
+                    //               begin: Alignment.topLeft,
+                    //               end: Alignment.bottomRight,
+                    //             )),
+                    //         child: ElevatedButton(
+                    //           onPressed: ()  {
+                    //             // await Firebase.initializeApp(
+                    //             //   options:
+                    //             //       DefaultFirebaseOptions.currentPlatform,
+                    //            // );
+                    //             if (_emailController.text == '' ||
+                    //                 _passwordController.text == '') {
+                    //               // CoolAlert.show(
+                    //               //   backgroundColor: kGrey,
+                    //               //   confirmBtnColor: Colors.green,
+                    //               //   context: context,
+                    //               //   title: 'Empty Selection!!!',
+                    //               //   text: 'Agree to our terms and conditions!',
+                    //               //   type: CoolAlertType.error,
+                    //               //   animType: CoolAlertAnimType.rotate,
+                    //               // );
+                    //               warning('fields can\'t be empty', context: context);
+                    //             }
+                    //             // await FirebaseAuth.instance.currentUser
+                    //             //     ?.sendEmailVerification();
+                    //             // Navigator.of(context).pushNamedAndRemoveUntil(
+                    //             //     "/App_Layout", (route) => false);
+                    //           },
+                    //           style: ElevatedButton.styleFrom(
+                    //               elevation: 0,
+                    //               foregroundColor: kWhite,
+                    //               backgroundColor: Colors.transparent,
+                    //               shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(10),
+                    //               )),
+                    //           child: const Text('Register'),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ),
                   SizedBox(
                     height: sizeHorizontal * 3,

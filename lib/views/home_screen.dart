@@ -1,21 +1,28 @@
 // import 'package:animated_radial_menu/animated_radial_menu.dart';
 // import 'package: marquee/marquee.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables
+
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
+// import 'package:databank/firebase_options.dart';
 import 'package:databank/views/add_money.dart';
 import 'package:databank/views/airtime_top_up.dart';
+import 'package:databank/views/app_layout.dart';
 import 'package:databank/views/cable_subscription.dart';
 import 'package:databank/views/history.dart';
 import 'package:databank/views/result_checker.dart';
 import 'package:databank/views/scan_to_load.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
+import '../backend/provider/user_details/user_details.dart';
 import '../customizations/size_config.dart';
 import '../model/electric_bill.dart';
 import '../model/vtu_operations.dart';
 import '../widget/drawer_widget.dart';
-import 'data_pin.dart';
+// import 'data_pin.dart';
 import 'data_top_up.dart';
 import 'electric_bill_expanded.dart';
 import 'electric_bill_payment.dart';
@@ -24,7 +31,7 @@ import 'onboarding_page.dart';
 import 'recharge_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key, required this.openDrawer});
+  const HomeScreen({super.key, required this.openDrawer});
   final VoidCallback openDrawer;
 
   @override
@@ -61,35 +68,92 @@ class _HomeScreenState extends State<HomeScreen> {
         screen: const AirtimeTopUp()),
     VtuOperations(
         svg: 'assets/images/recharge-card-printer.png',
-        name: 'Recharge Card',
+        name: 'Recharge Card \n not available',
         screen: const RechargeCard()),
     VtuOperations(
         svg: 'assets/images/data-pin.png',
-        name: 'Data Pin',
-        screen: const DataPin()),
+        name: 'Data Pin \n not available',
+        // screen: const DataPin(),
+        screen: AlertDialog(
+          title: const Text('Currently Unavailable'),
+          content:
+              const Text('the page your trying to access isn\'t available at the moment but we\'re working on it \n properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                const AppLayout();
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        )
+        
+        ),
     VtuOperations(
         svg: 'assets/images/cable.jpg',
         name: 'Cable Subscription',
-        screen: const CableSubscriptiopn()),
+        screen: const CableSubscription()),
     VtuOperations(
         svg: 'assets/images/graduation-cap.png',
         name: 'Result Checker',
-        screen: const ResultChecker()),
+        screen: ResultChecker()),
     VtuOperations(
         svg: 'assets/images/data-pin.png',
         name: 'Scan to Load Card',
         screen: const ScanToLoad()),
     VtuOperations(
         svg: 'assets/images/metaverse.png',
-        name: 'Airtime To Cash',
-        screen: const ResultChecker()),
+        name: 'Airtime To Cash \n not available',
+        screen: AlertDialog(
+          title: const Text('Currently Unavailable'),
+          content:
+              const Text('the page your trying to access isn\'t available at the moment but we\'re working on it \n properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                const AppLayout();
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        )),
     VtuOperations(
         svg: 'assets/images/metaverse.png',
-        name: 'Bulk SMS',
-        screen: const ResultChecker()),
+        name: 'Bulk SMS \n not available',
+        screen: AlertDialog(
+          title: const Text('Currently Unavailable'),
+          content:
+              const Text('the page your trying to access isn\'t available at the moment but we\'re working on it \n properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                const AppLayout();
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        )),
   ];
 
   bool _showBal = true;
+  var username;
+  @override
+  void initState() {
+    super.initState();
+    final balance = UserDetails().getUserAccountBalanace;
+    // ignore: avoid_print
+    print(balance);
+    setState(() {
+      username = DataBaseProvider().getUserName();
+    });
+
+// to be uncommented when the dependency in installed!!!
+    // FirebaseMessaging.instance.getToken().then((token) {
+    //   final platform = DefaultFirebaseOptions.currentPlatform;
+    //   UserDetails().createOrUpdateDeviceTokenAndPlatform(platform: platform,token:token);
+    // });
+// uncomment the above code when the criterial are meant!!!
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       top: 18,
                       left: 24,
                       child: Text(
-                        'Hello,Daniel Ekwere',
+                        'Hello,$username',
                         style: kEncodeSansMedium.copyWith(
                             color: kWhite,
                             fontSize: SizeConfig.blockSizeHorizontal! * 1.6),
@@ -207,25 +271,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                   },
                                 ),
-                                RichText(
-                                  text: TextSpan(
-                                      text: _showBal ? '#' : null,
-                                      style: kEncodeSansBold.copyWith(
-                                          color: kWhite,
-                                          fontSize:
-                                              SizeConfig.blockSizeHorizontal! *
-                                                  2.5),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: _showBal ? '500.0' : '*****',
-                                          style: kEncodeSansBold.copyWith(
-                                              color: kWhite,
-                                              fontSize: SizeConfig
-                                                      .blockSizeHorizontal! *
-                                                  2.5),
-                                        ),
-                                      ]),
-                                ),
+                                FutureBuilder<dynamic>(
+                                    future:
+                                        UserDetails().getUserAccountBalanace(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError) {
+                                        const Text('An error occured');
+                                      } else if (snapshot.hasData) {
+                                        if (snapshot.data!.balance == null) {
+                                          const Text(
+                                              'this profile doesn\'t have a wallet contact admin');
+                                        } else {
+                                          return RichText(
+                                            text: TextSpan(
+                                                text: _showBal ? '#' : null,
+                                                style: kEncodeSansBold.copyWith(
+                                                    color: kWhite,
+                                                    fontSize: SizeConfig
+                                                            .blockSizeHorizontal! *
+                                                        2.5),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: _showBal
+                                                        ? snapshot.data.balance
+                                                        : '*****',
+                                                    style: kEncodeSansBold.copyWith(
+                                                        color: kWhite,
+                                                        fontSize: SizeConfig
+                                                                .blockSizeHorizontal! *
+                                                            2.5),
+                                                  ),
+                                                ]),
+                                          );
+                                        }
+                                      } else {
+                                        return const CircularProgressIndicator();
+                                      }
+                                      return const CircularProgressIndicator();
+                                    }),
                                 const SizedBox(
                                   width: 15,
                                 ),
@@ -439,7 +522,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(
+                                            .push(CupertinoPageRoute(
                                           builder: (context) =>
                                               const AddMoney(),
                                         ));
@@ -477,7 +560,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(
+                                            .push(CupertinoPageRoute(
                                           builder: (context) =>
                                               const OnboardingPage(),
                                         ));
@@ -513,7 +596,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(
+                                            .push(CupertinoPageRoute(
                                           builder: (context) => HistoryScreen(
                                             openDrawer: widget.openDrawer,
                                           ),
@@ -594,7 +677,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   final bill = vtuOpe[index];
                   return GestureDetector(
                     onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => bill.screen!)),
+                        CupertinoPageRoute(builder: (context) => bill.screen!)),
                     child: Container(
                       width: SizeConfig.blockSizeHorizontal! * 8,
                       height: SizeConfig.blockSizeVertical! * 15,
@@ -652,7 +735,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => const ElectricExpanded(),
                       ));
                     },
@@ -680,9 +763,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              ElectricBillPayment(image: bill1.image),
+                        Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (context) => ElectricBillPayment(
+                              image: bill1.image, name: bill1.name),
                         ));
                       },
                       child: Container(

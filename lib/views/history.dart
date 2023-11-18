@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:flutter/services.dart';
 import '../customizations/size_config.dart';
 import '../model/history.dart';
 import '../widget/drawer_widget.dart';
-import '../widget/history_card.dart';
+// import '../widget/history_card.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key, required this.openDrawer});
@@ -24,8 +25,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     'Airtime',
     'Cable',
     'Electric Bills',
-    'Result check',
-    'Airtime to cash'
+    // 'Result check',
+    // 'Airtime to cash'
   ];
 
   List<dataHistory> his = [
@@ -54,7 +55,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double sizeVertival = SizeConfig.blockSizeVertical!;
+    double sizeVertical = SizeConfig.blockSizeVertical!;
+    double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
     return Scaffold(
       appBar: AppBar(
         leading: DrawerMenueWidget(
@@ -124,7 +126,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: sizeVertival * 2,
+                      width: sizeVertical * 2,
                     ),
                     Container(
                       //padding: EdgeInsets.all(12),
@@ -142,7 +144,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
               SizedBox(
-                height: sizeVertival * 3,
+                height: sizeVertical * 3,
               ),
               Align(
                   alignment: Alignment.topLeft,
@@ -157,7 +159,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   )),
               // start here okay....
               SizedBox(
-                height: sizeVertival * 2,
+                height: sizeVertical * 2,
               ),
               SizedBox(
                 width: double.infinity,
@@ -218,7 +220,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
               SizedBox(
-                height: sizeVertival * 3,
+                height: sizeVertical * 3,
               ),
               Text(
                 'Transactions',
@@ -227,7 +229,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     fontSize: SizeConfig.blockSizeHorizontal! * 3.0),
               ),
               SizedBox(
-                height: sizeVertival * 3,
+                height: sizeVertical * 3,
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24),
@@ -240,10 +242,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
               SizedBox(
-                height: sizeVertival * 3,
+                height: sizeVertical * 3,
               ),
               SizedBox(
-                height: sizeVertival * 2,
+                height: sizeVertical * 2,
               ),
               SizedBox(
                   height: double.maxFinite,
@@ -270,14 +272,51 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   his.length,
                                   (index) => Column(
                                     children: [
-                                      HistoryCard(
-                                        status: x.status,
-                                        beneficiary: x.beneficiary,
-                                        dataType: x.dataType,
-                                        transType: x.transacType,
-                                        initialBal: x.initialBal,
-                                        finalBal: x.finalBal,
+                                      ListTile(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              CupertinoPageRoute(
+                                                  builder: ((context) =>
+                                                      x.screen!)));
+                                        },
+                                        leading: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                            color: x.bcolor,
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(12),
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.mobile_screen_share_rounded,
+                                            color: x.fcolor,
+                                          ),
+                                        ),
+                                        title: Text(
+                                          x.transacType,
+                                          style: kEncodeSansMedium.copyWith(
+                                              color: kDarkBrown,
+                                              fontSize: sizeHorizontal * 2.0),
+                                        ),
+                                        subtitle: Text(
+                                          'initialBal: ${x.initialBal}, finalBal: ${x.finalBal},',
+                                          style: kEncodeSansRegular.copyWith(
+                                              color: kGrey,
+                                              fontSize: sizeVertical * 1.8),
+                                        ),
+                                        trailing: const Icon(Icons.diamond),
                                       ),
+
+                                      // PriceListCard(
+                                      //   status: x.status,
+                                      //   beneficiary: x.beneficiary,
+                                      //   dataType: x.dataType,
+                                      //   transType: x.transacType,
+                                      //   initialBal: x.initialBal,
+                                      //   finalBal: x.finalBal,
+                                      // ),
                                     ],
                                   ),
                                 ),

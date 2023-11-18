@@ -1,23 +1,45 @@
+import 'package:databank/backend/provider/purchase_provider/purchases_provider.dart';
+import 'package:databank/widget/button.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 import '../widget/fab.dart';
 
 class ResultChecker extends StatefulWidget {
-  const ResultChecker({
+  ResultChecker({
     super.key,
   });
 
   @override
   State<ResultChecker> createState() => _ResultCheckerState();
+
+
 }
 
 class _ResultCheckerState extends State<ResultChecker> {
+  bool _numberInputIsValid = true;
+  List<String> categories = ['MTN', 'AIRTEL', 'GLO', '9 MOBILE'];
+  List<String> subCategory = ['WAEC', 'NECO'];
+String? selectedValue;
+String? selectedValue2;
+    final TextEditingController _controller = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+ @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+    _phoneController.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+      SizeConfig().init(context);
+    double sizeVertical = SizeConfig.blockSizeVertical!;
     return Scaffold(
       floatingActionButton: fab(),
       appBar: AppBar(
@@ -39,7 +61,8 @@ class _ResultCheckerState extends State<ResultChecker> {
                   ),
                 ]),
             child: IconButton(
-              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil("/App_Layout", (route) => false),
+              onPressed: () => Navigator.of(context)
+                  .pushNamedAndRemoveUntil("/App_Layout", (route) => false),
               icon: const Icon(Icons.chevron_left),
             ),
           ),
@@ -233,77 +256,181 @@ class _ResultCheckerState extends State<ResultChecker> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(
-                              //       horizontal: 24.0),
-                              //   child: textField('-- Meter Type', 'Meter Type'),
-                              // ),
-                              // const SizedBox(
-                              //   height: 25,
-                              // ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(
-                              //       horizontal: 24.0),
-                              //   child: textFieldNumber(
-                              //       '-- Meter Number', ' Meter Number'),
-                              // ),
-                              // const SizedBox(
-                              //   height: 25,
-                              // ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(
-                              //       horizontal: 24.0),
-                              //   child: textFieldNumber('-- Amount', 'Amount'),
-                              // ),
-                              // const SizedBox(
-                              //   height: 25,
-                              // ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(
-                              //       horizontal: 24.0),
-                              //   child: textField(
-                              //       '-- Customer Phone', 'Customer Phone'),
-                              // ),
-                              const SizedBox(
-                                height: 25,
+// adding codes here
+
+
+
+
+
+Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0),
+                                child: DropdownButtonFormField<String>(
+                                  value: selectedValue,
+                                  items: categories.map((item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(item),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedValue = value!;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                    focusedBorder: kInputBorder,
+                                    fillColor: kLightGrey,
+                                    filled: true,
+                                    labelText: 'Select a network',
+                                    labelStyle: kEncodeSansSemiBold.copyWith(
+                                        color: kDarkGrey,
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! *
+                                                2.0),
+                                    hintStyle: kEncodeSansSemiBold.copyWith(
+                                        color: kLightGrey,
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! *
+                                                2.0),
+                                    border: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: kBrown,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: sizeVertical * 4,
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 24.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff373737),
-                                                Color(0xff6A6A6A),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            )),
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: const Text('Validate Meter'),
-                                        ),
+                                child: DropdownButtonFormField<String>(
+                                  value: selectedValue2,
+                                  items: subCategory.map((item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(item),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedValue2 = value!;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                    focusedBorder: kInputBorder,
+                                    fillColor: kLightGrey,
+                                    filled: true,
+                                    labelText: 'Select an amount',
+                                    labelStyle: kEncodeSansSemiBold.copyWith(
+                                        color: kDarkGrey,
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! *
+                                                2.0),
+                                    hintStyle: kEncodeSansSemiBold.copyWith(
+                                        color: kLightGrey,
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! *
+                                                2.0),
+                                    border: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: kBrown,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12),
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              )
+                              ),
+                              SizedBox(
+                                height: sizeVertical * 4,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0),
+                                child: TextField(
+                                  controller: _phoneController,
+                                  maxLength: 11,
+                                  // scrollPhysics: const BouncingScrollPhysics(),
+                                  keyboardType: TextInputType.phone,
+                                  decoration: InputDecoration(
+                                    prefixIcon: const IconTheme(
+                                        data: IconThemeData(color: kDarkGrey),
+                                        child: Icon(Icons.phone)),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 18),
+                                    hintText: 'Enter Phone',
+                                    label: Text(
+                                      'Enter Phone',
+                                      style: kEncodeSansSemiBold.copyWith(
+                                          color: kDarkGrey,
+                                          fontSize:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  2.0),
+                                    ),
+                                    errorText: _numberInputIsValid
+                                        ? null
+                                        : 'please enter a valid phone number!',
+                                    focusedBorder: kInputBorder,
+                                    border: kInputBorder,
+                                    filled: true,
+                                    fillColor: kLightGrey,
+                                  ),
+                                  onChanged: (value) {
+                                    final v = int.tryParse(value);
+                                    if (v == null) {
+                                      setState(() {
+                                        _numberInputIsValid = false;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        _numberInputIsValid = true;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
+
+
+
+
+
+
+
+// code added above
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              Consumer<PurchaseProvider>(
+                                  builder: (context, value, child) {
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  if (value.regMessage != '') {
+                                    successMessage(
+                                        message: value.regMessage,
+                                        x: value.color,
+                                        context: context);
+
+                                    value.clear();
+                                  }
+                                });
+                                return button(
+                                  text1: 'PURCHASE EPIN',
+                                  isLoading1: value.isLoading,
+                                  tap: () {
+                                    
+                                  },
+                                );
+                              }
+                                  // child:
+                                  )
                             ],
                           ),
                         ),

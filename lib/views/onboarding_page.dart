@@ -1,7 +1,6 @@
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/widget/onboarding_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../customizations/size_config.dart';
 import '../model/onborading.dart';
@@ -36,7 +35,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 204, 195, 255),
       body: SafeArea(
           child: Column(
         children: [
@@ -71,10 +70,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         ),
                       ),
                       SizedBox(height: sizeVertical * 1),
-                      SizedBox(
-                        height: sizeVertical * 50,
-                        child: SvgPicture.asset(onboardingContents[index].img,
-                            fit: BoxFit.contain),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: SizedBox(
+                          height: sizeVertical * 50,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(150),
+                            child: Image.asset(
+                              onboardingContents[index].img,
+                              fit: BoxFit.contain,
+                              height: sizeVertical * 1,
+                              width: double.infinity,
+                            ),
+                          ),
+                        ),
                       ),
                       Align(
                         alignment: Alignment.centerLeft,

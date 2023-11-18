@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:databank/backend/provider/purchase_provider/purchases_provider.dart';
+import 'package:databank/widget/button.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
@@ -9,14 +13,18 @@ import '../widget/fab.dart';
 import '../widget/textField.dart';
 
 class ElectricBillPayment extends StatefulWidget {
-  const ElectricBillPayment({super.key, required this.image});
+  const ElectricBillPayment(
+      {super.key, required this.image, required this.name});
   final String image;
+  final String name;
   @override
   State<ElectricBillPayment> createState() => _ElectricBillPaymentState();
 }
 
 class _ElectricBillPaymentState extends State<ElectricBillPayment> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _meterTypeController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
 
@@ -250,7 +258,7 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 24.0),
                                 child: textField(
-                                    '-- Meter Type', 'Meter Type', _controller),
+                                    '-- Meter Type', 'Meter Type', _meterTypeController),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -268,7 +276,7 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 24.0),
                                 child: textFieldNumber('-- Amount', 'Amount',
-                                    _numberController, 'x'),
+                                    _amountController, 'x'),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -282,42 +290,66 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 24.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff373737),
-                                                Color(0xff6A6A6A),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            )),
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: const Text('Validate Meter'),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              Consumer<PurchaseProvider>(
+                                builder: (context, value, child) {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    if (value.regMessage != '') {
+                                      successMessage(
+                                          message: value.regMessage,
+                                          x: value.color,
+                                          context: context);
+
+                                      value.clear();
+                                    }
+                                  });
+                                  return button(
+                                      text1: 'VALIDATE AND PURCHASE',
+                                      isLoading1: value.isLoading,
+                                      tap: () {
+                                        if (_controller.text == '' ||
+                                            _meterTypeController.text == '' ||
+                                            _amountController.text == '' ||
+                                            _phoneController.text == '') {
+                                          warning(
+                                              message: 'fields can\'t be empty',
+                                              context: context);
+                                        } else {
+                                          showDialog<bool>(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: const Text(
+                                                      'Confirm Purchase'),
+                                                  content: Text(
+                                                      'your about to validate and make purchase of ${_meterTypeController.text}  for #${_amountController.text}'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        value.validateMeterNumber(
+                                                            number: _controller
+                                                                .text
+                                                                .trim(),
+                                                            type:
+                                                                _meterTypeController
+                                                                    .text
+                                                                    .trim(),
+                                                            disco: widget.name,
+                                                            amount:
+                                                                _amountController
+                                                                    .text
+                                                                    .trim(),
+                                                            context: context);
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      });
+                                },
                               )
                             ],
                           ),

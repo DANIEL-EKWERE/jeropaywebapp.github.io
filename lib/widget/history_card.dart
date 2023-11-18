@@ -1,21 +1,24 @@
 import 'package:databank/customizations/app_style.dart';
 import 'package:flutter/material.dart';
 
-class HistoryCard extends StatelessWidget {
-  const HistoryCard(
-      {super.key,
-      required this.transType,
-      required this.beneficiary,
-      required this.dataType,
-      required this.initialBal,
-      required this.finalBal,
-      required this.status});
-  final String transType;
-  final String dataType;
-  final String beneficiary;
-  final String initialBal;
-  final String finalBal;
-  final String status;
+class PriceListCard extends StatelessWidget {
+  const PriceListCard({
+    super.key,
+    required this.fiveHundredMb,
+    required this.oneGb,
+    required this.twoGb,
+    required this.threeGb,
+    required this.fiveGb,
+    required this.tenGb,
+    required this.image,
+  });
+  final String fiveHundredMb;
+  final String oneGb;
+  final String twoGb;
+  final String threeGb;
+  final String fiveGb;
+  final String tenGb;
+  final String image;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +39,15 @@ class HistoryCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            CircleAvatar(
+              radius: 10,
+              backgroundColor: Colors.grey,
+              backgroundImage: AssetImage(
+                image,
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.all(12),
             ),
@@ -47,40 +58,44 @@ class HistoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Status'),
-                    Text('Transac. Type'),
-                    Text('Data Type'),
-                    Text('Beneficiary'),
+                    Text('500 mb'),
+                    Text('1GB'),
+                    Text('2GB'),
+                    Text('3GB'),
+                    Text('5GB'),
+                    Text('10GB'),
                   ],
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(status),
-                    Text(transType),
-                    Text(dataType),
-                    Text(beneficiary),
+                    Text(fiveHundredMb),
+                    Text(oneGb),
+                    Text(twoGb),
+                    Text(threeGb),
+                    Text(fiveGb),
+                    Text(tenGb),
                   ],
                 ),
               ],
             ),
-            Row(
-              children: [
-                
-                Text('inital Bal:$initialBal',
-                    style: const TextStyle(
-                      color: Colors.red,
-                    )),
-                const Spacer(),
-                Text(
-                  'final Bal:$finalBal',
-                  style: const TextStyle(
-                    color: Colors.green,
-                  ),
-                ),
-              ],
-            )
+            // Row(
+            //   children: [
+
+            //     Text('inital Bal:$initialBal',
+            //         style: const TextStyle(
+            //           color: Colors.red,
+            //         )),
+            //     const Spacer(),
+            //     Text(
+            //       'final Bal:$finalBal',
+            //       style: const TextStyle(
+            //         color: Colors.green,
+            //       ),
+            //     ),
+            //   ],
+            // )
           ],
         ),
       ),

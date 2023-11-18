@@ -1,14 +1,17 @@
 // import 'dart:html';
 import 'dart:io';
 
+import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/widget/button.dart';
 // import 'package:databank/widget/textField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../customizations/size_config.dart';
+import '../widget/snackbar.dart';
 
 class CreatUserProfile extends StatefulWidget {
   const CreatUserProfile({super.key});
@@ -26,7 +29,8 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
   bool _numberInputIsValid = true;
   String? selectedValue;
   // File? _imageFile;
-  File? pickedFile;
+  // File? pickedFile;
+  File? profileImage;
   // String _mlResult = 'No Result';
   final _picker = ImagePicker();
 
@@ -222,9 +226,9 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (pickedFile != null)
+                  if (profileImage != null)
                     Image.file(
-                      pickedFile!,
+                      profileImage!,
                       width: 200,
                       height: 200,
                       fit: BoxFit.cover,
@@ -242,18 +246,21 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                         )),
                     child: ElevatedButton(
                       onPressed: () async {
+                        // final picker = ImagePicker();
                         try {
                           final pickedFile = await _picker.pickImage(
                               source: ImageSource.gallery);
-                          if (mounted && pickedFile != null) {
-                            Navigator.pop(context, File(pickedFile.path));
+                          if (pickedFile != null) {
+                            // Navigator.pop(context, File(pickedFile.path));
+                            setState(() {
+                              profileImage = File(pickedFile.path);
+                            });
                           }
                         } catch (e) {
                           print(e);
                           Navigator.pop(context, null);
                         }
                       },
-                      child: const Text('Select Image From Phone'),
                       style: ElevatedButton.styleFrom(
                           elevation: 0,
                           foregroundColor: kWhite,
@@ -261,6 +268,7 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           )),
+                      child: const Text('Select Image From Phone'),
                     ),
                   ),
                 ],
@@ -268,7 +276,38 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
               SizedBox(
                 height: sizeHorizontal * 3.5,
               ),
-              button('Complete Profile')
+
+              Consumer<AuthenticationProvider>(
+                builder: (context, value, child) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (value.reqMessage != '') {
+                      successMessage(message: value.reqMessage, context: context);
+
+                      value.clear();
+                    }
+                  });
+                  return button(
+                    text1: 'Complete Profile',
+                    isLoading1: value.isLoading,
+                    tap: () {
+                      if (selectedValue!.isEmpty ||
+                          selectedValue2!.isEmpty ||
+                          textController3.text.isEmpty ||
+                          profileImage == null) {
+                        warning(message: 'fields can\'t be empty!');
+                      } else {
+                        value.CreateUserProfile(
+                            location: selectedValue!,
+                            phone: textController3.text.trim(),
+                            state: selectedValue2!,
+                            profile_picture: profileImage,
+                            context: context);
+                      }
+                    },
+                  );
+                },
+                // child:
+              ),
             ],
           ),
         ),

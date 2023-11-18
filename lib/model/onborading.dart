@@ -14,31 +14,53 @@ class Onboarding {
 
 List<Onboarding> onboardingContents = <Onboarding>[
   Onboarding(
-      img: 'assets/images/1.png',
+      img: 'assets/images/payfromhome.png',
       title: 'DataBank',
-      miniTitle: 'Africa\'s favourite app for airtime purchase',
-      subTitle: 'Why choose us for your airtime purchase',
+      miniTitle: 'Africa\'s favourite app for vtu service purchases',
+      subTitle: 'Best app in the market for vtu purchases',
       desc:
-          'why choose us, our airtime offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
+          'Why choose us,Buy Airtime,Data and pay for all utility bills from the comfort of your home with ease.'),
   Onboarding(
-      img: 'assets/images/2.png',
+      img: 'assets/images/becomeaseller.png',
       title: 'DataBank',
-      miniTitle: 'Africa\'s favourite app for data purchase',
-      subTitle: 'Why choose us for your bill payments',
+      miniTitle: 'Become a reseller',
+      subTitle: 'Best app in the market for resellers',
       desc:
-          'why choose us, our bill payment offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
+          'Why choose us, Become a vendor, buy at a very cheaper rate and resell.\nBecome the middle-man '),
   Onboarding(
-      img: 'assets/images/Buzz.png',
+      img: 'assets/images/forty_per_off.png',
       title: 'DataBank',
-      miniTitle: 'Africa\'s favourite app for data purchase',
-      subTitle: 'Why choose us for your data purchase',
+      miniTitle: 'Discount on all our services for resellers',
+      subTitle: 'Best discount rate you can\'t afford to lose',
       desc:
-          'why choose us, our data offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
-  // Onboarding(
-  //     img: 'assets/images/blog-4_ScP3mze.jpg',
-  //     title: 'DataBank',
-  //     miniTitle: 'Africa\'s favourite app for airtime purchase',
-  //     subTitle: 'Why choose us for your airtime purchase',
-  //     desc:
-  //         'why choose us, our airtime offers and prices are very cheap affordable for purchase, pocket friendly as well,we deliver a fast and swift service.'),
+          'why choose us, Get 40% off each purchases for all resellers. Buy at a sweet rate and sell and make your profit.'),
+  Onboarding(
+      img: 'assets/images/payfromhome.png',
+      title: 'DataBank',
+      miniTitle: 'Easy to fund wallet',
+      subTitle: 'Funding made easy with databank!',
+      desc:
+          'why choose us, Fund your account with ease no stress.\nFunding via Bank transfer and card supported.'),
+          Onboarding(
+      img: 'assets/images/receiptforall.png',
+      title: 'DataBank',
+      miniTitle: 'Get prove of payment',
+      subTitle: 'Your transactions are recoreded and kept save!',
+      desc:
+          'why choose us, Get proof for all your payments receipt in your phone and in your transaction history.'),
+           Onboarding(
+      img: 'assets/images/sharewithfriends.png',
+      title: 'DataBank',
+      miniTitle: 'refer and earn',
+      subTitle: 'spread the good gospel of data bank and get rewarded',
+      desc:
+          'why choose us, Share funds with your friends and also refer a friend an earn a welcome reward.'),
+          Onboarding(
+      img: 'assets/images/stay_connected.png',
+      title: 'DataBank',
+      miniTitle: 'Stay connected',
+      subTitle: 'without information your deformed',
+      desc:
+          'why choose us, Stay connected online with our cheap data with 40% discount for all resellers.\nRegister today and earn more and spend less.'),
+
 ];

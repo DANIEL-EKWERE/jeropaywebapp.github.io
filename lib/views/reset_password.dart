@@ -45,7 +45,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 height: sizeHorizontal * 3.5,
               ),
-              button('Reset Password')
+              button(text1:'Reset Password',isLoading1:false,tap:() {})
             ],
           ),
         ),

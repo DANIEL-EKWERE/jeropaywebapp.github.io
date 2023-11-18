@@ -92,7 +92,7 @@ class _PasswordResetState extends State<PasswordReset> {
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),
-                  button('Proceed'),
+                  button(text1:'Proceed',isLoading1:false,tap:(){}),
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),

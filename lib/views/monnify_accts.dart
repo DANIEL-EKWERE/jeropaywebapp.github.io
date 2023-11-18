@@ -91,10 +91,10 @@ class _MonnifyAcctsState extends State<MonnifyAccts> {
                     Radius.circular(12),
                   ),
                 ),
-                child: Column(
+                child: const Column(
                   children: [
                     Expanded(
-                      child: Container(),
+                      child: Text('this function is currently unavailable as we\'re currently working on it!!!'),
                     ),
                   ],
                 ),

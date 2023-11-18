@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../customizations/size_config.dart';
 import 'package:databank/customizations/app_style.dart';
@@ -94,9 +95,9 @@ class _ElectricExpandedState extends State<ElectricExpanded> {
                     final bill1 = opeSvg1[index];
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(CupertinoPageRoute(
                           builder: (context) =>
-                              ElectricBillPayment(image: bill1.image),
+                              ElectricBillPayment(image: bill1.image, name: bill1.name),
                         ));
                       },
                       child: Container(

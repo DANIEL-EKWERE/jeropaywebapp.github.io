@@ -1,5 +1,7 @@
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
+import 'package:databank/widget/history_card.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -176,59 +178,103 @@ class RewardScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemCount: reward.length,
                 itemBuilder: ((context, index) {
-                  Reward x = reward[index];
+                  // Reward x = reward[index];
                   return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 0.8,
-                          color: kLightGrey,
-                          style: BorderStyle.solid),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                      color: kWhite,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          spreadRadius: 1,
-                          color: kDarkBrown.withOpacity(0.05),
-                          offset: const Offset(0, 5),
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 0.8,
+                            color: kLightGrey,
+                            style: BorderStyle.solid),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(12),
                         ),
-                      ],
-                    ),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: ((context) => x.screen!)));
-                      },
-                      leading: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: x.bcolor,
-                          shape: BoxShape.rectangle,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(12),
+                        color: kWhite,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5,
+                            spreadRadius: 1,
+                            color: kDarkBrown.withOpacity(0.05),
+                            offset: const Offset(0, 5),
                           ),
-                        ),
-                        child: Icon(
-                          Icons.mobile_screen_share_rounded,
-                          color: x.fcolor,
-                        ),
+                        ],
                       ),
-                      title: Text(
-                        x.title,
-                        style: kEncodeSansMedium.copyWith(
-                            color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
-                      ),
-                      subtitle: Text(
-                        x.subTitle,
-                        style: kEncodeSansRegular.copyWith(
-                            color: kGrey, fontSize: sizeVertical * 1.8),
-                      ),
-                      trailing: const Icon(Icons.diamond),
-                    ),
-                  );
+
+// modifying this part of the code
+
+                      // child: ListTile(
+                      //   onTap: () {
+                      //     Navigator.of(context).push(CupertinoPageRoute(
+                      //         builder: ((context) => x.screen!)));
+                      //   },
+                      //   leading: Container(
+                      //     padding: const EdgeInsets.all(12),
+                      //     decoration: BoxDecoration(
+                      //       color: x.bcolor,
+                      //       shape: BoxShape.rectangle,
+                      //       borderRadius: const BorderRadius.all(
+                      //         Radius.circular(12),
+                      //       ),
+                      //     ),
+                      //     child: Icon(
+                      //       Icons.mobile_screen_share_rounded,
+                      //       color: x.fcolor,
+                      //     ),
+                      //   ),
+                      //   title: Text(
+                      //     x.title,
+                      //     style: kEncodeSansMedium.copyWith(
+                      //         color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
+                      //   ),
+                      //   subtitle: Text(
+                      //     x.subTitle,
+                      //     style: kEncodeSansRegular.copyWith(
+                      //         color: kGrey, fontSize: sizeVertical * 1.8),
+                      //   ),
+                      //   trailing: const Icon(Icons.diamond),
+                      // ),
+
+                  child:  const Column(children: [
+                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
+                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
+                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
+                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
+                    ],) 
+
+// thie code above is to be modified
+
+                      // child: ListTile(
+                      //   onTap: () {
+                      //     Navigator.of(context).push(CupertinoPageRoute(
+                      //         builder: ((context) => x.screen!)));
+                      //   },
+                      //   leading: Container(
+                      //     padding: const EdgeInsets.all(12),
+                      //     decoration: BoxDecoration(
+                      //       color: x.bcolor,
+                      //       shape: BoxShape.rectangle,
+                      //       borderRadius: const BorderRadius.all(
+                      //         Radius.circular(12),
+                      //       ),
+                      //     ),
+                      //     child: Icon(
+                      //       Icons.mobile_screen_share_rounded,
+                      //       color: x.fcolor,
+                      //     ),
+                      //   ),
+                      //   title: Text(
+                      //     x.title,
+                      //     style: kEncodeSansMedium.copyWith(
+                      //         color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
+                      //   ),
+                      //   subtitle: Text(
+                      //     x.subTitle,
+                      //     style: kEncodeSansRegular.copyWith(
+                      //         color: kGrey, fontSize: sizeVertical * 1.8),
+                      //   ),
+                      //   trailing: const Icon(Icons.diamond),
+                      // ),
+                      );
                 }),
               ),
               SizedBox(

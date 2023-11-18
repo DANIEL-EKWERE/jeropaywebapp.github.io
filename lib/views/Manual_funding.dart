@@ -65,7 +65,7 @@ class _ManualFundingState extends State<ManualFunding> {
               SizedBox(
                 height: sizeVertical * 3,
               ),
-              button('Send Payment Prove'),
+              button(text1:'Send Payment Prove',isLoading1:false, tap:(){}),
               SizedBox(
                 height: sizeVertical * 3,
               ),

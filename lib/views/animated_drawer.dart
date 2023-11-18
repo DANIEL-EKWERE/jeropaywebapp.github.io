@@ -126,16 +126,16 @@ class _AnimatedDrawerState extends State<AnimatedDrawer> {
         return HistoryScreen(openDrawer: openDrawer);
       case DrawerItems.contact:
         return ContactDataBank(openDrawer: openDrawer);
-        case DrawerItems.airtime:
+      case DrawerItems.airtime:
         return const AirtimeTopUp();
       case DrawerItems.data:
         return const DataTopUp();
       case DrawerItems.dataPin:
         return const DataPin();
       case DrawerItems.cable:
-        return const CableSubscriptiopn();
+        return const CableSubscription();
       case DrawerItems.result:
-        return const ResultChecker();
+        return ResultChecker();
       case DrawerItems.card:
         return const RechargeCard();
       default:

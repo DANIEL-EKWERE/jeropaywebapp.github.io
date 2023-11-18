@@ -181,7 +181,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ],
             ),
             SizedBox(height: sizeVertical * 1),
-            button('Continue With Payment'),
+            
+            button(
+              text1:'Continue With Payment',
+              isLoading1:false,
+              tap:(){}),
+
             SizedBox(height: sizeVertical * 2),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),

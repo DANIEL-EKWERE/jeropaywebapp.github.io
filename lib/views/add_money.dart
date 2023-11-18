@@ -1,4 +1,6 @@
 import 'package:databank/customizations/size_config.dart';
+import 'package:databank/views/payvessel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../customizations/app_style.dart';
@@ -97,7 +99,7 @@ class _AddMoneyState extends State<AddMoney> {
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
+                  CupertinoPageRoute(
                     builder: (context) => const MonnifyAccts(),
                   ),
                 );
@@ -144,6 +146,65 @@ class _AddMoneyState extends State<AddMoney> {
               ),
             ),
           ),
+
+
+
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  CupertinoPageRoute(
+                    builder: (context) => const Payvessel(),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                    ),
+                    width: double.infinity,
+                    height: SizeConfig.blockSizeVertical! * 13,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: kWhite,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            color: kGrey.withOpacity(0.2),
+                            offset: const Offset(0, 5),
+                          )
+                        ]),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: sizeVertical * 5,
+                            height: sizeVertical * 5,
+                            child: const Image(
+                              image: AssetImage(
+                                  'assets/images/payvessel.png'),
+                            ),
+                          ),
+                          SizedBox(
+                            width: sizeVertical * 3,
+                          ),
+                          const Text('Payvessel'),
+                        ]),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+
+
+
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
@@ -206,11 +267,11 @@ class _AddMoneyState extends State<AddMoney> {
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
             child: GestureDetector(
               onTap: () {
-             Navigator.of(context).push(
-                  MaterialPageRoute(
+                Navigator.of(context).push(
+                  CupertinoPageRoute(
                     builder: (context) => const ManualFunding(),
                   ),
-                );   
+                );
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

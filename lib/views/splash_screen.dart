@@ -1,5 +1,10 @@
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/size_config.dart';
+import 'package:databank/views/create_profile.dart';
+import 'package:databank/views/onboarding_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,8 +17,30 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 10))
-        .then((value) => Navigator.popAndPushNamed(context, "/App_Layout"));
+    Future.delayed(const Duration(seconds: 10), () {
+      DataBaseProvider().getUserId().then((value) {
+        if (value == '') {
+          Navigator.of(context).push(
+            CupertinoPageRoute(
+              builder: (context) => const OnboardingPage(),
+            ),
+          );
+        } else {
+          DataBaseProvider().getProfileId().then((value) {
+            if (value == '') {
+              Navigator.of(context).push(
+                CupertinoPageRoute(
+                  builder: (context) => const CreatUserProfile(),
+                ),
+              );
+            } else {
+              Navigator.popAndPushNamed(context, "/App_Layout");
+            }
+          });
+        }
+      });
+    });
+
     SizeConfig().init(context);
     return Container(
         width: double.infinity,
@@ -47,7 +74,9 @@ class _SplashScreenState extends State<SplashScreen> {
             //         ),
             Center(
               child: SvgPicture.asset('assets/images/data bank logo.svg'),
-            )
+            ),
+            SizedBox(height: SizeConfig.blockSizeVertical! * 5,),
+            const SpinKitSpinningLines(color: Colors.white,itemCount: 7,)
           ],
         ));
   }

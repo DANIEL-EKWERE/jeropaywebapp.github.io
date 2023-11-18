@@ -1,11 +1,14 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import '../backend/provider/purchase_provider/purchases_provider.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 import '../model/quik_dail.dart';
+import '../widget/button.dart';
 import '../widget/fab.dart';
+import '../widget/snackbar.dart';
 
 class DataTopUp extends StatefulWidget {
   const DataTopUp({
@@ -73,31 +76,135 @@ class _DataTopUpState extends State<DataTopUp> {
 
   Map<String, Map<String, List<String>>> items = {
     'MTN': {
-      'MTN(SME1)': ['1GB', '2GB', '3GB'],
-      'MTN(SME2)': ['1GB', '2GB', '3GB'],
-      'MTN(GIFTING)': ['1GB', '2GB', '3GB'],
-      'MTN(COPORATE)': ['1GB', '2GB', '3GB'],
+      'MTN(SME1)': [
+        'MTN 500MB - #150',
+        'MTN 1GB - #230',
+        'MTN 2GB - #460',
+        'MTN 3GB - #590'
+      ],
+      'MTN(SME2)': [
+        'MTN 500MB - #150',
+        'MTN 1GB - #230',
+        'MTN 2GB - #460',
+        'MTN 3GB - #590'
+      ],
+      'MTN(GIFTING)': [
+        'MTN 500MB - #150',
+        'MTN 1GB - #230',
+        'MTN 2GB - #460',
+        'MTN 3GB - #590'
+      ],
+      'MTN(COPORATE)': [
+        'MTN 500MB - #150',
+        'MTN 1GB - #230',
+        'MTN 2GB - #460',
+        'MTN 3GB - #590'
+      ],
     },
     'AIRTEL': {
-      'AIRTEL(SME1)': ['1GB', '2GB', '3GB'],
-      'AIRTEL(SME2)': ['1GB', '2GB', '3GB'],
-      'AIRTEL(GIFTING)': ['1GB', '2GB', '3GB'],
-      'AIRTEL(COPORATE)': ['1GB', '2GB', '3GB'],
+      'AIRTEL(SME1)': [
+        'AIRTEL 500MB - #150',
+        'AIRTEL 1GB - #230',
+        'AIRTEL 2GB - #460',
+        'AIRTEL 3GB - #590'
+      ],
+      'AIRTEL(SME2)': [
+        'AIRTEL 500MB - #150',
+        'AIRTEL 1GB - #230',
+        'AIRTEL 2GB - #460',
+        'AIRTEL 3GB - #590'
+      ],
+      'AIRTEL(GIFTING)': [
+        'AIRTEL 500MB - #150',
+        'AIRTEL 1GB - #230',
+        'AIRTEL 2GB - #460',
+        'AIRTEL 3GB - #590'
+      ],
+      'AIRTEL(COPORATE)': [
+        'AIRTEL 500MB - #150',
+        'AIRTEL 1GB - #230',
+        'AIRTEL 2GB - #460',
+        'AIRTEL 3GB - #590'
+      ],
     },
     'GLO': {
-      'GLO(SME1)': ['1GB', '2GB', '3GB'],
-      'GLO(SME2)': ['1GB', '2GB', '3GB'],
-      'GLO(GIFTING)': ['1GB', '2GB', '3GB'],
-      'GLO(COPORATE)': ['1GB', '2GB', '3GB'],
+      'GLO(SME1)': [
+        'GLO 500MB - #150',
+        'GLO 1GB - #230',
+        'GLO 2GB - #460',
+        'GLO 3GB - #590'
+      ],
+      'GLO(SME2)': [
+        'GLO 500MB - #150',
+        'GLO 1GB - #230',
+        'GLO 2GB - #460',
+        'GLO 3GB - #590'
+      ],
+      'GLO(GIFTING)': [
+        'GLO 500MB - #150',
+        'GLO 1GB - #230',
+        'GLO 2GB - #460',
+        'GLO 3GB - #590'
+      ],
+      'GLO(COPORATE)': [
+        'GLO 500MB - #150',
+        'GLO 1GB - #230',
+        'GLO 2GB - #460',
+        'GLO 3GB - #590'
+      ],
     },
     '9 MOBILE': {
-      '9 MOBILE(SME1)': ['1GB', '2GB', '3GB'],
-      '9 MOBILE(SME2)': ['1GB', '2GB', '3GB'],
-      '9 MOBILE(GIFTING)': ['1GB', '2GB', '3GB'],
-      '9 MOBILE(COPORATE)': ['1GB', '2GB', '3GB'],
+      '9 MOBILE(SME1)': [
+        '9 MOBILE 500MB - #150',
+        '9 MOBILE 1GB - #230',
+        '9 MOBILE 2GB - #460',
+        '9 MOBILE 3GB - #590'
+      ],
+      '9 MOBILE(SME2)': [
+        '9 MOBILE 500MB - #150',
+        '9 MOBILE 1GB - #230',
+        '9 MOBILE 2GB - #460',
+        '9 MOBILE 3GB - #590'
+      ],
+      '9 MOBILE(GIFTING)': [
+        '9 MOBILE 500MB - #150',
+        '9 MOBILE 1GB - #230',
+        '9 MOBILE 2GB - #460',
+        '9 MOBILE 3GB - #590'
+      ],
+      '9 MOBILE(COPORATE)': [
+        '9 MOBILE 500MB - #150',
+        '9 MOBILE 1GB - #230',
+        '9 MOBILE 2GB - #460',
+        '9 MOBILE 3GB - #590'
+      ],
     },
   };
+  Map<String, String> getDataId = {
+    // mtn
+    'MTN 500MB - #150': 'd928ec26-df8e-4a26-ad91-0d36f7aeecdb8',
+    'MTN 1GB - #230': 'd055ab1c-67a6-425d-8265-cedfd7873a3c',
+    'MTN 2GB - #460': '2f845458-d1f4-4c08-ade6-750953d73d52',
+    'MTN 3GB - #590': '49be9c6f-7736-4b68-90dd-afc57b8d85dc',
 
+    // airtel
+    'AIRTEL 500MB - #150': '01bdd291-325c-44fa-9547-c17ac5778e3f',
+    'AIRTEL 1GB - #230': 'd781023b-d79d-49bc-809a-9ec0539d5a45',
+    'AIRTEL 2GB - #460': 'd4d43803-b64c-4fa1-8d7a-b936ef5fc736',
+    'AIRTEL 3GB - #590': 'ffdbb024-2a93-41c2-a4d9-31ca44b84443',
+
+    // glo
+    'GLO 500MB - #150': 'b5dddd3b-313c-4fab-9277-751b3e28677a',
+    'GLO 1GB - #230': '14b4c285-481a-42e2-8517-ed6e090a6d8d',
+    'GLO 2GB - #460': '84e19afa-1fd6-406a-bfbc-6b3eb5d88ac8',
+    'GLO 3GB - #590': 'cf36db53-cc14-4f91-8f18-db577650e158',
+
+    //9 mobile
+    '9 MOBILE 500MB - #150': '4515121f-2b9c-4353-8b3e-731da08866c9',
+    '9 MOBILE 1GB - #230': 'acef55d7-5203-48bd-b9bd-260a614a2a8b',
+    '9 MOBILE 2GB - #460': '62af5076-bd3d-4a15-803d-d1ff0f3f1034',
+    '9 MOBILE 3GB - #590': '6e15da99-7706-4f80-99a7-b5d4af953723',
+  };
   bool _numberInputIsValid = true;
 
   TextEditingController phoneController = TextEditingController();
@@ -106,6 +213,12 @@ class _DataTopUpState extends State<DataTopUp> {
   void dispose() {
     super.dispose();
     phoneController.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -547,8 +660,6 @@ class _DataTopUpState extends State<DataTopUp> {
                                     }
                                   },
                                 ),
-                                //textFieldPhoneNumber('Enter Phone',
-                                //       'Enter Phone', phoneController),
                               ),
                               SizedBox(
                                 height: sizeVertical * 3.5,
@@ -604,61 +715,81 @@ class _DataTopUpState extends State<DataTopUp> {
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight,
                                             )),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            if (selectedValue == '' ||
-                                                selectedValue2 == '' ||
-                                                phoneController.text == '') {
-                                              CoolAlert.show(
-                                                backgroundColor: kGrey,
-                                                confirmBtnColor: Colors.green,
-                                                context: context,
-                                                title: 'Empty Selections!!!',
-                                                text:
-                                                    'input fields cannot be empty,please fill in the fields and try again!',
-                                                type: CoolAlertType.error,
-                                                animType:
-                                                    CoolAlertAnimType.rotate,
-                                              );
-                                            } else {
-                                              CoolAlert.show(
-                                                backgroundColor: kGrey,
-                                                confirmBtnColor: Colors.green,
-                                                context: context,
-                                                type: CoolAlertType.confirm,
-                                                title: 'Confirm Purchase!!!',
-                                                text:
-                                                    'your about to make purchase of $selectedValue2 $selectedValue airtime to the number ${phoneController.text}',
-                                                onConfirmBtnTap: () async {
-                                                  print(
-                                                      'loading please wait...');
+                                        child: Consumer<PurchaseProvider>(
+                                            builder: (context, value, child) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            if (value.regMessage != '') {
+                                              successMessage(
+                                                  message: value.regMessage,
+                                                  x: value.color,
+                                                  context: context);
 
-                                                  const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: Colors.red,
-                                                    ),
-                                                  );
-                                                },
-                                              );
+                                              value.clear();
                                             }
-                                            const Center(
-                                              child: CircularProgressIndicator(
-                                                color: Colors.red,
-                                              ),
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: const Text('Proceed'),
-                                        ),
+                                          });
+
+                                          return button(
+                                            text1: 'proceed',
+                                            isLoading1: false,
+                                            tap: () {
+                                              if (selectedCategory!.isEmpty ||
+                                                  selectedSubCategory!
+                                                      .isEmpty ||
+                                                  selectedItem!.isEmpty) {
+                                                warning(
+                                                    message:
+                                                        'fields cant\'t be empty!!!');
+                                              } else {
+                                                showDialog<bool>(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'Confirm Purchase'),
+                                                        content: Text(
+                                                            'Your about to make a purchase of $selectedCategory $selectedItem'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              final itemIndex =
+                                                                  items[selectedCategory]![
+                                                                      selectedSubCategory];
+                                                              final index =
+                                                                  itemIndex!
+                                                                      .indexOf(
+                                                                          selectedItem!);
+
+                                                              final item = items[
+                                                                      selectedCategory]![
+                                                                  selectedSubCategory]![index];
+
+                                                              final dataId =
+                                                                  getDataId[
+                                                                      item];
+                                                              value.PurchaseData(
+                                                                  context:
+                                                                      context,
+                                                                  dataId:
+                                                                      dataId!,
+                                                                  phone_number:
+                                                                      phoneController
+                                                                          .text
+                                                                          .trim());
+                                                              Navigator.pop(
+                                                                  context);
+                                                                  
+                                                            },
+                                                            child: const Text(
+                                                                'Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+                                              }
+                                            },
+                                          );
+                                        }),
                                       ),
                                     ),
                                   ],
