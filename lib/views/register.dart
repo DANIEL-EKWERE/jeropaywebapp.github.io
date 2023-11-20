@@ -394,7 +394,10 @@ class _RegisterState extends State<Register> {
                         builder: (context, value, child) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (value.reqMessage != '') {
-                          successMessage(message: value.reqMessage,x:value.color, context: context);
+                          successMessage(
+                              message: value.reqMessage,
+                              x: value.color,
+                              context: context);
 
                           value.clear();
                         }
@@ -403,10 +406,10 @@ class _RegisterState extends State<Register> {
                         text1: 'Log In',
                         isLoading1: value.isLoading,
                         tap: () {
+                          print('registering');
                           if (_firstNameController.text.isEmpty ||
                               _lastNameController.text.isEmpty ||
                               _userNameController.text.isEmpty ||
-                              // _phoneController.text.isEmpty ||
                               _emailController.text.isEmpty ||
                               _passwordController.text.isEmpty ||
                               _confirmPasswordController.text.isEmpty) {
@@ -427,7 +430,10 @@ class _RegisterState extends State<Register> {
                                 username: _userNameController.text.trim(),
                                 password: _passwordController.text.trim(),
                                 context: context);
-                            successMessage(message: value.reqMessage, x: value.color, context: context);
+                            successMessage(
+                                message: value.reqMessage,
+                                x: value.color,
+                                context: context);
                           }
                         },
                       );

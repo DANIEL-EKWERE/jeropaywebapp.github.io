@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   message: 'fields cant\'t be empty',
                                   context: context);
                             } else {
-                              value.LoginUser(
+                              value.loginUser(
                                   username: _emailController.text.trim(),
                                   password: _passwordController.text.trim(),
                                   context: context);

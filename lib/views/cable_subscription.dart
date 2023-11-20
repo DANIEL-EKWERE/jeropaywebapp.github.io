@@ -539,9 +539,9 @@ class _CableSubscriptionState extends State<CableSubscription> {
                                                       value.validateCableNumber(
                                                           iuc: _controller.text
                                                               .trim(),
-                                                          cable_provider:
+                                                          cableProvider:
                                                               selectedCategory!,
-                                                          cable_uuid:
+                                                          cableUuid:
                                                               cableUuid!,
                                                           context: context);
                                                     },

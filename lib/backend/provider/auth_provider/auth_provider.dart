@@ -85,16 +85,33 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> queryUserProfile() async {
+    try {
+      final url = '$requestBaseUrl/user/create/profile/';
+      http.Response request = await http.get(Uri.parse(url));
+      if (request.statusCode == 200) {
+        final res = json.decode(request.body);
+        final image = res['profileImage'];
+        DataBaseProvider().saveProfileImage(image);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   // login user
 
-  void LoginUser(
+  void loginUser(
       {required String username,
       required password,
       required BuildContext? context}) async {
     _isLoading = true;
     notifyListeners();
     String url = '$requestBaseUrl/user/login-user/';
-
+    final isProfileCreated = await queryUserProfile();
     final body = {
       "username": username,
       "password": password,
@@ -119,6 +136,13 @@ class AuthenticationProvider extends ChangeNotifier {
         DataBaseProvider().saveUserName(username);
         DataBaseProvider().getProfileId().then((value) {
           if (value == '') {
+            if (isProfileCreated) {
+              Navigator.of(context!).push(
+                CupertinoPageRoute(
+                  builder: (context) => const AppLayout(),
+                ),
+              );
+            }
             Navigator.of(context!).push(
               CupertinoPageRoute(
                 builder: (context) => const CreatUserProfile(),
@@ -182,11 +206,12 @@ class AuthenticationProvider extends ChangeNotifier {
       // }
 
       final pickedFileToFile = File(profile_picture!.path);
-      final imageStream = http.ByteStream.castFrom(pickedFileToFile.openRead());
+      final imageStream =
+          http.ByteStream(Stream.castFrom(pickedFileToFile.openRead()));
       final lenght = await pickedFileToFile.length();
       final imageUpload = http.MultipartFile(
           'profile_picture', imageStream, lenght,
-          filename:  (pickedFileToFile.path));
+          filename: (pickedFileToFile.path));
       res.files.add(imageUpload);
       var response = await res.send();
       if (response.statusCode == 201 || response.statusCode == 200) {

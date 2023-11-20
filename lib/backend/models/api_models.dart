@@ -1,3 +1,4 @@
+// import 'package:meta/meta.dart';
 import 'dart:convert';
 // FOR LISTING ALL TRANSACTIONS
 
@@ -503,365 +504,351 @@ import 'dart:convert';
 
 // auth models
 
-class CreateAccountModel {
-  final String username;
-  final String password;
-
-  CreateAccountModel({required this.username, required this.password});
-}
-
-class LoginAccountModel {
-  final String username;
-  final String password;
-
-  LoginAccountModel({required this.username, required this.password});
-}
-
-class CreateProfileModel {
-  final String location;
-  final String phone;
-  final String state;
-  final String profile_picture;
-
-  CreateProfileModel(
-      {required this.location,
-      required this.phone,
-      required this.state,
-      required this.profile_picture});
-}
-
-// airtime purchase model
-
-List<Transaction> productsCategoryFromJson(String str) =>
-    List<Transaction>.from(
-        json.decode(str).map((x) => Transaction.fromJson(x)));
-
-String TransactionToJson(List<Transaction> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class Transaction {
-  final String id;
-  final String details;
-  final String date_and_time;
-  final double old_balance;
-  final double new_balance;
-  final String phone_number;
-  final String status;
-  final double amount;
-  final String type;
-
-  Transaction(
-      {required this.id,
-      required this.details,
-      required this.date_and_time,
-      required this.old_balance,
-      required this.new_balance,
-      required this.phone_number,
-      required this.status,
-      required this.amount,
-      required this.type});
-
-  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
-        id: json['id'],
-        details: json['details'],
-        date_and_time: json['date_and_time'],
-        old_balance: json['old_balance'],
-        new_balance: json['new_balance'],
-        phone_number: json['phone_number'],
-        status: json['status'],
-        amount: json['amout']?.toDouble(),
-        type: json['type'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "details": details,
-        "date_and_time": date_and_time,
-        "old_balance": old_balance,
-        "new_balance": new_balance,
-        "phone_number": phone_number,
-        "status": status,
-        "amount": amount,
-        "type": type,
-      };
-}
-
-class AirtimePurchase {
-  final String network;
-  final double amount;
-  final String phone_number;
-
-  AirtimePurchase(
-      {required this.network,
-      required this.amount,
-      required this.phone_number});
-}
-
-
-
-
-
-
-List<Message> DataPurchaseFromJson(String str) =>
-                List<Message>.from(
-                    json.decode(str).map((x) => Message.fromJson(x)));
-
-            String DataPurchaseToJson(List<Message> data) =>
-                json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-            class DataPurchase{
-              final String? status;
-              Message? message;
-
-              DataPurchase({required this.status,required this.message});
-
-              factory DataPurchase.fromJson(Map<String, dynamic> Json) => DataPurchase(
-                  status: Json['status'],
-                  message: Message.fromJson(Json['message'])
-                  // Map<String, dynamic>.from(Json['messsage'].map((x))
-
-              );
-            }
-
-
-
-
-            class Message {
-              final String? id;
-              final String? details;
-              final String? date_and_time;
-              final String? old_balance;
-              final String? new_balance;
-              final String? phone_number;
-              final String? status;
-              final String? amount;
-              final String? type;
-
-              Message(
-                  {
-                    required this.id,
-                    required this.details,
-                    required this.date_and_time,
-                    required this.old_balance,
-                    required this.new_balance,
-                    required this.phone_number,
-                    required this.status,
-                    required this.amount,
-                    required this.type});
-
-              factory Message.fromJson(Map<String, dynamic> json) => Message(
-                id: json['id'],
-                details: json['details'],
-                date_and_time: json['date_and_time'],
-                old_balance: json['old_balance'],
-                new_balance: json['new_balance'],
-                phone_number: json['phone_number'],
-                status: json['status'],
-                amount: json['amount'],
-                type: json['type'],
-              );
-
-              Map<String, dynamic> toJson() => {
-                "id": id,
-                "details": details,
-                "date_and_time": date_and_time,
-                "old_balance": old_balance,
-                "new_balance": new_balance,
-                "phone_number": phone_number,
-                "status": status,
-                "amount": amount,
-                "type": type,
-              };
-            }
-
-
-
-
-
-
-List<DepositRecord> DepositRecordFromJson(String str) =>
-    List<DepositRecord>.from(
-        json.decode(str).map((x) => Transaction.fromJson(x)));
-
-String DepositRecordToJson(List<DepositRecord> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class DepositRecord {
-  final String id;
-  final double amount;
-  final String date_and_time;
-  final String wallet;
-
-  DepositRecord(
-      {required this.id,
-      required this.amount,
-      required this.date_and_time,
-      required this.wallet});
-
-  factory DepositRecord.fromJson(Map<String, dynamic> json) => DepositRecord(
-        id: json['id'],
-        date_and_time: json['date_and_time'],
-        amount: json['amout']?.toDouble(),
-        wallet: json['wallet'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "date_and_time": date_and_time,
-        "amount": amount,
-        'wallet': wallet,
-      };
-}
-
-// ignore: non_constant_identifier_names
-List<CableSubscription1> CableSubscriptionFromJson(String str) =>
-    List<CableSubscription1>.from(
-        json.decode(str).map((x) => CableSubscription1.fromJson(x)));
-
-// ignore: non_constant_identifier_names
-String CableSubscriptionToJson(List<CableSubscription1> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class CableSubscription1 {
-  final String iuc;
-  final String cable_provider;
-
-  CableSubscription1({required this.iuc, required this.cable_provider});
-
-  factory CableSubscription1.fromJson(Map<String, dynamic> json) =>
-      CableSubscription1(
-        iuc: json['iuc'],
-        cable_provider: json['cable_provider'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "iuc": iuc,
-        "cable_provder": cable_provider,
-      };
-}
-
-List<ElectricBillPayment> ElectricBillPaymentFromJson(String str) =>
-    List<ElectricBillPayment>.from(
-        json.decode(str).map((x) => Transaction.fromJson(x)));
-
-String ElectricBillPaymentToJson(List<ElectricBillPayment> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class ElectricBillPayment {
-  final String number;
-  final String type;
-  final String disco;
-  final double amount;
-
-  ElectricBillPayment(
-      {required this.number,
-      required this.type,
-      required this.disco,
-      required this.amount});
-
-  factory ElectricBillPayment.fromJson(Map<String, dynamic> json) =>
-      ElectricBillPayment(
-        number: json['number'],
-        type: json['type'],
-        disco: json['disco'],
-        amount: json['amount'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "number": number,
-        "type": type,
-        "disco": disco,
-        "amount": amount,
-      };
-}
-
-List<ValidateElectricBill> ValidateElectricBillFromJson(String str) =>
-    List<ValidateElectricBill>.from(
-        json.decode(str).map((x) => Transaction.fromJson(x)));
-
-String ValidateElectricBillToJson(List<ValidateElectricBill> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class ValidateElectricBill {
-  final String number;
-  final String type;
-  final String disco;
-
-  ValidateElectricBill(
-      {required this.number, required this.type, required this.disco});
-
-  factory ValidateElectricBill.fromJson(Map<String, dynamic> json) =>
-      ValidateElectricBill(
-        number: json['number'],
-        type: json['type'],
-        disco: json['disco'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "number": number,
-        "type": type,
-        "disco": disco,
-      };
-}
-
-// ignore: non_constant_identifier_names
-List<ValidateCableNumber> ValidateCableNumberFromJson(String str) =>
-    List<ValidateCableNumber>.from(
-        json.decode(str).map((x) => ValidateCableNumber.fromJson(x)));
-
-// ignore: non_constant_identifier_names
-String ValidateCableNumberToJson(List<ValidateCableNumber> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class ValidateCableNumber {
-  final String iuc;
-  final String cable_provider;
-
-  ValidateCableNumber({required this.iuc, required this.cable_provider});
-
-  factory ValidateCableNumber.fromJson(Map<String, dynamic> json) =>
-      ValidateCableNumber(
-        iuc: json['iuc'],
-        cable_provider: json['cable_provider'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "iuc": iuc,
-        "cable_provder": cable_provider,
-      };
-}
-
-// ignore: non_constant_identifier_names
-List<UpdatePassWord> UpdatePassWordFromJson(String str) =>
-    List<UpdatePassWord>.from(
-        json.decode(str).map((x) => UpdatePassWord.fromJson(x)));
-
-// ignore: non_constant_identifier_names
-String UpdatePassWordToJson(List<ValidateCableNumber> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-
-class UpdatePassWord {
-  // ignore: non_constant_identifier_names
-  final String old_password;
-  // ignore: non_constant_identifier_names
-  final String new_password;
-
-  // ignore: non_constant_identifier_names
-  UpdatePassWord({required this.old_password,required this.new_password});
-
-  factory UpdatePassWord.fromJson(Map<String, dynamic> json) =>
-      UpdatePassWord(
-        old_password: json['old_password'],
-        new_password: json['new_password'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "old_password": new_password,
-        "new_password": new_password,
-      };  
-
-}
+// class CreateAccountModel {
+//   final String username;
+//   final String password;
+
+//   CreateAccountModel({required this.username, required this.password});
+// }
+
+// class LoginAccountModel {
+//   final String username;
+//   final String password;
+
+//   LoginAccountModel({required this.username, required this.password});
+// }
+
+// class CreateProfileModel {
+//   final String location;
+//   final String phone;
+//   final String state;
+//   final String profile_picture;
+
+//   CreateProfileModel(
+//       {required this.location,
+//       required this.phone,
+//       required this.state,
+//       required this.profile_picture});
+// }
+
+// // airtime purchase model
+
+// List<Transaction> productsCategoryFromJson(String str) =>
+//     List<Transaction>.from(
+//         json.decode(str).map((x) => Transaction.fromJson(x)));
+
+// String TransactionToJson(List<Transaction> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class Transaction {
+//   final String id;
+//   final String details;
+//   final String date_and_time;
+//   final double old_balance;
+//   final double new_balance;
+//   final String phone_number;
+//   final String status;
+//   final double amount;
+//   final String type;
+
+//   Transaction(
+//       {required this.id,
+//       required this.details,
+//       required this.date_and_time,
+//       required this.old_balance,
+//       required this.new_balance,
+//       required this.phone_number,
+//       required this.status,
+//       required this.amount,
+//       required this.type});
+
+//   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
+//         id: json['id'],
+//         details: json['details'],
+//         date_and_time: json['date_and_time'],
+//         old_balance: json['old_balance'],
+//         new_balance: json['new_balance'],
+//         phone_number: json['phone_number'],
+//         status: json['status'],
+//         amount: json['amout']?.toDouble(),
+//         type: json['type'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "details": details,
+//         "date_and_time": date_and_time,
+//         "old_balance": old_balance,
+//         "new_balance": new_balance,
+//         "phone_number": phone_number,
+//         "status": status,
+//         "amount": amount,
+//         "type": type,
+//       };
+// }
+
+// class AirtimePurchase {
+//   final String network;
+//   final double amount;
+//   final String phone_number;
+
+//   AirtimePurchase(
+//       {required this.network,
+//       required this.amount,
+//       required this.phone_number});
+// }
+
+// List<Message> DataPurchaseFromJson(String str) =>
+//                 List<Message>.from(
+//                     json.decode(str).map((x) => Message.fromJson(x)));
+
+//             String DataPurchaseToJson(List<Message> data) =>
+//                 json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+//             class DataPurchase{
+//               final String? status;
+//               Message? message;
+
+//               DataPurchase({required this.status,required this.message});
+
+//               factory DataPurchase.fromJson(Map<String, dynamic> Json) => DataPurchase(
+//                   status: Json['status'],
+//                   message: Message.fromJson(Json['message'])
+//                   // Map<String, dynamic>.from(Json['messsage'].map((x))
+
+//               );
+//             }
+
+//             class Message {
+//               final String? id;
+//               final String? details;
+//               final String? date_and_time;
+//               final String? old_balance;
+//               final String? new_balance;
+//               final String? phone_number;
+//               final String? status;
+//               final String? amount;
+//               final String? type;
+
+//               Message(
+//                   {
+//                     required this.id,
+//                     required this.details,
+//                     required this.date_and_time,
+//                     required this.old_balance,
+//                     required this.new_balance,
+//                     required this.phone_number,
+//                     required this.status,
+//                     required this.amount,
+//                     required this.type});
+
+//               factory Message.fromJson(Map<String, dynamic> json) => Message(
+//                 id: json['id'],
+//                 details: json['details'],
+//                 date_and_time: json['date_and_time'],
+//                 old_balance: json['old_balance'],
+//                 new_balance: json['new_balance'],
+//                 phone_number: json['phone_number'],
+//                 status: json['status'],
+//                 amount: json['amount'],
+//                 type: json['type'],
+//               );
+
+//               Map<String, dynamic> toJson() => {
+//                 "id": id,
+//                 "details": details,
+//                 "date_and_time": date_and_time,
+//                 "old_balance": old_balance,
+//                 "new_balance": new_balance,
+//                 "phone_number": phone_number,
+//                 "status": status,
+//                 "amount": amount,
+//                 "type": type,
+//               };
+//             }
+
+// List<DepositRecord> DepositRecordFromJson(String str) =>
+//     List<DepositRecord>.from(
+//         json.decode(str).map((x) => Transaction.fromJson(x)));
+
+// String DepositRecordToJson(List<DepositRecord> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class DepositRecord {
+//   final String id;
+//   final double amount;
+//   final String date_and_time;
+//   final String wallet;
+
+//   DepositRecord(
+//       {required this.id,
+//       required this.amount,
+//       required this.date_and_time,
+//       required this.wallet});
+
+//   factory DepositRecord.fromJson(Map<String, dynamic> json) => DepositRecord(
+//         id: json['id'],
+//         date_and_time: json['date_and_time'],
+//         amount: json['amout']?.toDouble(),
+//         wallet: json['wallet'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "date_and_time": date_and_time,
+//         "amount": amount,
+//         'wallet': wallet,
+//       };
+// }
+
+// // ignore: non_constant_identifier_names
+// List<CableSubscription1> CableSubscriptionFromJson(String str) =>
+//     List<CableSubscription1>.from(
+//         json.decode(str).map((x) => CableSubscription1.fromJson(x)));
+
+// // ignore: non_constant_identifier_names
+// String CableSubscriptionToJson(List<CableSubscription1> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class CableSubscription1 {
+//   final String iuc;
+//   final String cable_provider;
+
+//   CableSubscription1({required this.iuc, required this.cable_provider});
+
+//   factory CableSubscription1.fromJson(Map<String, dynamic> json) =>
+//       CableSubscription1(
+//         iuc: json['iuc'],
+//         cable_provider: json['cable_provider'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "iuc": iuc,
+//         "cable_provder": cable_provider,
+//       };
+// }
+
+// List<ElectricBillPayment> ElectricBillPaymentFromJson(String str) =>
+//     List<ElectricBillPayment>.from(
+//         json.decode(str).map((x) => Transaction.fromJson(x)));
+
+// String ElectricBillPaymentToJson(List<ElectricBillPayment> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class ElectricBillPayment {
+//   final String number;
+//   final String type;
+//   final String disco;
+//   final double amount;
+
+//   ElectricBillPayment(
+//       {required this.number,
+//       required this.type,
+//       required this.disco,
+//       required this.amount});
+
+//   factory ElectricBillPayment.fromJson(Map<String, dynamic> json) =>
+//       ElectricBillPayment(
+//         number: json['number'],
+//         type: json['type'],
+//         disco: json['disco'],
+//         amount: json['amount'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "number": number,
+//         "type": type,
+//         "disco": disco,
+//         "amount": amount,
+//       };
+// }
+
+// List<ValidateElectricBill> ValidateElectricBillFromJson(String str) =>
+//     List<ValidateElectricBill>.from(
+//         json.decode(str).map((x) => Transaction.fromJson(x)));
+
+// String ValidateElectricBillToJson(List<ValidateElectricBill> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class ValidateElectricBill {
+//   final String number;
+//   final String type;
+//   final String disco;
+
+//   ValidateElectricBill(
+//       {required this.number, required this.type, required this.disco});
+
+//   factory ValidateElectricBill.fromJson(Map<String, dynamic> json) =>
+//       ValidateElectricBill(
+//         number: json['number'],
+//         type: json['type'],
+//         disco: json['disco'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "number": number,
+//         "type": type,
+//         "disco": disco,
+//       };
+// }
+
+// // ignore: non_constant_identifier_names
+// List<ValidateCableNumber> ValidateCableNumberFromJson(String str) =>
+//     List<ValidateCableNumber>.from(
+//         json.decode(str).map((x) => ValidateCableNumber.fromJson(x)));
+
+// // ignore: non_constant_identifier_names
+// String ValidateCableNumberToJson(List<ValidateCableNumber> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class ValidateCableNumber {
+//   final String iuc;
+//   final String cable_provider;
+
+//   ValidateCableNumber({required this.iuc, required this.cable_provider});
+
+//   factory ValidateCableNumber.fromJson(Map<String, dynamic> json) =>
+//       ValidateCableNumber(
+//         iuc: json['iuc'],
+//         cable_provider: json['cable_provider'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "iuc": iuc,
+//         "cable_provder": cable_provider,
+//       };
+// }
+
+// // ignore: non_constant_identifier_names
+// List<UpdatePassWord> UpdatePassWordFromJson(String str) =>
+//     List<UpdatePassWord>.from(
+//         json.decode(str).map((x) => UpdatePassWord.fromJson(x)));
+
+// // ignore: non_constant_identifier_names
+// String UpdatePassWordToJson(List<ValidateCableNumber> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class UpdatePassWord {
+//   // ignore: non_constant_identifier_names
+//   final String old_password;
+//   // ignore: non_constant_identifier_names
+//   final String new_password;
+
+//   // ignore: non_constant_identifier_names
+//   UpdatePassWord({required this.old_password,required this.new_password});
+
+//   factory UpdatePassWord.fromJson(Map<String, dynamic> json) =>
+//       UpdatePassWord(
+//         old_password: json['old_password'],
+//         new_password: json['new_password'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "old_password": new_password,
+//         "new_password": new_password,
+//       };
+
+// }
 
 // {
 //     "status": "success",
@@ -878,63 +865,59 @@ class UpdatePassWord {
 //     }
 // }
 
-
-
 // To parse this JSON data, do
 //
 //     final dataPurchase = dataPurchaseFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
-
-DataPurchase dataPurchaseFromJson(String str) => DataPurchase.fromJson(json.decode(str));
+DataPurchase dataPurchaseFromJson(String str) =>
+    DataPurchase.fromJson(json.decode(str));
 
 String dataPurchaseToJson(DataPurchase data) => json.encode(data.toJson());
 
 class DataPurchase {
-    final String status;
-    final Message message;
+  final String status;
+  final Message message;
 
-    DataPurchase({
-        required this.status,
-        required this.message,
-    });
+  DataPurchase({
+    required this.status,
+    required this.message,
+  });
 
-    factory DataPurchase.fromJson(Map<String, dynamic> json) => DataPurchase(
+  factory DataPurchase.fromJson(Map<String, dynamic> json) => DataPurchase(
         status: json["status"],
         message: Message.fromJson(json["message"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "message": message.toJson(),
-    };
+      };
 }
 
 class Message {
-    final String id;
-    final String detail;
-    final DateTime dateAndTime;
-    final String oldBalance;
-    final String newBalance;
-    final String phoneNumber;
-    final String status;
-    final String amount;
-    final String type;
+  final String id;
+  final String detail;
+  final DateTime dateAndTime;
+  final String oldBalance;
+  final String newBalance;
+  final String phoneNumber;
+  final String status;
+  final String amount;
+  final String type;
 
-    Message({
-        required this.id,
-        required this.detail,
-        required this.dateAndTime,
-        required this.oldBalance,
-        required this.newBalance,
-        required this.phoneNumber,
-        required this.status,
-        required this.amount,
-        required this.type,
-    });
+  Message({
+    required this.id,
+    required this.detail,
+    required this.dateAndTime,
+    required this.oldBalance,
+    required this.newBalance,
+    required this.phoneNumber,
+    required this.status,
+    required this.amount,
+    required this.type,
+  });
 
-    factory Message.fromJson(Map<String, dynamic> json) => Message(
+  factory Message.fromJson(Map<String, dynamic> json) => Message(
         id: json["id"],
         detail: json["detail"],
         dateAndTime: DateTime.parse(json["date_and_time"]),
@@ -944,9 +927,11 @@ class Message {
         status: json["status"],
         amount: json["amount"],
         type: json["type"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  get date_and_time => null;
+
+  Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
         "date_and_time": dateAndTime.toIso8601String(),
@@ -956,115 +941,107 @@ class Message {
         "status": status,
         "amount": amount,
         "type": type,
-    };
+      };
 }
-
-
-
-
-
 
 // To parse this JSON data, do
 //
 //     final depositRecord = depositRecordFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+List<DepositRecord> depositRecordFromJson(String str) =>
+    List<DepositRecord>.from(
+        json.decode(str).map((x) => DepositRecord.fromJson(x)));
 
-List<DepositRecord> depositRecordFromJson(String str) => List<DepositRecord>.from(json.decode(str).map((x) => DepositRecord.fromJson(x)));
-
-String depositRecordToJson(List<DepositRecord> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String depositRecordToJson(List<DepositRecord> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DepositRecord {
-    final String id;
-    final String amount;
-    final DateTime dateAndTime;
-    final String wallet;
+  final String id;
+  final String amount;
+  final DateTime dateAndTime;
+  final String wallet;
 
-    DepositRecord({
-        required this.id,
-        required this.amount,
-        required this.dateAndTime,
-        required this.wallet,
-    });
+  DepositRecord({
+    required this.id,
+    required this.amount,
+    required this.dateAndTime,
+    required this.wallet,
+  });
 
-    factory DepositRecord.fromJson(Map<String, dynamic> json) => DepositRecord(
+  factory DepositRecord.fromJson(Map<String, dynamic> json) => DepositRecord(
         id: json["id"],
         amount: json["amount"],
         dateAndTime: DateTime.parse(json["date_and_time"]),
         wallet: json["wallet"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "amount": amount,
         "date_and_time": dateAndTime.toIso8601String(),
         "wallet": wallet,
-    };
+      };
 }
-
-
-
 
 // To parse this JSON data, do
 //
 //     final allTransactions = allTransactionsFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+AllTransactions allTransactionsFromJson(String str) =>
+    AllTransactions.fromJson(json.decode(str));
 
-AllTransactions allTransactionsFromJson(String str) => AllTransactions.fromJson(json.decode(str));
-
-String allTransactionsToJson(AllTransactions data) => json.encode(data.toJson());
+String allTransactionsToJson(AllTransactions data) =>
+    json.encode(data.toJson());
 
 class AllTransactions {
-    final String status;
-    final int totalAmount;
-    final List<Datum> data;
+  final String status;
+  final int totalAmount;
+  final List<Datum1> data;
 
-    AllTransactions({
-        required this.status,
-        required this.totalAmount,
-        required this.data,
-    });
+  AllTransactions({
+    required this.status,
+    required this.totalAmount,
+    required this.data,
+  });
 
-    factory AllTransactions.fromJson(Map<String, dynamic> json) => AllTransactions(
+  factory AllTransactions.fromJson(Map<String, dynamic> json) =>
+      AllTransactions(
         status: json["status"],
         totalAmount: json["total_amount"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    );
+        data: List<Datum1>.from(json["data"].map((x) => Datum1.fromJson(x))),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "total_amount": totalAmount,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    };
+      };
 }
 
-class Datum {
-    final String id;
-    final String detail;
-    final DateAndTime dateAndTime;
-    final String oldBalance;
-    final String newBalance;
-    final String phoneNumber;
-    final Status status;
-    final String amount;
-    final Type type;
+class Datum1 {
+  final String id;
+  final String detail;
+  final DateAndTime dateAndTime;
+  final String oldBalance;
+  final String newBalance;
+  final String phoneNumber;
+  final Status status;
+  final String amount;
+  final Type type;
 
-    Datum({
-        required this.id,
-        required this.detail,
-        required this.dateAndTime,
-        required this.oldBalance,
-        required this.newBalance,
-        required this.phoneNumber,
-        required this.status,
-        required this.amount,
-        required this.type,
-    });
+  Datum1({
+    required this.id,
+    required this.detail,
+    required this.dateAndTime,
+    required this.oldBalance,
+    required this.newBalance,
+    required this.phoneNumber,
+    required this.status,
+    required this.amount,
+    required this.type,
+  });
 
-    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Datum1.fromJson(Map<String, dynamic> json) => Datum1(
         id: json["id"],
         detail: json["detail"],
         dateAndTime: dateAndTimeValues.map[json["date_and_time"]]!,
@@ -1074,9 +1051,9 @@ class Datum {
         status: statusValues.map[json["status"]]!,
         amount: json["amount"],
         type: typeValues.map[json["type"]]!,
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
         "date_and_time": dateAndTimeValues.reverse[dateAndTime],
@@ -1086,106 +1063,93 @@ class Datum {
         "status": statusValues.reverse[status],
         "amount": amount,
         "type": typeValues.reverse[type],
-    };
+      };
 }
 
-enum DateAndTime {
-    OCT_182023,
-    OCT_272023
-}
+enum DateAndTime { OCT_182023, OCT_272023 }
 
 final dateAndTimeValues = EnumValues({
-    "Oct. 18, 2023": DateAndTime.OCT_182023,
-    "Oct. 27, 2023": DateAndTime.OCT_272023
+  "Oct. 18, 2023": DateAndTime.OCT_182023,
+  "Oct. 27, 2023": DateAndTime.OCT_272023
 });
 
-enum Status {
-    SUCCESS
-}
+enum Status { SUCCESS }
 
-final statusValues = EnumValues({
-    "Success": Status.SUCCESS
-});
+final statusValues = EnumValues({"Success": Status.SUCCESS});
 
-enum Type {
-    AIRTIME,
-    DATA
-}
+enum Type { AIRTIME, DATA }
 
-final typeValues = EnumValues({
-    "Airtime": Type.AIRTIME,
-    "Data": Type.DATA
-});
+final typeValues = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA});
 
 class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
 
-    EnumValues(this.map);
+  EnumValues(this.map);
 
-    Map<T, String> get reverse {
-        reverseMap = map.map((k, v) => MapEntry(v, k));
-        return reverseMap;
-    }
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }
-
-
 
 // To parse this JSON data, do
 //
 //     final airtimePurchase = airtimePurchaseFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+AirtimePurchase airtimePurchaseFromJson(String str) =>
+    AirtimePurchase.fromJson(json.decode(str));
 
-AirtimePurchase airtimePurchaseFromJson(String str) => AirtimePurchase.fromJson(json.decode(str));
-
-String airtimePurchaseToJson(AirtimePurchase data) => json.encode(data.toJson());
+String airtimePurchaseToJson(AirtimePurchase data) =>
+    json.encode(data.toJson());
 
 class AirtimePurchase {
-    final String status;
-    final Data data;
+  final String status;
+  final Data data;
 
-    AirtimePurchase({
-        required this.status,
-        required this.data,
-    });
+  AirtimePurchase({
+    required this.status,
+    required this.data,
+  });
 
-    factory AirtimePurchase.fromJson(Map<String, dynamic> json) => AirtimePurchase(
+  factory AirtimePurchase.fromJson(Map<String, dynamic> json) =>
+      AirtimePurchase(
         status: json["status"],
         data: Data.fromJson(json["data"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  get message => null;
+
+  Map<String, dynamic> toJson() => {
         "status": status,
         "data": data.toJson(),
-    };
+      };
 }
 
 class Data {
-    final String id;
-    final String detail;
-    final DateTime dateAndTime;
-    final String oldBalance;
-    final String newBalance;
-    final String phoneNumber;
-    final String status;
-    final String amount;
-    final String type;
+  final String id;
+  final String detail;
+  final DateTime dateAndTime;
+  final String oldBalance;
+  final String newBalance;
+  final String phoneNumber;
+  final String status;
+  final String amount;
+  final String type;
 
-    Data({
-        required this.id,
-        required this.detail,
-        required this.dateAndTime,
-        required this.oldBalance,
-        required this.newBalance,
-        required this.phoneNumber,
-        required this.status,
-        required this.amount,
-        required this.type,
-    });
+  Data({
+    required this.id,
+    required this.detail,
+    required this.dateAndTime,
+    required this.oldBalance,
+    required this.newBalance,
+    required this.phoneNumber,
+    required this.status,
+    required this.amount,
+    required this.type,
+  });
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
         detail: json["detail"],
         dateAndTime: DateTime.parse(json["date_and_time"]),
@@ -1195,9 +1159,9 @@ class Data {
         status: json["status"],
         amount: json["amount"],
         type: json["type"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
         "date_and_time": dateAndTime.toIso8601String(),
@@ -1207,141 +1171,197 @@ class Data {
         "status": status,
         "amount": amount,
         "type": type,
-    };
+      };
 }
 
+// 'detail': f'You have purchased {amount}, {token}',
+//             'old_balance': old_bal,
+//             'new_balance': new_bal,
+//             'phone_number': '',
+//             'status': 'Success',
+//             'amount': amount,
+//             'type': 'Electricity'
 
+List<ElectricSubscription> electricSubscriptionFromJson(String str) =>
+    List<ElectricSubscription>.from(
+        json.decode(str).map((x) => ElectricSubscription.fromJson(x)));
+
+String electricSubscriptionToJson(List<ElectricSubscription> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class ElectricSubscription {
+  final String detail;
+  final String oldBalance;
+  final String newBalance;
+  final String phoneNumber;
+  final String status;
+  final String amount;
+  final String type;
+
+  ElectricSubscription(
+      {required this.detail,
+      required this.oldBalance,
+      required this.newBalance,
+      required this.phoneNumber,
+      required this.status,
+      required this.amount,
+      required this.type});
+
+  factory ElectricSubscription.fromJson(Map<String, dynamic> json) =>
+      ElectricSubscription(
+        detail: json['detail'],
+        oldBalance: json['old_balance'],
+        newBalance: json['new_balance'],
+        phoneNumber: json['phone_number'],
+        status: json['status'],
+        amount: json['amount'],
+        type: json['type'],
+      );
+
+  get date_and_time => null;
+
+  Map<String, dynamic> toJson() => {
+    "detail":detail,
+    "old_balance":oldBalance,
+    "new_balance":newBalance,
+    "phone_number":phoneNumber,
+    "status":status,
+    "amount":amount,
+    "type":type,
+
+  };
+}
 
 // To parse this JSON data, do
 //
 //     final dataPurchase = dataPurchaseFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+// DataPurchase dataPurchaseFromJson(String str) => DataPurchase.fromJson(json.decode(str));
 
-DataPurchase dataPurchaseFromJson(String str) => DataPurchase.fromJson(json.decode(str));
+// String dataPurchaseToJson(DataPurchase data) => json.encode(data.toJson());
 
-String dataPurchaseToJson(DataPurchase data) => json.encode(data.toJson());
+// class DataPurchase {
+//     final String status;
+//     final Message message;
 
-class DataPurchase {
-    final String status;
-    final Message message;
+//     DataPurchase({
+//         required this.status,
+//         required this.message,
+//     });
 
-    DataPurchase({
-        required this.status,
-        required this.message,
-    });
+//     factory DataPurchase.fromJson(Map<String, dynamic> json) => DataPurchase(
+//         status: json["status"],
+//         message: Message.fromJson(json["message"]),
+//     );
 
-    factory DataPurchase.fromJson(Map<String, dynamic> json) => DataPurchase(
-        status: json["status"],
-        message: Message.fromJson(json["message"]),
-    );
+//     Map<String, dynamic> toJson() => {
+//         "status": status,
+//         "message": message.toJson(),
+//     };
+// }
 
-    Map<String, dynamic> toJson() => {
-        "status": status,
-        "message": message.toJson(),
-    };
-}
+// class Message {
+//     final String id;
+//     final String detail;
+//     final DateTime dateAndTime;
+//     final String oldBalance;
+//     final String newBalance;
+//     final String phoneNumber;
+//     final String status;
+//     final String amount;
+//     final String type;
 
-class Message {
-    final String id;
-    final String detail;
-    final DateTime dateAndTime;
-    final String oldBalance;
-    final String newBalance;
-    final String phoneNumber;
-    final String status;
-    final String amount;
-    final String type;
+//     Message({
+//         required this.id,
+//         required this.detail,
+//         required this.dateAndTime,
+//         required this.oldBalance,
+//         required this.newBalance,
+//         required this.phoneNumber,
+//         required this.status,
+//         required this.amount,
+//         required this.type,
+//     });
 
-    Message({
-        required this.id,
-        required this.detail,
-        required this.dateAndTime,
-        required this.oldBalance,
-        required this.newBalance,
-        required this.phoneNumber,
-        required this.status,
-        required this.amount,
-        required this.type,
-    });
+//     factory Message.fromJson(Map<String, dynamic> json) => Message(
+//         id: json["id"],
+//         detail: json["detail"],
+//         dateAndTime: DateTime.parse(json["date_and_time"]),
+//         oldBalance: json["old_balance"],
+//         newBalance: json["new_balance"],
+//         phoneNumber: json["phone_number"],
+//         status: json["status"],
+//         amount: json["amount"],
+//         type: json["type"],
+//     );
 
-    factory Message.fromJson(Map<String, dynamic> json) => Message(
-        id: json["id"],
-        detail: json["detail"],
-        dateAndTime: DateTime.parse(json["date_and_time"]),
-        oldBalance: json["old_balance"],
-        newBalance: json["new_balance"],
-        phoneNumber: json["phone_number"],
-        status: json["status"],
-        amount: json["amount"],
-        type: json["type"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "detail": detail,
-        "date_and_time": dateAndTime.toIso8601String(),
-        "old_balance": oldBalance,
-        "new_balance": newBalance,
-        "phone_number": phoneNumber,
-        "status": status,
-        "amount": amount,
-        "type": type,
-    };
-}
+//     Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "detail": detail,
+//         "date_and_time": dateAndTime.toIso8601String(),
+//         "old_balance": oldBalance,
+//         "new_balance": newBalance,
+//         "phone_number": phoneNumber,
+//         "status": status,
+//         "amount": amount,
+//         "type": type,
+//     };
+// }
 
 // To parse this JSON data, do
 //
 //     final dataPlanListForPerticularNetwork = dataPlanListForPerticularNetworkFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+DataPlanListForPerticularNetwork dataPlanListForPerticularNetworkFromJson(
+        String str) =>
+    DataPlanListForPerticularNetwork.fromJson(json.decode(str));
 
-DataPlanListForPerticularNetwork dataPlanListForPerticularNetworkFromJson(String str) => DataPlanListForPerticularNetwork.fromJson(json.decode(str));
-
-String dataPlanListForPerticularNetworkToJson(DataPlanListForPerticularNetwork data) => json.encode(data.toJson());
+String dataPlanListForPerticularNetworkToJson(
+        DataPlanListForPerticularNetwork data) =>
+    json.encode(data.toJson());
 
 class DataPlanListForPerticularNetwork {
-    final String status;
-    final List<Datum> data;
+  final String status;
+  final List<Datum> data;
 
-    DataPlanListForPerticularNetwork({
-        required this.status,
-        required this.data,
-    });
+  DataPlanListForPerticularNetwork({
+    required this.status,
+    required this.data,
+  });
 
-    factory DataPlanListForPerticularNetwork.fromJson(Map<String, dynamic> json) => DataPlanListForPerticularNetwork(
+  factory DataPlanListForPerticularNetwork.fromJson(
+          Map<String, dynamic> json) =>
+      DataPlanListForPerticularNetwork(
         status: json["status"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    };
+      };
 }
 
 class Datum {
-    final String id;
-    final String amount;
-    final String network;
-    final String planType;
-    final String bandwidth;
-    final String networkId;
-    final String resellerAmount;
+  final String id;
+  final String amount;
+  final String network;
+  final String planType;
+  final String bandwidth;
+  final String networkId;
+  final String resellerAmount;
 
-    Datum({
-        required this.id,
-        required this.amount,
-        required this.network,
-        required this.planType,
-        required this.bandwidth,
-        required this.networkId,
-        required this.resellerAmount,
-    });
+  Datum({
+    required this.id,
+    required this.amount,
+    required this.network,
+    required this.planType,
+    required this.bandwidth,
+    required this.networkId,
+    required this.resellerAmount,
+  });
 
-    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         amount: json["amount"],
         network: json["network"],
@@ -1349,9 +1369,9 @@ class Datum {
         bandwidth: json["bandwidth"],
         networkId: json["network_id"],
         resellerAmount: json["reseller_amount"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "amount": amount,
         "network": network,
@@ -1359,106 +1379,103 @@ class Datum {
         "bandwidth": bandwidth,
         "network_id": networkId,
         "reseller_amount": resellerAmount,
-    };
+      };
 }
-
 
 // To parse this JSON data, do
 //
 //     final singleDeposit = singleDepositFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+List<SingleDeposit> singleDepositFromJson(String str) =>
+    List<SingleDeposit>.from(
+        json.decode(str).map((x) => SingleDeposit.fromJson(x)));
 
-List<SingleDeposit> singleDepositFromJson(String str) => List<SingleDeposit>.from(json.decode(str).map((x) => SingleDeposit.fromJson(x)));
-
-String singleDepositToJson(List<SingleDeposit> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String singleDepositToJson(List<SingleDeposit> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class SingleDeposit {
-    final String id;
-    final String amount;
-    final DateTime dateAndTime;
-    final String wallet;
+  final String id;
+  final String amount;
+  final DateTime dateAndTime;
+  final String wallet;
 
-    SingleDeposit({
-        required this.id,
-        required this.amount,
-        required this.dateAndTime,
-        required this.wallet,
-    });
+  SingleDeposit({
+    required this.id,
+    required this.amount,
+    required this.dateAndTime,
+    required this.wallet,
+  });
 
-    factory SingleDeposit.fromJson(Map<String, dynamic> json) => SingleDeposit(
+  factory SingleDeposit.fromJson(Map<String, dynamic> json) => SingleDeposit(
         id: json["id"],
         amount: json["amount"],
         dateAndTime: DateTime.parse(json["date_and_time"]),
         wallet: json["wallet"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "amount": amount,
         "date_and_time": dateAndTime.toIso8601String(),
         "wallet": wallet,
-    };
+      };
 }
-
-
 
 // To parse this JSON data, do
 //
 //     final singleTransaction = singleTransactionFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+SingleTransaction singleTransactionFromJson(String str) =>
+    SingleTransaction.fromJson(json.decode(str));
 
-SingleTransaction singleTransactionFromJson(String str) => SingleTransaction.fromJson(json.decode(str));
-
-String singleTransactionToJson(SingleTransaction data) => json.encode(data.toJson());
+String singleTransactionToJson(SingleTransaction data) =>
+    json.encode(data.toJson());
 
 class SingleTransaction {
-    final String status;
-    final Data data;
+  final String status;
+  final Data1 data;
 
-    SingleTransaction({
-        required this.status,
-        required this.data,
-    });
+  SingleTransaction({
+    required this.status,
+    required this.data,
+  });
 
-    factory SingleTransaction.fromJson(Map<String, dynamic> json) => SingleTransaction(
+  factory SingleTransaction.fromJson(Map<String, dynamic> json) =>
+      SingleTransaction(
         status: json["status"],
-        data: Data.fromJson(json["data"]),
-    );
+        data: Data1.fromJson(json["data"]),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "data": data.toJson(),
-    };
+      };
 }
 
-class Data {
-    final String id;
-    final String detail;
-    final String dateAndTime;
-    final String oldBalance;
-    final String newBalance;
-    final String phoneNumber;
-    final String status;
-    final String amount;
-    final String type;
+class Data1 {
+  final String id;
+  final String detail;
+  final String dateAndTime;
+  final String oldBalance;
+  final String newBalance;
+  final String phoneNumber;
+  final String status;
+  final String amount;
+  final String type;
 
-    Data({
-        required this.id,
-        required this.detail,
-        required this.dateAndTime,
-        required this.oldBalance,
-        required this.newBalance,
-        required this.phoneNumber,
-        required this.status,
-        required this.amount,
-        required this.type,
-    });
+  Data1({
+    required this.id,
+    required this.detail,
+    required this.dateAndTime,
+    required this.oldBalance,
+    required this.newBalance,
+    required this.phoneNumber,
+    required this.status,
+    required this.amount,
+    required this.type,
+  });
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Data1.fromJson(Map<String, dynamic> json) => Data1(
         id: json["id"],
         detail: json["detail"],
         dateAndTime: json["date_and_time"],
@@ -1468,9 +1485,9 @@ class Data {
         status: json["status"],
         amount: json["amount"],
         type: json["type"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
         "date_and_time": dateAndTime,
@@ -1480,45 +1497,41 @@ class Data {
         "status": status,
         "amount": amount,
         "type": type,
-    };
+      };
 }
-
 
 // To parse this JSON data, do
 //
 //     final singleDeposit = singleDepositFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
+// List<SingleDeposit> singleDepositFromJson(String str) => List<SingleDeposit>.from(json.decode(str).map((x) => SingleDeposit.fromJson(x)));
 
-List<SingleDeposit> singleDepositFromJson(String str) => List<SingleDeposit>.from(json.decode(str).map((x) => SingleDeposit.fromJson(x)));
+// String singleDepositToJson(List<SingleDeposit> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-String singleDepositToJson(List<SingleDeposit> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+// class SingleDeposit {
+//     final String id;
+//     final String amount;
+//     final DateTime dateAndTime;
+//     final String wallet;
 
-class SingleDeposit {
-    final String id;
-    final String amount;
-    final DateTime dateAndTime;
-    final String wallet;
+//     SingleDeposit({
+//         required this.id,
+//         required this.amount,
+//         required this.dateAndTime,
+//         required this.wallet,
+//     });
 
-    SingleDeposit({
-        required this.id,
-        required this.amount,
-        required this.dateAndTime,
-        required this.wallet,
-    });
+//     factory SingleDeposit.fromJson(Map<String, dynamic> json) => SingleDeposit(
+//         id: json["id"],
+//         amount: json["amount"],
+//         dateAndTime: DateTime.parse(json["date_and_time"]),
+//         wallet: json["wallet"],
+//     );
 
-    factory SingleDeposit.fromJson(Map<String, dynamic> json) => SingleDeposit(
-        id: json["id"],
-        amount: json["amount"],
-        dateAndTime: DateTime.parse(json["date_and_time"]),
-        wallet: json["wallet"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "amount": amount,
-        "date_and_time": dateAndTime.toIso8601String(),
-        "wallet": wallet,
-    };
-}
+//     Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "amount": amount,
+//         "date_and_time": dateAndTime.toIso8601String(),
+//         "wallet": wallet,
+//     };
+// }

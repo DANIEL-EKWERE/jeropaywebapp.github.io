@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:databank/backend/provider/database/db_provider.dart';
+import 'package:databank/views/log_in.dart';
 import 'package:databank/widget/receipt.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,8 @@ class PurchaseProvider extends ChangeNotifier {
   String get regMessage => _reqMessage;
   bool get isLoading => _isLoading;
   Color? get color => _color;
+
+  get dateAndTime => null;
   Future<void> PurchaseData(
       {required String dataId,
       required String phone_number,
@@ -46,7 +49,7 @@ class PurchaseProvider extends ChangeNotifier {
       if (req.statusCode == 200 || req.statusCode == 201) {
         _isLoading = false;
         final res = json.decode(req.body);
-        final dataPurchaseModel = DataPurchase.fromJson(res);
+        final dataPurchaseModel = dataPurchaseFromJson(res);
         _reqMessage = 'your purchase was successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
         showModalBottomSheet(
@@ -57,17 +60,43 @@ class PurchaseProvider extends ChangeNotifier {
             useSafeArea: true,
             context: context!,
             builder: (context) => Receipt(
-                  details: dataPurchaseModel.message!.details,
-                  date_and_time: dataPurchaseModel.message!.date_and_time,
-                  old_balance: dataPurchaseModel.message!.old_balance,
-                  new_balance: dataPurchaseModel.message!.new_balance,
-                  phone_number: dataPurchaseModel.message!.phone_number,
-                  status: dataPurchaseModel.message!.status,
-                  type: dataPurchaseModel.message!.type,
-                  amout: dataPurchaseModel.message!.amount,
+                  details: dataPurchaseModel.message.detail,
+                  date_and_time: dataPurchaseModel.message.date_and_time,
+                  old_balance: dataPurchaseModel.message.oldBalance,
+                  new_balance: dataPurchaseModel.message.newBalance,
+                  phone_number: dataPurchaseModel.message.phoneNumber,
+                  status: dataPurchaseModel.message.status,
+                  type: dataPurchaseModel.message.type,
+                  amout: dataPurchaseModel.message.amount,
                 ));
 
         notifyListeners();
+      } else if (req.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(req.body);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        showDialog<bool>(
+            context: context!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Login'),
+                content: const Text('Session Expired, login to continue!!!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            });
       } else {
         _isLoading = false;
         final res = json.decode(req.body);
@@ -116,7 +145,7 @@ class PurchaseProvider extends ChangeNotifier {
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
         final airtimePurchaseModel =
-            DataPurchase.fromJson(json.decode(request.body));
+            airtimePurchaseFromJson(json.decode(request.body));
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
 
@@ -139,7 +168,34 @@ class PurchaseProvider extends ChangeNotifier {
                 ));
 
         notifyListeners();
-      } else {
+      } else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        showDialog<bool>(
+            context: context!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Login'),
+                content: const Text('Session Expired, login to continue!!!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            });
+      } 
+      else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -157,7 +213,6 @@ class PurchaseProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   Future<void> electricSub(
       {required number,
@@ -188,7 +243,7 @@ class PurchaseProvider extends ChangeNotifier {
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
         final electricityPurchaseModel =
-            DataPurchase.fromJson(json.decode(request.body));
+            ElectricSubscription.fromJson(json.decode(request.body));
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
 
@@ -200,19 +255,45 @@ class PurchaseProvider extends ChangeNotifier {
             useSafeArea: true,
             context: context!,
             builder: (context) => Receipt(
-                  details: electricityPurchaseModel.message!.details,
-                  date_and_time:
-                      electricityPurchaseModel.message!.date_and_time,
-                  old_balance: electricityPurchaseModel.message!.old_balance,
-                  new_balance: electricityPurchaseModel.message!.new_balance,
-                  phone_number: electricityPurchaseModel.message!.phone_number,
-                  status: electricityPurchaseModel.message!.status,
-                  type: electricityPurchaseModel.message!.type,
-                  amout: electricityPurchaseModel.message!.amount,
+                  details: electricityPurchaseModel.detail,
+                  date_and_time: dateAndTime.toIso8601String(),
+                  old_balance: electricityPurchaseModel.oldBalance,
+                  new_balance: electricityPurchaseModel.newBalance,
+                  phone_number: electricityPurchaseModel.phoneNumber,
+                  status: electricityPurchaseModel.status,
+                  type: electricityPurchaseModel.type,
+                  amout: electricityPurchaseModel.amount,
                 ));
 
         notifyListeners();
-      } else {
+      } else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        showDialog<bool>(
+            context: context!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Login'),
+                content: const Text('Session Expired, login to continue!!!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            });
+      } 
+      else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -231,10 +312,9 @@ class PurchaseProvider extends ChangeNotifier {
     }
   }
 
-
   Future<void> purchaseExamEPin(
       {required network,
-      required exam_name,
+      required examName,
       required quantity,
       required BuildContext? context}) async {
     _isLoading = true;
@@ -242,7 +322,7 @@ class PurchaseProvider extends ChangeNotifier {
     notifyListeners();
     final body = {
       'network,': network,
-      'exam_name': exam_name,
+      'exam_name': examName,
       'quantity': quantity,
     };
 
@@ -259,7 +339,7 @@ class PurchaseProvider extends ChangeNotifier {
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
         final electricityPurchaseModel =
-            DataPurchase.fromJson(json.decode(request.body));
+            ElectricSubscription.fromJson(json.decode(request.body));
         _reqMessage = 'E Pin purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
 
@@ -271,19 +351,45 @@ class PurchaseProvider extends ChangeNotifier {
             useSafeArea: true,
             context: context!,
             builder: (context) => Receipt(
-                  details: electricityPurchaseModel.message!.details,
-                  date_and_time:
-                      electricityPurchaseModel.message!.date_and_time,
-                  old_balance: electricityPurchaseModel.message!.old_balance,
-                  new_balance: electricityPurchaseModel.message!.new_balance,
-                  phone_number: electricityPurchaseModel.message!.phone_number,
-                  status: electricityPurchaseModel.message!.status,
-                  type: electricityPurchaseModel.message!.type,
-                  amout: electricityPurchaseModel.message!.amount,
+                  details: electricityPurchaseModel.detail,
+                  date_and_time: electricityPurchaseModel.date_and_time,
+                  old_balance: electricityPurchaseModel.oldBalance,
+                  new_balance: electricityPurchaseModel.newBalance,
+                  phone_number: electricityPurchaseModel.phoneNumber,
+                  status: electricityPurchaseModel.status,
+                  type: electricityPurchaseModel.type,
+                  amout: electricityPurchaseModel.amount,
                 ));
 
         notifyListeners();
-      } else {
+      } 
+      else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        showDialog<bool>(
+            context: context!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Login'),
+                content: const Text('Session Expired, login to continue!!!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            });
+      }else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -341,8 +447,34 @@ class PurchaseProvider extends ChangeNotifier {
             disco: disco,
             amount: amount,
             context: context);
-
-      } else {
+      }else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        showDialog<bool>(
+            context: context!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Login'),
+                content: const Text('Session Expired, login to continue!!!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            });
+      } 
+      else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -363,15 +495,15 @@ class PurchaseProvider extends ChangeNotifier {
 
   Future<void> cableSub(
       {required String iuc,
-      required String cable_provider,
-      required String cable_uuid,
+      required String cableProvider,
+      required String cableUuid,
       required BuildContext? context}) async {
     _isLoading = true;
-    String url = '$baseUrl/cable-subscription/purchase/$cable_uuid/';
+    String url = '$baseUrl/cable-subscription/purchase/$cableUuid/';
     notifyListeners();
     final body = {
       'iuc': iuc,
-      'cable_provider': cable_provider,
+      'cable_provider': cableProvider,
     };
 
     final access = await DataBaseProvider().getToken();
@@ -387,7 +519,7 @@ class PurchaseProvider extends ChangeNotifier {
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
         final cablePurchaseModel =
-            DataPurchase.fromJson(json.decode(request.body));
+            ElectricSubscription.fromJson(json.decode(request.body));
         _reqMessage = 'cable purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
         notifyListeners();
@@ -399,18 +531,45 @@ class PurchaseProvider extends ChangeNotifier {
             useSafeArea: true,
             context: context!,
             builder: (context) => Receipt(
-                  details: cablePurchaseModel.message!.details,
-                  date_and_time: cablePurchaseModel.message!.date_and_time,
-                  old_balance: cablePurchaseModel.message!.old_balance,
-                  new_balance: cablePurchaseModel.message!.new_balance,
-                  phone_number: cablePurchaseModel.message!.phone_number,
-                  status: cablePurchaseModel.message!.status,
-                  type: cablePurchaseModel.message!.type,
-                  amout: cablePurchaseModel.message!.amount,
+                  details: cablePurchaseModel.detail,
+                  date_and_time: cablePurchaseModel.date_and_time,
+                  old_balance: cablePurchaseModel.oldBalance,
+                  new_balance: cablePurchaseModel.newBalance,
+                  phone_number: cablePurchaseModel.phoneNumber,
+                  status: cablePurchaseModel.status,
+                  type: cablePurchaseModel.type,
+                  amout: cablePurchaseModel.amount,
                 ));
 
         notifyListeners();
-      } else {
+      }else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        showDialog<bool>(
+            context: context!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Login'),
+                content: const Text('Session Expired, login to continue!!!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            });
+      } 
+      else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -418,7 +577,7 @@ class PurchaseProvider extends ChangeNotifier {
       }
     } on SocketException catch (_) {
       _isLoading = false;
-      _reqMessage = 'internet connection is not available ';
+      _reqMessage = 'internet connection is not available';
       _color = const Color(0xfff33225);
       notifyListeners();
     } catch (e) {
@@ -431,15 +590,15 @@ class PurchaseProvider extends ChangeNotifier {
 
   Future<void> validateCableNumber(
       {required String iuc,
-      required String cable_provider,
-      required String cable_uuid,
+      required String cableProvider,
+      required String cableUuid,
       required BuildContext? context}) async {
     _isLoading = true;
     String url = '$baseUrl/cable-subscription/validate/';
     notifyListeners();
     final body = {
       'iuc': iuc,
-      'cable_provider': cable_provider,
+      'cable_provider': cableProvider,
     };
 
     final access = await DataBaseProvider().getToken();
@@ -463,10 +622,37 @@ class PurchaseProvider extends ChangeNotifier {
 
         cableSub(
             iuc: iuc,
-            cable_provider: cable_provider,
-            cable_uuid: cable_uuid,
+            cableProvider: cableProvider,
+            cableUuid: cableUuid,
             context: context);
-      } else {
+      }else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        showDialog<bool>(
+            context: context!,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Login'),
+                content: const Text('Session Expired, login to continue!!!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            });
+      } 
+      else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);

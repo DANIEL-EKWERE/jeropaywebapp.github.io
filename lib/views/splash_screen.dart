@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 50), () {
       DataBaseProvider().getUserId().then((value) {
         if (value == '') {
           Navigator.of(context).push(
@@ -75,8 +75,13 @@ class _SplashScreenState extends State<SplashScreen> {
             Center(
               child: SvgPicture.asset('assets/images/data bank logo.svg'),
             ),
-            SizedBox(height: SizeConfig.blockSizeVertical! * 5,),
-            const SpinKitSpinningLines(color: Colors.white,itemCount: 7,)
+            SizedBox(height: SizeConfig.blockSizeVertical! * 30,),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: SpinKitSpinningLines(
+                duration: Duration(milliseconds: 5000),
+                color: Colors.white,itemCount: 7,)),
+              
           ],
         ));
   }

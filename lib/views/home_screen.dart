@@ -4,7 +4,7 @@
 
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
-// import 'package:databank/firebase_options.dart';
+import 'package:databank/firebase_options.dart';
 import 'package:databank/views/add_money.dart';
 import 'package:databank/views/airtime_top_up.dart';
 import 'package:databank/views/app_layout.dart';
@@ -12,6 +12,7 @@ import 'package:databank/views/cable_subscription.dart';
 import 'package:databank/views/history.dart';
 import 'package:databank/views/result_checker.dart';
 import 'package:databank/views/scan_to_load.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -148,10 +149,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
 // to be uncommented when the dependency in installed!!!
-    // FirebaseMessaging.instance.getToken().then((token) {
-    //   final platform = DefaultFirebaseOptions.currentPlatform;
-    //   UserDetails().createOrUpdateDeviceTokenAndPlatform(platform: platform,token:token);
-    // });
+    FirebaseMessaging.instance.getToken().then((token) {
+      final platform = DefaultFirebaseOptions.currentPlatform;
+      UserDetails().createOrUpdateDeviceTokenAndPlatform(platform: platform,token:token);
+    });
 // uncomment the above code when the criterial are meant!!!
   }
 
