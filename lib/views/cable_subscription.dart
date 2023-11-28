@@ -1,5 +1,4 @@
 import 'package:databank/backend/provider/purchase_provider/purchases_provider.dart';
-import 'package:databank/widget/button.dart';
 import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -511,47 +510,110 @@ class _CableSubscriptionState extends State<CableSubscription> {
                                       value.clear();
                                     }
                                   });
-                                  return button(
-                                    text1: 'VALIDATE AND PURCHASE',
-                                    isLoading1: value.isLoading,
-                                    tap: () {
-                                      if (selectedCategory == '' ||
-                                          selectedSubCategory == '' ||
-                                          _controller.text == '' ||
-                                          _phoneController.text == '') {
-                                        warning(
-                                            message: 'fields can\'t be empty',
-                                            context: context);
-                                      } else {
-                                        showDialog<bool>(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                title: const Text(
-                                                    'Confirm Purchase'),
-                                                content: Text(
-                                                    'Your about to make a purchase for ${_controller.text} with a cable provider of $selectedCategory for a plan of $selectedSubCategory'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      final cableUuid = cable_uuid[
-                                                          selectedSubCategory];
-                                                      value.validateCableNumber(
-                                                          iuc: _controller.text
-                                                              .trim(),
-                                                          cableProvider:
-                                                              selectedCategory!,
-                                                          cableUuid:
-                                                              cableUuid!,
-                                                          context: context);
-                                                    },
-                                                    child: const Text('Ok'),
-                                                  ),
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xff373737),
+                                                  Color(0xff6A6A6A),
                                                 ],
-                                              );
-                                            });
-                                      }
-                                    },
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              )),
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              if (selectedCategory == '' ||
+                                                  selectedSubCategory == '' ||
+                                                  _controller.text == '' ||
+                                                  _phoneController.text == '') {
+                                                warning(
+                                                    message:
+                                                        'fields can\'t be empty',
+                                                    context: context);
+                                              } else {
+                                                showDialog<bool>(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'Confirm Purchase'),
+                                                        content: Text(
+                                                            'Your about to make a purchase for ${_controller.text} with a cable provider of $selectedCategory for a plan of $selectedSubCategory'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              final cableUuid =
+                                                                  cable_uuid[
+                                                                      selectedSubCategory];
+                                                              value.validateCableNumber(
+                                                                  iuc: _controller
+                                                                      .text
+                                                                      .trim(),
+                                                                  cableProvider:
+                                                                      selectedCategory!,
+                                                                  cableUuid:
+                                                                      cableUuid!,
+                                                                  context:
+                                                                      context);
+                                                            },
+                                                            child: const Text(
+                                                                'Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+                                              }
+                                              // () async {
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                elevation: 0,
+                                                foregroundColor: kWhite,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                )),
+                                            child: value.isLoading
+                                                ? const Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      CircularProgressIndicator(
+                                                        color: Colors.white,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        'Loading please wait...',
+                                                        style: TextStyle(
+                                                            color: kWhite),
+                                                      )
+                                                    ],
+                                                  )
+                                                : Text(
+                                                    'VALIDATE AND PURCHASE',
+                                                    style: TextStyle(
+                                                        fontSize: SizeConfig
+                                                                .blockSizeHorizontal! *
+                                                            2.5,
+                                                        color: kWhite),
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 },
                               ),

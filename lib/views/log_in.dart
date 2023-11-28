@@ -13,10 +13,7 @@ import 'package:provider/provider.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 // import '../firebase_options.dart';
-import '../widget/button.dart';
 import '../widget/snackbar.dart';
-import '../widget/textField.dart';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -28,15 +25,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _passwordVisible = true;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
+  bool _passwordVisible = false;
+  final TextEditingController? _userNameController = TextEditingController();
+  final TextEditingController? _passwordController = TextEditingController();
+  bool _usernameInputIsValid = true;
+  final RegExp usernameExp = RegExp(r'^[a-zA-Z0-9*\-_@/\\]+$');
   @override
   void dispose() {
     super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
+    _userNameController!.dispose();
+    _passwordController!.dispose();
   }
 
   @override
@@ -87,10 +85,48 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),
-                  textFieldEmail(
-                      'Enter Email', 'Enter Email', _emailController),
+                  TextField(
+                    controller: _userNameController,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      prefixIcon: const IconTheme(
+                          data: IconThemeData(color: kDarkGrey),
+                          child: Icon(Icons.person)),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 18),
+                      hintText: 'Enter User Name',
+                      label: Text(
+                        'Enter User Name',
+                        style: kEncodeSansSemiBold.copyWith(
+                            color: kDarkGrey,
+                            fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+                      ),
+                      errorText: _usernameInputIsValid
+                          ? null
+                          : 'Enter alphanumeric and special character(e.g */\\_-) etc!',
+                      focusedBorder: kInputBorder,
+                      border: kInputBorder,
+                      filled: true,
+                      fillColor: kLightGrey,
+                    ),
+                    onChanged: (value) {
+                      if (value.isEmpty) {
+                        setState(() {
+                          _usernameInputIsValid = false;
+                        });
+                      } else if (!usernameExp.hasMatch(value)) {
+                        setState(() {
+                          _usernameInputIsValid = false;
+                        });
+                      } else {
+                        setState(() {
+                          _usernameInputIsValid = true;
+                        });
+                      }
+                    },
+                  ),
                   SizedBox(
-                    height: sizeHorizontal * 3,
+                    height: sizeHorizontal * 4,
                   ),
                   TextField(
                     keyboardType: TextInputType.visiblePassword,
@@ -150,106 +186,107 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: sizeHorizontal * 10,
                   ),
-                  SizedBox(
-                    height: sizeHorizontal * 3,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Consumer<AuthenticationProvider>(
                       builder: (context, value, child) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           if (value.reqMessage != '') {
                             successMessage(
-                                message: value.reqMessage,x: value.color, context: context);
+                                message: value.reqMessage,
+                                x: value.color,
+                                context: context);
 
                             value.clear();
                           }
                         });
-                        return button(
-                          text1: 'Log In',
-                          isLoading1: value.isLoading,
-                          tap: () {
-                            if (_emailController.text.isEmpty ||
-                                _passwordController.text.isEmpty) {
-                              warning(
-                                  message: 'fields cant\'t be empty',
-                                  context: context);
-                            } else {
-                              value.loginUser(
-                                  username: _emailController.text.trim(),
-                                  password: _passwordController.text.trim(),
-                                  context: context);
-                            }
-                          },
+                        return Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xff373737),
+                                        Color(0xff6A6A6A),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    )),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (_userNameController!.text.isEmpty ||
+                                        _passwordController!.text.isEmpty) {
+                                      warning(
+                                          message: 'fields cant\'t be empty',
+                                          context: context);
+                                    } else {
+                                      value.loginUser(
+                                          username:
+                                              _userNameController!.text.trim(),
+                                          password:
+                                              _passwordController!.text.trim(),
+                                          context: context);
+                                    }
+                                    // () async {
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      foregroundColor: kWhite,
+                                      backgroundColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                  child: value.isLoading
+                                      ? const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            CircularProgressIndicator(
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              'Loading please wait...',
+                                              style: TextStyle(color: kWhite),
+                                            )
+                                          ],
+                                        )
+                                      : Text(
+                                          'Log In',
+                                          style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .blockSizeHorizontal! *
+                                                  2.5,
+                                              color: kWhite),
+                                        ),
+                                ),
+                              ),
+                            ),
+                          ],
                         );
                       },
                     ),
                     //
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //       flex: 2,
-                    //       child: Container(
-                    //         decoration: const BoxDecoration(
-                    //             borderRadius:
-                    //                 BorderRadius.all(Radius.circular(10)),
-                    //             gradient: LinearGradient(
-                    //               colors: [
-                    //                 Color(0xff373737),
-                    //                 Color(0xff6A6A6A),
-                    //               ],
-                    //               begin: Alignment.topLeft,
-                    //               end: Alignment.bottomRight,
-                    //             )),
-                    //         child: ElevatedButton(
-                    //           onPressed: ()  {
-                    //             // await Firebase.initializeApp(
-                    //             //   options:
-                    //             //       DefaultFirebaseOptions.currentPlatform,
-                    //            // );
-                    //             if (_emailController.text == '' ||
-                    //                 _passwordController.text == '') {
-                    //               // CoolAlert.show(
-                    //               //   backgroundColor: kGrey,
-                    //               //   confirmBtnColor: Colors.green,
-                    //               //   context: context,
-                    //               //   title: 'Empty Selection!!!',
-                    //               //   text: 'Agree to our terms and conditions!',
-                    //               //   type: CoolAlertType.error,
-                    //               //   animType: CoolAlertAnimType.rotate,
-                    //               // );
-                    //               warning('fields can\'t be empty', context: context);
-                    //             }
-                    //             // await FirebaseAuth.instance.currentUser
-                    //             //     ?.sendEmailVerification();
-                    //             // Navigator.of(context).pushNamedAndRemoveUntil(
-                    //             //     "/App_Layout", (route) => false);
-                    //           },
-                    //           style: ElevatedButton.styleFrom(
-                    //               elevation: 0,
-                    //               foregroundColor: kWhite,
-                    //               backgroundColor: Colors.transparent,
-                    //               shape: RoundedRectangleBorder(
-                    //                 borderRadius: BorderRadius.circular(10),
-                    //               )),
-                    //           child: const Text('Register'),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   ),
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),
                   Text.rich(TextSpan(
-                      text: "Have an account already? ",
+                      text: "Don\'t have an account? ",
                       style: kEncodeSansMedium.copyWith(
                           color: kGrey,
                           fontSize: SizeConfig.blockSizeHorizontal! * 2.2),
                       children: [
                         TextSpan(
-                            text: 'Sign In ',
+                            text: 'Register',
                             style: kEncodeSansBold.copyWith(
                                 color: kBlack,
                                 fontSize:

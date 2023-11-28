@@ -1,7 +1,11 @@
+import 'package:databank/backend/models/api_models.dart';
+import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
+import 'package:databank/views/date_range.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import '../customizations/size_config.dart';
 import '../model/history.dart';
 import '../widget/drawer_widget.dart';
@@ -27,6 +31,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
     'Electric Bills',
     // 'Result check',
     // 'Airtime to cash'
+  ];
+  String? selectedDate;
+  List<String> dates = [
+    'today',
+    'yesterday',
+    'this-week',
+    'last-week',
+    'this-month',
+    'last-month'
   ];
 
   List<dataHistory> his = [
@@ -177,6 +190,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         });
                         // forward = true;
                         // _pageController.position;
+                        // TODO: this code below is to be considered
+                        //  _pageController.jumpToPage(index);
                         _pageController.page == index + 1
                             //  _pageController.page == index + 2
                             ? _pageController.previousPage(
@@ -231,13 +246,63 @@ class _HistoryScreenState extends State<HistoryScreen> {
               SizedBox(
                 height: sizeVertical * 3,
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 child: Row(
                   children: [
-                    Text('Recent'),
+                    Column(
+                      children: [
+                        Text('Select date'),
+                        DropdownButtonFormField<String>(
+                          value: selectedDate,
+                          items: dates.map((category) {
+                            return DropdownMenuItem<String>(
+                              value: category,
+                              child: Text(category),
+                            );
+                          }).toList(),
+                          onChanged: (category) {
+                            setState(() {
+                              selectedDate = category!;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            focusedBorder: kInputBorder,
+                            fillColor: kWhite,
+                            filled: true,
+                            labelText: 'Today',
+                            labelStyle: kEncodeSansSemiBold.copyWith(
+                                color: kDarkGrey,
+                                fontSize:
+                                    SizeConfig.blockSizeHorizontal! * 2.0),
+                            hintStyle: kEncodeSansSemiBold.copyWith(
+                                color: kLightGrey,
+                                fontSize:
+                                    SizeConfig.blockSizeHorizontal! * 2.0),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kBrown,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     Spacer(),
-                    Text('Time'),
+                    Column(
+                      children: [
+                        Text('Select Range'),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.of(context).push(CupertinoPageRoute(
+                                  builder: ((context) => const DateRange())));
+                            },
+                            icon: Icon(Icons.calendar_month))
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -247,84 +312,93 @@ class _HistoryScreenState extends State<HistoryScreen> {
               SizedBox(
                 height: sizeVertical * 2,
               ),
-              SizedBox(
-                  height: double.maxFinite,
-                  child: PageView.builder(
-                      itemCount: his.length,
-                      scrollDirection: Axis.horizontal,
-                      controller: _pageController,
-                      onPageChanged: (value) {
-                        curentPage = value;
-                        setState(() {
-                          current = value;
-                          //curentPage = index;
-                        });
-                      },
-                      itemBuilder: (context, index) {
-                        dynamic x = his[index];
-                        return Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 0),
-                              child: Column(
-                                children: List.generate(
-                                  his.length,
-                                  (index) => Column(
-                                    children: [
-                                      ListTile(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              CupertinoPageRoute(
-                                                  builder: ((context) =>
-                                                      x.screen!)));
-                                        },
-                                        leading: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                            color: x.bcolor,
-                                            shape: BoxShape.rectangle,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(12),
+              Consumer<TransactionsProvider>(
+                builder: (context, transaction, child) {
+                  List<AllTransactions> transactions = transaction.transactions;
+                  return SizedBox(
+                      height: double.maxFinite,
+                      child: PageView.builder(
+                          itemCount: transactions.length,
+                          scrollDirection: Axis.horizontal,
+                          controller: _pageController,
+                          onPageChanged: (value) {
+                            curentPage = value;
+                            setState(() {
+                              current = value;
+                              //curentPage = index;
+                            });
+                          },
+                          itemBuilder: (context, index) {
+                            AllTransactions x = transactions[index];
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 0),
+                                  child: Column(
+                                    children: List.generate(
+                                      his.length,
+                                      (index) => Column(
+                                        children: [
+                                          ListTile(
+                                            onTap: () {
+                                              // Navigator.of(context).push(
+                                              //     CupertinoPageRoute(
+                                              //         builder: ((context) =>
+                                              //             const )));
+                                            },
+                                            leading: Container(
+                                              padding: const EdgeInsets.all(12),
+                                              decoration: BoxDecoration(
+                                                color: kBrown,
+                                                shape: BoxShape.rectangle,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(12),
+                                                ),
+                                              ),
+                                              child: Icon(
+                                                Icons
+                                                    .mobile_screen_share_rounded,
+                                                color: kGrey,
+                                              ),
                                             ),
+                                            title: Text(
+                                              'type',
+                                              style: kEncodeSansMedium.copyWith(
+                                                  color: kDarkBrown,
+                                                  fontSize:
+                                                      sizeHorizontal * 2.0),
+                                            ),
+                                            subtitle: Text(
+                                              'initialBal: x.initialBal}, finalBal: x.finalBal},',
+                                              style:
+                                                  kEncodeSansRegular.copyWith(
+                                                      color: kGrey,
+                                                      fontSize:
+                                                          sizeVertical * 1.8),
+                                            ),
+                                            trailing: const Icon(Icons.diamond),
                                           ),
-                                          child: Icon(
-                                            Icons.mobile_screen_share_rounded,
-                                            color: x.fcolor,
-                                          ),
-                                        ),
-                                        title: Text(
-                                          x.transacType,
-                                          style: kEncodeSansMedium.copyWith(
-                                              color: kDarkBrown,
-                                              fontSize: sizeHorizontal * 2.0),
-                                        ),
-                                        subtitle: Text(
-                                          'initialBal: ${x.initialBal}, finalBal: ${x.finalBal},',
-                                          style: kEncodeSansRegular.copyWith(
-                                              color: kGrey,
-                                              fontSize: sizeVertical * 1.8),
-                                        ),
-                                        trailing: const Icon(Icons.diamond),
-                                      ),
 
-                                      // PriceListCard(
-                                      //   status: x.status,
-                                      //   beneficiary: x.beneficiary,
-                                      //   dataType: x.dataType,
-                                      //   transType: x.transacType,
-                                      //   initialBal: x.initialBal,
-                                      //   finalBal: x.finalBal,
-                                      // ),
-                                    ],
+                                          // PriceListCard(
+                                          //   status: x.status,
+                                          //   beneficiary: x.beneficiary,
+                                          //   dataType: x.dataType,
+                                          //   transType: x.transacType,
+                                          //   initialBal: x.initialBal,
+                                          //   finalBal: x.finalBal,
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        );
-                      }))
+                              ],
+                            );
+                          }));
+                },
+              )
             ],
           ),
         ),

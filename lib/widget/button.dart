@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 
-Padding button({required text1,required  isLoading1,required  tap}) {
+Padding button({required text1, required isLoading1, required tap}) {
   bool isLoading = isLoading1;
   VoidCallback? tap;
   String text = text1;
@@ -46,12 +46,18 @@ Padding button({required text1,required  isLoading1,required  tap}) {
                         SizedBox(
                           width: 10,
                         ),
-                        Text('Loading please wait...')
+                        Text(
+                          'Loading please wait...',
+                          style: TextStyle(color: kWhite),
+                        )
                       ],
                     )
-                  : Text(text,style: TextStyle(fontSize: SizeConfig
-                                                        .blockSizeHorizontal! *
-                                                    2.5,),),
+                  : Text(
+                      text,
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                          color: kWhite),
+                    ),
             ),
           ),
         ),

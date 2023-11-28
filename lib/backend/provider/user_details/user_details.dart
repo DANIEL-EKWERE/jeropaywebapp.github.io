@@ -12,17 +12,19 @@ class UserDetails extends ChangeNotifier {
   // setter
   bool _isLoading = false;
   String _reqMessage = '';
-  double _balance = 0.0;
+  String _balance = "no network";
   Color? _color;
 
   // getter
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
-  double get balance => _balance;
+  String get balance => _balance;
   Color? get color => _color;
 
-  Future getUserAccountBalanace() async {
-    _isLoading = false;
+  Future<String> getUserAccountBalanace() async {
+    print('calling balance');
+    _isLoading = true;
+    notifyListeners();
     final String url = '$baseUrl/admin/wallet-per-user/';
     notifyListeners();
     final access = await DataBaseProvider().getToken();
@@ -31,12 +33,16 @@ class UserDetails extends ChangeNotifier {
       'Authorization': 'Bearer $access',
     };
 
+    print(access);
+
     try {
       http.Response request =
           await http.get(Uri.parse(url), headers: reqHeader);
+      print(request.statusCode);
       if (request.statusCode == 200) {
         final resp = json.decode(request.body);
-        final balance = resp['balance'];
+        final balance = resp['balance'].toString();
+        print(balance);
         _isLoading = false;
         _reqMessage = 'wallet Retrieved and Refreshed';
         _color = const Color.fromARGB(255, 15, 175, 20);
@@ -65,7 +71,29 @@ class UserDetails extends ChangeNotifier {
     }
   }
 
-  void getUserAccountDetails() async {
+// {
+//     "status": 200,
+//     "response body": {
+//         "status": true,
+//         "service": "CREATE_VIRTUAL_ACCOUNT",
+//         "business": "064A4A647B0E4C3D8D83F68985FA31A9",
+//         "banks": [
+//             {
+//                 "bankCode": "120001",
+//                 "bankName": "9Payment Service Bank",
+//                 "accountNumber": "5121627127",
+//                 "accountName": "DATABANK-Daniel Ekwere",
+//                 "trackingReference": "UBKJ41WDPH42F823079YVD35"
+//             }
+//         ]
+//     }
+// }
+
+
+
+
+  Future getUserAccountDetails() async {
+    print('calling acct details method');
     String url = '$baseUrl/reserve-acct-for-user/';
     final access = await DataBaseProvider().getToken();
     Map<String, String>? reqHeader = {
@@ -88,7 +116,7 @@ class UserDetails extends ChangeNotifier {
         _color = const Color.fromARGB(255, 15, 175, 20);
         notifyListeners();
       } else {
-        _reqMessage = 'unable to generate vitual account';
+        _reqMessage = 'unable to generate vitual account ${response.statusCode}';
         _color = const Color(0xfff33225);
         notifyListeners();
       }
@@ -103,7 +131,7 @@ class UserDetails extends ChangeNotifier {
     }
   }
 
-  void createOrUpdateDeviceTokenAndPlatform(
+  Future<bool> createOrUpdateDeviceTokenAndPlatform(
       {required platform, required token, BuildContext? context}) async {
     String url = '$baseUrl/fcm-connector/';
     final access = await DataBaseProvider().getToken();
@@ -123,15 +151,29 @@ class UserDetails extends ChangeNotifier {
         _reqMessage = 'token and device retrieved';
         _color = const Color.fromARGB(255, 15, 175, 20);
         notifyListeners();
+        return true;
+      } else {
+        _reqMessage = 'token and device not retrieved';
+        _color = const Color(0xfff33225);
+        notifyListeners();
+        return false;
       }
     } on SocketException catch (_) {
       _reqMessage = 'internet connetion not available';
       _color = const Color(0xfff33225);
       notifyListeners();
+      return false;
     } catch (e) {
       _reqMessage = 'An error Occurred (TandD) $e';
       _color = const Color(0xfff33225);
       notifyListeners();
+      return false;
     }
+  }
+
+  void clear() {
+    _reqMessage = '';
+    _color = null;
+    notifyListeners();
   }
 }

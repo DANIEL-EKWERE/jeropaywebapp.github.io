@@ -1,11 +1,9 @@
+import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/size_config.dart';
-import 'package:databank/views/create_profile.dart';
-import 'package:databank/views/onboarding_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,26 +15,27 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 50), () {
+    Future.delayed(const Duration(seconds: 10), () {
       DataBaseProvider().getUserId().then((value) {
         if (value == '') {
-          Navigator.of(context).push(
-            CupertinoPageRoute(
-              builder: (context) => const OnboardingPage(),
-            ),
-          );
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil("/OnboardingPage", (route) => false);
         } else {
-          DataBaseProvider().getProfileId().then((value) {
-            if (value == '') {
-              Navigator.of(context).push(
-                CupertinoPageRoute(
-                  builder: (context) => const CreatUserProfile(),
-                ),
-              );
-            } else {
-              Navigator.popAndPushNamed(context, "/App_Layout");
-            }
-          });
+                          DataBaseProvider().getProfileId().then((value) async {
+                            if (value.isEmpty) {
+                              final isProfile =
+                                  await AuthenticationProvider().queryUserProfile();
+                              if (isProfile) {
+                                Navigator.of(context)
+                                    .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+                              }
+
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  "/CreatUserProfile", (route) => false);
+                            } else {
+                              Navigator.popAndPushNamed(context, "/App_Layout");
+                            }
+                          });
         }
       });
     });
@@ -51,14 +50,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 'assets/images/splash (1).png',
               ),
               colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8),
+                Color(0xff6A6A6A),
                 BlendMode.modulate,
               ),
               fit: BoxFit.cover),
           gradient: const LinearGradient(
             colors: [
+              Color(0xff373737),
               Color(0xff6A6A6A),
-              Color(0xff393939),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -68,20 +67,25 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Image.asset(
-            // 'assets/images/splash (1).png',
-            // fit: BoxFit.cover,
-            //         ),
-            Center(
-              child: SvgPicture.asset('assets/images/data bank logo.svg'),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical! * 30,
             ),
-            SizedBox(height: SizeConfig.blockSizeVertical! * 30,),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: SpinKitSpinningLines(
-                duration: Duration(milliseconds: 5000),
-                color: Colors.white,itemCount: 7,)),
-              
+            Center(
+                child: Image.asset(
+              'assets/images/logo-1.png',
+              fit: BoxFit.cover,
+              width: SizeConfig.blockSizeHorizontal! * 32,
+              height: SizeConfig.blockSizeVertical! * 15,
+            )
+                ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical! * 30,
+            ),
+            const SpinKitSpinningLines(
+              duration: Duration(milliseconds: 5000),
+              color: Color(0xfffE8C61E),
+              itemCount: 7,
+            ),
           ],
         ));
   }

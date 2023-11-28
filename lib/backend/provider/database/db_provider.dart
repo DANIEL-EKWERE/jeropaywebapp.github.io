@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,7 +55,7 @@ class DataBaseProvider extends ChangeNotifier {
     value.setString('userId', userId);
   }
 
-  void saveProfileId(String profileId) async {
+  Future saveProfileId(String profileId) async {
     SharedPreferences value = await _pref;
     value.setString('profileId', profileId);
   }
@@ -73,9 +75,9 @@ class DataBaseProvider extends ChangeNotifier {
     value.setString('bankName', bankName);
   }
 
-   void saveProfileImage(String image) async {
+   void saveProfileImage(File? image) async {
     SharedPreferences value = await _pref;
-    value.setString('image', image);
+    value.setString('image', image as String);
   }
 
   Future<String> getToken() async {

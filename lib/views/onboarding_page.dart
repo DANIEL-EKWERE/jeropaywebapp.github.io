@@ -35,7 +35,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 204, 195, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
           child: Column(
         children: [
@@ -103,12 +103,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            onboardingContents[index].miniTitle,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
-                            style: kEncodeSansBold.copyWith(
-                                color: kGrey, fontSize: sizeVertical * 2.25),
+                          child: FittedBox(
+                            child: Text(
+                              onboardingContents[index].miniTitle,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              style: kEncodeSansBold.copyWith(
+                                  color: kGrey, fontSize: sizeVertical * 3.20),
+                            ),
                           ),
                         ),
                       ),
@@ -124,13 +126,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 color: kYellow,
                               ),
                               SizedBox(width: sizeVertical * 1.5),
-                              Text(
-                                onboardingContents[index].subTitle,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 3,
-                                style: kEncodeSansBold.copyWith(
-                                    color: kBlack,
-                                    fontSize: sizeVertical * 1.7),
+                              FittedBox(
+                                child: Text(
+                                  onboardingContents[index].subTitle,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                  style: kEncodeSansBold.copyWith(
+                                      color: kBlack,
+                                      fontSize: sizeVertical * 1.7),
+                                ),
                               ),
                             ],
                           ),
@@ -146,7 +150,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 3,
                             style: kEncodeSansSemiBold.copyWith(
-                                color: kGrey, fontSize: sizeVertical * 1.5),
+                                color: kGrey, fontSize: sizeVertical * 2.1),
                           ),
                         ),
                       ),

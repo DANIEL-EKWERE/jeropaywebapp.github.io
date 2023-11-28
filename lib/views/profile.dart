@@ -1,18 +1,45 @@
+import 'dart:io';
+
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/reset_password.dart';
 import 'package:databank/views/create_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../widget/drawer_widget.dart';
 import 'contact_data_bank.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.openDrawer});
   final VoidCallback openDrawer;
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  var pImage;
+  @override
+  void initState() {
+    super.initState();
+
+    _profileImage();
+  }
+
+  Future _profileImage() async {
+    final image = await DataBaseProvider().getProfileImage();
+    setState(() {
+      pImage = image;
+    });
+  }
+
   final EdgeInsetsGeometry padding =
       const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 10);
+  File? profileImage;
+  final _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -28,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
               color: kGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
         ),
         leading: DrawerMenueWidget(
-          onClicked: openDrawer,
+          onClicked: widget.openDrawer,
           color: kGrey,
         ),
       ),
@@ -46,10 +73,12 @@ class ProfileScreen extends StatelessWidget {
                 //       color: kGrey, fontSize: sizeVertical * 1.8),
                 // ),
                 const Spacer(),
-                const CircleAvatar(
+
+                 CircleAvatar(
                   radius: 60,
                   backgroundColor: kGrey,
-                  backgroundImage: AssetImage('assets/images/pic-2.png'),
+                  backgroundImage:
+                      AssetImage(pImage ?? 'assets/images/pic-2.png'),
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.0,
@@ -58,7 +87,23 @@ class ProfileScreen extends StatelessWidget {
                     style: const ButtonStyle(
                         // padding:
                         ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      // final picker = ImagePicker();
+                      try {
+                        final pickedFile = await _picker.pickImage(
+                            source: ImageSource.gallery);
+                        if (pickedFile != null) {
+                          // Navigator.pop(context, File(pickedFile.path));
+                          setState(() {
+                            profileImage = File(pickedFile.path);
+                          });
+                          DataBaseProvider().saveProfileImage(profileImage);
+                        }
+                      } catch (e) {
+                        print(e);
+                        Navigator.pop(context, null);
+                      }
+                    },
                     icon: const Icon(
                       Icons.edit,
                       size: 15,

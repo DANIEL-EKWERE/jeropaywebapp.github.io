@@ -6,7 +6,7 @@ import '../backend/provider/purchase_provider/purchases_provider.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 import '../model/quik_dail.dart';
-import '../widget/button.dart';
+// import '../widget/button.dart';
 import '../widget/fab.dart';
 import '../widget/snackbar.dart';
 
@@ -54,7 +54,7 @@ class _DataTopUpState extends State<DataTopUp> {
   String? selectedCategory;
   String? selectedSubCategory;
   String? selectedItem;
-
+  bool _isCheck = false;
   // Define your categories and subcategories here
   List<String> categories = ['MTN', 'AIRTEL', 'GLO', '9 MOBILE'];
   Map<String, List<String>> subcategories = {
@@ -672,9 +672,15 @@ class _DataTopUpState extends State<DataTopUp> {
                                 child: Row(
                                   children: [
                                     Checkbox(
-                                      value: false,
-                                      onChanged: (newValue) {},
-                                    ),
+                                        // value: false,
+                                        onChanged: (newValue) {
+                                          if (newValue != null) {
+                                            setState(() {
+                                              _isCheck = newValue;
+                                            });
+                                          }
+                                        },
+                                        value: _isCheck),
                                     const SizedBox(
                                       width: 8,
                                     ),
@@ -729,66 +735,142 @@ class _DataTopUpState extends State<DataTopUp> {
                                             }
                                           });
 
-                                          return button(
-                                            text1: 'proceed',
-                                            isLoading1: false,
-                                            tap: () {
-                                              if (selectedCategory!.isEmpty ||
-                                                  selectedSubCategory!
-                                                      .isEmpty ||
-                                                  selectedItem!.isEmpty) {
-                                                warning(
-                                                    message:
-                                                        'fields cant\'t be empty!!!');
-                                              } else {
-                                                showDialog<bool>(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return AlertDialog(
-                                                        title: const Text(
-                                                            'Confirm Purchase'),
-                                                        content: Text(
-                                                            'Your about to make a purchase of $selectedCategory $selectedItem'),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              final itemIndex =
-                                                                  items[selectedCategory]![
-                                                                      selectedSubCategory];
-                                                              final index =
-                                                                  itemIndex!
-                                                                      .indexOf(
-                                                                          selectedItem!);
+                                          return Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 2,
+                                                child: Container(
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10)),
+                                                          gradient:
+                                                              LinearGradient(
+                                                            colors: [
+                                                              Color(0xff373737),
+                                                              Color(0xff6A6A6A),
+                                                            ],
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight,
+                                                          )),
+                                                  child: ElevatedButton(
+                                                    onPressed: () async {
+                                                      if (selectedCategory!
+                                                              .isEmpty ||
+                                                          selectedSubCategory!
+                                                              .isEmpty ||
+                                                          selectedItem!
+                                                              .isEmpty) {
+                                                        warning(
+                                                            message:
+                                                                'fields cant\'t be empty!!!');
+                                                      } else {
+                                                        showDialog<bool>(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                title: const Text(
+                                                                    'Confirm Purchase'),
+                                                                content: Text(
+                                                                    'Your about to make a purchase of $selectedCategory $selectedItem'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      final itemIndex =
+                                                                          items[selectedCategory]![
+                                                                              selectedSubCategory];
+                                                                      final index =
+                                                                          itemIndex!
+                                                                              .indexOf(selectedItem!);
 
-                                                              final item = items[
-                                                                      selectedCategory]![
-                                                                  selectedSubCategory]![index];
+                                                                      final item =
+                                                                          items[selectedCategory]![selectedSubCategory]![
+                                                                              index];
 
-                                                              final dataId =
-                                                                  getDataId[
-                                                                      item];
-                                                              value.PurchaseData(
-                                                                  context:
-                                                                      context,
-                                                                  dataId:
-                                                                      dataId!,
-                                                                  phone_number:
-                                                                      phoneController
-                                                                          .text
-                                                                          .trim());
-                                                              Navigator.pop(
-                                                                  context);
-                                                                  
-                                                            },
-                                                            child: const Text(
-                                                                'Ok'),
+                                                                      final dataId =
+                                                                          getDataId[
+                                                                              item];
+                                                                      value.PurchaseData(
+                                                                          context:
+                                                                              context,
+                                                                          dataId:
+                                                                              dataId!,
+                                                                          phone_number: phoneController
+                                                                              .text
+                                                                              .trim());
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child:
+                                                                        const Text(
+                                                                            'Ok'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            });
+                                                      }
+                                                      // () async {
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            elevation: 0,
+                                                            foregroundColor:
+                                                                kWhite,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            )),
+                                                    child: value.isLoading
+                                                        ? const Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              CircularProgressIndicator(
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                'Loading please wait...',
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        kWhite),
+                                                              )
+                                                            ],
+                                                          )
+                                                        : Text(
+                                                            'Proceed',
+                                                            style: TextStyle(
+                                                                fontSize: SizeConfig
+                                                                        .blockSizeHorizontal! *
+                                                                    2.5,
+                                                                color: kWhite),
                                                           ),
-                                                        ],
-                                                      );
-                                                    });
-                                              }
-                                            },
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           );
+
+                                          // return
                                         }),
                                       ),
                                     ),

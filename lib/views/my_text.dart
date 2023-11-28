@@ -77,11 +77,11 @@ class _MyDropdownExampleState extends State<MyDropdownExample> {
                     selectedItem = null;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Select Subcategory',
                 ),
               ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             if (selectedCategory != null)
               DropdownButtonFormField<String>(
                 value: selectedItem,

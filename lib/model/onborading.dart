@@ -35,32 +35,31 @@ List<Onboarding> onboardingContents = <Onboarding>[
       desc:
           'why choose us, Get 40% off each purchases for all resellers. Buy at a sweet rate and sell and make your profit.'),
   Onboarding(
-      img: 'assets/images/payfromhome.png',
+      img: 'assets/images/paywithcardnbank.png',
       title: 'DataBank',
       miniTitle: 'Easy to fund wallet',
       subTitle: 'Funding made easy with databank!',
       desc:
           'why choose us, Fund your account with ease no stress.\nFunding via Bank transfer and card supported.'),
-          Onboarding(
+  Onboarding(
       img: 'assets/images/receiptforall.png',
       title: 'DataBank',
       miniTitle: 'Get prove of payment',
-      subTitle: 'Your transactions are recoreded and kept save!',
+      subTitle: 'Recoreds are kept save!',
       desc:
           'why choose us, Get proof for all your payments receipt in your phone and in your transaction history.'),
-           Onboarding(
+  Onboarding(
       img: 'assets/images/sharewithfriends.png',
       title: 'DataBank',
       miniTitle: 'refer and earn',
-      subTitle: 'spread the good gospel of data bank and get rewarded',
+      subTitle: 'Refer and get rewarded',
       desc:
           'why choose us, Share funds with your friends and also refer a friend an earn a welcome reward.'),
-          Onboarding(
+  Onboarding(
       img: 'assets/images/stay_connected.png',
       title: 'DataBank',
       miniTitle: 'Stay connected',
       subTitle: 'without information your deformed',
       desc:
           'why choose us, Stay connected online with our cheap data with 40% discount for all resellers.\nRegister today and earn more and spend less.'),
-
 ];

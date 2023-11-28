@@ -4,19 +4,82 @@ import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
 import 'package:flutter/foundation.dart';
+import 'package:databank/backend/models/api_models.dart';
 
 class TransactionsProvider extends ChangeNotifier {
   String baseUrl = AppUrl.baseUrl;
 
   // setter
-
+  List<AllTransactions> _transactions = [];
   bool _isLoading = false;
   String _reqMessage = '';
 
   // getter
-
+List<AllTransactions> get transactions => _transactions;
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
+
+
+
+
+void updateTransactions(List<AllTransactions> newTransactions) {
+    _transactions = newTransactions;
+    notifyListeners();
+  }
+
+
+
+
+
+
+void fetchTransactionsFromAPI({required String selectedDate}) async {
+    String url = '$baseUrl/transactions/$selectedDate/';
+    _isLoading = true;
+    notifyListeners();
+
+    final access = await DataBaseProvider().getToken();
+    Map<String, String>? reqHeader = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $access',
+    };
+
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: reqHeader);
+      if (response.statusCode == 200) {
+        _isLoading = false;
+        _reqMessage = 'transaction retrieved';
+        print(response.body);
+        final lastMonthTransac = json.decode(response.body);
+        print(lastMonthTransac);
+        _reqMessage = lastMonthTransac['status'];
+        notifyListeners();
+      } else {
+        print(response.body);
+        _isLoading = false;
+        _reqMessage = 'error loading this receipt ${response.statusCode}';
+        notifyListeners();
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _reqMessage = 'internet connection not available';
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _reqMessage = 'An Error Occured $e';
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   void allTransactions() async {
     String url = '$baseUrl/transactions/all/';
@@ -37,6 +100,7 @@ class TransactionsProvider extends ChangeNotifier {
         _reqMessage = 'all transaction retrieved';
         print(response.body);
         final allTransac = json.decode(response.body);
+        final allTransactions = allTransactionsFromJson(allTransac);
         print(allTransac);
         notifyListeners();
       } else {
@@ -394,6 +458,5 @@ class TransactionsProvider extends ChangeNotifier {
       _isLoading = false;
       _reqMessage = 'An Error Occured $e';
     }
-
   }
 }
