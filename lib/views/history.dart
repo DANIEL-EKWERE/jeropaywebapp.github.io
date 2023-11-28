@@ -264,6 +264,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onChanged: (category) {
                             setState(() {
                               selectedDate = category!;
+
+Future<void> fetchTransactions(String selectedDate) async {
+  // Make API request using selectedDate
+  AllTransactions newTransactions = await TransactionsProvider().fetchTransactionsFromAPI(selectedDate: selectedDate);
+
+  // Use the TransactionProvider to update the state
+  Provider.of<TransactionsProvider>(context, listen: false).updateTransactions(newTransactions.data);
+}
+
+                              
                             });
                           },
                           decoration: InputDecoration(
@@ -314,7 +324,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
               Consumer<TransactionsProvider>(
                 builder: (context, transaction, child) {
-                  List<AllTransactions> transactions = transaction.transactions;
+                  List<Datum1> transactions = transaction.transactions;
                   return SizedBox(
                       height: double.maxFinite,
                       child: PageView.builder(
@@ -329,7 +339,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             });
                           },
                           itemBuilder: (context, index) {
-                            AllTransactions x = transactions[index];
+                            Datum1 x = transactions[index];
                             return Column(
                               children: [
                                 Padding(
@@ -364,14 +374,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               ),
                                             ),
                                             title: Text(
-                                              'type',
+                                              x.type as String,
                                               style: kEncodeSansMedium.copyWith(
                                                   color: kDarkBrown,
                                                   fontSize:
                                                       sizeHorizontal * 2.0),
                                             ),
                                             subtitle: Text(
-                                              'initialBal: x.initialBal}, finalBal: x.finalBal},',
+                                              'initialBal: ${x.oldBalance}, finalBal: ${x.newBalance},',
                                               style:
                                                   kEncodeSansRegular.copyWith(
                                                       color: kGrey,

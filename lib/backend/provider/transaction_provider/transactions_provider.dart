@@ -10,29 +10,22 @@ class TransactionsProvider extends ChangeNotifier {
   String baseUrl = AppUrl.baseUrl;
 
   // setter
-  List<AllTransactions> _transactions = [];
+  List<Datum1> _transactions = [];
   bool _isLoading = false;
   String _reqMessage = '';
 
   // getter
-List<AllTransactions> get transactions => _transactions;
+  List<Datum1> get transactions => _transactions;
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
 
-
-
-
-void updateTransactions(List<AllTransactions> newTransactions) {
+  void updateTransactions(List<Datum1> newTransactions) {
     _transactions = newTransactions;
     notifyListeners();
   }
 
-
-
-
-
-
-void fetchTransactionsFromAPI({required String selectedDate}) async {
+  Future<AllTransactions> fetchTransactionsFromAPI(
+      {required String selectedDate}) async {
     String url = '$baseUrl/transactions/$selectedDate/';
     _isLoading = true;
     notifyListeners();
@@ -50,15 +43,20 @@ void fetchTransactionsFromAPI({required String selectedDate}) async {
         _isLoading = false;
         _reqMessage = 'transaction retrieved';
         print(response.body);
+        final allTransac = json.decode(response.body);
+        print(allTransac);
         final lastMonthTransac = json.decode(response.body);
-        print(lastMonthTransac);
+        final allTransactions = allTransactionsFromJson(allTransac);
         _reqMessage = lastMonthTransac['status'];
         notifyListeners();
+        return allTransactions;
       } else {
         print(response.body);
         _isLoading = false;
         _reqMessage = 'error loading this receipt ${response.statusCode}';
         notifyListeners();
+        // return allTransactions;
+        throw Exception('Failed to load data ${response.statusCode}');
       }
     } on SocketException catch (_) {
       _isLoading = false;
@@ -67,19 +65,11 @@ void fetchTransactionsFromAPI({required String selectedDate}) async {
     } catch (e) {
       _isLoading = false;
       _reqMessage = 'An Error Occured $e';
+      throw Exception('Failed to make the request: $e');
     }
+    // return allTransactions;
+    throw Exception('Failed to load data');
   }
-
-
-
-
-
-
-
-
-
-
-
 
   void allTransactions() async {
     String url = '$baseUrl/transactions/all/';
