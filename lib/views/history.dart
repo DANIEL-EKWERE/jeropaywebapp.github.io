@@ -32,7 +32,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     // 'Result check',
     // 'Airtime to cash'
   ];
-  String? selectedDate;
+  String? selectedDate = 'today';
   List<String> dates = [
     'today',
     'yesterday',
@@ -64,6 +64,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
     initialPage: 0,
     //  viewportFraction: 2,
   );
+
+  Future<void> fetchTransactions(String selectedDate) async {
+    // Make API request using selectedDate
+    AllTransactions? newTransactions = await TransactionsProvider()
+        .fetchTransactionsFromAPI(selectedDate: selectedDate);
+
+    // Use the TransactionProvider to update the state
+    Provider.of<TransactionsProvider>(context, listen: false)
+        .updateTransactions(newTransactions!.data);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+     fetchTransactions(selectedDate!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -265,15 +281,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             setState(() {
                               selectedDate = category!;
 
-Future<void> fetchTransactions(String selectedDate) async {
-  // Make API request using selectedDate
-  AllTransactions newTransactions = await TransactionsProvider().fetchTransactionsFromAPI(selectedDate: selectedDate);
-
-  // Use the TransactionProvider to update the state
-  Provider.of<TransactionsProvider>(context, listen: false).updateTransactions(newTransactions.data);
-}
-
-                              
+                              fetchTransactions(selectedDate!);
                             });
                           },
                           decoration: InputDecoration(

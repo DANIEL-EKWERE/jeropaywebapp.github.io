@@ -8,7 +8,7 @@ import 'package:databank/backend/models/api_models.dart';
 
 class TransactionsProvider extends ChangeNotifier {
   String baseUrl = AppUrl.baseUrl;
-
+  AllTransactions? allTransactions;
   // setter
   List<Datum1> _transactions = [];
   bool _isLoading = false;
@@ -24,7 +24,10 @@ class TransactionsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<AllTransactions> fetchTransactionsFromAPI(
+// TODO: the code below is what am using for my transaction history
+
+
+  Future<AllTransactions?> fetchTransactionsFromAPI(
       {required String selectedDate}) async {
     String url = '$baseUrl/transactions/$selectedDate/';
     _isLoading = true;
@@ -46,10 +49,9 @@ class TransactionsProvider extends ChangeNotifier {
         final allTransac = json.decode(response.body);
         print(allTransac);
         final lastMonthTransac = json.decode(response.body);
-        final allTransactions = allTransactionsFromJson(allTransac);
+        allTransactions = allTransactionsFromJson(allTransac);
         _reqMessage = lastMonthTransac['status'];
         notifyListeners();
-        return allTransactions;
       } else {
         print(response.body);
         _isLoading = false;
@@ -67,11 +69,16 @@ class TransactionsProvider extends ChangeNotifier {
       _reqMessage = 'An Error Occured $e';
       throw Exception('Failed to make the request: $e');
     }
-    // return allTransactions;
-    throw Exception('Failed to load data');
+    return allTransactions;
+    // throw Exception('Failed to load data');
   }
 
-  void allTransactions() async {
+
+// TODO: the code above is what am using for my transaction history
+
+
+
+  void allTransaction() async {
     String url = '$baseUrl/transactions/all/';
     _isLoading = true;
     notifyListeners();
@@ -92,6 +99,7 @@ class TransactionsProvider extends ChangeNotifier {
         final allTransac = json.decode(response.body);
         final allTransactions = allTransactionsFromJson(allTransac);
         print(allTransac);
+        print(allTransactions);
         notifyListeners();
       } else {
         print(response.body);

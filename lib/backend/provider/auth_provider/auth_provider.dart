@@ -20,7 +20,9 @@ class AuthenticationProvider extends ChangeNotifier {
   bool _isLoading = false;
   String _reqMessage = '';
   Color? _color;
+  bool _hasProfile = false;
 
+bool get hasProfile => _hasProfile;
   Color? get color => _color;
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
@@ -113,18 +115,19 @@ class AuthenticationProvider extends ChangeNotifier {
       final url = '$requestBaseUrl/user/create/profile/';
       http.Response request =
           await http.get(Uri.parse(url), headers: reqHeader);
-      if (request.statusCode == 200  || request == 201) {
+      if (request.statusCode == 200 || request == 201) {
+        _hasProfile = true;
         final res = json.decode(request.body);
         final image = res['profileImage'];
         DataBaseProvider().saveProfileImage(image);
-        return true;
+  notifyListeners();
       } else {
-        return false;
+        throw Exception('Failed to load data ${request.statusCode}');
       }
     } catch (e) {
-      return false;
+      throw Exception('Failed to load data ${e.toString()} ');
     }
-    
+    return _hasProfile;
   }
 
   // login user
@@ -159,8 +162,10 @@ class AuthenticationProvider extends ChangeNotifier {
         print(isProfileCreated);
         final deviceToken = await FirebaseMessaging.instance.getToken();
         final platform = await DefaultFirebaseOptions.currentPlatform;
-       await UserDetails().createOrUpdateDeviceTokenAndPlatform(
-              platform: platform, token: deviceToken);
+        print(deviceToken);
+        print(platform);
+        await UserDetails().createOrUpdateDeviceTokenAndPlatform(
+            platform: platform, token: deviceToken);
         notifyListeners();
         final String token = req['token'].toString();
         final String userId = req['user_id'].toString();
@@ -181,7 +186,6 @@ class AuthenticationProvider extends ChangeNotifier {
             }
             Navigator.of(context!)
                 .pushNamedAndRemoveUntil("/CreatUserProfile", (route) => false);
-                
           } else {
             Navigator.of(context!)
                 .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
@@ -236,14 +240,6 @@ class AuthenticationProvider extends ChangeNotifier {
       res.fields['phone'] = phone;
       res.fields['state'] = state;
 
-      // if (profile_picture != null) {
-      //   res.files.add(http.MultipartFile.fromBytes(
-      //     'profile_picture',
-      //     await profile_picture.readAsBytes(),
-      //     filename: 'profile_picture.png',
-      //   ));
-      // }
-
       final pickedFileToFile = File(profile_picture!.path);
       final imageStream =
           http.ByteStream(Stream.castFrom(pickedFileToFile.openRead()));
@@ -254,27 +250,22 @@ class AuthenticationProvider extends ChangeNotifier {
       res.files.add(imageUpload);
       var response = await res.send();
       if (response.statusCode == 201 || response.statusCode == 200) {
-        //  final req = json.decode(res);
         _isLoading = false;
         _reqMessage = 'Profile Created Successfully';
         _color = const Color.fromARGB(255, 15, 175, 20);
         await DataBaseProvider().saveProfileId(phone);
         await UserDetails().getUserAccountDetails();
         notifyListeners();
-
-        // Navigator.push(context!,
-        //     MaterialPageRoute(builder: (context) => const AppLayout()));
         Navigator.of(context!)
             .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
-      } else if(response.statusCode == 500){
+      } else if (response.statusCode == 500) {
         var req = await response.stream.bytesToString();
-       var res =  json.decode(req);
+        var res = json.decode(req);
         _reqMessage = res['message'];
         Navigator.of(context!)
-                .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+            .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
         notifyListeners();
-        
-      }else{
+      } else {
         _isLoading = false;
         _reqMessage = 'Error Creating Profile ${response.statusCode}';
         const Color(0xfff33225);

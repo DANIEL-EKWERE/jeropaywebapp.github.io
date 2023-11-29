@@ -1,5 +1,6 @@
 // import 'package:cool_alert/cool_alert.dart';
 import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
+import 'package:databank/views/date_range.dart';
 import 'package:databank/views/password_reset.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_core/firebase_core.dart';
@@ -174,6 +175,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         Navigator.of(context).push(CupertinoPageRoute(
                             builder: ((context) => const PasswordReset())));
+
+                        // const PasswordReset())));
                       },
                       child: Text(
                         'Forget Password?',

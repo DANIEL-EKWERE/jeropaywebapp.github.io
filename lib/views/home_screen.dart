@@ -31,6 +31,7 @@ import 'electric_bill_expanded.dart';
 import 'electric_bill_payment.dart';
 // import 'log_in.dart';
 import 'recharge_card.dart';
+// import 'dart:developer' as devtools show log;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.openDrawer});
@@ -136,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   bool _showBal = true;
+  String? proImg;
   var username;
   var balance;
   var devicToken;
@@ -158,15 +160,21 @@ class _HomeScreenState extends State<HomeScreen> {
       balance = balancex;
     });
 
+    final img = userProfile();
+    setState(() {
+      proImg = img as String?;
+    });
+
     final usernamex = gatherUserName();
     Balance();
     setState(() {
       username = usernamex;
     });
 
-    final baln = Provider
-        .of<UserDetails>(context, listen: false)
+    final baln = Provider.of<UserDetails>(context, listen: false)
         .getUserAccountBalanace();
+    // devtools.log(baln);
+    print(baln);
     // UserDetails().getUserAccountBalanace().then((balance) {
     //   print("balance is $balance check3.3");
     // });
@@ -182,10 +190,12 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.instance.getToken().then((token) {
       print('device token is $token check1');
       final platform = DefaultFirebaseOptions.currentPlatform;
+      print('the device platform is $platform');
       UserDetails().createOrUpdateDeviceTokenAndPlatform(
           platform: platform, token: token);
       print('device token is $token sent');
       sendTokenAndPlatform(platform, token);
+      print('the device platform is $platform');
     });
 
 // uncomment the above code when the criterial are meant!!!
@@ -198,6 +208,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // });
     print("user name is $username method");
     return usernamex;
+  }
+
+  Future<String> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    return image;
   }
 
 // final balance =
@@ -226,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    final baln = Provider.of<UserDetails>(context);
+    // final baln = Provider.of<UserDetails>(context);
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(.99),
       appBar: AppBar(
@@ -261,10 +276,10 @@ class _HomeScreenState extends State<HomeScreen> {
               color: kWhite,
             ),
           ),
-          const CircleAvatar(
+           CircleAvatar(
             radius: 20,
             backgroundColor: kGrey,
-            backgroundImage: AssetImage('assets/images/pic-2.png'),
+            backgroundImage: NetworkImage(proImg ?? 'https://www.bellanaija.com/wp-content/uploads/2021/07/Linda-Osifo-2.jpg'),
           ),
           const SizedBox(
             width: 24,

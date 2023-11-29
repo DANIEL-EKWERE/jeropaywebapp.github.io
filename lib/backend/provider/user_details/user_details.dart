@@ -8,7 +8,7 @@ import '../database/db_provider.dart';
 
 class UserDetails extends ChangeNotifier {
   static String baseUrl = AppUrl.baseUrl;
-
+  String? image;
   // setter
   bool _isLoading = false;
   String _reqMessage = '';
@@ -89,9 +89,6 @@ class UserDetails extends ChangeNotifier {
 //     }
 // }
 
-
-
-
   Future getUserAccountDetails() async {
     print('calling acct details method');
     String url = '$baseUrl/reserve-acct-for-user/';
@@ -105,9 +102,10 @@ class UserDetails extends ChangeNotifier {
           await http.get(Uri.parse(url), headers: reqHeader);
       if (response.statusCode == 200) {
         final req = json.decode(response.body);
-        final bankName = req['bankName'];
-        final accountNumber = req['accountNumber'];
-        final accountName = req['accountName'];
+        final x = req['response body']!['banks'][0];
+        final bankName = x['bankName'];
+        final accountNumber = x['accountNumber'];
+        final accountName = x['accountName'];
 
         DataBaseProvider().saveAcctName(accountName);
         DataBaseProvider().saveAcctNumber(accountNumber);
@@ -116,7 +114,8 @@ class UserDetails extends ChangeNotifier {
         _color = const Color.fromARGB(255, 15, 175, 20);
         notifyListeners();
       } else {
-        _reqMessage = 'unable to generate vitual account ${response.statusCode}';
+        _reqMessage =
+            'unable to generate vitual account ${response.statusCode}';
         _color = const Color(0xfff33225);
         notifyListeners();
       }
@@ -131,8 +130,35 @@ class UserDetails extends ChangeNotifier {
     }
   }
 
+  Future<String> getUserProfileImage() async {
+    try {
+      final access = await DataBaseProvider().getToken();
+      Map<String, String>? reqHeader = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $access',
+      };
+      final url = '$baseUrl/user/create/profile/';
+      http.Response request =
+          await http.get(Uri.parse(url), headers: reqHeader);
+      if (request.statusCode == 200 || request == 201) {
+        final res = json.decode(request.body);
+        image = res['profileImage'];
+        DataBaseProvider().saveProfileImage(File(image!));
+
+        notifyListeners();
+       // return image!;
+      } else {
+        throw Exception('Failed to load data ${request.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load data ${e.toString()} ');
+    }
+     return image!;
+  }
+
   Future<bool> createOrUpdateDeviceTokenAndPlatform(
       {required platform, required token, BuildContext? context}) async {
+    print('calling sending device token and platform method');
     String url = '$baseUrl/fcm-connector/';
     final access = await DataBaseProvider().getToken();
     Map<String, String>? reqHeader = {
@@ -144,26 +170,35 @@ class UserDetails extends ChangeNotifier {
       'Device type': token,
     };
     try {
+      print(
+          'calling sending device token and platform method - in the try block');
       http.Response response = await http.post(Uri.parse(url),
           body: json.encode(body), headers: reqHeader);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(
+            'calling sending device token and platform method - codes executed successfully');
         _reqMessage = 'token and device retrieved';
         _color = const Color.fromARGB(255, 15, 175, 20);
         notifyListeners();
         return true;
       } else {
+        print(
+            'calling sending device token and platform method - somwthing went wrong');
         _reqMessage = 'token and device not retrieved';
         _color = const Color(0xfff33225);
         notifyListeners();
         return false;
       }
     } on SocketException catch (_) {
+      print(
+          'calling sending device token and platform method - networks issues');
       _reqMessage = 'internet connetion not available';
       _color = const Color(0xfff33225);
       notifyListeners();
       return false;
     } catch (e) {
+      print('calling sending device token and platform method - catch block');
       _reqMessage = 'An error Occurred (TandD) $e';
       _color = const Color(0xfff33225);
       notifyListeners();
