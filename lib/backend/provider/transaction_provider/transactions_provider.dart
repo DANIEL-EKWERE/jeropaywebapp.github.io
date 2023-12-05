@@ -38,7 +38,8 @@ class TransactionsProvider extends ChangeNotifier {
         amount: ''),
   );
 
-  late RecentTransactions recentTransacts;
+   RecentTransactions recentTransacts = RecentTransactions(status: '', transactions: []);
+  
   // getter
   // List<Datum1> get transactions => _transactions;
   bool get isLoading => _isLoading;

@@ -1059,12 +1059,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
-              const SizedBox(height: 90),
+              const SizedBox(height: 10),
               Consumer<TransactionsProvider>(
                   builder: (context, transactions, child) {
                 return ListView.builder(
-                    itemCount: transactions.recentTransacts.lenght,
+                    itemCount: transactions.recentTransacts.transactions.length,
                     itemBuilder: (context, index) {
+                     // RecentTransactions recents =
+                       //   RecentTransactions(status: '', transactions: []);
                       Transaction x =
                           transactions.recentTransacts.transactions[index];
                       return Card(
@@ -1111,6 +1113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     });
               }),
+              const SizedBox(height: 90),
             ],
           ),
         ),
