@@ -9,6 +9,7 @@ import '../database/db_provider.dart';
 class UserDetails extends ChangeNotifier {
   static String baseUrl = AppUrl.baseUrl;
   String? image;
+  
   // setter
   bool _isLoading = false;
   String _reqMessage = '';
@@ -137,23 +138,23 @@ class UserDetails extends ChangeNotifier {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $access',
       };
-      final url = '$baseUrl/user/create/profile/';
+      final url = '$baseUrl/dashboard/home/';
       http.Response request =
           await http.get(Uri.parse(url), headers: reqHeader);
-      if (request.statusCode == 200 || request == 201) {
+      if (request.statusCode == 200) {
         final res = json.decode(request.body);
-        image = res['profileImage'];
+        image = res['data']['profile_pic'];
         DataBaseProvider().saveProfileImage(File(image!));
 
         notifyListeners();
-       // return image!;
+        // return image!;
       } else {
         throw Exception('Failed to load data ${request.statusCode}');
       }
     } catch (e) {
       throw Exception('Failed to load data ${e.toString()} ');
     }
-     return image!;
+    return image!;
   }
 
   Future<bool> createOrUpdateDeviceTokenAndPlatform(

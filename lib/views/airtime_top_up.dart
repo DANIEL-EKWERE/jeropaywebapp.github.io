@@ -1,3 +1,4 @@
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/backend/provider/purchase_provider/purchases_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -268,13 +269,21 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                 width: 1.5,
                                                 color: kYellow,
                                                 style: BorderStyle.solid)),
-                                        child: Text(
-                                          'Paste Number',
-                                          style: kEncodeSansSemiBold.copyWith(
-                                              color: kYellow,
-                                              fontSize: SizeConfig
-                                                      .blockSizeHorizontal! *
-                                                  2.0),
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            final number =
+                                                await DataBaseProvider()
+                                                    .getProfileId();
+                                            setState(() {
+                                              _phoneController.text = number;
+                                            });
+                                          },
+                                          child: Text('Paste Number',
+                                              style: kEncodeSansSemiBold.copyWith(
+                                                  color: kYellow,
+                                                  fontSize: SizeConfig
+                                                          .blockSizeHorizontal! *
+                                                      2.0)),
                                         ),
                                       ),
                                     ],
@@ -365,12 +374,32 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                     horizontal: 24.0),
                                 child: DropdownButtonFormField<String>(
                                   value: selectedValue2,
-                                  items: dropdownItems2.map((item) {
-                                    return DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(item),
-                                    );
-                                  }).toList(),
+                                  items: [
+                                    DropdownMenuItem<String>(
+                                      value: '50',
+                                      child: Text('#50'),
+                                    ),
+                                    DropdownMenuItem<String>(
+                                      value: '100',
+                                      child: Text('#100'),
+                                    ),
+                                    DropdownMenuItem<String>(
+                                      value: '200',
+                                      child: Text('#200'),
+                                    ),
+                                    DropdownMenuItem<String>(
+                                      value: '500',
+                                      child: Text('#500'),
+                                    ),
+                                    DropdownMenuItem<String>(
+                                      value: '1000',
+                                      child: Text('#1000'),
+                                    ),
+                                    DropdownMenuItem<String>(
+                                      value: '2000',
+                                      child: Text('#2000'),
+                                    )
+                                  ],
                                   onChanged: (value) {
                                     setState(() {
                                       selectedValue2 = value!;
@@ -556,7 +585,7 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                   ],
                                                 )
                                               : Text(
-                                                  'Buy Coupon Code',
+                                                  'Buy Airtime',
                                                   style: TextStyle(
                                                       fontSize: SizeConfig
                                                               .blockSizeHorizontal! *

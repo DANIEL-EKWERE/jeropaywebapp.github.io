@@ -1,6 +1,7 @@
 // import 'dart:js';
 
 import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
+import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/views/app_layout.dart';
 import 'package:databank/views/create_profile.dart';
@@ -34,6 +35,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => DataBaseProvider()),
       ChangeNotifierProvider(create: (context) => PurchaseProvider()),
       ChangeNotifierProvider(create: (context) => UserDetails()),
+      ChangeNotifierProvider(create: (context) => TransactionsProvider()),
     ],
     child: MaterialApp(
       title: 'Data Bank',

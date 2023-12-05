@@ -1,10 +1,13 @@
 // import 'package:animated_radial_menu/animated_radial_menu.dart';
 // import 'package: marquee/marquee.dart';
 // ignore_for_file: prefer_typing_uninitialized_variables
-import '../widget/snackbar.dart';
+import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+// import '../widget/snackbar.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
-import 'package:databank/firebase_options.dart';
+// import 'package:databank/firebase_options.dart';
 import 'package:databank/views/add_money.dart';
 import 'package:databank/views/airtime_top_up.dart';
 import 'package:databank/views/app_layout.dart';
@@ -20,6 +23,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
+import '../backend/models/api_models.dart';
 import '../backend/provider/user_details/user_details.dart';
 import '../customizations/size_config.dart';
 import '../model/electric_bill.dart';
@@ -80,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         screen: AlertDialog(
           title: const Text('Currently Unavailable'),
           content: const Text(
-              'the page your trying to access isn\'t available at the moment but we\'re working on it \n properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+              'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
           actions: [
             TextButton(
               onPressed: () {
@@ -108,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
         screen: AlertDialog(
           title: const Text('Currently Unavailable'),
           content: const Text(
-              'the page your trying to access isn\'t available at the moment but we\'re working on it \n properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+              'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
           actions: [
             TextButton(
               onPressed: () {
@@ -124,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
         screen: AlertDialog(
           title: const Text('Currently Unavailable'),
           content: const Text(
-              'the page your trying to access isn\'t available at the moment but we\'re working on it \n properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+              'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
           actions: [
             TextButton(
               onPressed: () {
@@ -137,10 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   bool _showBal = true;
-  String? proImg;
+  String proImg =
+      'https://www.bellanaija.com/wp-content/uploads/2021/07/Linda-Osifo-2.jpg';
   var username;
   var balance;
   var devicToken;
+  var baln;
   var devicePlatform;
   void gatherData() async {
     username = await DataBaseProvider().getUserName();
@@ -153,28 +159,33 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     // ignore: avoid_print
-    //  final balance1 = Provider.of<UserDetails>(context, listen: false);
-    final balancex = gatherBalance();
-
-    setState(() {
-      balance = balancex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      baln = Provider.of<UserDetails>(context, listen: false);
+      baln.getUserAccountBalanace();
     });
 
-    final img = userProfile();
-    setState(() {
-      proImg = img as String?;
-    });
+    gatherBalance();
+    username1();
 
-    final usernamex = gatherUserName();
-    Balance();
-    setState(() {
-      username = usernamex;
-    });
+    // setState(() {
+    //   balance = balancex;
+    // });
 
-    final baln = Provider.of<UserDetails>(context, listen: false)
-        .getUserAccountBalanace();
+    // final img = userProfile();
+    // setState(() {
+    //   proImg = img;
+    // });
+
+    print(gatherUserName());
+    // Balance();
+    // setState(() {
+    //   username = usernamex;
+    // });
+
+    // final baln = Provider.of<UserDetails>(context, listen: false)
+    // .getUserAccountBalanace();
     // devtools.log(baln);
-    print(baln);
+    // print(baln);
     // UserDetails().getUserAccountBalanace().then((balance) {
     //   print("balance is $balance check3.3");
     // });
@@ -189,40 +200,51 @@ class _HomeScreenState extends State<HomeScreen> {
 // to be uncommented when the dependency in installed!!!
     FirebaseMessaging.instance.getToken().then((token) {
       print('device token is $token check1');
-      final platform = DefaultFirebaseOptions.currentPlatform;
+      var app = Firebase.app();
+
+      final platform = app.options.projectId;
       print('the device platform is $platform');
       UserDetails().createOrUpdateDeviceTokenAndPlatform(
-          platform: platform, token: token);
+          platform: 'android', token: token);
       print('device token is $token sent');
-      sendTokenAndPlatform(platform, token);
+      sendTokenAndPlatform('android', token);
       print('the device platform is $platform');
     });
 
 // uncomment the above code when the criterial are meant!!!
   }
 
+  void username1() {
+    final x = gatherUserName();
+    setState(() {
+      username = x;
+    });
+  }
+
   Future<String> gatherUserName() async {
     final usernamex = await DataBaseProvider().getUserName();
-    // setState(() {
-    //   username = usernamex;
-    // });
+    setState(() {
+      username = usernamex;
+    });
     print("user name is $username method");
     return usernamex;
   }
 
-  Future<String> userProfile() async {
+  Future<void> userProfile() async {
     final image = await UserDetails().getUserProfileImage();
-    return image;
+    setState(() {
+      proImg = image;
+    });
   }
 
 // final balance =
-  Future<String> gatherBalance() async {
+  Future<void> gatherBalance() async {
     final balancex = await UserDetails().getUserAccountBalanace();
-    // setState(() {
-    //   balance = balancex;
-    // });
+    setState(() {
+      balance = balancex;
+    });
     print("balance is $balance method");
-    return balancex;
+    // return balancex;
   }
 
   Future<void> Balance() {
@@ -241,7 +263,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // final baln = Provider.of<UserDetails>(context);
+    double sizeVertical = SizeConfig.blockSizeVertical!;
+    double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+    //transacts = Provider.of<TransactionsProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(.99),
       appBar: AppBar(
@@ -276,10 +300,10 @@ class _HomeScreenState extends State<HomeScreen> {
               color: kWhite,
             ),
           ),
-           CircleAvatar(
+          CircleAvatar(
             radius: 20,
             backgroundColor: kGrey,
-            backgroundImage: NetworkImage(proImg ?? 'https://www.bellanaija.com/wp-content/uploads/2021/07/Linda-Osifo-2.jpg'),
+            backgroundImage: NetworkImage(proImg),
           ),
           const SizedBox(
             width: 24,
@@ -292,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          return await Balance();
+          return gatherBalance();
         },
         child: SingleChildScrollView(
           child: Column(
@@ -324,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           'Hello,$username 👋',
                           style: kEncodeSansMedium.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 1.6),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 3),
                         ),
                       ),
                       Positioned(
@@ -334,7 +358,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           DateFormat('dd MMM,yyyy.').format(currentTime),
                           style: kEncodeSansMedium.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 1.6),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 3),
+                        ),
+                      ),
+                      Positioned(
+                        top: 70,
+                        left: 24,
+                        child: Text(
+                          'package: \nSmart User',
+                          style: kEncodeSansMedium.copyWith(
+                              color: kWhite,
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2),
+                        ),
+                      ),
+                      Positioned(
+                        top: 70,
+                        right: 24,
+                        child: Text(
+                          'Bonus Balance: \n         0.00',
+                          style: kEncodeSansMedium.copyWith(
+                              color: kWhite,
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2),
                         ),
                       ),
                       Positioned(
@@ -362,13 +406,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                   ),
                                   // FutureBuilder<String>(
-                                  //   future: balance.getUserAccountBalanace(),
+                                  //   future: baln.getUserAccountBalanace(),
                                   //   builder: (context, snapshot) {
                                   //     if (snapshot.connectionState ==
                                   //         ConnectionState.done) {
                                   //       if (snapshot.hasError) {
                                   //         const Text('An error occured');
                                   //       } else if (snapshot.hasData) {
+                                  //         final balance1 = snapshot.data;
                                   //         return RichText(
                                   //           text: TextSpan(
                                   //               text: _showBal ? '#' : null,
@@ -380,7 +425,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   //               children: <TextSpan>[
                                   //                 TextSpan(
                                   //                   text: _showBal
-                                  //                       ? snapshot.data!
+                                  //                       ? balance1
                                   //                       : '*****',
                                   //                   style: kEncodeSansBold.copyWith(
                                   //                       color: kWhite,
@@ -424,48 +469,73 @@ class _HomeScreenState extends State<HomeScreen> {
                                   //     );
                                   //   },
                                   // ),
-                                  Consumer<UserDetails>(
-                                    builder: (context, value, child) {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        if (value.reqMessage != '') {
-                                          successMessage(
-                                              message: value.reqMessage,
-                                              x: value.color,
-                                              context: context);
 
-                                          value.clear();
-                                        }
-                                      });
-                                      if (value.isLoading) {
-                                        const SpinKitWave(
-                                          color: kDarkGrey,
-                                          size: 25,
-                                        );
-                                      }
-                                      return RichText(
-                                        text: TextSpan(
-                                            text: _showBal ? '#' : null,
-                                            style: kEncodeSansBold.copyWith(
-                                                color: kWhite,
-                                                fontSize: SizeConfig
-                                                        .blockSizeHorizontal! *
-                                                    2.5),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: _showBal
-                                                    ? value.balance
-                                                    : '*****',
+                                  // RichText(
+                                  //   text: TextSpan(
+                                  //       text: _showBal ? '#' : null,
+                                  //       style: kEncodeSansBold.copyWith(
+                                  //           color: kWhite,
+                                  //           fontSize: SizeConfig
+                                  //                   .blockSizeHorizontal! *
+                                  //               2.5),
+                                  //       children: <TextSpan>[
+                                  //         TextSpan(
+                                  //           text: _showBal ? balance : '*****',
+                                  //           style: kEncodeSansBold.copyWith(
+                                  //               color: kWhite,
+                                  //               fontSize: SizeConfig
+                                  //                       .blockSizeHorizontal! *
+                                  //                   2.5),
+                                  //         ),
+                                  //       ]),
+                                  // ),
+                                  FutureBuilder<String>(
+                                    future: baln.getUserAccountBalanace(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        if (snapshot.hasError) {
+                                          return const Text(
+                                              'An error occurred');
+                                        } else if (snapshot.hasData) {
+                                          final balance = snapshot.data;
+                                          return RichText(
+                                            // Your RichText implementation
+
+                                            text: TextSpan(
+                                                text: _showBal ? '#' : null,
                                                 style: kEncodeSansBold.copyWith(
                                                     color: kWhite,
                                                     fontSize: SizeConfig
                                                             .blockSizeHorizontal! *
                                                         2.5),
-                                              ),
-                                            ]),
-                                      );
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: _showBal
+                                                        ? balance
+                                                        : '*****',
+                                                    style: kEncodeSansBold.copyWith(
+                                                        color: kWhite,
+                                                        fontSize: SizeConfig
+                                                                .blockSizeHorizontal! *
+                                                            2.5),
+                                                  ),
+                                                ]),
+                                          );
+                                        }
+                                      } else if (baln.isLoading) {
+                                        // Show the loading indicator while the data is being fetched
+                                        return const SpinKitWave(
+                                          color: kDarkGrey,
+                                          size: 25,
+                                        );
+                                      }
+
+                                      // You can return a default widget here, for example:
+                                      return const SizedBox();
                                     },
                                   ),
+
                                   const SizedBox(
                                     width: 15,
                                   ),
@@ -477,7 +547,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: kEncodeSansRegular.copyWith(
                                   color: Colors.white.withOpacity(0.7),
                                   fontSize:
-                                      SizeConfig.blockSizeHorizontal! * 1.5),
+                                      SizeConfig.blockSizeHorizontal! * 1.7),
                             ),
                           ],
                         ),
@@ -487,8 +557,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           right: SizeConfig.blockSizeHorizontal! * 10,
                           left: SizeConfig.blockSizeHorizontal! * 10,
                           child: SpinKitPulse(
-                            color: kWhite.withOpacity(0.5),
-                            size: 300,
+                            color: kDarkGrey.withOpacity(0.2),
+                            size: 400,
+                            duration: const Duration(milliseconds: 300),
                           )),
                       Positioned(
                         right: 24,
@@ -507,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   style: kEncodeSansMedium.copyWith(
                                       color: kWhite,
                                       fontSize:
-                                          SizeConfig.blockSizeVertical! * 2.2),
+                                          SizeConfig.blockSizeVertical! * 2.4),
                                 ),
                                 const Divider(
                                   color: kYellow,
@@ -542,7 +613,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: kWhite,
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *
-                                                  1.5,
+                                                  1.7,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
@@ -562,7 +633,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: kWhite,
                                           fontSize:
                                               SizeConfig.blockSizeVertical! *
-                                                  1.5),
+                                                  2),
                                     ),
                                     Stack(
                                       clipBehavior: Clip.none,
@@ -787,7 +858,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: kWhite,
                                           ),
                                           child: const Icon(
-                                            Icons.history,
+                                            Icons.share,
                                             color: kBlue,
                                           ),
                                         ),
@@ -796,7 +867,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 10,
                                       ),
                                       Text(
-                                        'History',
+                                        'Refer&Earn',
                                         style: kEncodeSansMedium.copyWith(
                                             color: kBrown,
                                             fontSize: SizeConfig
@@ -989,6 +1060,57 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }),
               const SizedBox(height: 90),
+              Consumer<TransactionsProvider>(
+                  builder: (context, transactions, child) {
+                return ListView.builder(
+                    itemCount: transactions.recentTransacts.lenght,
+                    itemBuilder: (context, index) {
+                      Transaction x =
+                          transactions.recentTransacts.transactions[index];
+                      return Card(
+                        child: ListTile(
+                          onTap: () {
+                            context
+                                .read<TransactionsProvider>()
+                                .singleTransactions(
+                                    trans_uuid: x.id, context: context);
+                          },
+                          leading: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: kBrown,
+                              shape: BoxShape.rectangle,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                            child: Image.asset(
+                              'assets/images/logo-1.png',
+                              width: sizeHorizontal * 5,
+                            ),
+                            // Icon(
+                            //   Icons
+                            //       .mobile_screen_share_rounded,
+                            //   color: kGrey,
+                            // ),
+                          ),
+                          title: Text(
+                            "${typeValues2.reverse[x.type]!} purchase to ${x.phoneNumber}",
+                            style: kEncodeSansMedium.copyWith(
+                                color: kDarkBrown,
+                                fontSize: sizeHorizontal * 1.6),
+                          ),
+                          subtitle: Text(
+                            'Date: ${x.dateAndTime}',
+                            style: kEncodeSansRegular.copyWith(
+                                color: kGrey, fontSize: sizeVertical * 2.0),
+                          ),
+                          trailing: Text(
+                              "${statusValues2.reverse[x.status]!}\n #${x.amount}"),
+                        ),
+                      );
+                    });
+              }),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/views/log_in.dart';
 import 'package:databank/widget/receipt.dart';
@@ -9,6 +10,7 @@ import 'package:databank/backend/constant.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../models/api_models.dart';
+
 // 923cdea0-feec-4e3a-9e2e-e0edc76c8aec giting mtn
 class PurchaseProvider extends ChangeNotifier {
   final baseUrl = AppUrl.baseUrl;
@@ -24,7 +26,22 @@ class PurchaseProvider extends ChangeNotifier {
   String get regMessage => _reqMessage;
   bool get isLoading => _isLoading;
   Color? get color => _color;
-
+  // Message message = Message(amount: '',id: '', dateAndTime: DateTime.now(),detail: '', oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'');
+  AirtimePurchaseModel airtimePurchaseModel =
+      AirtimePurchaseModel(data: Data(id:'',detail: '',dateAndTime: DateTime.now(),oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'',amount: ''), status: '');
+  // Data data = Data(id:'',detail: '',dateAndTime: DateTime.now(),oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'',amount: '');
+  DataPurchase dataPurchaseModel = DataPurchase(
+      message: Message(
+          amount: '',
+          id: '',
+          dateAndTime: DateTime.now(),
+          detail: '',
+          oldBalance: '',
+          newBalance: '',
+          phoneNumber: '',
+          status: '',
+          type: ''),
+      status: '');
   get dateAndTime => null;
   Future<void> PurchaseData(
       {required String dataId,
@@ -49,7 +66,8 @@ class PurchaseProvider extends ChangeNotifier {
       if (req.statusCode == 200 || req.statusCode == 201) {
         _isLoading = false;
         final res = json.decode(req.body);
-        final dataPurchaseModel = dataPurchaseFromJson(res);
+        print(res);
+        dataPurchaseModel = dataPurchaseFromJson(req.body);
         _reqMessage = 'your purchase was successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
         showModalBottomSheet(
@@ -97,12 +115,22 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
+      } else if (req.statusCode == 404) {
+        final res = json.decode(req.body);
+        _isLoading = false;
+        _reqMessage = res['details']['phone_number'][0];
+        _color = _color = const Color(0xfff33225);
+        notifyListeners();
+      } else if (req.statusCode == 400) {
+        final res = json.decode(req.body);
+        _isLoading = false;
+        _reqMessage = res['message']['error'][0];
+        _color = _color = const Color(0xfff33225);
+        notifyListeners();
       } else {
         _isLoading = false;
-        final res = json.decode(req.body);
-        final dataPurchaseModel = DataPurchase.fromJson(res);
-        _reqMessage = dataPurchaseModel.message.toString();
-        _color = const Color(0xfff33225);
+        _reqMessage = 'something went wrong';
+        _color = _color = const Color(0xfff33225);
         notifyListeners();
       }
     } on SocketException catch (_) {
@@ -144,8 +172,8 @@ class PurchaseProvider extends ChangeNotifier {
 
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
-        final airtimePurchaseModel =
-            airtimePurchaseFromJson(json.decode(request.body));
+         airtimePurchaseModel =
+            airtimePurchaseFromJson(request.body);
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
 
@@ -171,7 +199,7 @@ class PurchaseProvider extends ChangeNotifier {
       } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
-        _reqMessage = res['message'];
+        _reqMessage = res['message']['error'][0];
         _color = const Color(0xfff33225);
         notifyListeners();
         showDialog<bool>(
@@ -194,10 +222,21 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
-      } 
-      else {
+      } else if (request.statusCode == 404) {
+        final res = json.decode(request.body);
         _isLoading = false;
-        _reqMessage = 'something went wrong ${request.statusCode}';
+        _reqMessage = res['details']['phone_number'][0];
+        _color = _color = const Color(0xfff33225);
+        notifyListeners();
+      } else if (request.statusCode == 400) {
+        final res = json.decode(request.body);
+        _isLoading = false;
+        _reqMessage = res['message']['error'][0];
+        _color = _color = const Color(0xfff33225);
+        notifyListeners();
+      } else {
+        _isLoading = false;
+        _reqMessage = 'something went wrong';
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       }
@@ -292,8 +331,7 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
-      } 
-      else {
+      } else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -362,8 +400,7 @@ class PurchaseProvider extends ChangeNotifier {
                 ));
 
         notifyListeners();
-      } 
-      else if (request.statusCode == 401) {
+      } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
         _reqMessage = res['message'];
@@ -389,7 +426,7 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
-      }else {
+      } else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -447,7 +484,7 @@ class PurchaseProvider extends ChangeNotifier {
             disco: disco,
             amount: amount,
             context: context);
-      }else if (request.statusCode == 401) {
+      } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
         _reqMessage = res['message'];
@@ -473,8 +510,7 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
-      } 
-      else {
+      } else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -542,7 +578,7 @@ class PurchaseProvider extends ChangeNotifier {
                 ));
 
         notifyListeners();
-      }else if (request.statusCode == 401) {
+      } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
         _reqMessage = res['message'];
@@ -568,8 +604,7 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
-      } 
-      else {
+      } else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
@@ -625,7 +660,7 @@ class PurchaseProvider extends ChangeNotifier {
             cableProvider: cableProvider,
             cableUuid: cableUuid,
             context: context);
-      }else if (request.statusCode == 401) {
+      } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
         _reqMessage = res['message'];
@@ -651,8 +686,7 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
-      } 
-      else {
+      } else {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);

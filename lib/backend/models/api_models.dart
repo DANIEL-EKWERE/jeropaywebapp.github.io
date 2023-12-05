@@ -985,95 +985,88 @@ class DepositRecord {
 
 // To parse this JSON data, do
 //
-//     final allTransactions = allTransactionsFromJson(jsonString);
+//     final recentTransactions = recentTransactionsFromJson(jsonString);
 
-AllTransactions allTransactionsFromJson(String str) =>
-    AllTransactions.fromJson(json.decode(str));
+RecentTransactions recentTransactionsFromJson(String str) => RecentTransactions.fromJson(json.decode(str));
 
-String allTransactionsToJson(AllTransactions data) =>
-    json.encode(data.toJson());
+String recentTransactionsToJson(RecentTransactions data) => json.encode(data.toJson());
 
-class AllTransactions {
-  final String status;
-  final int totalAmount;
-  final List<Datum1> data;
+class RecentTransactions {
+    final String status;
+    final List<Transaction> transactions;
 
-  AllTransactions({
-    required this.status,
-    required this.totalAmount,
-    required this.data,
-  });
+    RecentTransactions({
+        required this.status,
+        required this.transactions,
+    });
 
-  factory AllTransactions.fromJson(Map<String, dynamic> json) =>
-      AllTransactions(
+    factory RecentTransactions.fromJson(Map<String, dynamic> json) => RecentTransactions(
         status: json["status"],
-        totalAmount: json["total_amount"],
-        data: List<Datum1>.from(json["data"].map((x) => Datum1.fromJson(x))),
-      );
+        transactions: List<Transaction>.from(json["transactions"].map((x) => Transaction.fromJson(x))),
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "status": status,
-        "total_amount": totalAmount,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-      };
+        "transactions": List<dynamic>.from(transactions.map((x) => x.toJson())),
+    };
 }
 
-class Datum1 {
-  final String id;
-  final String detail;
-  final DateAndTime dateAndTime;
-  final String oldBalance;
-  final String newBalance;
-  final String phoneNumber;
-  final Status status;
-  final String amount;
-  final Type type;
+class Transaction {
+    final String id;
+    final String detail;
+    final String dateAndTime;
+    final String oldBalance;
+    final String newBalance;
+    final String phoneNumber;
+    final String status;
+    final String amount;
+    final String type;
 
-  Datum1({
-    required this.id,
-    required this.detail,
-    required this.dateAndTime,
-    required this.oldBalance,
-    required this.newBalance,
-    required this.phoneNumber,
-    required this.status,
-    required this.amount,
-    required this.type,
-  });
+    Transaction({
+        required this.id,
+        required this.detail,
+        required this.dateAndTime,
+        required this.oldBalance,
+        required this.newBalance,
+        required this.phoneNumber,
+        required this.status,
+        required this.amount,
+        required this.type,
+    });
 
-  factory Datum1.fromJson(Map<String, dynamic> json) => Datum1(
+    factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
         id: json["id"],
         detail: json["detail"],
-        dateAndTime: dateAndTimeValues.map[json["date_and_time"]]!,
+        dateAndTime: json["date_and_time"],
         oldBalance: json["old_balance"],
         newBalance: json["new_balance"],
         phoneNumber: json["phone_number"],
-        status: statusValues.map[json["status"]]!,
+        status: json["status"],
         amount: json["amount"],
-        type: typeValues.map[json["type"]]!,
-      );
+        type: json["type"],
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
-        "date_and_time": dateAndTimeValues.reverse[dateAndTime],
+        "date_and_time": dateAndTime,
         "old_balance": oldBalance,
         "new_balance": newBalance,
         "phone_number": phoneNumber,
-        "status": statusValues.reverse[status],
+        "status": status,
         "amount": amount,
-        "type": typeValues.reverse[type],
-      };
+        "type": type,
+    };
 }
 
-enum DateAndTime { OCT_182023, OCT_272023 }
+// enum DateAndTime { OCT_182023, OCT_272023 }
 
-final dateAndTimeValues = EnumValues({
-  "Oct. 18, 2023": DateAndTime.OCT_182023,
-  "Oct. 27, 2023": DateAndTime.OCT_272023
-});
+// final dateAndTimeValues = EnumValues({
+//   "Oct. 18, 2023": DateAndTime.OCT_182023,
+//   "Oct. 27, 2023": DateAndTime.OCT_272023
+// });
 
-enum Status { SUCCESS }
+enum Status { SUCCESS, PENDING }
 
 final statusValues = EnumValues({"Success": Status.SUCCESS});
 
@@ -1092,28 +1085,145 @@ class EnumValues<T> {
     return reverseMap;
   }
 }
+//==========================================================================
+// To parse this JSON data, do
+//
+//     final allTransactions = allTransactionsFromJson(jsonString);
 
+
+// List<AllTransactions2> allTransactionsFromJson2(String str) => List<AllTransactions2>.from(json.decode(str).map((x) => AllTransactions2.fromJson(x)));
+
+// String allTransactionsToJson2(List<AllTransactions> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+
+
+ AllTransactions2 allTransactionsFromJson2(String str) => AllTransactions2.fromJson(json.decode(str));
+
+ String allTransactionsToJson2(AllTransactions2 data) => json.encode(data.toJson());
+
+class AllTransactions2 {
+  final String? status;
+  final dynamic totalAmount;
+  final List<Datum2>? data;
+
+  AllTransactions2({
+    required this.status,
+    required this.totalAmount,
+    required this.data,
+  });
+
+  factory AllTransactions2.fromJson(Map<String, dynamic> json) =>
+      AllTransactions2(
+        status: json["status"],
+        totalAmount: json["total_amount"],
+        data: List<Datum2>.from(json["data"].map((x) => Datum2.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "total_amount": totalAmount,
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
+}
+
+class Datum2 {
+  final String? id;
+  final String? detail;
+  final String? dateAndTime;
+  final String? oldBalance;
+  final String? newBalance;
+  final String? phoneNumber;
+  final Status? status;
+  final String? amount;
+  final Type? type;
+
+  Datum2({
+    required this.id,
+    required this.detail,
+    required this.dateAndTime,
+    required this.oldBalance,
+    required this.newBalance,
+    required this.phoneNumber,
+    required this.status,
+    required this.amount,
+    required this.type,
+  });
+
+  factory Datum2.fromJson(Map<String, dynamic> json) => Datum2(
+        id: json["id"],
+        detail: json["detail"],
+        dateAndTime: json["date_and_time"],
+        oldBalance: json["old_balance"],
+        newBalance: json["new_balance"],
+        phoneNumber: json["phone_number"],
+        status: statusValues.map[json["status"]],
+        amount: json["amount"],
+        type: typeValues.map[json["type"]],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "detail": detail,
+        "date_and_time": dateAndTime,
+        "old_balance": oldBalance,
+        "new_balance": newBalance,
+        "phone_number": phoneNumber,
+        "status": statusValues.reverse[status],
+        "amount": amount,
+        "type": typeValues.reverse[type],
+      };
+}
+
+// enum DateAndTime2 { OCT_182023, OCT_272023 }
+
+// final dateAndTimeValues2 = EnumValues({
+//   "Oct. 18, 2023": DateAndTime.OCT_182023,
+//   "Oct. 27, 2023": DateAndTime.OCT_272023
+// });
+
+enum Status2 { SUCCESS, PENDING }
+
+final statusValues2 =
+    EnumValues({"Success": Status.SUCCESS, "Pending": Status.PENDING});
+
+enum Type2 { AIRTIME, DATA }
+
+final typeValues2 = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA});
+
+class EnumValues2<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues2(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
+}
+
+//========================================================================
 // To parse this JSON data, do
 //
 //     final airtimePurchase = airtimePurchaseFromJson(jsonString);
 
-AirtimePurchase airtimePurchaseFromJson(String str) =>
-    AirtimePurchase.fromJson(json.decode(str));
+AirtimePurchaseModel airtimePurchaseFromJson(String str) =>
+    AirtimePurchaseModel.fromJson(json.decode(str));
 
-String airtimePurchaseToJson(AirtimePurchase data) =>
+String airtimePurchaseToJson(AirtimePurchaseModel data) =>
     json.encode(data.toJson());
 
-class AirtimePurchase {
+class AirtimePurchaseModel {
   final String status;
   final Data data;
 
-  AirtimePurchase({
+  AirtimePurchaseModel({
     required this.status,
     required this.data,
   });
 
-  factory AirtimePurchase.fromJson(Map<String, dynamic> json) =>
-      AirtimePurchase(
+  factory AirtimePurchaseModel.fromJson(Map<String, dynamic> json) =>
+      AirtimePurchaseModel(
         status: json["status"],
         data: Data.fromJson(json["data"]),
       );
@@ -1221,15 +1331,14 @@ class ElectricSubscription {
   get date_and_time => null;
 
   Map<String, dynamic> toJson() => {
-    "detail":detail,
-    "old_balance":oldBalance,
-    "new_balance":newBalance,
-    "phone_number":phoneNumber,
-    "status":status,
-    "amount":amount,
-    "type":type,
-
-  };
+        "detail": detail,
+        "old_balance": oldBalance,
+        "new_balance": newBalance,
+        "phone_number": phoneNumber,
+        "status": status,
+        "amount": amount,
+        "type": type,
+      };
 }
 
 // To parse this JSON data, do
@@ -1535,3 +1644,41 @@ class Data1 {
 //         "wallet": wallet,
 //     };
 // }
+
+// status code 400 insufficient wallet balance
+// {
+//   "status": "error",
+//   "message": {
+//     "error": [
+//       "You can't purchase this plan due to insufficient balance  N66.58999999999997 Kindly Fund your Wallet"
+//     ]
+//   }
+// }
+
+
+// status code for wrong inputs 404
+// {
+//   "status": "error",
+//   "details": {
+//     "phone_number": [
+//       "Ensure this field has no more than 11 characters."
+//     ]
+//   }
+// }
+
+
+// {status: success, total_amount: 16000.0, data: [{id: 01242804-2685-4aaa-ba20-fd8d2b948dcb, detail: you have purchase elelctricity, date_and_time: Nov. 28, 2023, old_balance: 1500.00, new_balance: 700.00, phone_number: 07013116710, status: Success, amount: 3000.00, type: Electricity}, {id: 4ec26dee-0b39-4e74-8fd6-6a77eaaf9cee, detail: you have purchase cable sub, date_and_time: Nov. 28, 2023, old_balance: 1200.00, new_balance: 600.00, phone_number: 07013116710, status: Success, amount: 600.00, type: Cable}, {id: 6923e465-aa60-4b52-931d-3056b5cd35f1, detail: you have purchase airtime, date_and_time: Nov. 28, 2023, old_balance: 900.00, new_balance: 800.00, phone_number: 07013116710, status: Success, amount: 3000.00, type: Airtime}, {id: 6df7ef7b-8975-46ff-903f-1ee7576ce427, detail: you have purchase airtime, date_and_time: Nov. 28, 2023, old_balance: 800.00, new_balance: 700.00, phone_number: 07013116710, status: Success, amount: 3000.00, type: Airtime}, {id: 5336ef4a-63b7-4509-9b07-1beb2caf8af1},
+
+
+
+
+
+
+
+
+
+
+
+//===================================================================================
+
+

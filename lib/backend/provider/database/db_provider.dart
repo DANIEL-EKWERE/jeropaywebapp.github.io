@@ -24,6 +24,8 @@ class DataBaseProvider extends ChangeNotifier {
 
   String _profileImage = '';
 
+  String _phone = '';
+
   String get token => _token;
 
   String get userName => _userName;
@@ -39,6 +41,8 @@ class DataBaseProvider extends ChangeNotifier {
   String get bankName => _bankName;
 
   String get profileImage => _profileImage;
+
+  String get phone => _phone;
 
   void saveToken(String token) async {
     SharedPreferences value = await _pref;
@@ -75,9 +79,15 @@ class DataBaseProvider extends ChangeNotifier {
     value.setString('bankName', bankName);
   }
 
-   void saveProfileImage(File? image) async {
+  void saveProfileImage(File? image) async {
     SharedPreferences value = await _pref;
     value.setString('image', image as String);
+  }
+
+
+   void savePhoneNumber(String phone) async {
+    SharedPreferences value = await _pref;
+    value.setString('phone', phone);
   }
 
   Future<String> getToken() async {
@@ -90,6 +100,21 @@ class DataBaseProvider extends ChangeNotifier {
       return data;
     } else {
       _token = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
+   Future<String> getPhone() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('phone')) {
+      String data = value.getString('phone')!;
+      _phone= data;
+      notifyListeners();
+      return data;
+    } else {
+      _phone = '';
       notifyListeners();
       return '';
     }

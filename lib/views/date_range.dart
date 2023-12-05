@@ -1,6 +1,8 @@
 import 'package:databank/customizations/app_style.dart';
+import 'package:databank/customizations/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DateRange extends StatefulWidget {
   const DateRange({super.key});
@@ -15,16 +17,39 @@ class _DateRangeState extends State<DateRange> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double sizeVertical = SizeConfig.blockSizeVertical!;
+    double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: kWhite),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color(0xff6A6A6A),
+              Color.fromARGB(255, 79, 78, 78),
+            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          ),
+        ),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.light),
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         children: [
           Row(
             children: [
-              Text('Start Date:'),
+              Text(
+                'Start Date:',
+                style: kEncodeSansBold.copyWith(
+                    fontSize: sizeHorizontal * 3.5, color: kGrey),
+              ),
               CupertinoButton(
                 child: Text(
-                    '${startDate.month}-${startDate.day}-${startDate.year}'),
+                  '${startDate.month}-${startDate.day}-${startDate.year}',
+                  style: kEncodeSansBold.copyWith(
+                      fontSize: sizeHorizontal * 3.0, color: kYellow),
+                ),
                 onPressed: () {
                   showCupertinoModalPopup(
                       context: context,
@@ -60,9 +85,17 @@ class _DateRangeState extends State<DateRange> {
           ),
           Row(
             children: [
-              Text('End Date:'),
+              Text(
+                'End Date:',
+                style: kEncodeSansBold.copyWith(
+                    fontSize: sizeHorizontal * 3.5, color: kGrey),
+              ),
               CupertinoButton(
-                child: Text('${endDate.month}-${endDate.day}-${endDate.year}'),
+                child: Text(
+                  '${endDate.month}-${endDate.day}-${endDate.year}',
+                  style: kEncodeSansBold.copyWith(
+                      fontSize: sizeHorizontal * 3.0, color: kYellow),
+                ),
                 onPressed: () {
                   showCupertinoModalPopup(
                       context: context,
@@ -94,10 +127,88 @@ class _DateRangeState extends State<DateRange> {
             ],
           ),
           SizedBox(
-            height: 20,
+            height: sizeVertical * 10,
           ),
-          ElevatedButton(onPressed: () {}, child: Text('Filter')),
-          Text('selected date1')
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff373737),
+                          Color.fromARGB(255, 135, 135, 135),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      )),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // if (_userNameController!.text.isEmpty ||
+                      //     _passwordController!.text.isEmpty) {
+                      //   warning(
+                      //       message: 'fields cant\'t be empty',
+                      //       context: context);
+                      //    } else {
+                      // value.loginUser(
+                      //     username:
+                      //         _userNameController!.text.trim(),
+                      //     password:
+                      //         _passwordController!.text.trim(),
+                      //     context: context);
+                      //  }
+                      // () async {
+                    },
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        foregroundColor: kWhite,
+                        backgroundColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )),
+                    child:
+                        // value.isLoading
+                        //     ? const Row(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.center,
+                        //         crossAxisAlignment:
+                        //             CrossAxisAlignment.center,
+                        //         children: [
+                        //           CircularProgressIndicator(
+                        //             color: Colors.white,
+                        //           ),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Text(
+                        //             'Loading please wait...',
+                        //             style: TextStyle(color: kWhite),
+                        //           )
+                        //         ],
+                        //       )
+                        Text(
+                      'Filter Date',
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                          color: kWhite),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5 * 2,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              'selected a start date and an end date to filter your transaction within that range!',
+              style: TextStyle(),
+            ),
+          )
         ],
       ),
     );

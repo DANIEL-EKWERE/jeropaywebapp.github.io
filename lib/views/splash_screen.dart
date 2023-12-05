@@ -1,4 +1,3 @@
-import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,15 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
         } else {
                           DataBaseProvider().getProfileId().then((value) async {
                             if (value.isEmpty) {
-                              final isProfile =
-                                  await AuthenticationProvider().queryUserProfile();
-                              if (isProfile) {
-                                Navigator.of(context)
-                                    .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
-                              }
+                              // final isProfile =
+                              //     await AuthenticationProvider().queryUserProfile();
+                              // if (isProfile) {
+                               Navigator.of(context)
+                                    .pushNamedAndRemoveUntil("/Login", (route) => false);
+                              // }
 
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  "/CreatUserProfile", (route) => false);
+                              // Navigator.of(context).pushNamedAndRemoveUntil(
+                              //     "/CreatUserProfile", (route) => false);
                             } else {
                               Navigator.popAndPushNamed(context, "/App_Layout");
                             }

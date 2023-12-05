@@ -1,13 +1,15 @@
 import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/views/date_range.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../customizations/size_config.dart';
-import '../model/history.dart';
+// import '../model/history.dart';
 import '../widget/drawer_widget.dart';
 // import '../widget/history_card.dart';
 
@@ -32,32 +34,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
     // 'Result check',
     // 'Airtime to cash'
   ];
-  String? selectedDate = 'today';
-  List<String> dates = [
-    'today',
-    'yesterday',
-    'this-week',
-    'last-week',
-    'this-month',
-    'last-month'
-  ];
-
-  List<dataHistory> his = [
-    dataHistory(
-        'Data TopUp', 'SME', '07065919223', '500.0', '250', 'successful'),
-    dataHistory(
-        'Data TopUp', 'SME', '07065919223', '600.0', '350', 'successful'),
-    dataHistory(
-        'Data TopUp', 'SME', '07065919223', '700.0', '350', 'successful'),
-    dataHistory(
-        'Data TopUp', 'SME', '07065919223', '800.0', '350', 'successful'),
-    dataHistory(
-        'Data TopUp', 'SME', '07065919223', '900.0', '450', 'successful'),
-    dataHistory(
-        'Data TopUp', 'SME', '07065919223', '1000.0', '550', 'successful'),
-    dataHistory(
-        'Data TopUp', 'SME', '07065919223', '1100.0', '650', 'successful'),
-  ];
+  String selectedDate = 'all';
+  // Future<AllTransactions2>? transacts;
+  TransactionsProvider? transacts;
   bool? forward = false;
   int curentPage = 0;
   final PageController _pageController = PageController(
@@ -66,19 +45,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
   );
 
   Future<void> fetchTransactions(String selectedDate) async {
+    print('calling fetch ');
     // Make API request using selectedDate
-    AllTransactions? newTransactions = await TransactionsProvider()
+    AllTransactions2 newTransactions = await TransactionsProvider()
         .fetchTransactionsFromAPI(selectedDate: selectedDate);
 
     // Use the TransactionProvider to update the state
     Provider.of<TransactionsProvider>(context, listen: false)
-        .updateTransactions(newTransactions!.data);
+        .updateTransactions(newTransactions.data!);
   }
 
   @override
   void initState() {
     super.initState();
-     fetchTransactions(selectedDate!);
+    fetchTransactions(selectedDate);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      transacts = Provider.of<TransactionsProvider>(context, listen: false);
+    });
   }
 
   @override
@@ -86,14 +70,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
     SizeConfig().init(context);
     double sizeVertical = SizeConfig.blockSizeVertical!;
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+    transacts = Provider.of<TransactionsProvider>(context);
+    //.fetchTransactionsFromAPI(selectedDate: selectedDate);
+
     return Scaffold(
       appBar: AppBar(
         leading: DrawerMenueWidget(
           onClicked: openDrawer,
-          color: kGrey,
+          color: kWhite,
         ),
         flexibleSpace: Container(
-          decoration: const BoxDecoration(),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color(0xff6A6A6A),
+              Color.fromARGB(255, 79, 78, 78),
+            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          ),
         ),
         elevation: 0,
         shadowColor: const Color.fromARGB(255, 235, 227, 227).withOpacity(0.1),
@@ -104,7 +96,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             onPressed: () {},
             icon: const Icon(
               Icons.notifications,
-              color: kBlack,
+              color: kWhite,
             ),
           ),
           const CircleAvatar(
@@ -119,305 +111,379 @@ class _HistoryScreenState extends State<HistoryScreen> {
         systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarIconBrightness: Brightness.light),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        style: kEncodeSansRegular.copyWith(
-                          color: kDarkGrey,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
-                        ),
-                        decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 13),
-                            prefixIcon: const IconTheme(
-                                data: IconThemeData(color: kDarkGrey),
-                                child: Icon(Icons.search)),
-                            hintText: 'Search for transactions...',
-                            border: kInputBorder,
-                            errorBorder: kInputBorder,
-                            disabledBorder: kInputBorder,
-                            focusedBorder: kInputBorder,
-                            focusedErrorBorder: kInputBorder,
-                            enabledBorder: kInputBorder,
-                            hintStyle: kEncodeSansRegular.copyWith(
-                              color: kDarkGrey,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
-                            )),
-                      ),
-                    ),
-                    SizedBox(
-                      width: sizeVertical * 2,
-                    ),
-                    Container(
-                      //padding: EdgeInsets.all(12),
-                      width: SizeConfig.blockSizeHorizontal! * 6.8,
-                      height: SizeConfig.blockSizeVertical! * 6.8,
-                      decoration: const BoxDecoration(
-                          color: kBlack,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: const Icon(
-                        Icons.search,
-                        color: kWhite,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: sizeVertical * 3,
-              ),
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Text(
-                      'Categories',
-                      style: kEncodeSansMedium.copyWith(
-                          color: kBlack,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 3),
-                    ),
-                  )),
-              // start here okay....
-              SizedBox(
-                height: sizeVertical * 2,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 36,
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: categories.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          current = index;
-                          // curentPage = index;
-                        });
-                        // forward = true;
-                        // _pageController.position;
-                        // TODO: this code below is to be considered
-                        //  _pageController.jumpToPage(index);
-                        _pageController.page == index + 1
-                            //  _pageController.page == index + 2
-                            ? _pageController.previousPage(
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.easeInOut)
-                            : _pageController.nextPage(
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.easeInOut);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: current == 0 ? 12 : 15,
-                          // right: current == categories.length - 1 ? 15 : 1,
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        height: 36,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: current == index ? kBrown : kWhite,
-                          border: current == index
-                              ? null
-                              : Border.all(
-                                  color: kLightGrey,
-                                  width: 1,
-                                ),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              categories[index],
-                              style: kEncodeSansMedium.copyWith(
-                                color: current == index ? kWhite : kDarkBrown,
-                                fontSize: SizeConfig.blockSizeHorizontal! * 2,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: sizeVertical * 3,
-              ),
-              Text(
-                'Transactions',
-                style: kEncodeSansMedium.copyWith(
-                    color: kGrey,
-                    fontSize: SizeConfig.blockSizeHorizontal! * 3.0),
-              ),
-              SizedBox(
-                height: sizeVertical * 3,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Column(
-                      children: [
-                        Text('Select date'),
-                        DropdownButtonFormField<String>(
-                          value: selectedDate,
-                          items: dates.map((category) {
-                            return DropdownMenuItem<String>(
-                              value: category,
-                              child: Text(category),
-                            );
-                          }).toList(),
-                          onChanged: (category) {
-                            setState(() {
-                              selectedDate = category!;
-
-                              fetchTransactions(selectedDate!);
-                            });
-                          },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await fetchTransactions(selectedDate);
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          style: kEncodeSansRegular.copyWith(
+                            color: kDarkGrey,
+                            fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
+                          ),
                           decoration: InputDecoration(
-                            focusedBorder: kInputBorder,
-                            fillColor: kWhite,
-                            filled: true,
-                            labelText: 'Today',
-                            labelStyle: kEncodeSansSemiBold.copyWith(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 13),
+                              prefixIcon: const IconTheme(
+                                  data: IconThemeData(color: kDarkGrey),
+                                  child: Icon(Icons.search)),
+                              hintText: 'Search for transactions...',
+                              border: kInputBorder,
+                              errorBorder: kInputBorder,
+                              disabledBorder: kInputBorder,
+                              focusedBorder: kInputBorder,
+                              focusedErrorBorder: kInputBorder,
+                              enabledBorder: kInputBorder,
+                              hintStyle: kEncodeSansRegular.copyWith(
                                 color: kDarkGrey,
-                                fontSize:
-                                    SizeConfig.blockSizeHorizontal! * 2.0),
-                            hintStyle: kEncodeSansSemiBold.copyWith(
-                                color: kLightGrey,
-                                fontSize:
-                                    SizeConfig.blockSizeHorizontal! * 2.0),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kBrown,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8),
+                                fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                              )),
+                        ),
+                      ),
+                      SizedBox(
+                        width: sizeVertical * 2,
+                      ),
+                      Container(
+                        //padding: EdgeInsets.all(12),
+                        width: SizeConfig.blockSizeHorizontal! * 6.8,
+                        height: SizeConfig.blockSizeVertical! * 6.8,
+                        decoration: const BoxDecoration(
+                            color: kBlack,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        child: const Icon(
+                          Icons.search,
+                          color: kWhite,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: sizeVertical * 3,
+                ),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        'Categories',
+                        style: kEncodeSansMedium.copyWith(
+                            color: kBlack,
+                            fontSize: SizeConfig.blockSizeHorizontal! * 3),
+                      ),
+                    )),
+                // start here okay....
+                SizedBox(
+                  height: sizeVertical * 2,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 36,
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: categories.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            current = index;
+                            // curentPage = index;
+                          });
+                          // forward = true;
+                          // _pageController.position;
+                          // TODO: this code below is to be considered
+                          //  _pageController.jumpToPage(index);
+                          _pageController.page == index + 1
+                              //  _pageController.page == index + 2
+                              ? _pageController.previousPage(
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeInOut)
+                              : _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeInOut);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            left: current == 0 ? 12 : 15,
+                            // right: current == categories.length - 1 ? 15 : 1,
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          height: 36,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: current == index ? kBrown : kWhite,
+                            border: current == index
+                                ? null
+                                : Border.all(
+                                    color: kLightGrey,
+                                    width: 1,
+                                  ),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                categories[index],
+                                style: kEncodeSansMedium.copyWith(
+                                  color: current == index ? kWhite : kDarkBrown,
+                                  fontSize: SizeConfig.blockSizeHorizontal! * 2,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: sizeVertical * 3,
+                ),
+                Text(
+                  'Transactions',
+                  style: kEncodeSansMedium.copyWith(
+                      color: kGrey,
+                      fontSize: SizeConfig.blockSizeHorizontal! * 3.0),
+                ),
+                SizedBox(
+                  height: sizeVertical * 3,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Text('Select date'),
+                          SizedBox(
+                            height: sizeVertical * 3,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .4,
+                            child: DropdownButtonFormField<String>(
+                              value: selectedDate,
+                              items: [
+                                DropdownMenuItem<String>(
+                                  value: 'all',
+                                  child: Text('All'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'today',
+                                  child: Text('Today'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'this-week',
+                                  child: Text('This Week'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'last-week',
+                                  child: Text('Last Week'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'this-month',
+                                  child: Text('This Month'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'last-month',
+                                  child: Text('Last Month'),
+                                )
+                              ],
+                              // items: dates.map((category) {
+                              //   return DropdownMenuItem<String>(
+                              //     value: category,
+                              //     child: Text(category),
+                              //   );
+                              // }).toList(),
+                              onChanged: (category) {
+                                setState(() {
+                                  selectedDate = category!;
+
+                                  // fetchTransactions(selectedDate!);
+                                });
+                                fetchTransactions(selectedDate);
+                              },
+                              decoration: InputDecoration(
+                                focusedBorder: kInputBorder,
+                                fillColor: kWhite,
+                                filled: true,
+                                labelText: 'Today',
+                                labelStyle: kEncodeSansSemiBold.copyWith(
+                                    color: kDarkGrey,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal! * 2.0),
+                                hintStyle: kEncodeSansSemiBold.copyWith(
+                                    color: kLightGrey,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal! * 2.0),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: kBrown,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Column(
-                      children: [
-                        Text('Select Range'),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.of(context).push(CupertinoPageRoute(
-                                  builder: ((context) => const DateRange())));
-                            },
-                            icon: Icon(Icons.calendar_month))
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text('Select Range'),
+                          SizedBox(
+                            height: sizeVertical * 3,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(CupertinoPageRoute(
+                                    builder: ((context) => const DateRange())));
+                              },
+                              icon: Icon(Icons.calendar_month))
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: sizeVertical * 3,
-              ),
-              SizedBox(
-                height: sizeVertical * 2,
-              ),
-              Consumer<TransactionsProvider>(
-                builder: (context, transaction, child) {
-                  List<Datum1> transactions = transaction.transactions;
-                  return SizedBox(
-                      height: double.maxFinite,
-                      child: PageView.builder(
-                          itemCount: transactions.length,
-                          scrollDirection: Axis.horizontal,
-                          controller: _pageController,
-                          onPageChanged: (value) {
-                            curentPage = value;
-                            setState(() {
-                              current = value;
-                              //curentPage = index;
-                            });
-                          },
-                          itemBuilder: (context, index) {
-                            Datum1 x = transactions[index];
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 0),
-                                  child: Column(
-                                    children: List.generate(
-                                      his.length,
-                                      (index) => Column(
+                SizedBox(
+                  height: sizeVertical * 3,
+                ),
+                SizedBox(
+                  height: sizeVertical * 2,
+                ),
+
+                //      transacts.transaction.isEmpty
+                //        Text('nothing here $transactions')
+                // transacts!.isLoading
+                //     ? SpinKitWanderingCubes(
+                //         color: kYellow,
+                //       )
+                //     : 
+                transacts!.transaction.isEmpty
+                        ? Center(
+                            child: Text(
+                                'you\'ve not made any transactions yet!!!'),
+                          )
+                        : SizedBox(
+                            height: double.maxFinite,
+                            child: PageView.builder(
+                              itemCount: transacts!.transaction.length,
+                              scrollDirection: Axis.horizontal,
+                              controller: _pageController,
+                              onPageChanged: (value) {
+                                curentPage = value;
+                                setState(() {
+                                  current = value;
+                                });
+                              },
+                              itemBuilder: (context, index) {
+                                Datum2 x = transacts!.transaction[index];
+                                return transacts!.isLoading
+                                    ? SpinKitWanderingCubes(
+                                        color: kYellow,
+                                      )
+                                    : Column(
                                         children: [
-                                          ListTile(
-                                            onTap: () {
-                                              // Navigator.of(context).push(
-                                              //     CupertinoPageRoute(
-                                              //         builder: ((context) =>
-                                              //             const )));
-                                            },
-                                            leading: Container(
-                                              padding: const EdgeInsets.all(12),
-                                              decoration: BoxDecoration(
-                                                color: kBrown,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(12),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 0),
+                                            child: Column(
+                                              children: List.generate(
+                                                transacts!.transaction.length,
+                                                (index) => Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20),
+                                                      child: Card(
+                                                        child: ListTile(
+                                                          onTap: () {
+                                                            context
+                                                                .read<
+                                                                    TransactionsProvider>()
+                                                                .singleTransactions(
+                                                                    trans_uuid:
+                                                                        x.id!,
+                                                                    context:
+                                                                        context);
+                                                          },
+                                                          leading: Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(12),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: kBrown,
+                                                              shape: BoxShape
+                                                                  .rectangle,
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .all(
+                                                                Radius.circular(
+                                                                    12),
+                                                              ),
+                                                            ),
+                                                            child: Image.asset(
+                                                              'assets/images/logo-1.png',
+                                                              width:
+                                                                  sizeHorizontal *
+                                                                      5,
+                                                            ),
+                                                            // Icon(
+                                                            //   Icons
+                                                            //       .mobile_screen_share_rounded,
+                                                            //   color: kGrey,
+                                                            // ),
+                                                          ),
+                                                          title: Text(
+                                                            "${typeValues2.reverse[x.type]!} purchase to ${x.phoneNumber}",
+                                                            style: kEncodeSansMedium.copyWith(
+                                                                color:
+                                                                    kDarkBrown,
+                                                                fontSize:
+                                                                    sizeHorizontal *
+                                                                        1.6),
+                                                          ),
+                                                          subtitle: Text(
+                                                            'Date: ${x.dateAndTime}',
+                                                            style: kEncodeSansRegular
+                                                                .copyWith(
+                                                                    color:
+                                                                        kGrey,
+                                                                    fontSize:
+                                                                        sizeVertical *
+                                                                            2.0),
+                                                          ),
+                                                          trailing: Text(
+                                                              "${statusValues2.reverse[x.status]!}\n #${x.amount}"),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              child: Icon(
-                                                Icons
-                                                    .mobile_screen_share_rounded,
-                                                color: kGrey,
-                                              ),
                                             ),
-                                            title: Text(
-                                              x.type as String,
-                                              style: kEncodeSansMedium.copyWith(
-                                                  color: kDarkBrown,
-                                                  fontSize:
-                                                      sizeHorizontal * 2.0),
-                                            ),
-                                            subtitle: Text(
-                                              'initialBal: ${x.oldBalance}, finalBal: ${x.newBalance},',
-                                              style:
-                                                  kEncodeSansRegular.copyWith(
-                                                      color: kGrey,
-                                                      fontSize:
-                                                          sizeVertical * 1.8),
-                                            ),
-                                            trailing: const Icon(Icons.diamond),
                                           ),
-
-                                          // PriceListCard(
-                                          //   status: x.status,
-                                          //   beneficiary: x.beneficiary,
-                                          //   dataType: x.dataType,
-                                          //   transType: x.transacType,
-                                          //   initialBal: x.initialBal,
-                                          //   finalBal: x.finalBal,
-                                          // ),
                                         ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }));
-                },
-              )
-            ],
+                                      );
+                              },
+                            ),
+                          ),
+              ],
+            ),
           ),
         ),
       ),

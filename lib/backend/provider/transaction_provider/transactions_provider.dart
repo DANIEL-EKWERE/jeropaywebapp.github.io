@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:databank/backend/provider/database/db_provider.dart';
+import 'package:databank/widget/receipt.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
 import 'package:flutter/foundation.dart';
@@ -8,27 +10,51 @@ import 'package:databank/backend/models/api_models.dart';
 
 class TransactionsProvider extends ChangeNotifier {
   String baseUrl = AppUrl.baseUrl;
-  AllTransactions? allTransactions;
+  // List<AllTransactions>? allTransactions;
+  AllTransactions2 allTran2 =
+      AllTransactions2(status: '', totalAmount: 0.0, data: []);
+
+  AllTransactions2 allTran =
+      AllTransactions2(status: '', totalAmount: 0.0, data: []);
   // setter
-  List<Datum1> _transactions = [];
+  List<Datum2> _transactions = [];
+
+  List<Datum2> get transaction => _transactions;
   bool _isLoading = false;
   String _reqMessage = '';
+  AllTransactions2 allTransac =
+      AllTransactions2(status: '', totalAmount: 0.0, data: []);
+  SingleTransaction singleTransaction = SingleTransaction(
+    status: '',
+    data: Data1(
+        id: '',
+        detail: '',
+        dateAndTime: '',
+        oldBalance: '',
+        newBalance: '',
+        phoneNumber: '',
+        status: '',
+        type: '',
+        amount: ''),
+  );
 
+  late RecentTransactions recentTransacts;
   // getter
-  List<Datum1> get transactions => _transactions;
+  // List<Datum1> get transactions => _transactions;
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
 
-  void updateTransactions(List<Datum1> newTransactions) {
+  void updateTransactions(List<Datum2> newTransactions) {
     _transactions = newTransactions;
+    print(_transactions);
     notifyListeners();
   }
 
 // TODO: the code below is what am using for my transaction history
 
-
-  Future<AllTransactions?> fetchTransactionsFromAPI(
+  Future<AllTransactions2> fetchTransactionsFromAPI(
       {required String selectedDate}) async {
+    print('calling transactions');
     String url = '$baseUrl/transactions/$selectedDate/';
     _isLoading = true;
     notifyListeners();
@@ -45,13 +71,22 @@ class TransactionsProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         _isLoading = false;
         _reqMessage = 'transaction retrieved';
-        print(response.body);
+        print('the whole body ${response.body}');
         final allTransac = json.decode(response.body);
-        print(allTransac);
+        print('======================');
+        print('NOT FROM MODEL $allTransac');
         final lastMonthTransac = json.decode(response.body);
-        allTransactions = allTransactionsFromJson(allTransac);
+        print('NOT FROM MODEL 2 $lastMonthTransac');
+        print('======================');
+        AllTransactions2 allTransactions =
+            allTransactionsFromJson2(response.body);
+        print('======================');
+        print(allTransactions.data);
+        print('FROM MODEL $allTransactions');
+        print(allTransactions.status);
         _reqMessage = lastMonthTransac['status'];
         notifyListeners();
+        return allTransactions;
       } else {
         print(response.body);
         _isLoading = false;
@@ -69,12 +104,83 @@ class TransactionsProvider extends ChangeNotifier {
       _reqMessage = 'An Error Occured $e';
       throw Exception('Failed to make the request: $e');
     }
-    return allTransactions;
-    // throw Exception('Failed to load data');
+
+    throw Exception('Failed to load data');
+  }
+
+// TODO: the code above is what am using for my transaction history
+
+
+
+
+
+
+
+
+
+
+
+Future<RecentTransactions> recentTransactions() async {
+    print('calling recent transactions');
+    String url = '$baseUrl/Recent-transactions/';
+    _isLoading = true;
+    notifyListeners();
+
+    final access = await DataBaseProvider().getToken();
+    Map<String, String>? reqHeader = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $access',
+    };
+
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: reqHeader);
+      if (response.statusCode == 200) {
+        _isLoading = false;
+        _reqMessage = 'transaction retrieved';
+        final responseBody = jsonDecode(response.body);
+          recentTransacts = RecentTransactions.fromJson(responseBody);
+        _reqMessage = responseBody['status'];
+        notifyListeners();
+        return recentTransacts;
+      } else {
+        print(response.body);
+        _isLoading = false;
+        _reqMessage = 'error loading this receipt ${response.statusCode}';
+        notifyListeners();
+        throw Exception('Failed to load data ${response.statusCode}');
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _reqMessage = 'internet connection not available';
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _reqMessage = 'An Error Occured $e';
+      throw Exception('Failed to make the request: $e');
+    }
+
+    throw Exception('Failed to load data');
   }
 
 
-// TODO: the code above is what am using for my transaction history
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -97,9 +203,26 @@ class TransactionsProvider extends ChangeNotifier {
         _reqMessage = 'all transaction retrieved';
         print(response.body);
         final allTransac = json.decode(response.body);
-        final allTransactions = allTransactionsFromJson(allTransac);
+        final allTransactions = allTransactionsFromJson2(allTransac);
         print(allTransac);
         print(allTransactions);
+        // showModalBottomSheet(
+        //     showDragHandle: true,
+        //     isDismissible: false,
+        //     isScrollControlled: true,
+        //     // anchorPoint: const Offset(5, 50),
+        //     useSafeArea: true,
+        //     context: context!,
+        //     builder: (context) => Receipt(
+        //           details: allTransactions.detail,
+        //           date_and_time: dateAndTime.toIso8601String(),
+        //           old_balance: allTransactions.oldBalance,
+        //           new_balance: allTransactions.newBalance,
+        //           phone_number: allTransactions.phoneNumber,
+        //           status: allTransactions.status,
+        //           type: allTransactions.type,
+        //           amout: allTransactions.amount,
+        //         ));
         notifyListeners();
       } else {
         print(response.body);
@@ -117,7 +240,8 @@ class TransactionsProvider extends ChangeNotifier {
     }
   }
 
-  void singleTransactions({required String trans_uuid}) async {
+  void singleTransactions(
+      {required String trans_uuid, required BuildContext? context}) async {
     String url = '$baseUrl/transaction/$trans_uuid/';
     _isLoading = true;
     notifyListeners();
@@ -134,9 +258,28 @@ class TransactionsProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         _isLoading = false;
         print(response.body);
-        final singleTransac = json.decode(response.body);
-        print(singleTransac);
-        _reqMessage = singleTransac['status'];
+        final jsonString = json.decode(response.body);
+        print(jsonString);
+        singleTransaction = singleTransactionFromJson(response.body);
+        _reqMessage = jsonString['status'];
+        _reqMessage = singleTransaction.status;
+        showModalBottomSheet(
+            showDragHandle: true,
+            isDismissible: false,
+            isScrollControlled: true,
+            // anchorPoint: const Offset(5, 50),
+            useSafeArea: true,
+            context: context!,
+            builder: (context) => Receipt(
+                  details: singleTransaction.data.detail,
+                  date_and_time: singleTransaction.data.dateAndTime,
+                  old_balance: singleTransaction.data.oldBalance,
+                  new_balance: singleTransaction.data.newBalance,
+                  phone_number: singleTransaction.data.phoneNumber,
+                  status: singleTransaction.data.status,
+                  type: singleTransaction.data.type,
+                  amout: singleTransaction.data.amount,
+                ));
         notifyListeners();
       } else {
         print(response.body);
@@ -456,5 +599,11 @@ class TransactionsProvider extends ChangeNotifier {
       _isLoading = false;
       _reqMessage = 'An Error Occured $e';
     }
+  }
+
+  void clear() {
+    _reqMessage = '';
+
+    notifyListeners();
   }
 }

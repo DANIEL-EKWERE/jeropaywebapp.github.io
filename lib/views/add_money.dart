@@ -54,12 +54,12 @@ class _AddMoneyState extends State<AddMoney> {
           SizedBox(
             height: sizeVertical * 3,
           ),
-          const Image(
-              image: AssetImage('assets/images/add money svg.png'),
-              fit: BoxFit.cover),
-          SizedBox(
-            height: sizeVertical * 3,
-          ),
+          // const Image(
+          //     image: AssetImage('assets/images/add money svg.png'),
+          //     fit: BoxFit.cover),
+          // SizedBox(
+          //   height: sizeVertical * 3,
+          // ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

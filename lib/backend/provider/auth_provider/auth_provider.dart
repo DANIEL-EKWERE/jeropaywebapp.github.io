@@ -7,7 +7,7 @@ import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
-import 'package:databank/firebase_options.dart';
+// import 'package:databank/firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:databank/views/log_in.dart';
 import 'package:path/path.dart';
@@ -22,7 +22,7 @@ class AuthenticationProvider extends ChangeNotifier {
   Color? _color;
   bool _hasProfile = false;
 
-bool get hasProfile => _hasProfile;
+  bool get hasProfile => _hasProfile;
   Color? get color => _color;
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
@@ -120,7 +120,7 @@ bool get hasProfile => _hasProfile;
         final res = json.decode(request.body);
         final image = res['profileImage'];
         DataBaseProvider().saveProfileImage(image);
-  notifyListeners();
+        notifyListeners();
       } else {
         throw Exception('Failed to load data ${request.statusCode}');
       }
@@ -139,7 +139,8 @@ bool get hasProfile => _hasProfile;
     _isLoading = true;
     notifyListeners();
     String url = '$requestBaseUrl/user/login-user/';
-    final isProfileCreated = await queryUserProfile();
+    print('calling login in');
+    // final isProfileCreated = await queryUserProfile();
     final body = {
       "username": username,
       "password": password,
@@ -149,49 +150,67 @@ bool get hasProfile => _hasProfile;
     };
 
     try {
+      print('calling login in try block');
       http.Response res = await http.post(Uri.parse(url),
           headers: reqHeader, body: json.encode(body));
       print(res.body);
       print(res.statusCode);
       _reqMessage = '${res.body}';
-      if (res.statusCode == 201 || res.statusCode == 200) {
+      if (res.statusCode == 200) {
         final req = json.decode(res.body);
         _isLoading = false;
         _reqMessage = 'Login Successfully!!!';
         _color = const Color.fromARGB(255, 15, 175, 20);
-        print(isProfileCreated);
+        //  print(isProfileCreated);
         final deviceToken = await FirebaseMessaging.instance.getToken();
-        final platform = await DefaultFirebaseOptions.currentPlatform;
+        final platform = 'android';
         print(deviceToken);
         print(platform);
         await UserDetails().createOrUpdateDeviceTokenAndPlatform(
-            platform: platform, token: deviceToken);
+            platform: 'android', token: deviceToken);
         notifyListeners();
         final String token = req['token'].toString();
         final String userId = req['user_id'].toString();
         final String username = req['username'].toString();
+        final String profileId = req['profile_id'].toString();
+        final String phone = req['phone_number'].toString();
 
         print(token);
         print(userId);
         print(username);
+        print(phone);
         DataBaseProvider().saveToken(token);
         DataBaseProvider().saveUserId(userId);
         DataBaseProvider().saveUserName(username);
-        DataBaseProvider().getProfileId().then((value) {
-          print('profle id $value');
-          if (value.isEmpty) {
-            if (isProfileCreated) {
-              Navigator.of(context!)
-                  .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
-            }
-            Navigator.of(context!)
-                .pushNamedAndRemoveUntil("/CreatUserProfile", (route) => false);
-          } else {
-            Navigator.of(context!)
-                .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+        DataBaseProvider().saveProfileId(profileId);
+        DataBaseProvider().getPhone().then((phone1) {
+          if (phone1.isEmpty) {
+            DataBaseProvider().savePhoneNumber(phone);
           }
         });
+
+        // DataBaseProvider().getProfileId().then((value) {
+        //   print('profle id $value');
+        //   if (value.isEmpty) {
+        //     // if (isProfileCreated) {
+        //     //   Navigator.of(context!)
+        //     //       .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+        //     // }
+        //   } else {
+        Navigator.of(context!)
+            .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+        //   }
+        // });
         notifyListeners();
+      } else if (res.statusCode == 201) {
+        final req = json.decode(res.body);
+        _isLoading = false;
+        _reqMessage = 'create profile to continue';
+        _color = const Color(0xfff33225);
+        Navigator.of(context!)
+            .pushNamedAndRemoveUntil("/CreatUserProfile", (route) => false);
+        notifyListeners();
+        print(req);
       } else {
         final req = json.decode(res.body);
         _isLoading = false;
