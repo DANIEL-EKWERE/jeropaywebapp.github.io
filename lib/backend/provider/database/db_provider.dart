@@ -26,6 +26,12 @@ class DataBaseProvider extends ChangeNotifier {
 
   String _phone = '';
 
+  String _email = '';
+
+  String _first_name = '';
+
+  String _last_name = '';
+
   String get token => _token;
 
   String get userName => _userName;
@@ -43,6 +49,12 @@ class DataBaseProvider extends ChangeNotifier {
   String get profileImage => _profileImage;
 
   String get phone => _phone;
+
+  String get email => _email;
+
+  String get first_name => _first_name;
+
+  String get last_name => _last_name;
 
   void saveToken(String token) async {
     SharedPreferences value = await _pref;
@@ -84,10 +96,24 @@ class DataBaseProvider extends ChangeNotifier {
     value.setString('image', image as String);
   }
 
-
-   void savePhoneNumber(String phone) async {
+  void savePhoneNumber(String phone) async {
     SharedPreferences value = await _pref;
     value.setString('phone', phone);
+  }
+
+  void saveEmail(String email) async {
+    SharedPreferences value = await _pref;
+    value.setString('email', email);
+  }
+
+    void saveFirstName(String first_name) async {
+    SharedPreferences value = await _pref;
+    value.setString('first_name', first_name);
+  }
+
+    void saveLastName(String last_name) async {
+    SharedPreferences value = await _pref;
+    value.setString('last_name', last_name);
   }
 
   Future<String> getToken() async {
@@ -105,12 +131,12 @@ class DataBaseProvider extends ChangeNotifier {
     }
   }
 
-   Future<String> getPhone() async {
+  Future<String> getPhone() async {
     SharedPreferences value = await _pref;
 
     if (value.containsKey('phone')) {
       String data = value.getString('phone')!;
-      _phone= data;
+      _phone = data;
       notifyListeners();
       return data;
     } else {
@@ -215,6 +241,51 @@ class DataBaseProvider extends ChangeNotifier {
 
     if (value.containsKey('image')) {
       String data = value.getString('image')!;
+      _profileImage = data;
+      notifyListeners();
+      return data;
+    } else {
+      _profileImage = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
+  Future<String> getEmail() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('email')) {
+      String data = value.getString('email')!;
+      _email = data;
+      notifyListeners();
+      return data;
+    } else {
+      _email = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
+  Future<String> getFirstName() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('first_name')) {
+      String data = value.getString('first_name')!;
+      _first_name = data;
+      notifyListeners();
+      return data;
+    } else {
+      _first_name = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
+  Future<String> getLastName() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('last_name')) {
+      String data = value.getString('last_name')!;
       _profileImage = data;
       notifyListeners();
       return data;

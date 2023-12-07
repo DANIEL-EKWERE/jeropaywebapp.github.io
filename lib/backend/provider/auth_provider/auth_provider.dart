@@ -130,6 +130,54 @@ class AuthenticationProvider extends ChangeNotifier {
     return _hasProfile;
   }
 
+  // update password
+
+  Future<void> changePassword(
+      {required String old_password, required String new_password}) async {
+    _isLoading = true;
+    try {
+      final access = await DataBaseProvider().getToken();
+      Map<String, String>? reqHeader = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $access',
+      };
+
+      final body = {
+        'old_password': old_password,
+        'new_password': new_password,
+      };
+      final url = '$requestBaseUrl/user/change-password/';
+      http.Response request = await http.post(Uri.parse(url),
+          headers: reqHeader, body: json.encode(body));
+      if (request.statusCode == 200) {
+        _isLoading = false;
+
+        final res = json.decode(request.body);
+        final image = res['message'];
+        DataBaseProvider().saveProfileImage(image);
+        notifyListeners();
+      } else if (request.statusCode == 400) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        final image = res['old_password'];
+        _reqMessage = image;
+        notifyListeners();
+        throw Exception('Failed to load data ${request.statusCode}');
+      } else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res;
+        notifyListeners();
+      }
+    } catch (e) {
+      _isLoading = false;
+      _reqMessage = 'somthing went wrong ${e.toString()}';
+      notifyListeners();
+      throw Exception('Failed to load data ${e.toString()} ');
+    }
+    //return _hasProfile;
+  }
+
   // login user
 
   void loginUser(
@@ -174,15 +222,24 @@ class AuthenticationProvider extends ChangeNotifier {
         final String username = req['username'].toString();
         final String profileId = req['profile_id'].toString();
         final String phone = req['phone_number'].toString();
+        final String email = req['email'].toString();
+        final String first_name = req['first_name'].toString();
+        final String last_name = req['last_name'].toString();
 
         print(token);
         print(userId);
         print(username);
         print(phone);
+        print(email);
+        print(first_name);
+        print(last_name);
         DataBaseProvider().saveToken(token);
         DataBaseProvider().saveUserId(userId);
         DataBaseProvider().saveUserName(username);
         DataBaseProvider().saveProfileId(profileId);
+        DataBaseProvider().saveEmail(email);
+        DataBaseProvider().saveFirstName(first_name);
+        DataBaseProvider().saveLastName(last_name);
         DataBaseProvider().getPhone().then((phone1) {
           if (phone1.isEmpty) {
             DataBaseProvider().savePhoneNumber(phone);
@@ -204,6 +261,8 @@ class AuthenticationProvider extends ChangeNotifier {
         notifyListeners();
       } else if (res.statusCode == 201) {
         final req = json.decode(res.body);
+        final String token = req['token'].toString();
+        DataBaseProvider().saveToken(token);
         _isLoading = false;
         _reqMessage = 'create profile to continue';
         _color = const Color(0xfff33225);
@@ -249,6 +308,8 @@ class AuthenticationProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $access',
     };
+    _reqMessage = 'access token $access';
+    notifyListeners();
     try {
       var res = http.MultipartRequest('POST', Uri.parse(url));
 
@@ -284,10 +345,29 @@ class AuthenticationProvider extends ChangeNotifier {
         Navigator.of(context!)
             .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
         notifyListeners();
+      } else if (response.statusCode == 401) {
+        _isLoading = false;
+        var req = await response.stream.bytesToString();
+        var res = json.decode(req);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        // Handle unauthorized access (e.g., redirect to login screen)
+        // Example: Navigator.pushNamed(context, '/login');
+        Navigator.of(context!)
+            .pushNamedAndRemoveUntil("/Login", (route) => false);
+
+        notifyListeners();
       } else {
         _isLoading = false;
-        _reqMessage = 'Error Creating Profile ${response.statusCode}';
-        const Color(0xfff33225);
+        var responseBody = await response.stream.bytesToString();
+        var responseJson = json.decode(responseBody);
+
+        // Check if 'body' property exists in the response
+        var bodyValue = responseJson['body'] ?? 'No body found';
+
+        _reqMessage =
+            'Error Creating Profile ${response.statusCode} $bodyValue';
+        _color = const Color(0xfff33225);
         notifyListeners();
       }
     } on SocketException catch (_) {

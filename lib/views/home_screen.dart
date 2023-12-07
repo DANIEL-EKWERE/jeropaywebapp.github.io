@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     gatherBalance();
     username1();
-
+    context.read<TransactionsProvider>().recentTransactions();
     // setState(() {
     //   balance = balancex;
     // });
@@ -348,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           'Hello,$username 👋',
                           style: kEncodeSansMedium.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 3),
+                              fontSize: SizeConfig.blockSizeVertical! * 2),
                         ),
                       ),
                       Positioned(
@@ -358,27 +358,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           DateFormat('dd MMM,yyyy.').format(currentTime),
                           style: kEncodeSansMedium.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 3),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2),
                         ),
                       ),
                       Positioned(
-                        top: 70,
+                        top: 120,
                         left: 24,
                         child: Text(
                           'package: \nSmart User',
                           style: kEncodeSansMedium.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.7),
                         ),
                       ),
                       Positioned(
-                        top: 70,
+                        top: 120,
                         right: 24,
                         child: Text(
-                          'Bonus Balance: \n         0.00',
+                          'Bonus Bal: \n           0.00',
                           style: kEncodeSansMedium.copyWith(
                               color: kWhite,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 2),
+                              fontSize: SizeConfig.blockSizeHorizontal! * 1.7),
                         ),
                       ),
                       Positioned(
@@ -840,12 +840,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          Navigator.of(context)
-                                              .push(CupertinoPageRoute(
-                                            builder: (context) => HistoryScreen(
-                                              openDrawer: widget.openDrawer,
-                                            ),
-                                          ));
+                                          // Navigator.of(context)
+                                          //     .push(CupertinoPageRoute(
+                                          //   builder: (context) => HistoryScreen(
+                                          //     openDrawer: widget.openDrawer,
+                                          //   ),
+                                          // ));
+
+                                          context
+                                              .read<TransactionsProvider>()
+                                              .recentTransactions();
                                         },
                                         child: Container(
                                           width:
@@ -1060,60 +1064,60 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }),
               const SizedBox(height: 10),
-              Consumer<TransactionsProvider>(
-                  builder: (context, transactions, child) {
-                return ListView.builder(
-                    itemCount: transactions.recentTransacts.transactions.length,
-                    itemBuilder: (context, index) {
-                     // RecentTransactions recents =
-                       //   RecentTransactions(status: '', transactions: []);
-                      Transaction x =
-                          transactions.recentTransacts.transactions[index];
-                      return Card(
-                        child: ListTile(
-                          onTap: () {
-                            context
-                                .read<TransactionsProvider>()
-                                .singleTransactions(
-                                    trans_uuid: x.id, context: context);
-                          },
-                          leading: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: kBrown,
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                            ),
-                            child: Image.asset(
-                              'assets/images/logo-1.png',
-                              width: sizeHorizontal * 5,
-                            ),
-                            // Icon(
-                            //   Icons
-                            //       .mobile_screen_share_rounded,
-                            //   color: kGrey,
-                            // ),
-                          ),
-                          title: Text(
-                            "${typeValues2.reverse[x.type]!} purchase to ${x.phoneNumber}",
-                            style: kEncodeSansMedium.copyWith(
-                                color: kDarkBrown,
-                                fontSize: sizeHorizontal * 1.6),
-                          ),
-                          subtitle: Text(
-                            'Date: ${x.dateAndTime}',
-                            style: kEncodeSansRegular.copyWith(
-                                color: kGrey, fontSize: sizeVertical * 2.0),
-                          ),
-                          trailing: Text(
-                              "${statusValues2.reverse[x.status]!}\n #${x.amount}"),
-                        ),
-                      );
-                    });
-              }),
-              const SizedBox(height: 90),
+              // Consumer<TransactionsProvider>(
+              //     builder: (context, transactions, child) {
+              //   return ListView.builder(
+              //       itemCount: transactions.recentTransacts.transactions.length,
+              //       itemBuilder: (context, index) {
+              //        // RecentTransactions recents =
+              //          //   RecentTransactions(status: '', transactions: []);
+              //         Transaction x =
+              //             transactions.recentTransacts.transactions[index];
+              //         return Card(
+              //           child: ListTile(
+              //             onTap: () {
+              //               context
+              //                   .read<TransactionsProvider>()
+              //                   .singleTransactions(
+              //                       trans_uuid: x.id, context: context);
+              //             },
+              //             leading: Container(
+              //               padding: const EdgeInsets.all(12),
+              //               decoration: BoxDecoration(
+              //                 color: kBrown,
+              //                 shape: BoxShape.rectangle,
+              //                 borderRadius: const BorderRadius.all(
+              //                   Radius.circular(12),
+              //                 ),
+              //               ),
+              //               child: Image.asset(
+              //                 'assets/images/logo-1.png',
+              //                 width: sizeHorizontal * 5,
+              //               ),
+              //               // Icon(
+              //               //   Icons
+              //               //       .mobile_screen_share_rounded,
+              //               //   color: kGrey,
+              //               // ),
+              //             ),
+              //             title: Text(
+              //               "${typeValues2.reverse[x.type]!} purchase to ${x.phoneNumber}",
+              //               style: kEncodeSansMedium.copyWith(
+              //                   color: kDarkBrown,
+              //                   fontSize: sizeHorizontal * 1.6),
+              //             ),
+              //             subtitle: Text(
+              //               'Date: ${x.dateAndTime}',
+              //               style: kEncodeSansRegular.copyWith(
+              //                   color: kGrey, fontSize: sizeVertical * 2.0),
+              //             ),
+              //             trailing: Text(
+              //                 "${statusValues2.reverse[x.status]!}\n #${x.amount}"),
+              //           ),
+              //         );
+              //       });
+              // }),
+              // const SizedBox(height: 90),
             ],
           ),
         ),

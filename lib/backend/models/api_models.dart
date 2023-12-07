@@ -869,21 +869,27 @@ import 'dart:convert';
 //
 //     final dataPurchase = dataPurchaseFromJson(jsonString);
 
-DataPurchase dataPurchaseFromJson(String str) =>
-    DataPurchase.fromJson(json.decode(str));
+// To parse this JSON data, do
+//
+//     final dataPurchaseModel = dataPurchaseModelFromJson(jsonString);
 
-String dataPurchaseToJson(DataPurchase data) => json.encode(data.toJson());
+DataPurchaseModel dataPurchaseModelFromJson(String str) =>
+    DataPurchaseModel.fromJson(json.decode(str));
 
-class DataPurchase {
+String dataPurchaseModelToJson(DataPurchaseModel data) =>
+    json.encode(data.toJson());
+
+class DataPurchaseModel {
   final String status;
   final Message message;
 
-  DataPurchase({
+  DataPurchaseModel({
     required this.status,
     required this.message,
   });
 
-  factory DataPurchase.fromJson(Map<String, dynamic> json) => DataPurchase(
+  factory DataPurchaseModel.fromJson(Map<String, dynamic> json) =>
+      DataPurchaseModel(
         status: json["status"],
         message: Message.fromJson(json["message"]),
       );
@@ -897,7 +903,7 @@ class DataPurchase {
 class Message {
   final String id;
   final String detail;
-  final DateTime dateAndTime;
+  final String dateAndTime;
   final String oldBalance;
   final String newBalance;
   final String phoneNumber;
@@ -920,7 +926,7 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) => Message(
         id: json["id"],
         detail: json["detail"],
-        dateAndTime: DateTime.parse(json["date_and_time"]),
+        dateAndTime: json["date_and_time"],
         oldBalance: json["old_balance"],
         newBalance: json["new_balance"],
         phoneNumber: json["phone_number"],
@@ -929,12 +935,10 @@ class Message {
         type: json["type"],
       );
 
-  get date_and_time => null;
-
   Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
-        "date_and_time": dateAndTime.toIso8601String(),
+        "date_and_time": dateAndTime,
         "old_balance": oldBalance,
         "new_balance": newBalance,
         "phone_number": phoneNumber,
@@ -987,54 +991,58 @@ class DepositRecord {
 //
 //     final recentTransactions = recentTransactionsFromJson(jsonString);
 
-RecentTransactions recentTransactionsFromJson(String str) => RecentTransactions.fromJson(json.decode(str));
+RecentTransactions recentTransactionsFromJson(String str) =>
+    RecentTransactions.fromJson(json.decode(str));
 
-String recentTransactionsToJson(RecentTransactions data) => json.encode(data.toJson());
+String recentTransactionsToJson(RecentTransactions data) =>
+    json.encode(data.toJson());
 
 class RecentTransactions {
-    final String status;
-    final List<Transaction> transactions;
+  final String status;
+  final List<Transaction> transactions;
 
-    RecentTransactions({
-        required this.status,
-        required this.transactions,
-    });
+  RecentTransactions({
+    required this.status,
+    required this.transactions,
+  });
 
-    factory RecentTransactions.fromJson(Map<String, dynamic> json) => RecentTransactions(
+  factory RecentTransactions.fromJson(Map<String, dynamic> json) =>
+      RecentTransactions(
         status: json["status"],
-        transactions: List<Transaction>.from(json["transactions"].map((x) => Transaction.fromJson(x))),
-    );
+        transactions: List<Transaction>.from(
+            json["transactions"].map((x) => Transaction.fromJson(x))),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "transactions": List<dynamic>.from(transactions.map((x) => x.toJson())),
-    };
+      };
 }
 
 class Transaction {
-    final String id;
-    final String detail;
-    final String dateAndTime;
-    final String oldBalance;
-    final String newBalance;
-    final String phoneNumber;
-    final String status;
-    final String amount;
-    final String type;
+  final String id;
+  final String detail;
+  final String dateAndTime;
+  final String oldBalance;
+  final String newBalance;
+  final String phoneNumber;
+  final String status;
+  final String amount;
+  final String type;
 
-    Transaction({
-        required this.id,
-        required this.detail,
-        required this.dateAndTime,
-        required this.oldBalance,
-        required this.newBalance,
-        required this.phoneNumber,
-        required this.status,
-        required this.amount,
-        required this.type,
-    });
+  Transaction({
+    required this.id,
+    required this.detail,
+    required this.dateAndTime,
+    required this.oldBalance,
+    required this.newBalance,
+    required this.phoneNumber,
+    required this.status,
+    required this.amount,
+    required this.type,
+  });
 
-    factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
+  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
         id: json["id"],
         detail: json["detail"],
         dateAndTime: json["date_and_time"],
@@ -1044,9 +1052,9 @@ class Transaction {
         status: json["status"],
         amount: json["amount"],
         type: json["type"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
         "date_and_time": dateAndTime,
@@ -1056,7 +1064,7 @@ class Transaction {
         "status": status,
         "amount": amount,
         "type": type,
-    };
+      };
 }
 
 // enum DateAndTime { OCT_182023, OCT_272023 }
@@ -1090,16 +1098,15 @@ class EnumValues<T> {
 //
 //     final allTransactions = allTransactionsFromJson(jsonString);
 
-
 // List<AllTransactions2> allTransactionsFromJson2(String str) => List<AllTransactions2>.from(json.decode(str).map((x) => AllTransactions2.fromJson(x)));
 
 // String allTransactionsToJson2(List<AllTransactions> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+AllTransactions2 allTransactionsFromJson2(String str) =>
+    AllTransactions2.fromJson(json.decode(str));
 
-
- AllTransactions2 allTransactionsFromJson2(String str) => AllTransactions2.fromJson(json.decode(str));
-
- String allTransactionsToJson2(AllTransactions2 data) => json.encode(data.toJson());
+String allTransactionsToJson2(AllTransactions2 data) =>
+    json.encode(data.toJson());
 
 class AllTransactions2 {
   final String? status;

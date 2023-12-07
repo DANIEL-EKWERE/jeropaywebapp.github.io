@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
+import 'package:databank/views/about_us.dart';
 import 'package:databank/views/reset_password.dart';
 import 'package:databank/views/create_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,17 +23,67 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   var pImage;
+  var firstName;
+  var lastName;
+  var email;
+  var phone;
+  var userName;
   @override
   void initState() {
     super.initState();
 
     _profileImage();
+    gatheUserName();
+    gatheUserEmail();
+    gatheUserPhoneNumber();
+    gatheUserfirstName();
+    gatheUserLastName();
   }
 
   Future _profileImage() async {
     final image = await DataBaseProvider().getProfileImage();
     setState(() {
       pImage = image;
+    });
+  }
+
+  Future gatheUserName() async {
+    final username = await DataBaseProvider().getUserName();
+
+    setState(() {
+      userName = username;
+    });
+  }
+
+  Future gatheUserEmail() async {
+    final userEmail = await DataBaseProvider().getEmail();
+
+    setState(() {
+      email = userEmail;
+    });
+  }
+
+  Future gatheUserPhoneNumber() async {
+    final userPhone = await DataBaseProvider().getPhone();
+
+    setState(() {
+      phone = userPhone;
+    });
+  }
+
+  Future gatheUserfirstName() async {
+    final userfirstName = await DataBaseProvider().getFirstName();
+
+    setState(() {
+      firstName = userfirstName;
+    });
+  }
+
+  Future gatheUserLastName() async {
+    final userLastName = await DataBaseProvider().getLastName();
+
+    setState(() {
+      lastName = userLastName;
     });
   }
 
@@ -74,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 // ),
                 const Spacer(),
 
-                 CircleAvatar(
+                CircleAvatar(
                   radius: 60,
                   backgroundColor: kGrey,
                   backgroundImage:
@@ -143,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Daniel',
+                          text: firstName,
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
@@ -172,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Ekwere',
+                          text: lastName,
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
@@ -201,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Daniel Ekwere',
+                          text: userName,
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
@@ -230,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'ekweredaniel8@gmail.com',
+                          text: email,
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
@@ -259,7 +310,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
-                          text: '07043194111',
+                          text: phone,
                           style: kEncodeSansBold.copyWith(
                               color: kGrey,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
@@ -369,7 +420,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 IconButton(
                   icon: const Icon(Icons.open_in_browser_outlined),
                   color: kGrey,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (context) => const AboutUs()));
+                  },
                 )
               ],
             ),

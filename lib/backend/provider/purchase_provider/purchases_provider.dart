@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../models/api_models.dart';
-
 // 923cdea0-feec-4e3a-9e2e-e0edc76c8aec giting mtn
 class PurchaseProvider extends ChangeNotifier {
   final baseUrl = AppUrl.baseUrl;
@@ -27,21 +25,32 @@ class PurchaseProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   Color? get color => _color;
   // Message message = Message(amount: '',id: '', dateAndTime: DateTime.now(),detail: '', oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'');
-  AirtimePurchaseModel airtimePurchaseModel =
-      AirtimePurchaseModel(data: Data(id:'',detail: '',dateAndTime: DateTime.now(),oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'',amount: ''), status: '');
-  // Data data = Data(id:'',detail: '',dateAndTime: DateTime.now(),oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'',amount: '');
-  DataPurchase dataPurchaseModel = DataPurchase(
-      message: Message(
-          amount: '',
+  AirtimePurchaseModel airtimePurchaseModel = AirtimePurchaseModel(
+      data: Data(
           id: '',
-          dateAndTime: DateTime.now(),
           detail: '',
+          dateAndTime: DateTime.now(),
           oldBalance: '',
           newBalance: '',
           phoneNumber: '',
           status: '',
-          type: ''),
+          type: '',
+          amount: ''),
       status: '');
+
+  DataPurchaseModel dataPurchaseModel = DataPurchaseModel(
+    status: '',
+    message: Message(
+        amount: '',
+        id: '',
+        dateAndTime: '',
+        detail: '',
+        oldBalance: '',
+        newBalance: '',
+        phoneNumber: '',
+        status: '',
+        type: ''),
+  );
   get dateAndTime => null;
   Future<void> PurchaseData(
       {required String dataId,
@@ -55,43 +64,136 @@ class PurchaseProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $access',
     };
-
+    print(dataId);
     final body = {
       'phone_number': phone_number,
     };
 
     try {
-      http.Response req = await http.post(Uri.parse(url),
+      http.Response response = await http.post(Uri.parse(url),
           body: json.encode(body), headers: reqHeader);
-      if (req.statusCode == 200 || req.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         _isLoading = false;
-        final res = json.decode(req.body);
+        var res = json.decode(response.body);
         print(res);
-        dataPurchaseModel = dataPurchaseFromJson(req.body);
+        print(response.statusCode);
+        dataPurchaseModel = dataPurchaseModelFromJson(response.body);
         _reqMessage = 'your purchase was successful';
+        print(dataPurchaseModel);
         _color = const Color.fromARGB(255, 15, 175, 20);
+        // showModalBottomSheet(
+        //     showDragHandle: true,
+        //     isDismissible: false,
+        //     isScrollControlled: true,
+        //     // anchorPoint: const Offset(5, 50),
+        //     useSafeArea: true,
+        //     context: context!,
+        //     builder: (context) => Receipt(
+        //           details: dataPurchaseModel.message.detail,
+        //           date_and_time: dataPurchaseModel.message.dateAndTime,
+        //           old_balance: dataPurchaseModel.message.oldBalance,
+        //           new_balance: dataPurchaseModel.message.newBalance,
+        //           phone_number: dataPurchaseModel.message.phoneNumber,
+        //           status: dataPurchaseModel.message.status,
+        //           type: dataPurchaseModel.message.type,
+        //           amout: dataPurchaseModel.message.amount,
+        //         ));
+
         showModalBottomSheet(
             showDragHandle: true,
             isDismissible: false,
             isScrollControlled: true,
-            // anchorPoint: const Offset(5, 50),
             useSafeArea: true,
             context: context!,
-            builder: (context) => Receipt(
-                  details: dataPurchaseModel.message.detail,
-                  date_and_time: dataPurchaseModel.message.date_and_time,
-                  old_balance: dataPurchaseModel.message.oldBalance,
-                  new_balance: dataPurchaseModel.message.newBalance,
-                  phone_number: dataPurchaseModel.message.phoneNumber,
-                  status: dataPurchaseModel.message.status,
-                  type: dataPurchaseModel.message.type,
-                  amout: dataPurchaseModel.message.amount,
+            builder: (context) => SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 50,
+                      // color:
+                      //     kYellow,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Transaction Receipt'),
+                          Divider(),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Details:'),
+                                FittedBox(
+                                    child: Text(
+                                  dataPurchaseModel.message.detail,
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.height *
+                                              1.5,
+                                      fontWeight: FontWeight.bold),
+                                ))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Date and Time:'),
+                                Text(
+                                    dataPurchaseModel.message.dateAndTime)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Old Balance:'),
+                                Text(dataPurchaseModel.message.oldBalance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('New Balance:'),
+                                Text(dataPurchaseModel.message.newBalance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Phone:'),
+                                Text(dataPurchaseModel.message.phoneNumber)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Status:'),
+                                Text(dataPurchaseModel.message.status)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Amount:'),
+                                Text(dataPurchaseModel.message.amount)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Type:'),
+                                Text(dataPurchaseModel.message.type)
+                              ]),
+                        ],
+                      ),
+                    ),
+                  ),
                 ));
 
         notifyListeners();
-      } else if (req.statusCode == 401) {
+      } else if (response.statusCode == 401) {
         _isLoading = false;
-        final res = json.decode(req.body);
+        final res = json.decode(response.body);
         _reqMessage = res['message'];
         _color = const Color(0xfff33225);
         notifyListeners();
@@ -115,21 +217,23 @@ class PurchaseProvider extends ChangeNotifier {
                 ],
               );
             });
-      } else if (req.statusCode == 404) {
-        final res = json.decode(req.body);
+      } else if (response.statusCode == 404) {
+        final res = json.decode(response.body);
         _isLoading = false;
-        _reqMessage = res['details']['phone_number'][0];
+        _reqMessage =
+            '${res['details']['phone_number'][0]} ${response.statusCode}';
         _color = _color = const Color(0xfff33225);
         notifyListeners();
-      } else if (req.statusCode == 400) {
-        final res = json.decode(req.body);
+      } else if (response.statusCode == 400) {
+        final res = json.decode(response.body);
         _isLoading = false;
         _reqMessage = res['message']['error'][0];
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else {
         _isLoading = false;
-        _reqMessage = 'something went wrong';
+        _reqMessage =
+            'something went wrong ${response.statusCode} ${response.body}';
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       }
@@ -141,6 +245,7 @@ class PurchaseProvider extends ChangeNotifier {
     } catch (e) {
       _isLoading = false;
       _reqMessage = 'something went wrong $e';
+      print(e);
       _color = const Color(0xfff33225);
       notifyListeners();
     }
@@ -172,8 +277,7 @@ class PurchaseProvider extends ChangeNotifier {
 
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
-         airtimePurchaseModel =
-            airtimePurchaseFromJson(request.body);
+        airtimePurchaseModel = airtimePurchaseFromJson(request.body);
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
 
@@ -181,19 +285,110 @@ class PurchaseProvider extends ChangeNotifier {
             showDragHandle: true,
             isDismissible: false,
             isScrollControlled: true,
-            // anchorPoint: const Offset(5, 50),
             useSafeArea: true,
             context: context!,
-            builder: (context) => Receipt(
-                  details: airtimePurchaseModel.message!.details,
-                  date_and_time: airtimePurchaseModel.message!.date_and_time,
-                  old_balance: airtimePurchaseModel.message!.old_balance,
-                  new_balance: airtimePurchaseModel.message!.new_balance,
-                  phone_number: airtimePurchaseModel.message!.phone_number,
-                  status: airtimePurchaseModel.message!.status,
-                  type: airtimePurchaseModel.message!.type,
-                  amout: airtimePurchaseModel.message!.amount,
+            builder: (context) => SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 50,
+                      // color:
+                      //     kYellow,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Transaction Receipt'),
+                          Divider(),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Details:'),
+                                FittedBox(
+                                    child: Text(
+                                  airtimePurchaseModel.message!.details,
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.height *
+                                              1.5,
+                                      fontWeight: FontWeight.bold),
+                                ))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Date and Time:'),
+                                Text(
+                                    airtimePurchaseModel.message!.date_and_time)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Old Balance:'),
+                                Text(airtimePurchaseModel.message!.old_balance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('New Balance:'),
+                                Text(airtimePurchaseModel.message!.new_balance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Phone:'),
+                                Text(airtimePurchaseModel.message!.phone_number)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Status:'),
+                                Text(airtimePurchaseModel.message!.status)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Amount:'),
+                                Text(airtimePurchaseModel.message!.amount)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Type:'),
+                                Text(airtimePurchaseModel.message!.type)
+                              ]),
+                        ],
+                      ),
+                    ),
+                  ),
                 ));
+
+        // showModalBottomSheet(
+        //     showDragHandle: true,
+        //     isDismissible: false,
+        //     isScrollControlled: true,
+        //     // anchorPoint: const Offset(5, 50),
+        //     useSafeArea: true,
+        //     context: context!,
+        //     builder: (context) => Receipt(
+        //           details: airtimePurchaseModel.message!.details,
+        //           date_and_time: airtimePurchaseModel.message!.date_and_time,
+        //           old_balance: airtimePurchaseModel.message!.old_balance,
+        //           new_balance: airtimePurchaseModel.message!.new_balance,
+        //           phone_number: airtimePurchaseModel.message!.phone_number,
+        //           status: airtimePurchaseModel.message!.status,
+        //           type: airtimePurchaseModel.message!.type,
+        //           amout: airtimePurchaseModel.message!.amount,
+        //         ));
 
         notifyListeners();
       } else if (request.statusCode == 401) {
