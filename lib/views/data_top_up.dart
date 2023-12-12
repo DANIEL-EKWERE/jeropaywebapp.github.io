@@ -1,3 +1,4 @@
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -188,7 +189,7 @@ class _DataTopUpState extends State<DataTopUp> {
     'MTN 3GB - #590': '49be9c6f-7736-4b68-90dd-afc57b8d85dc',
 
     // airtel
-    'AIRTEL 500MB - #150': '01bdd291-325c-44fa-9547-c17ac5778e3f',
+    'AIRTEL 500MB - #150': '16c51d1d-d62f-4e95-af04-6b097085258a',
     'AIRTEL 1GB - #230': 'd781023b-d79d-49bc-809a-9ec0539d5a45',
     'AIRTEL 2GB - #460': 'd4d43803-b64c-4fa1-8d7a-b936ef5fc736',
     'AIRTEL 3GB - #590': 'ffdbb024-2a93-41c2-a4d9-31ca44b84443',
@@ -246,8 +247,7 @@ class _DataTopUpState extends State<DataTopUp> {
                   ),
                 ]),
             child: IconButton(
-              onPressed: () => Navigator.of(context)
-                  .pushNamedAndRemoveUntil("/App_Layout", (route) => false),
+              onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.chevron_left),
             ),
           ),
@@ -424,13 +424,23 @@ class _DataTopUpState extends State<DataTopUp> {
                                                 width: 1.5,
                                                 color: kYellow,
                                                 style: BorderStyle.solid)),
-                                        child: Text(
-                                          'Paste Number',
-                                          style: kEncodeSansSemiBold.copyWith(
-                                              color: kYellow,
-                                              fontSize: SizeConfig
-                                                      .blockSizeHorizontal! *
-                                                  2.0),
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            final number =
+                                                await DataBaseProvider()
+                                                    .getPhone();
+                                            setState(() {
+                                              phoneController.text = number;
+                                            });
+                                          },
+                                          child: Text(
+                                            'Paste Number',
+                                            style: kEncodeSansSemiBold.copyWith(
+                                                color: kYellow,
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    2.0),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -796,7 +806,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                       final dataId =
                                                                           getDataId[
                                                                               item];
-                                                                      value.PurchaseData(
+                                                                       value.PurchaseData(
                                                                           context:
                                                                               context,
                                                                           dataId:
@@ -804,8 +814,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                           phone_number: phoneController
                                                                               .text
                                                                               .trim());
-                                                                      Navigator.pop(
-                                                                          context);
+                                                                     Navigator.pop(context);
                                                                     },
                                                                     child:
                                                                         const Text(

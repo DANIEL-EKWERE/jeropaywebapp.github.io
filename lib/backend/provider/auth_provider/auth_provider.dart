@@ -308,7 +308,7 @@ class AuthenticationProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $access',
     };
-    _reqMessage = 'access token $access';
+  //  _reqMessage = 'access token $access';
     notifyListeners();
     try {
       var res = http.MultipartRequest('POST', Uri.parse(url));

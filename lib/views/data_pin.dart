@@ -78,8 +78,7 @@ class _DataPinState extends State<DataPin> {
                   ),
                 ]),
             child: IconButton(
-              onPressed: () => Navigator.of(context)
-                  .pushNamedAndRemoveUntil("/App_Layout", (route) => false),
+              onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.chevron_left),
             ),
           ),
@@ -476,46 +475,43 @@ class _DataPinState extends State<DataPin> {
                                         child: ElevatedButton(
                                           onPressed: () async {
                                             // () async {
-                                              if (selectedCategory == '' ||
-                                                  selectedValue2 == '' ||
-                                                  _controller.text ==
-                                                      '') {
-                                                CoolAlert.show(
-                                                  context: context,
-                                                  title: 'Empty Selections!!!',
-                                                  text:
-                                                      'input fields cannot be empty,please fill in the fields and try again!',
-                                                  type: CoolAlertType.error,
-                                                  animType:
-                                                      CoolAlertAnimType.rotate,
-                                                );
-                                              } else {
-                                                CoolAlert.show(
-                                                  context: context,
-                                                  type: CoolAlertType.confirm,
-                                                  title: 'Confirm Purchase!!!',
-                                                  text:
-                                                      'your about to make purchase of $selectedCategory  airtime to the number ${_numberController.text}',
-                                                  onConfirmBtnTap: () async {
-                                                    print(
-                                                        'loading please wait...');
-
-                                                    const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color: Colors.red,
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              }
-                                              const Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: Colors.red,
-                                                ),
+                                            if (selectedCategory == '' ||
+                                                selectedValue2 == '' ||
+                                                _controller.text == '') {
+                                              CoolAlert.show(
+                                                context: context,
+                                                title: 'Empty Selections!!!',
+                                                text:
+                                                    'input fields cannot be empty,please fill in the fields and try again!',
+                                                type: CoolAlertType.error,
+                                                animType:
+                                                    CoolAlertAnimType.rotate,
                                               );
-                                            
+                                            } else {
+                                              CoolAlert.show(
+                                                context: context,
+                                                type: CoolAlertType.confirm,
+                                                title: 'Confirm Purchase!!!',
+                                                text:
+                                                    'your about to make purchase of $selectedCategory  airtime to the number ${_numberController.text}',
+                                                onConfirmBtnTap: () async {
+                                                  print(
+                                                      'loading please wait...');
+
+                                                  const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: Colors.red,
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }
+                                            const Center(
+                                              child: CircularProgressIndicator(
+                                                color: Colors.red,
+                                              ),
+                                            );
                                           },
                                           style: ElevatedButton.styleFrom(
                                               elevation: 0,

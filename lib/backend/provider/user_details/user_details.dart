@@ -9,7 +9,7 @@ import '../database/db_provider.dart';
 class UserDetails extends ChangeNotifier {
   static String baseUrl = AppUrl.baseUrl;
   String? image;
-  
+
   // setter
   bool _isLoading = false;
   String _reqMessage = '';
@@ -90,7 +90,7 @@ class UserDetails extends ChangeNotifier {
 //     }
 // }
 
-  Future getUserAccountDetails() async {
+  Future<void> getUserAccountDetails() async {
     print('calling acct details method');
     String url = '$baseUrl/reserve-acct-for-user/';
     final access = await DataBaseProvider().getToken();
@@ -107,7 +107,9 @@ class UserDetails extends ChangeNotifier {
         final bankName = x['bankName'];
         final accountNumber = x['accountNumber'];
         final accountName = x['accountName'];
-
+        print('bsnk name $bankName');
+        print('account number $accountNumber');
+        print('account name $accountName');
         DataBaseProvider().saveAcctName(accountName);
         DataBaseProvider().saveAcctNumber(accountNumber);
         DataBaseProvider().saveBankName(bankName);

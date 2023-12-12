@@ -91,8 +91,7 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                   ),
                 ]),
             child: IconButton(
-              onPressed: () => Navigator.of(context)
-                  .pushNamedAndRemoveUntil("/App_Layout", (route) => false),
+              onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.chevron_left),
             ),
           ),
@@ -269,11 +268,11 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                 width: 1.5,
                                                 color: kYellow,
                                                 style: BorderStyle.solid)),
-                                        child: TextButton(
-                                          onPressed: () async {
+                                        child: GestureDetector(
+                                          onTap: () async {
                                             final number =
                                                 await DataBaseProvider()
-                                                    .getProfileId();
+                                                    .getPhone();
                                             setState(() {
                                               _phoneController.text = number;
                                             });
@@ -543,8 +542,7 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                                         .trim(),
                                                                 context:
                                                                     context);
-                                                            Navigator.pop(
-                                                                context);
+                                                            Navigator.pop(context);
                                                           },
                                                           child:
                                                               const Text('Ok'),

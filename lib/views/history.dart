@@ -1,9 +1,11 @@
 import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/views/date_range.dart';
+import 'package:databank/views/log_in.dart';
 import 'package:databank/widget/button.dart';
 import 'package:databank/widget/receipt.dart';
 import 'package:databank/widget/snackbar.dart';
+import 'package:databank/views/transaction_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:databank/customizations/app_style.dart';
@@ -375,7 +377,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         : SizedBox(
                             height: double.maxFinite,
                             child: PageView.builder(
-                              itemCount: transacts!.transaction.length,
+                            //  itemCount: transacts!.transaction.length,
+                            itemCount: categories.length,
                               scrollDirection: Axis.horizontal,
                               controller: _pageController,
                               onPageChanged: (value) {
@@ -415,172 +418,30 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                       20),
                                                           child: Card(
                                                             child: ListTile(
-                                                              onTap: () {
-                                                                context
-                                                                    .read<
-                                                                        TransactionsProvider>()
-                                                                    .singleTransactions(
-                                                                        trans_uuid: x
-                                                                            .id!,
-                                                                        context:
-                                                                            context);
-                                                                // showModalBottomSheet(
-                                                                //     showDragHandle:
-                                                                //         true,
-                                                                //     isDismissible:
-                                                                //         false,
-                                                                //     isScrollControlled:
-                                                                //         true,
-
-                                                                //     // anchorPoint: const Offset(5, 50),
-                                                                //     useSafeArea:
-                                                                //         true,
-                                                                //     context:
-                                                                //         context,
-                                                                //     builder:
-                                                                //         (context) =>
-                                                                //             SingleChildScrollView(
-                                                                //               child: Padding(
-                                                                //                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                                                                //                 child: Container(
-                                                                //                   width: double.infinity,
-                                                                //                   height: SizeConfig.blockSizeVertical! * 50,
-                                                                //                   // color:
-                                                                //                   //     kYellow,
-                                                                //                   child: Column(
-                                                                //                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                //                     crossAxisAlignment: CrossAxisAlignment.center,
-                                                                //                     children: [
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('Details:'),
-                                                                //                         FittedBox(
-                                                                //                             child: Text(
-                                                                //                           single.data.detail,
-                                                                //                           style: TextStyle(fontSize: SizeConfig.blockSizeVertical! * 1.5, fontWeight: FontWeight.bold),
-                                                                //                         ))
-                                                                //                       ]),
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('Date and Time:'),
-                                                                //                         Text(single.data.dateAndTime)
-                                                                //                       ]),
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('Old Balance:'),
-                                                                //                         Text(single.data.oldBalance)
-                                                                //                       ]),
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('New Balance:'),
-                                                                //                         Text(single.data.newBalance)
-                                                                //                       ]),
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('Phone:'),
-                                                                //                         Text(single.data.phoneNumber)
-                                                                //                       ]),
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('Status:'),
-                                                                //                         Text(single.data.status)
-                                                                //                       ]),
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('Amount:'),
-                                                                //                         Text(single.data.amount)
-                                                                //                       ]),
-                                                                //                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                         const Text('Type:'),
-                                                                //                         Text(single.data.type)
-                                                                //                       ]),
-                                                                //                     ],
-                                                                //                   ),
-                                                                //                   // child:
-                                                                //                   //     Column(
-                                                                //                   //   children: [
-                                                                //                   //     Row(
-                                                                //                   //       mainAxisAlignment:
-                                                                //                   //           MainAxisAlignment.end,
-                                                                //                   //       children: [
-                                                                //                   //         Padding(
-                                                                //                   //           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                                                                //                   //           child: Text(
-                                                                //                   //             'Purchase Receipt',
-                                                                //                   //             style: kEncodeSansSemiBold.copyWith(color: kGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
-                                                                //                   //           ),
-                                                                //                   //         ),
-                                                                //                   //         SizedBox(width: SizeConfig.blockSizeHorizontal! * 5),
-                                                                //                   //         Align(
-                                                                //                   //           alignment: Alignment.topRight,
-                                                                //                   //           child: GestureDetector(
-                                                                //                   //             onTap: () => Navigator.pop(context),
-                                                                //                   //             child: const Icon(
-                                                                //                   //               Icons.cancel,
-                                                                //                   //               color: kGrey,
-                                                                //                   //             ),
-                                                                //                   //           ),
-                                                                //                   //         ),
-                                                                //                   //         SizedBox(width: sizeVertical * 1),
-                                                                //                   //       ],
-                                                                //                   //     ),
-                                                                //                   //     const Divider(),
-                                                                //                   //     SizedBox(
-                                                                //                   //         height:
-                                                                //                   //             sizeVertical * 1),
-                                                                //                   // Column(
-                                                                //                   //   mainAxisAlignment:
-                                                                //                   //       MainAxisAlignment.spaceEvenly,
-                                                                //                   //   crossAxisAlignment:
-                                                                //                   //       CrossAxisAlignment.center,
-                                                                //                   //   children: [
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('Details:'),
-                                                                //                   //       Text(single.data.detail)
-                                                                //                   //     ]),
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('Date and Time:'),
-                                                                //                   //       Text(single.data.dateAndTime)
-                                                                //                   //     ]),
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('Old Balance:'),
-                                                                //                   //       Text(single.data.oldBalance)
-                                                                //                   //     ]),
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('New Balance:'),
-                                                                //                   //       Text(single.data.newBalance)
-                                                                //                   //     ]),
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('Phone:'),
-                                                                //                   //       Text(single.data.phoneNumber)
-                                                                //                   //     ]),
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('Status:'),
-                                                                //                   //       Text(single.data.status)
-                                                                //                   //     ]),
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('Amount:'),
-                                                                //                   //       Text(single.data.amount)
-                                                                //                   //     ]),
-                                                                //                   //     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                //                   //       const Text('Type:'),
-                                                                //                   //       Text(single.data.type)
-                                                                //                   //     ]),
-                                                                //                   //   ],
-                                                                //                   // ),
-                                                                //                   //     SizedBox(
-                                                                //                   //         height:
-                                                                //                   //             sizeVertical * 1),
-                                                                //                   //     Expanded(
-                                                                //                   //       child:
-                                                                //                   //           Row(
-                                                                //                   //         children: [
-                                                                //                   //           button(text1: 'Go Home', isLoading1: false, tap: () {}),
-                                                                //                   //           button(text1: 'Perform Another Trans.', isLoading1: false, tap: () {}),
-                                                                //                   //         ],
-                                                                //                   //       ),
-                                                                //                   //     ),
-                                                                //                   //     SizedBox(
-                                                                //                   //         height:
-                                                                //                   //             sizeVertical * 2),
-                                                                //                   //   ],
-                                                                //                   // ),
-                                                                //                 ),
-                                                                //               ),
-                                                                //             ));
+                                                              onTap: () async {
+                                                                SingleTransaction
+                                                                    singleTransaction =
+                                                                    await context
+                                                                        .read<
+                                                                            TransactionsProvider>()
+                                                                        .singleTransactions(
+                                                                          trans_uuid:
+                                                                              x.id!,
+                                                                          context:
+                                                                              context,
+                                                                        );
+Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            TransactionDetailsScreen(
+                                                                      singleTransaction:
+                                                                          singleTransaction,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                                
                                                               },
                                                               leading:
                                                                   Container(
