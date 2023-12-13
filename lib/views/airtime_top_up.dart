@@ -55,7 +55,6 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
     modalBottomSheetContext = context;
   }
 
-
   String? selectedValue;
   List<String> dropdownItems = [
     'MTN',
@@ -539,8 +538,9 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                       actions: [
                                                         TextButton(
                                                           onPressed: () async {
-                                                             Navigator.pop(context);
-                                                          final airtimePurchaseModel = await value.AirtimePurchase(
+                                                            Navigator.pop(
+                                                                context);
+                                                            final airtimePurchaseModel = await value.AirtimePurchase(
                                                                 network:
                                                                     selectedValue,
                                                                 amount:
@@ -552,100 +552,188 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                                 context:
                                                                     context);
 
+                                                            showModalBottomSheet(
+                                                                showDragHandle:
+                                                                    true,
+                                                                isDismissible:
+                                                                    false,
+                                                                isScrollControlled:
+                                                                    true,
+
+                                                                // anchorPoint: const Offset(5, 50),
+                                                                useSafeArea:
+                                                                    true,
+                                                                context:
+                                                                    modalBottomSheetContext,
+                                                                builder:
+                                                                    (context) =>
+                                                                        SingleChildScrollView(
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(horizontal: 20),
+                                                                            child:
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              height: MediaQuery.of(context).size.height * 40,
+                                                                              // color:
+                                                                              //     kYellow,
+                                                                              child: Column(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: [
+                                                                                  Text('Transaction Receipt'),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Divider(),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('Details:'),
+                                                                                    FittedBox(
+                                                                                        child: Text(
+                                                                                      airtimePurchaseModel.message!.detail,
+                                                                                      style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
+                                                                                    ))
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('Date and Time:'),
+                                                                                    Text(airtimePurchaseModel.message!.dateAndTime)
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('Old Balance:'),
+                                                                                    Text(airtimePurchaseModel.message!.oldBalance)
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('New Balance:'),
+                                                                                    Text(airtimePurchaseModel.message!.newBalance)
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('Phone:'),
+                                                                                    Text(airtimePurchaseModel.message!.phoneNumber)
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('Status:'),
+                                                                                    Text(airtimePurchaseModel.message!.status)
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('Amount:'),
+                                                                                    Text(airtimePurchaseModel.message!.amount)
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                    const Text('Type:'),
+                                                                                    Text(airtimePurchaseModel.message!.type)
+                                                                                  ]),
+                                                                                  SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                      Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
 
 
-                                                                    showModalBottomSheet(
-            showDragHandle: true,
-            isDismissible: false,
-            isScrollControlled: true,
 
-            // anchorPoint: const Offset(5, 50),
-            useSafeArea: true,
-            context: modalBottomSheetContext,
-            builder: (context) => SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 40,
-                      // color:
-                      //     kYellow,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('Transaction Receipt'),
-                          Divider(),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Details:'),
-                                FittedBox(
-                                    child: Text(
-                                  airtimePurchaseModel.message!.detail,
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              .5,
-                                      fontWeight: FontWeight.bold),
-                                ))
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Date and Time:'),
-                                Text(airtimePurchaseModel.message!.dateAndTime)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Old Balance:'),
-                                Text(airtimePurchaseModel.message!.oldBalance)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('New Balance:'),
-                                Text(airtimePurchaseModel.message!.newBalance)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Phone:'),
-                                Text(airtimePurchaseModel.message!.phoneNumber)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Status:'),
-                                Text(airtimePurchaseModel.message!.status)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Amount:'),
-                                Text(airtimePurchaseModel.message!.amount)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Type:'),
-                                Text(airtimePurchaseModel.message!.type)
-                              ]),
-                        ],
-                      ),
-                    ),
-                  ),
-                ));
-                                                           
+
+                                                                                      Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                          children: [
+                                                                                            Row(
+                                                                                              children: [
+                                                                                                Expanded(
+                                                                                                  flex: 2,
+                                                                                                  child: Container(
+                                                                                                    decoration: const BoxDecoration(
+                                                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                                        gradient: LinearGradient(
+                                                                                                          colors: [
+                                                                                                            Color(0xff373737),
+                                                                                                            Color(0xff6A6A6A),
+                                                                                                          ],
+                                                                                                          begin: Alignment.topLeft,
+                                                                                                          end: Alignment.bottomRight,
+                                                                                                        )),
+                                                                                                    child: ElevatedButton(
+                                                                                                      onPressed: () async {
+                                                                                                        // () async {
+                                                                                                      },
+                                                                                                      style: ElevatedButton.styleFrom(
+                                                                                                          elevation: 0,
+                                                                                                          foregroundColor: kWhite,
+                                                                                                          backgroundColor: Colors.transparent,
+                                                                                                          shape: RoundedRectangleBorder(
+                                                                                                            borderRadius: BorderRadius.circular(10),
+                                                                                                          )),
+                                                                                                      child: Text(
+                                                                                                        'Print',
+                                                                                                        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                            Row(
+                                                                                              children: [
+                                                                                                Expanded(
+                                                                                                  flex: 2,
+                                                                                                  child: Container(
+                                                                                                    decoration: const BoxDecoration(
+                                                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                                        gradient: LinearGradient(
+                                                                                                          colors: [
+                                                                                                            Color(0xff373737),
+                                                                                                            Color(0xff6A6A6A),
+                                                                                                          ],
+                                                                                                          begin: Alignment.topLeft,
+                                                                                                          end: Alignment.bottomRight,
+                                                                                                        )),
+                                                                                                    child: ElevatedButton(
+                                                                                                      onPressed: () async {
+                                                                                                        // () async {
+                                                                                                      },
+                                                                                                      style: ElevatedButton.styleFrom(
+                                                                                                          elevation: 0,
+                                                                                                          foregroundColor: kWhite,
+                                                                                                          backgroundColor: Colors.transparent,
+                                                                                                          shape: RoundedRectangleBorder(
+                                                                                                            borderRadius: BorderRadius.circular(10),
+                                                                                                          )),
+                                                                                                      child: Text(
+                                                                                                        'Download',
+                                                                                                        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+
+
+
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ));
                                                           },
                                                           child:
                                                               const Text('Ok'),

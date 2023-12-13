@@ -105,30 +105,7 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> queryUserProfile() async {
-    try {
-      final access = await DataBaseProvider().getToken();
-      Map<String, String>? reqHeader = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $access',
-      };
-      final url = '$requestBaseUrl/user/create/profile/';
-      http.Response request =
-          await http.get(Uri.parse(url), headers: reqHeader);
-      if (request.statusCode == 200 || request == 201) {
-        _hasProfile = true;
-        final res = json.decode(request.body);
-        final image = res['profileImage'];
-        DataBaseProvider().saveProfileImage(image);
-        notifyListeners();
-      } else {
-        throw Exception('Failed to load data ${request.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Failed to load data ${e.toString()} ');
-    }
-    return _hasProfile;
-  }
+  
 
   // update password
 
@@ -188,7 +165,6 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
     String url = '$requestBaseUrl/user/login-user/';
     print('calling login in');
-    // final isProfileCreated = await queryUserProfile();
     final body = {
       "username": username,
       "password": password,
@@ -225,6 +201,9 @@ class AuthenticationProvider extends ChangeNotifier {
         final String email = req['email'].toString();
         final String first_name = req['first_name'].toString();
         final String last_name = req['last_name'].toString();
+        final String bank_name = req['bank_name'].toString();
+        final String account_number = req['account_number'].toString();
+        final String account_name = req['account_name'].toString();
 
         print(token);
         print(userId);
@@ -233,6 +212,9 @@ class AuthenticationProvider extends ChangeNotifier {
         print(email);
         print(first_name);
         print(last_name);
+        print(bank_name);
+        print(account_number);
+        print(account_name);
         DataBaseProvider().saveToken(token);
         DataBaseProvider().saveUserId(userId);
         DataBaseProvider().saveUserName(username);
@@ -240,24 +222,16 @@ class AuthenticationProvider extends ChangeNotifier {
         DataBaseProvider().saveEmail(email);
         DataBaseProvider().saveFirstName(first_name);
         DataBaseProvider().saveLastName(last_name);
+        DataBaseProvider().saveBankName(bank_name);
+        DataBaseProvider().saveAcctName(account_name);
+        DataBaseProvider().saveAcctNumber(account_number);
         DataBaseProvider().getPhone().then((phone1) {
           if (phone1.isEmpty) {
             DataBaseProvider().savePhoneNumber(phone);
           }
         });
-
-        // DataBaseProvider().getProfileId().then((value) {
-        //   print('profle id $value');
-        //   if (value.isEmpty) {
-        //     // if (isProfileCreated) {
-        //     //   Navigator.of(context!)
-        //     //       .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
-        //     // }
-        //   } else {
         Navigator.of(context!)
             .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
-        //   }
-        // });
         notifyListeners();
       } else if (res.statusCode == 201) {
         final req = json.decode(res.body);
@@ -308,7 +282,7 @@ class AuthenticationProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $access',
     };
-  //  _reqMessage = 'access token $access';
+    //  _reqMessage = 'access token $access';
     notifyListeners();
     try {
       var res = http.MultipartRequest('POST', Uri.parse(url));
@@ -334,7 +308,7 @@ class AuthenticationProvider extends ChangeNotifier {
         _reqMessage = 'Profile Created Successfully';
         _color = const Color.fromARGB(255, 15, 175, 20);
         await DataBaseProvider().saveProfileId(phone);
-        await UserDetails().getUserAccountDetails();
+        // await UserDetails().getUserAccountDetails();
         notifyListeners();
         Navigator.of(context!)
             .pushNamedAndRemoveUntil("/App_Layout", (route) => false);

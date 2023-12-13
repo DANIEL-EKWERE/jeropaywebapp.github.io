@@ -12,7 +12,7 @@ import 'package:databank/views/add_money.dart';
 import 'package:databank/views/airtime_top_up.dart';
 import 'package:databank/views/app_layout.dart';
 import 'package:databank/views/cable_subscription.dart';
-import 'package:databank/views/history.dart';
+// import 'package:databank/views/history.dart';
 import 'package:databank/views/result_checker.dart';
 import 'package:databank/views/scan_to_load.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -23,7 +23,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
-import '../backend/models/api_models.dart';
+// import '../backend/models/api_models.dart';
 import '../backend/provider/user_details/user_details.dart';
 import '../customizations/size_config.dart';
 import '../model/electric_bill.dart';
@@ -263,8 +263,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double sizeVertical = SizeConfig.blockSizeVertical!;
-    double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
+    // double sizeVertical = SizeConfig.blockSizeVertical!;
+    // double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
     //transacts = Provider.of<TransactionsProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(.99),
@@ -851,7 +851,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           //     .read<TransactionsProvider>()
                                           //     .recentTransactions();
 
-                                          context.read<UserDetails>().getUserAccountDetails();
+                                         // context.read<UserDetails>().getUserAccountDetails();
                                         },
                                         child: Container(
                                           width:

@@ -463,130 +463,144 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                                     crossAxisAlignment: CrossAxisAlignment.center,
                                                                                     children: [
                                                                                       Text('Transaction Receipt'),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('Details:'),
                                                                                         FittedBox(
-                                                                                            child: Text(
-                                                                                          singleTransaction.data.detail,
-                                                                                          style: kEncodeSansBold.copyWith(fontSize: SizeConfig.blockSizeHorizontal! * 1.5,)
-                                                                                        ))
+                                                                                            child: Text(singleTransaction.data.detail,
+                                                                                                style: kEncodeSansBold.copyWith(
+                                                                                                  fontSize: SizeConfig.blockSizeHorizontal! * 1.5,
+                                                                                                )))
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('Date and Time:'),
                                                                                         Text(singleTransaction.data.dateAndTime)
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('Old Balance:'),
                                                                                         Text(singleTransaction.data.oldBalance)
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
-                                                                                            SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('New Balance:'),
                                                                                         Text(singleTransaction.data.newBalance)
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('Phone:'),
                                                                                         Text(singleTransaction.data.phoneNumber)
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('Status:'),
                                                                                         Text(singleTransaction.data.status)
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('Amount: '),
                                                                                         Text(singleTransaction.data.amount)
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Divider(),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*5),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                         const Text('Type:'),
                                                                                         Text(singleTransaction.data.type)
                                                                                       ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*10),
-                                                                                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                        Row(
-                                                                                          children: [
-                                                                                            Expanded(
-                                                                                              flex: 2,
-                                                                                              child: Container(
-                                                                                                decoration: const BoxDecoration(
-                                                                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                                    gradient: LinearGradient(
-                                                                                                      colors: [
-                                                                                                        Color(0xff373737),
-                                                                                                        Color.fromARGB(255, 135, 135, 135),
-                                                                                                      ],
-                                                                                                      begin: Alignment.topLeft,
-                                                                                                      end: Alignment.bottomRight,
-                                                                                                    )),
-                                                                                                child: ElevatedButton(
-                                                                                                  onPressed: () async {},
-                                                                                                  style: ElevatedButton.styleFrom(
-                                                                                                      elevation: 0,
-                                                                                                      foregroundColor: kWhite,
-                                                                                                      backgroundColor: Colors.transparent,
-                                                                                                      shape: RoundedRectangleBorder(
-                                                                                                        borderRadius: BorderRadius.circular(10),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 10),
+                                                                                      Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                        children: [
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              Expanded(
+                                                                                                flex: 1,
+                                                                                                child: Container(
+                                                                                                  decoration: const BoxDecoration(
+                                                                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                                      gradient: LinearGradient(
+                                                                                                        colors: [
+                                                                                                          Color(0xff373737),
+                                                                                                          Color(0xff6A6A6A),
+                                                                                                        ],
+                                                                                                        begin: Alignment.topLeft,
+                                                                                                        end: Alignment.bottomRight,
                                                                                                       )),
-                                                                                                  child: Text(
-                                                                                                    'Print',
-                                                                                                    style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                  child: ElevatedButton(
+                                                                                                    onPressed: () async {
+                                                                                                      // () async {
+                                                                                                    },
+                                                                                                    style: ElevatedButton.styleFrom(
+                                                                                                        elevation: 0,
+                                                                                                        foregroundColor: kWhite,
+                                                                                                        backgroundColor: Colors.transparent,
+                                                                                                        shape: RoundedRectangleBorder(
+                                                                                                          borderRadius: BorderRadius.circular(10),
+                                                                                                        )),
+                                                                                                    child: Text(
+                                                                                                      'Print',
+                                                                                                      style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                    ),
                                                                                                   ),
                                                                                                 ),
                                                                                               ),
-                                                                                            ),
-                                                                                            Expanded(
-                                                                                              flex: 2,
-                                                                                              child: Container(
-                                                                                                decoration: const BoxDecoration(
-                                                                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                                    gradient: LinearGradient(
-                                                                                                      colors: [
-                                                                                                        Color(0xff373737),
-                                                                                                        Color.fromARGB(255, 135, 135, 135),
-                                                                                                      ],
-                                                                                                      begin: Alignment.topLeft,
-                                                                                                      end: Alignment.bottomRight,
-                                                                                                    )),
-                                                                                                child: ElevatedButton(
-                                                                                                  onPressed: () async {},
-                                                                                                  style: ElevatedButton.styleFrom(
-                                                                                                      elevation: 0,
-                                                                                                      foregroundColor: kWhite,
-                                                                                                      backgroundColor: Colors.transparent,
-                                                                                                      shape: RoundedRectangleBorder(
-                                                                                                        borderRadius: BorderRadius.circular(10),
+                                                                                            ],
+                                                                                          ),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              Expanded(
+                                                                                                flex: 1,
+                                                                                                child: Container(
+                                                                                                  decoration: const BoxDecoration(
+                                                                                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                                      gradient: LinearGradient(
+                                                                                                        colors: [
+                                                                                                          Color(0xff373737),
+                                                                                                          Color(0xff6A6A6A),
+                                                                                                        ],
+                                                                                                        begin: Alignment.topLeft,
+                                                                                                        end: Alignment.bottomRight,
                                                                                                       )),
-                                                                                                  child: Text(
-                                                                                                    'Download',
-                                                                                                    style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                  child: ElevatedButton(
+                                                                                                    onPressed: () async {
+                                                                                                      // () async {
+                                                                                                    },
+                                                                                                    style: ElevatedButton.styleFrom(
+                                                                                                        elevation: 0,
+                                                                                                        foregroundColor: kWhite,
+                                                                                                        backgroundColor: Colors.transparent,
+                                                                                                        shape: RoundedRectangleBorder(
+                                                                                                          borderRadius: BorderRadius.circular(10),
+                                                                                                        )),
+                                                                                                    child: Text(
+                                                                                                      'Download',
+                                                                                                      style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                    ),
                                                                                                   ),
                                                                                                 ),
                                                                                               ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                      ]),
-                                                                                      SizedBox(height:SizeConfig.blockSizeVertical!*15),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                      SizedBox(height: SizeConfig.blockSizeVertical! * 10),
                                                                                     ],
                                                                                   ),
                                                                                 ),

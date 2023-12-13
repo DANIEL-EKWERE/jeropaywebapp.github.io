@@ -443,7 +443,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                             });
                                           },
                                           child: Text(
-                                            'Paste Number',
+                                            'PasteNumber',
                                             style: kEncodeSansSemiBold.copyWith(
                                                 color: kYellow,
                                                 fontSize: SizeConfig
@@ -853,7 +853,9 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                                       crossAxisAlignment: CrossAxisAlignment.center,
                                                                                       children: [
                                                                                         Text('Transaction Receipt'),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('Details:'),
                                                                                           FittedBox(
@@ -862,34 +864,133 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                                             style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
                                                                                           ))
                                                                                         ]),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('Date and Time:'),
                                                                                           Text(dataPurchaseModel.message.dateAndTime)
                                                                                         ]),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('Old Balance:'),
                                                                                           Text(dataPurchaseModel.message.oldBalance)
                                                                                         ]),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('New Balance:'),
                                                                                           Text(dataPurchaseModel.message.newBalance)
                                                                                         ]),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('Phone:'),
                                                                                           Text(dataPurchaseModel.message.phoneNumber)
                                                                                         ]),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('Status:'),
                                                                                           Text(dataPurchaseModel.message.status)
                                                                                         ]),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('Amount:'),
                                                                                           Text(dataPurchaseModel.message.amount)
                                                                                         ]),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
                                                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
                                                                                           const Text('Type:'),
                                                                                           Text(dataPurchaseModel.message.type)
                                                                                         ]),
+                                                                                        Divider(),
+                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                          children: [
+                                                                                            Row(
+                                                                                              children: [
+                                                                                                Expanded(
+                                                                                                  flex: 2,
+                                                                                                  child: Container(
+                                                                                                    decoration: const BoxDecoration(
+                                                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                                        gradient: LinearGradient(
+                                                                                                          colors: [
+                                                                                                            Color(0xff373737),
+                                                                                                            Color(0xff6A6A6A),
+                                                                                                          ],
+                                                                                                          begin: Alignment.topLeft,
+                                                                                                          end: Alignment.bottomRight,
+                                                                                                        )),
+                                                                                                    child: ElevatedButton(
+                                                                                                      onPressed: () async {
+                                                                                                        // () async {
+                                                                                                      },
+                                                                                                      style: ElevatedButton.styleFrom(
+                                                                                                          elevation: 0,
+                                                                                                          foregroundColor: kWhite,
+                                                                                                          backgroundColor: Colors.transparent,
+                                                                                                          shape: RoundedRectangleBorder(
+                                                                                                            borderRadius: BorderRadius.circular(10),
+                                                                                                          )),
+                                                                                                      child: Text(
+                                                                                                        'Print',
+                                                                                                        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                            Row(
+                                                                                              children: [
+                                                                                                Expanded(
+                                                                                                  flex: 2,
+                                                                                                  child: Container(
+                                                                                                    decoration: const BoxDecoration(
+                                                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                                        gradient: LinearGradient(
+                                                                                                          colors: [
+                                                                                                            Color(0xff373737),
+                                                                                                            Color(0xff6A6A6A),
+                                                                                                          ],
+                                                                                                          begin: Alignment.topLeft,
+                                                                                                          end: Alignment.bottomRight,
+                                                                                                        )),
+                                                                                                    child: ElevatedButton(
+                                                                                                      onPressed: () async {
+                                                                                                        // () async {
+                                                                                                      },
+                                                                                                      style: ElevatedButton.styleFrom(
+                                                                                                          elevation: 0,
+                                                                                                          foregroundColor: kWhite,
+                                                                                                          backgroundColor: Colors.transparent,
+                                                                                                          shape: RoundedRectangleBorder(
+                                                                                                            borderRadius: BorderRadius.circular(10),
+                                                                                                          )),
+                                                                                                      child: Text(
+                                                                                                        'Download',
+                                                                                                        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
                                                                                       ],
                                                                                     ),
                                                                                   ),

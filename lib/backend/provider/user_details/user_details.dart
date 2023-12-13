@@ -90,48 +90,48 @@ class UserDetails extends ChangeNotifier {
 //     }
 // }
 
-  Future<void> getUserAccountDetails() async {
-    print('calling acct details method');
-    String url = '$baseUrl/reserve-acct-for-user/';
-    final access = await DataBaseProvider().getToken();
-    Map<String, String>? reqHeader = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $access',
-    };
-    try {
-      http.Response response =
-          await http.get(Uri.parse(url), headers: reqHeader);
-      if (response.statusCode == 200) {
-        final req = json.decode(response.body);
-        final x = req['response body']!['banks'][0];
-        final bankName = x['bankName'];
-        final accountNumber = x['accountNumber'];
-        final accountName = x['accountName'];
-        print('bsnk name $bankName');
-        print('account number $accountNumber');
-        print('account name $accountName');
-        DataBaseProvider().saveAcctName(accountName);
-        DataBaseProvider().saveAcctNumber(accountNumber);
-        DataBaseProvider().saveBankName(bankName);
-        _reqMessage = 'generated vitual account';
-        _color = const Color.fromARGB(255, 15, 175, 20);
-        notifyListeners();
-      } else {
-        _reqMessage =
-            'unable to generate vitual account ${response.statusCode}';
-        _color = const Color(0xfff33225);
-        notifyListeners();
-      }
-    } on SocketException catch (_) {
-      _reqMessage = 'internet connection not available';
-      _color = const Color(0xfff33225);
-      notifyListeners();
-    } catch (e) {
-      _reqMessage = 'an error occurred $e';
-      _color = const Color(0xfff33225);
-      notifyListeners();
-    }
-  }
+  // Future<void> getUserAccountDetails() async {
+  //   print('calling acct details method');
+  //   String url = '$baseUrl/reserve-acct-for-user/';
+  //   final access = await DataBaseProvider().getToken();
+  //   Map<String, String>? reqHeader = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer $access',
+  //   };
+  //   try {
+  //     http.Response response =
+  //         await http.get(Uri.parse(url), headers: reqHeader);
+  //     if (response.statusCode == 200) {
+  //       final req = json.decode(response.body);
+  //       final x = req['response body']!['banks'][0];
+  //       final bankName = x['bankName'];
+  //       final accountNumber = x['accountNumber'];
+  //       final accountName = x['accountName'];
+  //       print('bsnk name $bankName');
+  //       print('account number $accountNumber');
+  //       print('account name $accountName');
+  //       DataBaseProvider().saveAcctName(accountName);
+  //       DataBaseProvider().saveAcctNumber(accountNumber);
+  //       DataBaseProvider().saveBankName(bankName);
+  //       _reqMessage = 'generated vitual account';
+  //       _color = const Color.fromARGB(255, 15, 175, 20);
+  //       notifyListeners();
+  //     } else {
+  //       _reqMessage =
+  //           'unable to generate vitual account ${response.statusCode}';
+  //       _color = const Color(0xfff33225);
+  //       notifyListeners();
+  //     }
+  //   } on SocketException catch (_) {
+  //     _reqMessage = 'internet connection not available';
+  //     _color = const Color(0xfff33225);
+  //     notifyListeners();
+  //   } catch (e) {
+  //     _reqMessage = 'an error occurred $e';
+  //     _color = const Color(0xfff33225);
+  //     notifyListeners();
+  //   }
+  // }
 
   Future<String> getUserProfileImage() async {
     try {
