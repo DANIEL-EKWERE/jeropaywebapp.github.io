@@ -206,6 +206,15 @@ class _DataTopUpState extends State<DataTopUp> {
     '9 MOBILE 2GB - #460': '62af5076-bd3d-4a15-803d-d1ff0f3f1034',
     '9 MOBILE 3GB - #590': '6e15da99-7706-4f80-99a7-b5d4af953723',
   };
+
+  late BuildContext modalBottomSheetContext;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    modalBottomSheetContext = context;
+  }
+
   bool _numberInputIsValid = true;
 
   TextEditingController phoneController = TextEditingController();
@@ -791,7 +800,9 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                 actions: [
                                                                   TextButton(
                                                                     onPressed:
-                                                                        () {
+                                                                        () async {
+                                                                      Navigator.pop(
+                                                                          context);
                                                                       final itemIndex =
                                                                           items[selectedCategory]![
                                                                               selectedSubCategory];
@@ -806,7 +817,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                       final dataId =
                                                                           getDataId[
                                                                               item];
-                                                                       value.PurchaseData(
+                                                                      final dataPurchaseModel = await value.PurchaseData(
                                                                           context:
                                                                               context,
                                                                           dataId:
@@ -814,7 +825,76 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                           phone_number: phoneController
                                                                               .text
                                                                               .trim());
-                                                                     Navigator.pop(context);
+
+                                                                      showModalBottomSheet(
+                                                                          showDragHandle:
+                                                                              true,
+                                                                          isDismissible:
+                                                                              false,
+                                                                          isScrollControlled:
+                                                                              true,
+
+                                                                          // anchorPoint: const Offset(5, 50),
+                                                                          useSafeArea:
+                                                                              true,
+                                                                          context:
+                                                                              modalBottomSheetContext,
+                                                                          builder: (context) =>
+                                                                              SingleChildScrollView(
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                                                                  child: Container(
+                                                                                    width: double.infinity,
+                                                                                    //  height: MediaQuery.of(context).size.height * 40,
+                                                                                    // color:
+                                                                                    //     kYellow,
+                                                                                    child: Column(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Text('Transaction Receipt'),
+                                                                                        Divider(),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('Details:'),
+                                                                                          FittedBox(
+                                                                                              child: Text(
+                                                                                            dataPurchaseModel.message.detail,
+                                                                                            style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
+                                                                                          ))
+                                                                                        ]),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('Date and Time:'),
+                                                                                          Text(dataPurchaseModel.message.dateAndTime)
+                                                                                        ]),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('Old Balance:'),
+                                                                                          Text(dataPurchaseModel.message.oldBalance)
+                                                                                        ]),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('New Balance:'),
+                                                                                          Text(dataPurchaseModel.message.newBalance)
+                                                                                        ]),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('Phone:'),
+                                                                                          Text(dataPurchaseModel.message.phoneNumber)
+                                                                                        ]),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('Status:'),
+                                                                                          Text(dataPurchaseModel.message.status)
+                                                                                        ]),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('Amount:'),
+                                                                                          Text(dataPurchaseModel.message.amount)
+                                                                                        ]),
+                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                          const Text('Type:'),
+                                                                                          Text(dataPurchaseModel.message.type)
+                                                                                        ]),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ));
                                                                     },
                                                                     child:
                                                                         const Text(

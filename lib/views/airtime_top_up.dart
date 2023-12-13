@@ -47,6 +47,14 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
       '9 MOBILE(COPORATE)'
     ],
   };
+  late BuildContext modalBottomSheetContext;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    modalBottomSheetContext = context;
+  }
+
 
   String? selectedValue;
   List<String> dropdownItems = [
@@ -530,8 +538,9 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                           'Your about to purchase $selectedValue2 of $selectedValue for ${_phoneController.text}'),
                                                       actions: [
                                                         TextButton(
-                                                          onPressed: () {
-                                                            value.AirtimePurchase(
+                                                          onPressed: () async {
+                                                             Navigator.pop(context);
+                                                          final airtimePurchaseModel = await value.AirtimePurchase(
                                                                 network:
                                                                     selectedValue,
                                                                 amount:
@@ -542,7 +551,101 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
                                                                         .trim(),
                                                                 context:
                                                                     context);
-                                                            Navigator.pop(context);
+
+
+
+                                                                    showModalBottomSheet(
+            showDragHandle: true,
+            isDismissible: false,
+            isScrollControlled: true,
+
+            // anchorPoint: const Offset(5, 50),
+            useSafeArea: true,
+            context: modalBottomSheetContext,
+            builder: (context) => SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 40,
+                      // color:
+                      //     kYellow,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Transaction Receipt'),
+                          Divider(),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Details:'),
+                                FittedBox(
+                                    child: Text(
+                                  airtimePurchaseModel.message!.detail,
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              .5,
+                                      fontWeight: FontWeight.bold),
+                                ))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Date and Time:'),
+                                Text(airtimePurchaseModel.message!.dateAndTime)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Old Balance:'),
+                                Text(airtimePurchaseModel.message!.oldBalance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('New Balance:'),
+                                Text(airtimePurchaseModel.message!.newBalance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Phone:'),
+                                Text(airtimePurchaseModel.message!.phoneNumber)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Status:'),
+                                Text(airtimePurchaseModel.message!.status)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Amount:'),
+                                Text(airtimePurchaseModel.message!.amount)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Type:'),
+                                Text(airtimePurchaseModel.message!.type)
+                              ]),
+                        ],
+                      ),
+                    ),
+                  ),
+                ));
+                                                           
                                                           },
                                                           child:
                                                               const Text('Ok'),

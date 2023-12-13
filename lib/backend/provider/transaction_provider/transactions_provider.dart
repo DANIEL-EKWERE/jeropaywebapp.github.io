@@ -240,17 +240,17 @@ class TransactionsProvider extends ChangeNotifier {
         _reqMessage = singleTransaction.status;
 
 
-        Navigator.push(
-                                                                  context!,
-                                                                  MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            TransactionDetailsScreen(
-                                                                      singleTransaction:
-                                                                          singleTransaction,
-                                                                    ),
-                                                                  ),
-                                                                );
+        // Navigator.push(
+        //                                                           context!,
+        //                                                           MaterialPageRoute(
+        //                                                             builder:
+        //                                                                 (context) =>
+        //                                                                     TransactionDetailsScreen(
+        //                                                               singleTransaction:
+        //                                                                   singleTransaction,
+        //                                                             ),
+        //                                                           ),
+        //                                                         );
         // Navigator.of(context!).push(
         //                 CupertinoPageRoute(
         //                   builder: (context) =>  Receipt(details: singleTransaction.data.detail,date_and_time: singleTransaction.data.dateAndTime,old_balance: singleTransaction.data.oldBalance,new_balance: singleTransaction.data.newBalance,amout: singleTransaction.data.amount,phone_number: singleTransaction.data.phoneNumber,status: singleTransaction.data.status,type: singleTransaction.data.type,),
