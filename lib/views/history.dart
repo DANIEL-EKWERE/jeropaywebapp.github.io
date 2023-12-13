@@ -1,11 +1,11 @@
 import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/views/date_range.dart';
-import 'package:databank/views/log_in.dart';
-import 'package:databank/widget/button.dart';
-import 'package:databank/widget/receipt.dart';
-import 'package:databank/widget/snackbar.dart';
-import 'package:databank/views/transaction_details_screen.dart';
+// import 'package:databank/views/log_in.dart';
+// import 'package:databank/widget/button.dart';
+// import 'package:databank/widget/receipt.dart';
+// import 'package:databank/widget/snackbar.dart';
+// import 'package:databank/views/transaction_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:databank/customizations/app_style.dart';
@@ -29,6 +29,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
   _HistoryScreenState(this.openDrawer);
   int current = 0;
   int current1 = 0;
+
+  late BuildContext modalBottomSheetContext;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    modalBottomSheetContext = context;
+  }
+
+
   List<String> categories = <String>[
     'All',
     'Data',
@@ -430,17 +440,115 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                           context:
                                                                               context,
                                                                         );
-Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            TransactionDetailsScreen(
-                                                                      singleTransaction:
-                                                                          singleTransaction,
-                                                                    ),
-                                                                  ),
-                                                                );
+// Navigator.push(
+//                                                                   context,
+//                                                                   MaterialPageRoute(
+//                                                                     builder:
+//                                                                         (context) =>
+//                                                                             TransactionDetailsScreen(
+//                                                                       singleTransaction:
+//                                                                           singleTransaction,
+//                                                                     ),
+//                                                                   ),
+//                                                                 );
+
+
+
+
+showModalBottomSheet(
+            showDragHandle: true,
+            isDismissible: false,
+            isScrollControlled: true,
+
+            // anchorPoint: const Offset(5, 50),
+            useSafeArea: true,
+            context: modalBottomSheetContext,
+            builder: (context) => SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 40,
+                      // color:
+                      //     kYellow,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Transaction Receipt'),
+                          Divider(),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Details:'),
+                                FittedBox(
+                                    child: Text(
+                                  singleTransaction.data.detail,
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              1.5,
+                                      fontWeight: FontWeight.bold),
+                                ))
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Date and Time:'),
+                                Text(singleTransaction.data.dateAndTime)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Old Balance:'),
+                                Text(singleTransaction.data.oldBalance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('New Balance:'),
+                                Text(singleTransaction.data.newBalance)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Phone:'),
+                                Text(singleTransaction.data.phoneNumber)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Status:'),
+                                Text(singleTransaction.data.status)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Amount:'),
+                                Text(singleTransaction.data.amount)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('Type:'),
+                                Text(singleTransaction.data.type)
+                              ]),
+                        ],
+                      ),
+
+                    ),
+                  ),
+                ));
+
+
                                                                 
                                                               },
                                                               leading:
