@@ -511,7 +511,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                                       Divider(),
                                                                                       SizedBox(height:SizeConfig.blockSizeVertical!*5),
                                                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                        const Text('Amount:'),
+                                                                                        const Text('Amount: '),
                                                                                         Text(singleTransaction.data.amount)
                                                                                       ]),
                                                                                       SizedBox(height:SizeConfig.blockSizeVertical!*5),
