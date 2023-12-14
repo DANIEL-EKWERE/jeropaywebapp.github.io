@@ -6,9 +6,11 @@ import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/about_us.dart';
 import 'package:databank/views/reset_password.dart';
 import 'package:databank/views/create_profile.dart';
+import 'package:databank/views/set_transaction_pin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../widget/drawer_widget.dart';
 import 'contact_data_bank.dart';
@@ -372,7 +374,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: sizeHorizontal * 2.5,
                 ),
                 Text(
-                  'Reset Transaction Pin',
+                  'Set Transaction Pin',
                   style: kEncodeSansMedium.copyWith(
                       color: kGrey, fontSize: sizeVertical * 2.3),
                 ),
@@ -382,7 +384,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: kGrey,
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
-                        builder: (context) => const CreatUserProfile()));
+                        builder: (context) => SetTransactionPin()));
                   },
                 )
               ],
@@ -472,10 +474,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   width: sizeHorizontal * 2.5,
                 ),
-                Text(
-                  'Log Out',
-                  style: kEncodeSansMedium.copyWith(
-                      color: kGrey, fontSize: sizeVertical * 2.3),
+                GestureDetector(
+                  onTap: () {
+                    context.read<DataBaseProvider>().logOut(context);
+                  },
+                  child: Text(
+                    'Log Out',
+                    style: kEncodeSansMedium.copyWith(
+                        color: kGrey, fontSize: sizeVertical * 2.3),
+                  ),
                 ),
               ],
             ),

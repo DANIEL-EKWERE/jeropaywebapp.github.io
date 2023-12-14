@@ -8,6 +8,16 @@ import '../../../views/onboarding_page.dart';
 class DataBaseProvider extends ChangeNotifier {
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 
+  String _transactionPin = '';
+
+  String _confirmTransactionPin = '';
+
+  String _reqMessage = '';
+
+  Color? _color;
+
+  bool _isLoading = false;
+
   String _token = '';
 
   String _userName = '';
@@ -56,9 +66,24 @@ class DataBaseProvider extends ChangeNotifier {
 
   String get last_name => _last_name;
 
+  bool get isLoading => _isLoading;
+
+  Color? get color => _color;
+
+  String get reqMessage => _reqMessage;
+
+  String get transactionPin => _transactionPin;
+
+  String get confirmTransactionPin => _confirmTransactionPin;
+
   void saveToken(String token) async {
     SharedPreferences value = await _pref;
     value.setString('token', token);
+  }
+
+ void saveTransactionPin(String transactionPin) async {
+    SharedPreferences value = await _pref;
+    value.setString('transactionPin', transactionPin);
   }
 
   void saveUserName(String userName) async {
@@ -106,12 +131,12 @@ class DataBaseProvider extends ChangeNotifier {
     value.setString('email', email);
   }
 
-    void saveFirstName(String first_name) async {
+  void saveFirstName(String first_name) async {
     SharedPreferences value = await _pref;
     value.setString('first_name', first_name);
   }
 
-    void saveLastName(String last_name) async {
+  void saveLastName(String last_name) async {
     SharedPreferences value = await _pref;
     value.setString('last_name', last_name);
   }
@@ -130,6 +155,22 @@ class DataBaseProvider extends ChangeNotifier {
       return '';
     }
   }
+
+  Future<String> getTransactionPin() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('transactionPin')) {
+      String data = value.getString('transactionPin')!;
+      _token = data;
+      notifyListeners();
+      return data;
+    } else {
+      _token = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
 
   Future<String> getPhone() async {
     SharedPreferences value = await _pref;
@@ -297,13 +338,25 @@ class DataBaseProvider extends ChangeNotifier {
   }
 
   void logOut(BuildContext? context) async {
+    _isLoading = true;
+    notifyListeners();
     final value = await _pref;
     value.clear();
+    notifyListeners();
+    _isLoading = false;
+    _reqMessage = 'Log Out Successfull';
+    _color = _color = const Color.fromARGB(255, 15, 175, 20);
     notifyListeners();
     Navigator.of(context!).push(
       CupertinoPageRoute(
         builder: (context) => const OnboardingPage(),
       ),
     );
+  }
+
+  void clear() {
+    _reqMessage = '';
+    _color = null;
+    notifyListeners();
   }
 }

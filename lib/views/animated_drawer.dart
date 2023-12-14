@@ -1,3 +1,4 @@
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/model/drawer_items.dart';
 import 'package:databank/views/airtime_top_up.dart';
@@ -8,6 +9,7 @@ import 'package:databank/views/recharge_card.dart';
 import 'package:databank/views/result_checker.dart';
 import 'package:databank/views/reward.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../model/drawer_item.dart';
 import 'cable_subscription.dart';
@@ -63,6 +65,7 @@ class _AnimatedDrawerState extends State<AnimatedDrawer> {
                   case DrawerItems.logout:
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Logged Out!!!')));
+                    context.read<DataBaseProvider>().logOut(context);
                     return;
                   default:
                     setState(() {
