@@ -64,7 +64,7 @@ void main() async {
           "/ElectricExpanded": (context) => const ElectricExpanded(),
           "/PasswordReset": (context) => const PasswordReset(),
           "/CreatUserProfile": (context) => const CreatUserProfile(),
-          "/c": (context) => const OnboardingPage(),
+          "/OnboardingPage": (context) => const OnboardingPage(),
         },
       ),
     ));
