@@ -81,7 +81,7 @@ class DataBaseProvider extends ChangeNotifier {
     value.setString('token', token);
   }
 
- void saveTransactionPin(String transactionPin) async {
+  void saveTransactionPin(String transactionPin) async {
     SharedPreferences value = await _pref;
     value.setString('transactionPin', transactionPin);
   }
@@ -170,7 +170,6 @@ class DataBaseProvider extends ChangeNotifier {
       return '';
     }
   }
-
 
   Future<String> getPhone() async {
     SharedPreferences value = await _pref;
@@ -347,11 +346,8 @@ class DataBaseProvider extends ChangeNotifier {
     _reqMessage = 'Log Out Successfull';
     _color = _color = const Color.fromARGB(255, 15, 175, 20);
     notifyListeners();
-    Navigator.of(context!).push(
-      CupertinoPageRoute(
-        builder: (context) => const OnboardingPage(),
-      ),
-    );
+    Navigator.of(context!)
+        .pushNamedAndRemoveUntil("/OnboardingPage", (route) => false);
   }
 
   void clear() {

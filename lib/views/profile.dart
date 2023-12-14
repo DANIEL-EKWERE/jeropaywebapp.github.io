@@ -476,6 +476,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    showDialog<bool>(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                              title: const Text('Confirm Log Out'),
+                              content: Text(
+                                  'Your sure you want to log out of your data bank account?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    context
+                                        .read<DataBaseProvider>()
+                                        .logOut(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Log Out sucesful!!!'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                  },
+                                  child: Text('yes'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('cancel'),
+                                ),
+                              ]);
+                        });
+
                     context.read<DataBaseProvider>().logOut(context);
                   },
                   child: Text(
