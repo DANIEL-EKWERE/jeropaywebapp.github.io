@@ -848,12 +848,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             builder: (context) => ReferAndEarn(
                                             ),
                                           ));
-
-                                          // context
-                                          //     .read<TransactionsProvider>()
-                                          //     .recentTransactions();
-
-                                         // context.read<UserDetails>().getUserAccountDetails();
                                         },
                                         child: Container(
                                           width:

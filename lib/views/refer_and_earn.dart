@@ -23,7 +23,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("arnings page"),
+        title: const Text("earnings page"),
         actions: [
           IconButton(
               onPressed: () {
@@ -47,11 +47,11 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                 child: CircularProgressIndicator(),
               );
             }
-            final data = snapshot.data!.docs[0];
-            final earnings = data.get("refEarnings");
-            List referalsList = data.get('referals');
+          //  final data = snapshot.data!.docs[0];
+            final earnings = '500.00';
+            List referalsList = ['daniel','moses','victor','emmanuel','emeka'];
 
-            final refCode = data.get("refCode");
+            final refCode = 'danielekwere';
 
             return Container(
               padding: const EdgeInsets.all(10),

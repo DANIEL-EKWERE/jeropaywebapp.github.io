@@ -4,7 +4,7 @@ import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
-import 'package:databank/views/transaction_details_screen.dart';
+// import 'package:databank/views/transaction_details_screen.dart';
 import 'package:databank/backend/models/api_models.dart';
 
 class TransactionsProvider extends ChangeNotifier {

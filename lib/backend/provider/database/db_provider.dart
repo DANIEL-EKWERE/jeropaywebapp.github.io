@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../views/onboarding_page.dart';
-
 class DataBaseProvider extends ChangeNotifier {
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 

@@ -207,13 +207,13 @@ class _DataTopUpState extends State<DataTopUp> {
     '9 MOBILE 3GB - #590': '6e15da99-7706-4f80-99a7-b5d4af953723',
   };
 
-  late BuildContext modalBottomSheetContext;
+  // late BuildContext modalBottomSheetContext;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    modalBottomSheetContext = context;
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   modalBottomSheetContext = context;
+  // }
 
   bool _numberInputIsValid = true;
 
@@ -800,7 +800,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                 actions: [
                                                                   TextButton(
                                                                     onPressed:
-                                                                        () async {
+                                                                        () {
                                                                       Navigator.pop(
                                                                           context);
                                                                       final itemIndex =
@@ -817,7 +817,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                       final dataId =
                                                                           getDataId[
                                                                               item];
-                                                                      final dataPurchaseModel = await value.PurchaseData(
+                                                                       value.PurchaseData(
                                                                           context:
                                                                               context,
                                                                           dataId:
@@ -826,176 +826,176 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                               .text
                                                                               .trim());
 
-                                                                      showModalBottomSheet(
-                                                                          showDragHandle:
-                                                                              true,
-                                                                          isDismissible:
-                                                                              false,
-                                                                          isScrollControlled:
-                                                                              true,
+                                                                      // showModalBottomSheet(
+                                                                      //     showDragHandle:
+                                                                      //         true,
+                                                                      //     isDismissible:
+                                                                      //         false,
+                                                                      //     isScrollControlled:
+                                                                      //         true,
 
-                                                                          // anchorPoint: const Offset(5, 50),
-                                                                          useSafeArea:
-                                                                              true,
-                                                                          context:
-                                                                              modalBottomSheetContext,
-                                                                          builder: (context) =>
-                                                                              SingleChildScrollView(
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    //  height: MediaQuery.of(context).size.height * 40,
-                                                                                    // color:
-                                                                                    //     kYellow,
-                                                                                    child: Column(
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                      children: [
-                                                                                        Text('Transaction Receipt'),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('Details:'),
-                                                                                          FittedBox(
-                                                                                              child: Text(
-                                                                                            dataPurchaseModel.message.detail,
-                                                                                            style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
-                                                                                          ))
-                                                                                        ]),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('Date and Time:'),
-                                                                                          Text(dataPurchaseModel.message.dateAndTime)
-                                                                                        ]),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('Old Balance:'),
-                                                                                          Text(dataPurchaseModel.message.oldBalance)
-                                                                                        ]),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('New Balance:'),
-                                                                                          Text(dataPurchaseModel.message.newBalance)
-                                                                                        ]),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('Phone:'),
-                                                                                          Text(dataPurchaseModel.message.phoneNumber)
-                                                                                        ]),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('Status:'),
-                                                                                          Text(dataPurchaseModel.message.status)
-                                                                                        ]),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('Amount:'),
-                                                                                          Text(dataPurchaseModel.message.amount)
-                                                                                        ]),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                          const Text('Type:'),
-                                                                                          Text(dataPurchaseModel.message.type)
-                                                                                        ]),
-                                                                                        Divider(),
-                                                                                        SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        Row(
-                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                          children: [
-                                                                                            Row(
-                                                                                              children: [
-                                                                                                Expanded(
-                                                                                                  flex: 2,
-                                                                                                  child: Container(
-                                                                                                    decoration: const BoxDecoration(
-                                                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                                        gradient: LinearGradient(
-                                                                                                          colors: [
-                                                                                                            Color(0xff373737),
-                                                                                                            Color(0xff6A6A6A),
-                                                                                                          ],
-                                                                                                          begin: Alignment.topLeft,
-                                                                                                          end: Alignment.bottomRight,
-                                                                                                        )),
-                                                                                                    child: ElevatedButton(
-                                                                                                      onPressed: () async {
-                                                                                                        // () async {
-                                                                                                      },
-                                                                                                      style: ElevatedButton.styleFrom(
-                                                                                                          elevation: 0,
-                                                                                                          foregroundColor: kWhite,
-                                                                                                          backgroundColor: Colors.transparent,
-                                                                                                          shape: RoundedRectangleBorder(
-                                                                                                            borderRadius: BorderRadius.circular(10),
-                                                                                                          )),
-                                                                                                      child: Text(
-                                                                                                        'Print',
-                                                                                                        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                            Row(
-                                                                                              children: [
-                                                                                                Expanded(
-                                                                                                  flex: 2,
-                                                                                                  child: Container(
-                                                                                                    decoration: const BoxDecoration(
-                                                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                                        gradient: LinearGradient(
-                                                                                                          colors: [
-                                                                                                            Color(0xff373737),
-                                                                                                            Color(0xff6A6A6A),
-                                                                                                          ],
-                                                                                                          begin: Alignment.topLeft,
-                                                                                                          end: Alignment.bottomRight,
-                                                                                                        )),
-                                                                                                    child: ElevatedButton(
-                                                                                                      onPressed: () async {
-                                                                                                        // () async {
-                                                                                                      },
-                                                                                                      style: ElevatedButton.styleFrom(
-                                                                                                          elevation: 0,
-                                                                                                          foregroundColor: kWhite,
-                                                                                                          backgroundColor: Colors.transparent,
-                                                                                                          shape: RoundedRectangleBorder(
-                                                                                                            borderRadius: BorderRadius.circular(10),
-                                                                                                          )),
-                                                                                                      child: Text(
-                                                                                                        'Download',
-                                                                                                        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ));
+                                                                      //     // anchorPoint: const Offset(5, 50),
+                                                                      //     useSafeArea:
+                                                                      //         true,
+                                                                      //     context:
+                                                                      //         modalBottomSheetContext,
+                                                                      //     builder: (context) =>
+                                                                      //         SingleChildScrollView(
+                                                                      //           child: Padding(
+                                                                      //             padding: const EdgeInsets.symmetric(horizontal: 20),
+                                                                      //             child: Container(
+                                                                      //               width: double.infinity,
+                                                                      //               //  height: MediaQuery.of(context).size.height * 40,
+                                                                      //               // color:
+                                                                      //               //     kYellow,
+                                                                      //               child: Column(
+                                                                      //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                      //                 crossAxisAlignment: CrossAxisAlignment.center,
+                                                                      //                 children: [
+                                                                      //                   Text('Transaction Receipt'),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('Details:'),
+                                                                      //                     FittedBox(
+                                                                      //                         child: Text(
+                                                                      //                       dataPurchaseModel.message.detail,
+                                                                      //                       style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
+                                                                      //                     ))
+                                                                      //                   ]),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('Date and Time:'),
+                                                                      //                     Text(dataPurchaseModel.message.dateAndTime)
+                                                                      //                   ]),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('Old Balance:'),
+                                                                      //                     Text(dataPurchaseModel.message.oldBalance)
+                                                                      //                   ]),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('New Balance:'),
+                                                                      //                     Text(dataPurchaseModel.message.newBalance)
+                                                                      //                   ]),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('Phone:'),
+                                                                      //                     Text(dataPurchaseModel.message.phoneNumber)
+                                                                      //                   ]),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('Status:'),
+                                                                      //                     Text(dataPurchaseModel.message.status)
+                                                                      //                   ]),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('Amount:'),
+                                                                      //                     Text(dataPurchaseModel.message.amount)
+                                                                      //                   ]),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                      //                     const Text('Type:'),
+                                                                      //                     Text(dataPurchaseModel.message.type)
+                                                                      //                   ]),
+                                                                      //                   Divider(),
+                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                      //                   Row(
+                                                                      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      //                     crossAxisAlignment: CrossAxisAlignment.center,
+                                                                      //                     children: [
+                                                                      //                       Row(
+                                                                      //                         children: [
+                                                                      //                           Expanded(
+                                                                      //                             flex: 2,
+                                                                      //                             child: Container(
+                                                                      //                               decoration: const BoxDecoration(
+                                                                      //                                   borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                      //                                   gradient: LinearGradient(
+                                                                      //                                     colors: [
+                                                                      //                                       Color(0xff373737),
+                                                                      //                                       Color(0xff6A6A6A),
+                                                                      //                                     ],
+                                                                      //                                     begin: Alignment.topLeft,
+                                                                      //                                     end: Alignment.bottomRight,
+                                                                      //                                   )),
+                                                                      //                               child: ElevatedButton(
+                                                                      //                                 onPressed: () async {
+                                                                      //                                   // () async {
+                                                                      //                                 },
+                                                                      //                                 style: ElevatedButton.styleFrom(
+                                                                      //                                     elevation: 0,
+                                                                      //                                     foregroundColor: kWhite,
+                                                                      //                                     backgroundColor: Colors.transparent,
+                                                                      //                                     shape: RoundedRectangleBorder(
+                                                                      //                                       borderRadius: BorderRadius.circular(10),
+                                                                      //                                     )),
+                                                                      //                                 child: Text(
+                                                                      //                                   'Print',
+                                                                      //                                   style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                      //                                 ),
+                                                                      //                               ),
+                                                                      //                             ),
+                                                                      //                           ),
+                                                                      //                         ],
+                                                                      //                       ),
+                                                                      //                       Row(
+                                                                      //                         children: [
+                                                                      //                           Expanded(
+                                                                      //                             flex: 2,
+                                                                      //                             child: Container(
+                                                                      //                               decoration: const BoxDecoration(
+                                                                      //                                   borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                      //                                   gradient: LinearGradient(
+                                                                      //                                     colors: [
+                                                                      //                                       Color(0xff373737),
+                                                                      //                                       Color(0xff6A6A6A),
+                                                                      //                                     ],
+                                                                      //                                     begin: Alignment.topLeft,
+                                                                      //                                     end: Alignment.bottomRight,
+                                                                      //                                   )),
+                                                                      //                               child: ElevatedButton(
+                                                                      //                                 onPressed: () async {
+                                                                      //                                   // () async {
+                                                                      //                                 },
+                                                                      //                                 style: ElevatedButton.styleFrom(
+                                                                      //                                     elevation: 0,
+                                                                      //                                     foregroundColor: kWhite,
+                                                                      //                                     backgroundColor: Colors.transparent,
+                                                                      //                                     shape: RoundedRectangleBorder(
+                                                                      //                                       borderRadius: BorderRadius.circular(10),
+                                                                      //                                     )),
+                                                                      //                                 child: Text(
+                                                                      //                                   'Download',
+                                                                      //                                   style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
+                                                                      //                                 ),
+                                                                      //                               ),
+                                                                      //                             ),
+                                                                      //                           ),
+                                                                      //                         ],
+                                                                      //                       ),
+                                                                      //                     ],
+                                                                      //                   ),
+                                                                      //                 ],
+                                                                      //               ),
+                                                                      //             ),
+                                                                      //           ),
+                                                                      //         ));
                                                                     },
                                                                     child:
                                                                         const Text(

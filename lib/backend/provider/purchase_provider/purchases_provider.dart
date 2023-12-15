@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
+import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/log_in.dart';
 import 'package:databank/widget/receipt.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../../customizations/app_style.dart';
 
 // 923cdea0-feec-4e3a-9e2e-e0edc76c8aec giting mtn
 class PurchaseProvider extends ChangeNotifier {
@@ -24,6 +27,9 @@ class PurchaseProvider extends ChangeNotifier {
   String get regMessage => _reqMessage;
   bool get isLoading => _isLoading;
   Color? get color => _color;
+
+  late BuildContext modalBottomSheetContext;
+
   // Message message = Message(amount: '',id: '', dateAndTime: DateTime.now(),detail: '', oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'');
   AirtimePurchaseModel airtimePurchaseModel = AirtimePurchaseModel(
       data: Data(
@@ -81,97 +87,222 @@ class PurchaseProvider extends ChangeNotifier {
         _reqMessage = 'your purchase was successful';
         print(dataPurchaseModel);
         _color = const Color.fromARGB(255, 15, 175, 20);
-        showModalBottomSheet(
-            showDragHandle: true,
-            isDismissible: false,
-            isScrollControlled: true,
+        if (context != null) {
+          showModalBottomSheet(
+              showDragHandle: true,
+              isDismissible: false,
+              isScrollControlled: true,
 
-            // anchorPoint: const Offset(5, 50),
-            useSafeArea: true,
-            context: context!,
-            builder: (context) => SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      width: double.infinity,
-                      //  height: MediaQuery.of(context).size.height * 40,
-                      // color:
-                      //     kYellow,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('Transaction Receipt'),
-                          Divider(),
-                          Row(
+              // anchorPoint: const Offset(5, 50),
+              useSafeArea: true,
+              context: modalBottomSheetContext,
+              builder: (context) => SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        width: double.infinity,
+                        //  height: MediaQuery.of(context).size.height * 40,
+                        // color:
+                        //     kYellow,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Transaction Receipt'),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Details:'),
+                                  FittedBox(
+                                      child: Text(
+                                    dataPurchaseModel.message.detail,
+                                    style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                .5,
+                                        fontWeight: FontWeight.bold),
+                                  ))
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Date and Time:'),
+                                  Text(dataPurchaseModel.message.dateAndTime)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Old Balance:'),
+                                  Text(dataPurchaseModel.message.oldBalance)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('New Balance:'),
+                                  Text(dataPurchaseModel.message.newBalance)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Phone:'),
+                                  Text(dataPurchaseModel.message.phoneNumber)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Status:'),
+                                  Text(dataPurchaseModel.message.status)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Amount:'),
+                                  Text(dataPurchaseModel.message.amount)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Type:'),
+                                  Text(dataPurchaseModel.message.type)
+                                ]),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text('Details:'),
-                                FittedBox(
-                                    child: Text(
-                                  dataPurchaseModel.message.detail,
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              1.5,
-                                      fontWeight: FontWeight.bold),
-                                ))
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Date and Time:'),
-                                Text(dataPurchaseModel.message.dateAndTime)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Old Balance:'),
-                                Text(dataPurchaseModel.message.oldBalance)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('New Balance:'),
-                                Text(dataPurchaseModel.message.newBalance)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Phone:'),
-                                Text(dataPurchaseModel.message.phoneNumber)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Status:'),
-                                Text(dataPurchaseModel.message.status)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Amount:'),
-                                Text(dataPurchaseModel.message.amount)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text('Type:'),
-                                Text(dataPurchaseModel.message.type)
-                              ]),
-                        ],
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color(0xff373737),
+                                                Color(0xff6A6A6A),
+                                              ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            )),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            // () async {
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              elevation: 0,
+                                              foregroundColor: kWhite,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              )),
+                                          child: Text(
+                                            'Print',
+                                            style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    2.5,
+                                                color: kWhite),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color(0xff373737),
+                                                Color(0xff6A6A6A),
+                                              ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            )),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            // () async {
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              elevation: 0,
+                                              foregroundColor: kWhite,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              )),
+                                          child: Text(
+                                            'Download',
+                                            style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    2.5,
+                                                color: kWhite),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ));
+                  ));
+        }
 
         notifyListeners();
       } else if (response.statusCode == 401) {
@@ -265,7 +396,224 @@ class PurchaseProvider extends ChangeNotifier {
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
 
-        
+        if (context != null) {
+          showModalBottomSheet(
+              showDragHandle: true,
+              isDismissible: false,
+              isScrollControlled: true,
+
+              // anchorPoint: const Offset(5, 50),
+              useSafeArea: true,
+              context: context,
+              builder: (context) => SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        width: double.infinity,
+                        // height: MediaQuery.of(context).size.height * 40,
+                        // color:
+                        //     kYellow,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Transaction Receipt'),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Details:'),
+                                  FittedBox(
+                                      child: Text(
+                                          airtimePurchaseModel.message!.detail,
+                                          style: kEncodeSansBold.copyWith(
+                                            fontSize: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                1.5,
+                                          )))
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Date and Time:'),
+                                  Text(
+                                      airtimePurchaseModel.message!.dateAndTime)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Old Balance:'),
+                                  Text(airtimePurchaseModel.message!.oldBalance)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('New Balance:'),
+                                  Text(airtimePurchaseModel.message!.newBalance)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Phone:'),
+                                  Text(
+                                      airtimePurchaseModel.message!.phoneNumber)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Status:'),
+                                  Text(airtimePurchaseModel.message!.status)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Amount:'),
+                                  Text(airtimePurchaseModel.message!.amount)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Type:'),
+                                  Text(airtimePurchaseModel.message!.type)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color(0xff373737),
+                                                Color(0xff6A6A6A),
+                                              ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            )),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            // () async {
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              elevation: 0,
+                                              foregroundColor: kWhite,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              )),
+                                          child: Text(
+                                            'Print',
+                                            style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    2.5,
+                                                color: kWhite),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color(0xff373737),
+                                                Color(0xff6A6A6A),
+                                              ],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            )),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            // () async {
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              elevation: 0,
+                                              foregroundColor: kWhite,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              )),
+                                          child: Text(
+                                            'Download',
+                                            style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    2.5,
+                                                color: kWhite),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ));
+        }
 
         notifyListeners();
       } else if (request.statusCode == 401) {
