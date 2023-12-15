@@ -2,6 +2,7 @@
 // import 'package: marquee/marquee.dart';
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
+import 'package:databank/views/refer_and_earn.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 // import '../widget/snackbar.dart';
@@ -842,12 +843,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          // Navigator.of(context)
-                                          //     .push(CupertinoPageRoute(
-                                          //   builder: (context) => HistoryScreen(
-                                          //     openDrawer: widget.openDrawer,
-                                          //   ),
-                                          // ));
+                                          Navigator.of(context)
+                                              .push(CupertinoPageRoute(
+                                            builder: (context) => ReferAndEarn(
+                                            ),
+                                          ));
 
                                           // context
                                           //     .read<TransactionsProvider>()

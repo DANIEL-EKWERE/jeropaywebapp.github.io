@@ -386,8 +386,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         : SizedBox(
                             height: double.maxFinite,
                             child: PageView.builder(
-                              //  itemCount: transacts!.transaction.length,
-                              itemCount: categories.length,
+                              itemCount: transacts!.transaction.length,
+                             // itemCount: categories.length,
                               scrollDirection: Axis.horizontal,
                               controller: _pageController,
                               onPageChanged: (value) {
