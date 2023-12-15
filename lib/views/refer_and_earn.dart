@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:databank/views/log_in.dart';
 import 'package:databank/widget/snackbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter/services.dart';
+import '../backend/provider/user_details/user_details.dart';
+import 'package:provider/provider.dart';
 
 class ReferAndEarn extends StatefulWidget {
   const ReferAndEarn({super.key});
@@ -15,10 +14,18 @@ class ReferAndEarn extends StatefulWidget {
 }
 
 class _ReferAndEarnState extends State<ReferAndEarn> {
-  CollectionReference profileRef =
-      FirebaseFirestore.instance.collection("users");
+  var baln;
 
-  final auth = FirebaseAuth.instance;
+  @override
+  void initState() {
+    super.initState();
+    // ignore: avoid_print
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      baln = Provider.of<UserDetails>(context, listen: false);
+      baln.getUserAccountBalanace();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,29 +34,33 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
         actions: [
           IconButton(
               onPressed: () {
-                auth.signOut().then((value) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      CupertinoPageRoute(builder: (context) => LoginScreen()),
-                      (route) => false);
-                });
+                // auth.signOut().then((value) {
+                //   Navigator.pushAndRemoveUntil(
+                //       context,
+                //       CupertinoPageRoute(builder: (context) => LoginScreen()),
+                //       (route) => false);
+                // });
               },
               icon: const Icon(Icons.exit_to_app))
         ],
       ),
-      body: FutureBuilder<QuerySnapshot>(
-          future: profileRef
-              .where("refCode", isEqualTo: auth.currentUser!.uid)
-              .get(),
+      body: FutureBuilder<String>(
+          future: baln.getUserAccountBalanace(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-          //  final data = snapshot.data!.docs[0];
+            //  final data = snapshot.data!.docs[0];
             final earnings = '500.00';
-            List referalsList = ['daniel','moses','victor','emmanuel','emeka'];
+            List referalsList = [
+              'daniel',
+              'moses',
+              'victor',
+              'emmanuel',
+              'emeka'
+            ];
 
             final refCode = 'danielekwere';
 
@@ -85,7 +96,9 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
 
                                     Clipboard.setData(data);
 
-                                    warning(context:context,message: "Ref code copied");
+                                    warning(
+                                        context: context,
+                                        message: "Ref code copied");
                                   },
                                   icon: const Icon(Icons.copy)),
                             ),
