@@ -1078,9 +1078,9 @@ enum Status { SUCCESS, PENDING }
 
 final statusValues = EnumValues({"Success": Status.SUCCESS});
 
-enum Type { AIRTIME, DATA }
+enum Type { AIRTIME, DATA, ELECTRICITY, CABLE}
 
-final typeValues = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA});
+final typeValues = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA, "Electricity": Type.ELECTRICITY,"Cable":Type.CABLE});
 
 class EnumValues<T> {
   Map<String, T> map;
@@ -1193,9 +1193,9 @@ enum Status2 { SUCCESS, PENDING }
 final statusValues2 =
     EnumValues({"Success": Status.SUCCESS, "Pending": Status.PENDING});
 
-enum Type2 { AIRTIME, DATA }
+enum Type2 { AIRTIME, DATA, ELECTRICITY, CABLE}
 
-final typeValues2 = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA});
+final typeValues2 = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA, "Electricity": Type.ELECTRICITY,"Cable":Type.CABLE});
 
 class EnumValues2<T> {
   Map<String, T> map;

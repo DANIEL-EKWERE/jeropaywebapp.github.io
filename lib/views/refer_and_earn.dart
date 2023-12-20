@@ -54,7 +54,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
             }
             //  final data = snapshot.data!.docs[0];
             final earnings = '500.00';
-            List referalsList = [
+            List<String> referalsList = [
               'daniel',
               'moses',
               'victor',

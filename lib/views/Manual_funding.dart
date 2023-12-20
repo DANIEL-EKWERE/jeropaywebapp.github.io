@@ -1,5 +1,7 @@
 import 'package:databank/customizations/app_style.dart';
+import 'package:databank/views/send_proof.dart';
 import 'package:databank/widget/button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../customizations/size_config.dart';
@@ -65,7 +67,13 @@ class _ManualFundingState extends State<ManualFunding> {
               SizedBox(
                 height: sizeVertical * 3,
               ),
-              button(text1:'Send Payment Prove',isLoading1:false, tap:(){}),
+              button(text1:'Send Payment Prove',isLoading1:false, tap:(){
+                Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) =>  SendPaymentProofToAdmin(),
+                        ),
+                      );
+              }),
               SizedBox(
                 height: sizeVertical * 3,
               ),

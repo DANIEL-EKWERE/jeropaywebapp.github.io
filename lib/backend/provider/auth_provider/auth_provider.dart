@@ -357,6 +357,93 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+
+
+  void SendPaymentProof(
+      {
+      required File? profile_picture,
+      required BuildContext? context}) async {
+    _isLoading = true;
+    notifyListeners();
+    String url = '$requestBaseUrl/payment-proof/';
+    final access = await DataBaseProvider().getToken();
+    Map<String, String>? reqHeader = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $access',
+    };
+    //  _reqMessage = 'access token $access';
+    notifyListeners();
+    try {
+      var res = http.MultipartRequest('POST', Uri.parse(url));
+
+      // Set the headers
+      res.headers.addAll(reqHeader);
+
+
+
+      final pickedFileToFile = File(profile_picture!.path);
+      final imageStream =
+          http.ByteStream(Stream.castFrom(pickedFileToFile.openRead()));
+      final lenght = await pickedFileToFile.length();
+      final imageUpload = http.MultipartFile(
+          'profile_picture', imageStream, lenght,
+          filename: basename(pickedFileToFile.path));
+      res.files.add(imageUpload);
+      var response = await res.send();
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        _isLoading = false;
+        _reqMessage = 'Payment Proof Sent Successfully';
+        _color = const Color.fromARGB(255, 15, 175, 20);
+
+        // await UserDetails().getUserAccountDetails();
+        notifyListeners();
+        Navigator.of(context!)
+            .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+      } else if (response.statusCode == 500) {
+        var req = await response.stream.bytesToString();
+        var res = json.decode(req);
+        _reqMessage = res['message'];
+        Navigator.of(context!)
+            .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+        notifyListeners();
+      } else if (response.statusCode == 401) {
+        _isLoading = false;
+        var req = await response.stream.bytesToString();
+        var res = json.decode(req);
+        _reqMessage = res['message'];
+        _color = const Color(0xfff33225);
+        // Handle unauthorized access (e.g., redirect to login screen)
+        // Example: Navigator.pushNamed(context, '/login');
+        Navigator.of(context!)
+            .pushNamedAndRemoveUntil("/Login", (route) => false);
+
+        notifyListeners();
+      } else {
+        _isLoading = false;
+        var responseBody = await response.stream.bytesToString();
+        var responseJson = json.decode(responseBody);
+
+        // Check if 'body' property exists in the response
+        var bodyValue = responseJson['body'] ?? 'No body found';
+
+        _reqMessage =
+            'Error Sending Payment Proof ${response.statusCode} $bodyValue';
+        _color = const Color(0xfff33225);
+        notifyListeners();
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _reqMessage = 'internet connection is not available';
+      _color = const Color(0xfff33225);
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _reqMessage = 'please try again $e';
+      _color = const Color(0xfff33225);
+      notifyListeners();
+    }
+  }
+
   void clear() {
     _reqMessage = '';
     _color = null;

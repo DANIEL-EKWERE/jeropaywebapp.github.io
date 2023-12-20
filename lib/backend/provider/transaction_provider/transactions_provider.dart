@@ -12,13 +12,22 @@ class TransactionsProvider extends ChangeNotifier {
   // List<AllTransactions>? allTransactions;
   AllTransactions2 allTran2 =
       AllTransactions2(status: '', totalAmount: 0.0, data: []);
+  List<String> categories = [
+    'Data',
+    'Airtime',
+    'Cable',
+    'Electricity',
+    'Deposit'
+  ];
+  List<dynamic> selectedCategories = [];
 
   AllTransactions2 allTran =
       AllTransactions2(status: '', totalAmount: 0.0, data: []);
   // setter
-  List<Datum2> _transactions = [];
+  List<Datum2>? _transactions = [];
 
-  List<Datum2> get transaction => _transactions;
+  List<Datum2>? get transaction => _transactions;
+
   bool _isLoading = false;
   String _reqMessage = '';
   AllTransactions2 allTransac =
@@ -45,11 +54,13 @@ class TransactionsProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
 
-  void updateTransactions(List<Datum2> newTransactions) {
+  void updateTransactions(List<Datum2>? newTransactions) {
     _transactions = newTransactions;
     print(_transactions);
     notifyListeners();
   }
+
+ 
 
 // TODO: the code below is what am using for my transaction history
 
@@ -236,9 +247,8 @@ class TransactionsProvider extends ChangeNotifier {
         print(jsonString);
         singleTransaction = singleTransactionFromJson(response.body);
         _reqMessage = jsonString['status'];
- 
-        _reqMessage = singleTransaction.status;
 
+        _reqMessage = singleTransaction.status;
 
         // Navigator.push(
         //                                                           context!,
