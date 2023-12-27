@@ -5,8 +5,8 @@ import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/about_us.dart';
 import 'package:databank/views/reset_password.dart';
-import 'package:databank/views/create_profile.dart';
 import 'package:databank/views/set_transaction_pin.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -485,16 +485,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   'Your sure you want to log out of your data bank account?'),
                               actions: [
                                 TextButton(
-                                  onPressed: () {
-                                    context
+                                  onPressed: () async {
+                                    await context
                                         .read<DataBaseProvider>()
                                         .logOut(context);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Log Out sucesful!!!'),
-                                        backgroundColor: Colors.green,
-                                      ),
-                                    );
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   const SnackBar(
+                                    //     content: Text('Log Out sucesful!!!'),
+                                    //     backgroundColor: Colors.green,
+                                    //   ),
+                                    // );
+                                    successMessage(context: context,message: 'Log Out sucesful!!!',x: Color.fromARGB(255, 15, 175, 20));
                                   },
                                   child: Text('yes'),
                                 ),

@@ -60,10 +60,12 @@ class AuthenticationProvider extends ChangeNotifier {
         _isLoading = false;
         _reqMessage = 'Account Created Successfully';
         _color = const Color.fromARGB(255, 15, 175, 20);
-
+        final req = json.decode(res.body);
+        final String token = req['access_token'].toString();
+        DataBaseProvider().saveToken(token);
         notifyListeners();
         Navigator.of(context!)
-            .pushNamedAndRemoveUntil("/Login", (route) => false);
+            .pushNamedAndRemoveUntil("/CreatUserProfile", (route) => false);
       } else {
         final req = json.decode(res.body);
         _isLoading = false;
@@ -104,8 +106,6 @@ class AuthenticationProvider extends ChangeNotifier {
       print(e);
     }
   }
-
-  
 
   // update password
 
@@ -193,7 +193,7 @@ class AuthenticationProvider extends ChangeNotifier {
         await UserDetails().createOrUpdateDeviceTokenAndPlatform(
             platform: 'android', token: deviceToken);
         notifyListeners();
-        final String token = req['token'].toString();
+        final String token = req['token'];
         final String userId = req['user_id'].toString();
         final String username = req['username'].toString();
         final String profileId = req['profile_id'].toString();
@@ -205,7 +205,7 @@ class AuthenticationProvider extends ChangeNotifier {
         final String account_number = req['account_number'].toString();
         final String account_name = req['account_name'].toString();
 
-        print(token);
+        //   print(token);
         print(userId);
         print(username);
         print(phone);
@@ -311,7 +311,7 @@ class AuthenticationProvider extends ChangeNotifier {
         // await UserDetails().getUserAccountDetails();
         notifyListeners();
         Navigator.of(context!)
-            .pushNamedAndRemoveUntil("/App_Layout", (route) => false);
+            .pushNamedAndRemoveUntil("/Login", (route) => false);
       } else if (response.statusCode == 500) {
         var req = await response.stream.bytesToString();
         var res = json.decode(req);
@@ -357,12 +357,8 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
-
-
   void SendPaymentProof(
-      {
-      required File? profile_picture,
-      required BuildContext? context}) async {
+      {required File? profile_picture, required BuildContext? context}) async {
     _isLoading = true;
     notifyListeners();
     String url = '$requestBaseUrl/payment-proof/';
@@ -378,8 +374,6 @@ class AuthenticationProvider extends ChangeNotifier {
 
       // Set the headers
       res.headers.addAll(reqHeader);
-
-
 
       final pickedFileToFile = File(profile_picture!.path);
       final imageStream =

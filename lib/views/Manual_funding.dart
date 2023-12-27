@@ -1,6 +1,5 @@
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/views/send_proof.dart';
-import 'package:databank/widget/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -67,13 +66,47 @@ class _ManualFundingState extends State<ManualFunding> {
               SizedBox(
                 height: sizeVertical * 3,
               ),
-              button(text1:'Send Payment Prove',isLoading1:false, tap:(){
-                Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          builder: (context) =>  SendPaymentProofToAdmin(),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff373737),
+                              Color.fromARGB(255, 135, 135, 135),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          )),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) => SendPaymentProofToAdmin(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            foregroundColor: kWhite,
+                            backgroundColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                        child: Text(
+                          'Send Payment Prove',
+                          style: TextStyle(
+                              fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                              color: kWhite),
                         ),
-                      );
-              }),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: sizeVertical * 3,
               ),

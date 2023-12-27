@@ -1,10 +1,12 @@
 // import 'package:flutter/gestures.dart';
+import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
-import '../widget/button.dart';
+import '../widget/snackbar.dart';
 import '../widget/textField.dart';
 
 class PasswordReset extends StatefulWidget {
@@ -92,7 +94,92 @@ class _PasswordResetState extends State<PasswordReset> {
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),
-                  button(text1:'Proceed',isLoading1:false,tap:(){}),
+                  Consumer<AuthenticationProvider>(
+                    builder: (context, value, child) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (value.reqMessage != '') {
+                          successMessage(
+                              message: value.reqMessage,
+                              x: value.color,
+                              context: context);
+
+                          value.clear();
+                        }
+                      });
+                      return Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xff373737),
+                                      Color(0xff6A6A6A),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  // if (_userNameController!.text.isEmpty ||
+                                  //     _passwordController!.text.isEmpty) {
+                                  //   warning(
+                                  //       message: 'fields cant\'t be empty',
+                                  //       context: context);
+                                  //   } else {
+                                  // value.loginUser(
+                                  //     username:
+                                  //         _userNameController!.text.trim(),
+                                  //     password:
+                                  //         _passwordController!.text.trim(),
+                                  //     context: context);
+                                  //  }
+                                  // () async {
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    foregroundColor: kWhite,
+                                    backgroundColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
+                                child: value.isLoading
+                                    ? const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'Loading please wait...',
+                                            style: TextStyle(color: kWhite),
+                                          )
+                                        ],
+                                      )
+                                    : Text(
+                                        'Log In',
+                                        style: TextStyle(
+                                            fontSize: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                2.5,
+                                            color: kWhite),
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                   SizedBox(
                     height: sizeHorizontal * 3,
                   ),

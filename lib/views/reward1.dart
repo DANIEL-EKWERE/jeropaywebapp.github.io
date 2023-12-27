@@ -1,8 +1,10 @@
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/views/about_us.dart';
 import 'package:databank/views/profile.dart';
 import 'package:databank/views/reward.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../model/drawer_item.dart';
 import '../model/drawer_items.dart';
 import 'contact.dart';
@@ -57,6 +59,15 @@ class _RewardScreen1State extends State<RewardScreen1> {
               onSelectedItem: (DrawerItem value) {
                 switch (value) {
                   case DrawerItems.logout:
+                  context
+                                        .read<DataBaseProvider>()
+                                        .logOut(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Log Out sucesful!!!'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Logged Out!!!')));
                     return;

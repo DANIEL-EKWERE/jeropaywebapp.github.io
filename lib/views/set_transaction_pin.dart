@@ -26,7 +26,7 @@ class SetTransactionPin extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Reset Password',
+                'Set Transaction Pin',
                 style: kEncodeSansBold.copyWith(
                     color: kGrey, fontSize: sizeHorizontal * 3.5),
               ),

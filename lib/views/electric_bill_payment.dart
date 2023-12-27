@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/backend/provider/purchase_provider/purchases_provider.dart';
+import 'package:databank/backend/provider/user_details/user_details.dart';
 // import 'package:databank/widget/button.dart';
 import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,12 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
 
+
+  var username;
+  var baln;
+  var balance;
+
+
   @override
   void dispose() {
     super.dispose();
@@ -35,6 +43,63 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
     _phoneController.dispose();
     _numberController.dispose();
   }
+
+
+  void username1() {
+    final x = gatherUserName();
+    setState(() {
+      username = x;
+    });
+  }
+
+  Future<String> gatherUserName() async {
+    final usernamex = await DataBaseProvider().getUserName();
+    setState(() {
+      username = usernamex;
+    });
+    print("user name is $username method");
+    return usernamex;
+  }
+
+  // Future<void> userProfile() async {
+  //   final image = await UserDetails().getUserProfileImage();
+  //   setState(() {
+  //     proImg = image;
+  //   });
+  // }
+
+// final balance =
+  Future<void> gatherBalance() async {
+    final balancex = await UserDetails().getUserAccountBalanace();
+    setState(() {
+      balance = balancex;
+    });
+    print("balance is $balance method");
+    // return balancex;
+  }
+
+  Future<void> Balance() {
+    final bal = gatherBalance();
+    setState(() {
+      balance = bal;
+    });
+    return balance;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // ignore: avoid_print
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      baln = Provider.of<UserDetails>(context, listen: false);
+      baln.getUserAccountBalanace();
+    });
+    Balance();
+    gatherBalance();
+    username1();
+    gatherUserName();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +188,7 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                             top: 10,
                             left: 18,
                             child: Text(
-                              'Hello,\nDaniel Ekwere.',
+                              'Hello,\n$username.',
                               style: kEncodeSansRegular.copyWith(
                                 color: kWhite,
                                 fontSize: SizeConfig.blockSizeHorizontal! * 2.0,
@@ -145,7 +210,7 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                             top: 30,
                             right: 18,
                             child: Text(
-                              '#500.00',
+                              '#$balance',
                               style: kEncodeSansRegular.copyWith(
                                 color: kWhite,
                                 fontSize: SizeConfig.blockSizeHorizontal! * 2.0,
@@ -303,118 +368,121 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                                       value.clear();
                                     }
                                   });
-                                  return Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)),
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Color(0xff373737),
-                                                  Color(0xff6A6A6A),
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              )),
-                                          child: ElevatedButton(
-                                            onPressed: () async {
-                                              if (_controller.text == '' ||
-                                                  _meterTypeController.text ==
-                                                      '' ||
-                                                  _amountController.text ==
-                                                      '' ||
-                                                  _phoneController.text == '') {
-                                                warning(
-                                                    message:
-                                                        'fields can\'t be empty',
-                                                    context: context);
-                                              } else {
-                                                showDialog<bool>(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return AlertDialog(
-                                                        title: const Text(
-                                                            'Confirm Purchase'),
-                                                        content: Text(
-                                                            'your about to validate and make purchase of ${_meterTypeController.text}  for #${_amountController.text}'),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              value.validateMeterNumber(
-                                                                  number:
-                                                                      _controller
-                                                                          .text
-                                                                          .trim(),
-                                                                  type: _meterTypeController
-                                                                      .text
-                                                                      .trim(),
-                                                                  disco: widget
-                                                                      .name,
-                                                                  amount:
-                                                                      _amountController
-                                                                          .text
-                                                                          .trim(),
-                                                                  context:
-                                                                      context);
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: const Text(
-                                                                'Ok'),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    });
-                                              }
-                                              // () async {
-                   
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                                elevation: 0,
-                                                foregroundColor: kWhite,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xff373737),
+                                                    Color(0xff6A6A6A),
+                                                  ],
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
                                                 )),
-                                            child: value.isLoading
-                                                ? const Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      CircularProgressIndicator(
-                                                        color: Colors.white,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Text(
-                                                        'Loading please wait...',
-                                                        style: TextStyle(
-                                                            color: kWhite),
-                                                      )
-                                                    ],
-                                                  )
-                                                : Text(
-                                                    'VALIDATE AND PURCHASE',
-                                                    style: TextStyle(
-                                                        fontSize: SizeConfig
-                                                                .blockSizeHorizontal! *
-                                                            2.5,
-                                                        color: kWhite),
-                                                  ),
+                                            child: ElevatedButton(
+                                              onPressed: () async {
+                                                if (_controller.text == '' ||
+                                                    _meterTypeController.text ==
+                                                        '' ||
+                                                    _amountController.text ==
+                                                        '' ||
+                                                    _phoneController.text == '') {
+                                                  warning(
+                                                      message:
+                                                          'fields can\'t be empty',
+                                                      context: context);
+                                                } else {
+                                                  showDialog<bool>(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              'Confirm Purchase'),
+                                                          content: Text(
+                                                              'your about to validate and make purchase of ${_meterTypeController.text}  for #${_amountController.text}'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                value.validateMeterNumber(
+                                                                    number:
+                                                                        _controller
+                                                                            .text
+                                                                            .trim(),
+                                                                    type: _meterTypeController
+                                                                        .text
+                                                                        .trim(),
+                                                                    disco: widget
+                                                                        .name,
+                                                                    amount:
+                                                                        _amountController
+                                                                            .text
+                                                                            .trim(),
+                                                                    context:
+                                                                        context);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: const Text(
+                                                                  'Ok'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      });
+                                                }
+                                                // () async {
+                                                     
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  elevation: 0,
+                                                  foregroundColor: kWhite,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                  )),
+                                              child: value.isLoading
+                                                  ? const Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        CircularProgressIndicator(
+                                                          color: Colors.white,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text(
+                                                          'Loading please wait...',
+                                                          style: TextStyle(
+                                                              color: kWhite),
+                                                        )
+                                                      ],
+                                                    )
+                                                  : Text(
+                                                      'VALIDATE AND PURCHASE',
+                                                      style: TextStyle(
+                                                          fontSize: SizeConfig
+                                                                  .blockSizeHorizontal! *
+                                                              1.5,
+                                                          color: kWhite),
+                                                    ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   );
                                 },
                               )

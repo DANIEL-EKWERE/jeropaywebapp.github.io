@@ -11,8 +11,8 @@ import 'package:databank/customizations/app_style.dart';
 // import 'package:databank/firebase_options.dart';
 import 'package:databank/views/add_money.dart';
 import 'package:databank/views/airtime_top_up.dart';
-import 'package:databank/views/app_layout.dart';
 import 'package:databank/views/cable_subscription.dart';
+import 'package:databank/views/upgrade_to_reseller.dart';
 // import 'package:databank/views/history.dart';
 import 'package:databank/views/result_checker.dart';
 import 'package:databank/views/scan_to_load.dart';
@@ -24,6 +24,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
+
 // import '../backend/models/api_models.dart';
 import '../backend/provider/user_details/user_details.dart';
 import '../customizations/size_config.dart';
@@ -34,9 +35,7 @@ import '../widget/drawer_widget.dart';
 import 'data_top_up.dart';
 import 'electric_bill_expanded.dart';
 import 'electric_bill_payment.dart';
-// import 'log_in.dart';
-import 'recharge_card.dart';
-// import 'dart:developer' as devtools show log;
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.openDrawer});
@@ -48,21 +47,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<ElectricBills> opeSvg = <ElectricBills>[
-    ElectricBills(image: 'assets/images/AEDC.png', name: 'AEDC'),
-    ElectricBills(image: 'assets/images/EEDC.png', name: 'EEDC'),
-    ElectricBills(image: 'assets/images/EKEDC.png', name: 'EKEDC'),
+    ElectricBills(image: 'assets/images/AEDC.png', name: 'Abuja Electric'),
+    ElectricBills(image: 'assets/images/EEDC.png', name: 'Enugu Electric'),
+    ElectricBills(image: 'assets/images/EKEDC.png', name: 'Eko Electric'),
   ];
 
   final List<ElectricBills> opeSvg1 = <ElectricBills>[
-    ElectricBills(image: 'assets/images/AEDC.png', name: 'AEDC'),
-    ElectricBills(image: 'assets/images/EEDC.png', name: 'EEDC'),
-    ElectricBills(image: 'assets/images/EKEDC.png', name: 'EKEDC'),
-    ElectricBills(image: 'assets/images/IBEDC.png', name: 'IBEDC'),
-    ElectricBills(image: 'assets/images/IKEDC.png', name: 'IKEDC'),
-    ElectricBills(image: 'assets/images/JED.png', name: 'JED'),
-    ElectricBills(image: 'assets/images/KAEDCO.png', name: 'KAEDCO'),
-    ElectricBills(image: 'assets/images/PHED.png', name: 'PHED'),
-    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'KAEDCO (1)'),
+    ElectricBills(image: 'assets/images/AEDC.png', name: 'Abuja Electric'),
+    ElectricBills(image: 'assets/images/EEDC.png', name: 'Enugu Electric'),
+    ElectricBills(image: 'assets/images/EKEDC.png', name: 'Eko Electric'),
+    ElectricBills(image: 'assets/images/IBEDC.png', name: 'Ibandan Electric'),
+    ElectricBills(image: 'assets/images/IKEDC.png', name: 'Ikeja Electric'),
+    ElectricBills(image: 'assets/images/JED.png', name: 'Jos Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO.png', name: 'Kaduna Electric'),
+    ElectricBills(image: 'assets/images/PHED.png', name: 'Port Harcourt Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Benin Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Yola Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Kano Electric'),
   ];
 
   final List<VtuOperations> vtuOpe = [
@@ -74,27 +75,27 @@ class _HomeScreenState extends State<HomeScreen> {
         svg: 'assets/images/contact-list.png',
         name: 'Airtime TopUp',
         screen: const AirtimeTopUp()),
-    VtuOperations(
-        svg: 'assets/images/recharge-card-printer.png',
-        name: 'Recharge Card \n not available',
-        screen: const RechargeCard()),
-    VtuOperations(
-        svg: 'assets/images/data-pin.png',
-        name: 'Data Pin \n not available',
-        // screen: const DataPin(),
-        screen: AlertDialog(
-          title: const Text('Currently Unavailable'),
-          content: const Text(
-              'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                const AppLayout();
-              },
-              child: const Text('Ok'),
-            ),
-          ],
-        )),
+    // VtuOperations(
+    //     svg: 'assets/images/recharge-card-printer.png',
+    //     name: 'Recharge Card \n not available',
+    //     screen: const RechargeCard()),
+    // VtuOperations(
+    //     svg: 'assets/images/data-pin.png',
+    //     name: 'Data Pin \n not available',
+    //     // screen: const DataPin(),
+    //     screen: AlertDialog(
+    //       title: const Text('Currently Unavailable'),
+    //       content: const Text(
+    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             const AppLayout();
+    //           },
+    //           child: const Text('Ok'),
+    //         ),
+    //       ],
+    //     )),
     VtuOperations(
         svg: 'assets/images/cable.jpg',
         name: 'Cable Subscription',
@@ -107,42 +108,42 @@ class _HomeScreenState extends State<HomeScreen> {
         svg: 'assets/images/data-pin.png',
         name: 'Scan to Load Card',
         screen: const ScanToLoad()),
-    VtuOperations(
-        svg: 'assets/images/metaverse.png',
-        name: 'Airtime To Cash \n not available',
-        screen: AlertDialog(
-          title: const Text('Currently Unavailable'),
-          content: const Text(
-              'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                const AppLayout();
-              },
-              child: const Text('Ok'),
-            ),
-          ],
-        )),
-    VtuOperations(
-        svg: 'assets/images/metaverse.png',
-        name: 'Bulk SMS \n not available',
-        screen: AlertDialog(
-          title: const Text('Currently Unavailable'),
-          content: const Text(
-              'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                const AppLayout();
-              },
-              child: const Text('Ok'),
-            ),
-          ],
-        )),
+    // VtuOperations(
+    //     svg: 'assets/images/metaverse.png',
+    //     name: 'Airtime To Cash \n not available',
+    //     screen: AlertDialog(
+    //       title: const Text('Currently Unavailable'),
+    //       content: const Text(
+    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             const AppLayout();
+    //           },
+    //           child: const Text('Ok'),
+    //         ),
+    //       ],
+    //     )),
+    // VtuOperations(
+    //     svg: 'assets/images/metaverse.png',
+    //     name: 'Bulk SMS \n not available',
+    //     screen: AlertDialog(
+    //       title: const Text('Currently Unavailable'),
+    //       content: const Text(
+    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             const AppLayout();
+    //           },
+    //           child: const Text('Ok'),
+    //         ),
+    //       ],
+    //     )),
   ];
-
+  final Uri url = Uri.parse('https://wa.link/y4scus');
   bool _showBal = true;
-  String proImg =
+  dynamic proImg =
       'https://www.bellanaija.com/wp-content/uploads/2021/07/Linda-Osifo-2.jpg';
   var username;
   var balance;
@@ -171,11 +172,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // setState(() {
     //   balance = balancex;
     // });
-
-    // final img = userProfile();
-    // setState(() {
-    //   proImg = img;
-    // });
+    userProfile();
+    final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
 
     print(gatherUserName());
     // Balance();
@@ -288,7 +289,11 @@ class _HomeScreenState extends State<HomeScreen> {
             const Color.fromARGB(0, 255, 255, 255).withOpacity(0.9),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              if (!await launchUrl(url)) {
+                throw Exception('could\'t load link $url');
+              }
+            },
             icon: const Icon(
               Icons.support_agent_outlined,
               color: kWhite,
@@ -302,12 +307,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           CircleAvatar(
-            radius: 20,
-            backgroundColor: kGrey,
-            backgroundImage:
-             NetworkImage("https://databank-api-h413.onrender.com/media/profile-pic/$proImg")
-            //  : Image.asset("assets/images/pic-2.png"),
-          ),
+              radius: 20,
+              backgroundColor: kGrey,
+              backgroundImage: NetworkImage(
+                  "https://databank-api-h413.onrender.com/media/profile-pic$proImg")
+              //  : Image.asset("assets/images/pic-2.png"),
+              ),
           const SizedBox(
             width: 24,
           )
@@ -408,90 +413,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       });
                                     },
                                   ),
-                                  // FutureBuilder<String>(
-                                  //   future: baln.getUserAccountBalanace(),
-                                  //   builder: (context, snapshot) {
-                                  //     if (snapshot.connectionState ==
-                                  //         ConnectionState.done) {
-                                  //       if (snapshot.hasError) {
-                                  //         const Text('An error occured');
-                                  //       } else if (snapshot.hasData) {
-                                  //         final balance1 = snapshot.data;
-                                  //         return RichText(
-                                  //           text: TextSpan(
-                                  //               text: _showBal ? '#' : null,
-                                  //               style: kEncodeSansBold.copyWith(
-                                  //                   color: kWhite,
-                                  //                   fontSize: SizeConfig
-                                  //                           .blockSizeHorizontal! *
-                                  //                       2.5),
-                                  //               children: <TextSpan>[
-                                  //                 TextSpan(
-                                  //                   text: _showBal
-                                  //                       ? balance1
-                                  //                       : '*****',
-                                  //                   style: kEncodeSansBold.copyWith(
-                                  //                       color: kWhite,
-                                  //                       fontSize: SizeConfig
-                                  //                               .blockSizeHorizontal! *
-                                  //                           2.5),
-                                  //                 ),
-                                  //               ]),
-                                  //         );
-                                  //       }
-                                  //     } else {
-                                  //       return const SpinKitWave(
-                                  //         color: kDarkGrey,
-                                  //         size: 25,
-                                  //       );
-                                  //     }
-                                  //     return const SpinKitWave(
-                                  //       color: kYellow,
-                                  //     );
-                                  //   },
-                                  // ),
-
-                                  // FutureBuilder<String>(
-                                  //   future: balance.getUserAccountBalanace(),
-                                  //   builder: (context, snapshot) {
-                                  //     if (snapshot.connectionState ==
-                                  //         ConnectionState.done) {
-                                  //       if (snapshot.hasError) {
-                                  //         const Text('An error occured');
-                                  //       } else if (snapshot.hasData) {
-
-                                  //       }
-                                  //     } else {
-                                  //       return const SpinKitWave(
-                                  //         color: kDarkGrey,
-                                  //         size: 25,
-                                  //       );
-                                  //     }
-                                  //     return const SpinKitWave(
-                                  //       color: kYellow,
-                                  //     );
-                                  //   },
-                                  // ),
-
-                                  // RichText(
-                                  //   text: TextSpan(
-                                  //       text: _showBal ? '#' : null,
-                                  //       style: kEncodeSansBold.copyWith(
-                                  //           color: kWhite,
-                                  //           fontSize: SizeConfig
-                                  //                   .blockSizeHorizontal! *
-                                  //               2.5),
-                                  //       children: <TextSpan>[
-                                  //         TextSpan(
-                                  //           text: _showBal ? balance : '*****',
-                                  //           style: kEncodeSansBold.copyWith(
-                                  //               color: kWhite,
-                                  //               fontSize: SizeConfig
-                                  //                       .blockSizeHorizontal! *
-                                  //                   2.5),
-                                  //         ),
-                                  //       ]),
-                                  // ),
                                   FutureBuilder<String>(
                                     future: baln.getUserAccountBalanace(),
                                     builder: (context, snapshot) {
@@ -538,7 +459,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       return const SizedBox();
                                     },
                                   ),
-
                                   const SizedBox(
                                     width: 15,
                                   ),
@@ -805,11 +725,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          // Navigator.of(context)
-                                          //     .push(CupertinoPageRoute(
-                                          //   builder: (context) =>
-                                          //       const OnboardingPage(),
-                                          // ));
+                                          Navigator.of(context)
+                                              .push(CupertinoPageRoute(
+                                            builder: (context) =>
+                                                const UpgradeToReseller(),
+                                          ));
                                           // value.getUserAccountBalanace();
                                         },
                                         child: Container(
@@ -845,8 +765,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         onTap: () {
                                           Navigator.of(context)
                                               .push(CupertinoPageRoute(
-                                            builder: (context) => ReferAndEarn(
-                                            ),
+                                            builder: (context) =>
+                                                ReferAndEarn(),
                                           ));
                                         },
                                         child: Container(
@@ -1061,61 +981,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
-              const SizedBox(height: 10),
-              // Consumer<TransactionsProvider>(
-              //     builder: (context, transactions, child) {
-              //   return ListView.builder(
-              //       itemCount: transactions.recentTransacts.transactions.length,
-              //       itemBuilder: (context, index) {
-              //        // RecentTransactions recents =
-              //          //   RecentTransactions(status: '', transactions: []);
-              //         Transaction x =
-              //             transactions.recentTransacts.transactions[index];
-              //         return Card(
-              //           child: ListTile(
-              //             onTap: () {
-              //               context
-              //                   .read<TransactionsProvider>()
-              //                   .singleTransactions(
-              //                       trans_uuid: x.id, context: context);
-              //             },
-              //             leading: Container(
-              //               padding: const EdgeInsets.all(12),
-              //               decoration: BoxDecoration(
-              //                 color: kBrown,
-              //                 shape: BoxShape.rectangle,
-              //                 borderRadius: const BorderRadius.all(
-              //                   Radius.circular(12),
-              //                 ),
-              //               ),
-              //               child: Image.asset(
-              //                 'assets/images/logo-1.png',
-              //                 width: sizeHorizontal * 5,
-              //               ),
-              //               // Icon(
-              //               //   Icons
-              //               //       .mobile_screen_share_rounded,
-              //               //   color: kGrey,
-              //               // ),
-              //             ),
-              //             title: Text(
-              //               "${typeValues2.reverse[x.type]!} purchase to ${x.phoneNumber}",
-              //               style: kEncodeSansMedium.copyWith(
-              //                   color: kDarkBrown,
-              //                   fontSize: sizeHorizontal * 1.6),
-              //             ),
-              //             subtitle: Text(
-              //               'Date: ${x.dateAndTime}',
-              //               style: kEncodeSansRegular.copyWith(
-              //                   color: kGrey, fontSize: sizeVertical * 2.0),
-              //             ),
-              //             trailing: Text(
-              //                 "${statusValues2.reverse[x.status]!}\n #${x.amount}"),
-              //           ),
-              //         );
-              //       });
-              // }),
-              // const SizedBox(height: 90),
+              SizedBox(height: SizeConfig.blockSizeVertical! * 15),
             ],
           ),
         ),

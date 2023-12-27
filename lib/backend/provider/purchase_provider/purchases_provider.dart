@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
-import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/log_in.dart';
 import 'package:databank/widget/receipt.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../customizations/app_style.dart';
 
 // 923cdea0-feec-4e3a-9e2e-e0edc76c8aec giting mtn
 class PurchaseProvider extends ChangeNotifier {
@@ -28,37 +26,37 @@ class PurchaseProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   Color? get color => _color;
 
-  late BuildContext modalBottomSheetContext;
-
+  BuildContext? modalBottomSheetContext;
+  AirtimePurchaseModel? airtimePurchaseModel;
   // Message message = Message(amount: '',id: '', dateAndTime: DateTime.now(),detail: '', oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'');
-  AirtimePurchaseModel airtimePurchaseModel = AirtimePurchaseModel(
-      data: Data(
-          id: '',
-          detail: '',
-          dateAndTime: DateTime.now(),
-          oldBalance: '',
-          newBalance: '',
-          phoneNumber: '',
-          status: '',
-          type: '',
-          amount: ''),
-      status: '');
-
-  DataPurchaseModel dataPurchaseModel = DataPurchaseModel(
-    status: '',
-    message: Message(
-        amount: '',
-        id: '',
-        dateAndTime: '',
-        detail: '',
-        oldBalance: '',
-        newBalance: '',
-        phoneNumber: '',
-        status: '',
-        type: ''),
-  );
+  // AirtimePurchaseModel airtimePurchaseModel = AirtimePurchaseModel(
+  //     data: Data(
+  //         id: '',
+  //         detail: '',
+  //         dateAndTime: '',
+  //         oldBalance: '',
+  //         newBalance: '',
+  //         phoneNumber: '',
+  //         status: '',
+  //         type: '',
+  //         amount: ''),
+  //     status: '');
+  DataPurchaseModel? dataPurchaseModel;
+  // DataPurchaseModel dataPurchaseModel = DataPurchaseModel(
+  //   status: '',
+  //   message: Message(
+  //       amount: '',
+  //       id: '',
+  //       dateAndTime: '',
+  //       detail: '',
+  //       oldBalance: '',
+  //       newBalance: '',
+  //       phoneNumber: '',
+  //       status: '',
+  //       type: ''),
+  // );
   get dateAndTime => null;
-  Future<DataPurchaseModel> PurchaseData(
+  Future<DataPurchaseModel>? PurchaseData(
       {required String dataId,
       required String phone_number,
       required BuildContext? context}) async {
@@ -87,228 +85,14 @@ class PurchaseProvider extends ChangeNotifier {
         _reqMessage = 'your purchase was successful';
         print(dataPurchaseModel);
         _color = const Color.fromARGB(255, 15, 175, 20);
-        if (context != null) {
-          showModalBottomSheet(
-              showDragHandle: true,
-              isDismissible: false,
-              isScrollControlled: true,
-
-              // anchorPoint: const Offset(5, 50),
-              useSafeArea: true,
-              context: modalBottomSheetContext,
-              builder: (context) => SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
-                        width: double.infinity,
-                        //  height: MediaQuery.of(context).size.height * 40,
-                        // color:
-                        //     kYellow,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Transaction Receipt'),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Details:'),
-                                  FittedBox(
-                                      child: Text(
-                                    dataPurchaseModel.message.detail,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                .5,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Date and Time:'),
-                                  Text(dataPurchaseModel.message.dateAndTime)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Old Balance:'),
-                                  Text(dataPurchaseModel.message.oldBalance)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('New Balance:'),
-                                  Text(dataPurchaseModel.message.newBalance)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Phone:'),
-                                  Text(dataPurchaseModel.message.phoneNumber)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Status:'),
-                                  Text(dataPurchaseModel.message.status)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Amount:'),
-                                  Text(dataPurchaseModel.message.amount)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Type:'),
-                                  Text(dataPurchaseModel.message.type)
-                                ]),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff373737),
-                                                Color(0xff6A6A6A),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            )),
-                                        child: ElevatedButton(
-                                          onPressed: () async {
-                                            // () async {
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: Text(
-                                            'Print',
-                                            style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .blockSizeHorizontal! *
-                                                    2.5,
-                                                color: kWhite),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff373737),
-                                                Color(0xff6A6A6A),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            )),
-                                        child: ElevatedButton(
-                                          onPressed: () async {
-                                            // () async {
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: Text(
-                                            'Download',
-                                            style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .blockSizeHorizontal! *
-                                                    2.5,
-                                                color: kWhite),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ));
-        }
+     
 
         notifyListeners();
       } else if (response.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(response.body);
         _reqMessage = res['message'];
+        dataPurchaseModel = null;
         _color = const Color(0xfff33225);
         notifyListeners();
         showDialog<bool>(
@@ -334,14 +118,16 @@ class PurchaseProvider extends ChangeNotifier {
       } else if (response.statusCode == 404) {
         final res = json.decode(response.body);
         _isLoading = false;
+        dataPurchaseModel = null;
         _reqMessage =
             '${res['details']['phone_number'][0]} ${response.statusCode}';
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else if (response.statusCode == 400) {
-        final res = json.decode(response.body);
+       // final res = json.decode(response.body);
+        dataPurchaseModel = null;
         _isLoading = false;
-        _reqMessage = res['message']['error'][0];
+        _reqMessage = 'insufficient balance';
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else {
@@ -353,20 +139,22 @@ class PurchaseProvider extends ChangeNotifier {
       }
     } on SocketException catch (_) {
       _isLoading = false;
+      dataPurchaseModel = null;
       _reqMessage = 'internet connection is not available ';
       _color = const Color(0xfff33225);
       notifyListeners();
     } catch (e) {
+      dataPurchaseModel = null;
       _isLoading = false;
       _reqMessage = 'something went wrong $e';
       print(e);
       _color = const Color(0xfff33225);
       notifyListeners();
     }
-    return dataPurchaseModel;
+    return dataPurchaseModel!;
   }
 
-  Future<AirtimePurchaseModel> AirtimePurchase(
+  Future<AirtimePurchaseModel>? AirtimePurchase(
       {required network,
       required amount,
       required phone_number,
@@ -395,225 +183,20 @@ class PurchaseProvider extends ChangeNotifier {
         airtimePurchaseModel = airtimePurchaseFromJson(request.body);
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
+        print(airtimePurchaseModel!.data!.detail!);
+        print(airtimePurchaseModel!.data!.amount!);
+        print(airtimePurchaseModel!.data!.dateAndTime!);
+        print(airtimePurchaseModel!.data!.newBalance!);
+        print(airtimePurchaseModel!.data!.oldBalance!);
+        print(airtimePurchaseModel!.data!.phoneNumber!);
+        print(airtimePurchaseModel!.data!.status!);
+        print(airtimePurchaseModel!.data!.type!);
 
-        if (context != null) {
-          showModalBottomSheet(
-              showDragHandle: true,
-              isDismissible: false,
-              isScrollControlled: true,
-
-              // anchorPoint: const Offset(5, 50),
-              useSafeArea: true,
-              context: context,
-              builder: (context) => SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
-                        width: double.infinity,
-                        // height: MediaQuery.of(context).size.height * 40,
-                        // color:
-                        //     kYellow,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Transaction Receipt'),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Details:'),
-                                  FittedBox(
-                                      child: Text(
-                                          airtimePurchaseModel.message!.detail,
-                                          style: kEncodeSansBold.copyWith(
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                1.5,
-                                          )))
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Date and Time:'),
-                                  Text(
-                                      airtimePurchaseModel.message!.dateAndTime)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Old Balance:'),
-                                  Text(airtimePurchaseModel.message!.oldBalance)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('New Balance:'),
-                                  Text(airtimePurchaseModel.message!.newBalance)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Phone:'),
-                                  Text(
-                                      airtimePurchaseModel.message!.phoneNumber)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Status:'),
-                                  Text(airtimePurchaseModel.message!.status)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Amount:'),
-                                  Text(airtimePurchaseModel.message!.amount)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text('Type:'),
-                                  Text(airtimePurchaseModel.message!.type)
-                                ]),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Divider(),
-                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff373737),
-                                                Color(0xff6A6A6A),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            )),
-                                        child: ElevatedButton(
-                                          onPressed: () async {
-                                            // () async {
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: Text(
-                                            'Print',
-                                            style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .blockSizeHorizontal! *
-                                                    2.5,
-                                                color: kWhite),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff373737),
-                                                Color(0xff6A6A6A),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            )),
-                                        child: ElevatedButton(
-                                          onPressed: () async {
-                                            // () async {
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              foregroundColor: kWhite,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                          child: Text(
-                                            'Download',
-                                            style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .blockSizeHorizontal! *
-                                                    2.5,
-                                                color: kWhite),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ));
-        }
+        // Navigator.of(context!).push(
+        //                 CupertinoPageRoute(
+        //                   builder: (context) => TransactionDetailsScreen(airtimePurchaseModel:airtimePurchaseModel),
+        //                 ),
+        //               );
 
         notifyListeners();
       } else if (request.statusCode == 401) {
@@ -621,6 +204,7 @@ class PurchaseProvider extends ChangeNotifier {
         final res = json.decode(request.body);
         _reqMessage = res['message']['error'][0];
         _color = const Color(0xfff33225);
+        airtimePurchaseModel = null;
         notifyListeners();
         showDialog<bool>(
             context: context!,
@@ -645,33 +229,40 @@ class PurchaseProvider extends ChangeNotifier {
       } else if (request.statusCode == 404) {
         final res = json.decode(request.body);
         _isLoading = false;
+        airtimePurchaseModel = null;
         _reqMessage = res['details']['phone_number'][0];
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else if (request.statusCode == 400) {
-        final res = json.decode(request.body);
+      //  final res = json.decode(request.body);
         _isLoading = false;
-        _reqMessage = res['message']['error'][0];
+        _reqMessage = 'insufficient balance';
+        airtimePurchaseModel = null;
+        //res['message']['error'][0];
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else {
         _isLoading = false;
         _reqMessage = 'something went wrong';
+        airtimePurchaseModel = null;
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       }
     } on SocketException catch (_) {
       _isLoading = false;
+      airtimePurchaseModel = null;
       _reqMessage = 'internet connection is not available ';
       _color = const Color(0xfff33225);
       notifyListeners();
     } catch (e) {
       _isLoading = false;
-      _reqMessage = "something went wrong $e";
+      airtimePurchaseModel = null;
+      _reqMessage =
+          "something went wrong $e ${airtimePurchaseModel!.data!.detail!} ${airtimePurchaseModel!.data!.amount!} ${airtimePurchaseModel!.data!.dateAndTime!} ${airtimePurchaseModel!.data!.newBalance!} ${airtimePurchaseModel!.data!.oldBalance!} ${airtimePurchaseModel!.data!.phoneNumber!} ${airtimePurchaseModel!.data!.status!} ${airtimePurchaseModel!.data!.type!}";
       _color = const Color(0xfff33225);
       notifyListeners();
     }
-    return airtimePurchaseModel;
+    return airtimePurchaseModel!;
   }
 
   Future<void> electricSub(

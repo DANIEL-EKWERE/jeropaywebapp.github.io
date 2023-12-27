@@ -34,7 +34,7 @@ flexibleSpace: Container(
               children:[
                 Text('Welcome to DATABANK',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
             SizedBox(height: sizeVertical*2,),
-            Text('Data bank i a registered telecommunication company that offers instant Data top-up,Airtime Recharge,Cable TV subscription (DSTV,GOtv,StarTimes),Electricity Bill Payment,Airtime to Cash Bulk SMS,Data Card Pin generation and more. \n we have one of the best telecommunication platforms in Nigeria with a detailed API documentation, swift multi-wallet funding channels and a robust customer service unit.'),
+            Text('Data bank is a registered telecommunication company that offers instant Data top-up,Airtime Recharge,Cable TV subscription (DSTV,GOtv,StarTimes),Electricity Bill Payment,Airtime to Cash Bulk SMS,Data Card Pin generation and more. \n we have one of the best telecommunication platforms in Nigeria with a detailed API documentation, swift multi-wallet funding channels and a robust customer service unit.'),
             SizedBox(height: sizeVertical*3,),
             Text('We are automated:',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
             SizedBox(height: sizeVertical*2,),
@@ -42,15 +42,15 @@ flexibleSpace: Container(
             SizedBox(height: sizeVertical*3,),
             Text('we are reliable:',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
             SizedBox(height: sizeVertical*2,),
-            Text('Our platform is fully optimized plaform that is credible and reliable. you get 100% value for any transaction you carry out with us with us.'),
+            Text('Our platform is fully optimized plaform that is credible and reliable. you get 100% value for any transaction you carry out with us.'),
             SizedBox(height: sizeVertical*3,),
             Text('we are safe and secure:',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
             SizedBox(height: sizeVertical*2,),
             Text('Our system ensures that you are fully in control of your wallet, you determine when money leaves and stays in your wallet.'),
             SizedBox(height: sizeVertical*3,),
-            Text('we are alwys here',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
+            Text('we are always here',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
             SizedBox(height: sizeVertical*2,),
-            Text('Our customer service is ust a click away. We  respond to our client needs promptly.'),
+            Text('Our customer service is a click away. We  respond to our client needs promptly.'),
             // SizedBox(height: sizeVertical*5,)
               ]
             ),

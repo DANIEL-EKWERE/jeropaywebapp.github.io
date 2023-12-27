@@ -880,8 +880,8 @@ String dataPurchaseModelToJson(DataPurchaseModel data) =>
     json.encode(data.toJson());
 
 class DataPurchaseModel {
-  final String status;
-  final Message message;
+  final String? status;
+  final Message? message;
 
   DataPurchaseModel({
     required this.status,
@@ -896,12 +896,12 @@ class DataPurchaseModel {
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "message": message.toJson(),
+        "message": message!.toJson(),
       };
 }
 
 class Message {
-  final String id;
+  final String? id;
   final String detail;
   final String dateAndTime;
   final String oldBalance;
@@ -962,7 +962,7 @@ String depositRecordToJson(List<DepositRecord> data) =>
 class DepositRecord {
   final String id;
   final String amount;
-  final DateTime dateAndTime;
+  final String dateAndTime;
   final String wallet;
 
   DepositRecord({
@@ -975,14 +975,14 @@ class DepositRecord {
   factory DepositRecord.fromJson(Map<String, dynamic> json) => DepositRecord(
         id: json["id"],
         amount: json["amount"],
-        dateAndTime: DateTime.parse(json["date_and_time"]),
+        dateAndTime: json["date_and_time"],
         wallet: json["wallet"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "amount": amount,
-        "date_and_time": dateAndTime.toIso8601String(),
+        "date_and_time": dateAndTime,
         "wallet": wallet,
       };
 }
@@ -1076,11 +1076,11 @@ class Transaction {
 
 enum Status { SUCCESS, PENDING }
 
-final statusValues = EnumValues({"Success": Status.SUCCESS});
+final statusValues = EnumValues({"Success": Status.SUCCESS, "Pending": Status.PENDING});
 
-enum Type { AIRTIME, DATA, ELECTRICITY, CABLE}
+// enum Type { AIRTIME, DATA, ELECTRICITY, CABLE}
 
-final typeValues = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA, "Electricity": Type.ELECTRICITY,"Cable":Type.CABLE});
+// final typeValues = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA, "Electricity": Type.ELECTRICITY,"Cable":Type.CABLE});
 
 class EnumValues<T> {
   Map<String, T> map;
@@ -1142,7 +1142,7 @@ class Datum2 {
   final String? phoneNumber;
   final Status? status;
   final String? amount;
-  final Type? type;
+  final String? type;
 
   Datum2({
     required this.id,
@@ -1165,7 +1165,7 @@ class Datum2 {
         phoneNumber: json["phone_number"],
         status: statusValues.map[json["status"]],
         amount: json["amount"],
-        type: typeValues.map[json["type"]],
+        type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -1177,7 +1177,7 @@ class Datum2 {
         "phone_number": phoneNumber,
         "status": statusValues.reverse[status],
         "amount": amount,
-        "type": typeValues.reverse[type],
+        "type": type,
       };
 }
 
@@ -1193,9 +1193,9 @@ enum Status2 { SUCCESS, PENDING }
 final statusValues2 =
     EnumValues({"Success": Status.SUCCESS, "Pending": Status.PENDING});
 
-enum Type2 { AIRTIME, DATA, ELECTRICITY, CABLE}
+// enum Type2 { AIRTIME, DATA, ELECTRICITY, CABLE}
 
-final typeValues2 = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA, "Electricity": Type.ELECTRICITY,"Cable":Type.CABLE});
+// final typeValues2 = EnumValues({"Airtime": Type.AIRTIME, "Data": Type.DATA, "Electricity": Type.ELECTRICITY,"Cable":Type.CABLE});
 
 class EnumValues2<T> {
   Map<String, T> map;
@@ -1221,8 +1221,8 @@ String airtimePurchaseToJson(AirtimePurchaseModel data) =>
     json.encode(data.toJson());
 
 class AirtimePurchaseModel {
-  final String status;
-  final Data data;
+  final String? status;
+  final Data? data;
 
   AirtimePurchaseModel({
     required this.status,
@@ -1239,20 +1239,20 @@ class AirtimePurchaseModel {
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "data": data.toJson(),
+        "data": data!.toJson(),
       };
 }
 
 class Data {
-  final String id;
-  final String detail;
-  final DateTime dateAndTime;
-  final String oldBalance;
-  final String newBalance;
-  final String phoneNumber;
-  final String status;
-  final String amount;
-  final String type;
+  final String? id;
+  final String? detail;
+  final String? dateAndTime;
+  final String? oldBalance;
+  final String? newBalance;
+  final String? phoneNumber;
+  final String? status;
+  final String? amount;
+  final String? type;
 
   Data({
     required this.id,
@@ -1269,7 +1269,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
         detail: json["detail"],
-        dateAndTime: DateTime.parse(json["date_and_time"]),
+        dateAndTime: json["date_and_time"],
         oldBalance: json["old_balance"],
         newBalance: json["new_balance"],
         phoneNumber: json["phone_number"],
@@ -1281,7 +1281,7 @@ class Data {
   Map<String, dynamic> toJson() => {
         "id": id,
         "detail": detail,
-        "date_and_time": dateAndTime.toIso8601String(),
+        "date_and_time": dateAndTime,
         "old_balance": oldBalance,
         "new_balance": newBalance,
         "phone_number": phoneNumber,

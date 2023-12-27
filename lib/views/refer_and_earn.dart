@@ -1,10 +1,11 @@
+import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/services.dart';
 import '../backend/provider/user_details/user_details.dart';
-import 'package:provider/provider.dart';
 
 class ReferAndEarn extends StatefulWidget {
   const ReferAndEarn({super.key});
@@ -14,16 +15,38 @@ class ReferAndEarn extends StatefulWidget {
 }
 
 class _ReferAndEarnState extends State<ReferAndEarn> {
-  var baln;
+  // UserDetails? baln;
+  var balance;
+  Future<String>? gatherBalance() async {
+    final balancex = await UserDetails().getUserAccountBalanace();
+    setState(() {
+      balance = balancex;
+    });
+    print("balance is $balance method");
+    return balance;
+    // return balancex;
+  }
+
+  Future<void> gatherBalance1() async {
+    final balancex = await UserDetails().getUserAccountBalanace();
+    setState(() {
+      balance = balancex;
+    });
+    print("balance is $balance method");
+    return balance;
+    // return balancex;
+  }
 
   @override
   void initState() {
     super.initState();
-    // ignore: avoid_print
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      baln = Provider.of<UserDetails>(context, listen: false);
-      baln.getUserAccountBalanace();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   baln = Provider.of<UserDetails>(context, listen: false);
+    //   baln!.getUserAccountBalanace();
+    // });
+
+    // baln!.getUserAccountBalanace();
+    gatherBalance();
   }
 
   @override
@@ -33,19 +56,28 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
         title: const Text("earnings page"),
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+              await  context.read<DataBaseProvider>().logOut(context);
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   const SnackBar(
+                //     content: Text('Log Out sucesful!!!'),
+                //     backgroundColor: Colors.green,
+                //   ),
+                // );
                 // auth.signOut().then((value) {
                 //   Navigator.pushAndRemoveUntil(
                 //       context,
                 //       CupertinoPageRoute(builder: (context) => LoginScreen()),
                 //       (route) => false);
                 // });
+
+                successMessage(context: context,message: 'Log Out sucesful!!!',x: Color.fromARGB(255, 15, 175, 20));
               },
               icon: const Icon(Icons.exit_to_app))
         ],
       ),
       body: FutureBuilder<String>(
-          future: baln.getUserAccountBalanace(),
+          future: gatherBalance(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
@@ -53,7 +85,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
               );
             }
             //  final data = snapshot.data!.docs[0];
-            final earnings = '500.00';
+            final earnings = snapshot.data;
             List<String> referalsList = [
               'daniel',
               'moses',
@@ -69,7 +101,9 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
               child: RefreshIndicator(
                 onRefresh: () {
                   setState(() {});
-                  return Future.delayed(const Duration(seconds: 3));
+                  return gatherBalance1();
+                  // baln!.getUserAccountBalanace();
+                  //Future.delayed(const Duration(seconds: 3));
                 },
                 child: CustomScrollView(
                   slivers: [

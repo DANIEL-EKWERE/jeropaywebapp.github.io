@@ -77,8 +77,7 @@ class _RechargeCardState extends State<RechargeCard> {
                   ),
                 ]),
             child: IconButton(
-              onPressed: () => Navigator.of(context)
-                  .pushNamedAndRemoveUntil("/App_Layout", (route) => false),
+              onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.chevron_left),
             ),
           ),

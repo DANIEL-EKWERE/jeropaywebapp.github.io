@@ -43,7 +43,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     'Data',
     'Airtime',
     'Cable',
-    'Electric Bills',
+    'Electricity',
     // 'Result check',
     // 'Airtime to cash'
   ];
@@ -85,9 +85,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
     transacts = Provider.of<TransactionsProvider>(context);
     final filterProducts = transacts!.transaction!.where((product) {
-    return transacts!.selectedCategories.isEmpty ||
-        transacts!.selectedCategories.contains(product.type);
-  }).toList();
+      return transacts!.selectedCategories.isEmpty ||
+          transacts!.selectedCategories.contains(product.type);
+    }).toList();
     //.fetchTransactionsFromAPI(selectedDate: selectedDate);
 
     return Scaffold(
@@ -218,14 +218,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onTap: () {
                             setState(() {
                               current = index;
+                              final type = categories[index];
                               // curentPage = index;
-                              transacts!.selectedCategories.contains(Type);
-                              if(current == index && index != 0){
- transacts!.selectedCategories.add(Type);
-                              }else{
-                                 transacts!.selectedCategories.remove(Type);
+                              transacts!.selectedCategories.contains(type);
+                              if (current == index && index != 0) {
+                                transacts!.selectedCategories.add(type);
+                              } else {
+                                transacts!.selectedCategories.remove(type);
                               }
-                             
                             });
                             // forward = true;
                             // _pageController.position;
@@ -402,6 +402,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           : SizedBox(
                               height: double.maxFinite,
                               child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
                                   itemCount: transacts!.transaction!.length,
                                   itemBuilder: (context, index) {
                                     Datum2 x = transacts!.transaction![index];
@@ -650,7 +651,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                             sizeHorizontal * 5,
                                                       )),
                                                   title: Text(
-                                                    "${typeValues2.reverse[x.type]!} purchase to ${x.phoneNumber}",
+                                                    "${x.type!} purchase to ${x.phoneNumber}",
                                                     style: kEncodeSansMedium
                                                         .copyWith(
                                                             color: kDarkBrown,

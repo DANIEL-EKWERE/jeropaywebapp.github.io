@@ -60,8 +60,6 @@ class TransactionsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
- 
-
 // TODO: the code below is what am using for my transaction history
 
   Future<AllTransactions2> fetchTransactionsFromAPI(
@@ -121,6 +119,71 @@ class TransactionsProvider extends ChangeNotifier {
   }
 
 // TODO: the code above is what am using for my transaction history
+
+  Future<Map<String, Map<String, List<String>>>> FetchPrices() async {
+    print('callimg recent');
+    print('calling recent transactions');
+    String url = '$baseUrl/all-data-plans/';
+    _isLoading = true;
+    notifyListeners();
+
+    final access = await DataBaseProvider().getToken();
+    Map<String, String>? reqHeader = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $access',
+    };
+
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: reqHeader);
+      if (response.statusCode == 200) {
+        _isLoading = false;
+        _reqMessage = 'price updated';
+        final responseBody = jsonDecode(response.body);
+        print('from models===== $responseBody');
+        final data = responseBody['data'];
+        print('not from models===== $recentTransacts');
+        _reqMessage = responseBody['status'];
+        print(recentTransacts.status);
+
+        final Map<String, Map<String, List<String>>> itemx = {};
+
+        for (final price in data) {
+          final network = price['network'];
+          final amount = price['price_desc'];
+          final plan_type = price['plan_type'];
+          if (!itemx.containsKey(network)) {
+            itemx[network!] = {};
+          }
+          if (!itemx[network]!.containsKey(plan_type)) {
+            itemx[network]![plan_type!] = [];
+          }
+          itemx[network]![plan_type]!.add(amount!);
+        }
+
+        print("===== $itemx");
+        _reqMessage = '$itemx';
+        notifyListeners();
+        return itemx;
+      } else {
+        print(response.body);
+        _isLoading = false;
+        _reqMessage = 'error loading this receipt ${response.statusCode}';
+        notifyListeners();
+        throw Exception('Failed to load data ${response.statusCode}');
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _reqMessage = 'internet connection not available';
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _reqMessage = 'An Error Occured $e';
+      throw Exception('Failed to make the request: $e');
+    }
+
+    throw Exception('Failed to load data');
+  }
 
   Future<RecentTransactions> recentTransactions() async {
     print('callimg recent');

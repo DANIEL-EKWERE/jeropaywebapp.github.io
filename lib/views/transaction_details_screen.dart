@@ -1,10 +1,12 @@
+import 'package:databank/customizations/app_style.dart';
+import 'package:databank/customizations/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:databank/backend/models/api_models.dart';
 
 class TransactionDetailsScreen extends StatelessWidget {
-  final SingleTransaction singleTransaction;
+  final AirtimePurchaseModel? airtimePurchaseModel;
 
-  TransactionDetailsScreen({required this.singleTransaction});
+  TransactionDetailsScreen({required this.airtimePurchaseModel});
 
   @override
   Widget build(BuildContext context) {
@@ -14,93 +16,120 @@ class TransactionDetailsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 40,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Transaction Receipt'),
-                Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Details:'),
-                    FittedBox(
-                      child: Text(
-                        singleTransaction.data.detail,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 1.5,
-                          fontWeight: FontWeight.bold,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        width: double.infinity,
+                        // height: MediaQuery.of(context).size.height * 40,
+                        // color:
+                        //     kYellow,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Transaction Receipt'),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Details:'),
+                                  FittedBox(
+                                      child: Text(
+                                          airtimePurchaseModel!.data!.detail!,
+                                          style: kEncodeSansBold.copyWith(
+                                            fontSize: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                1.5,
+                                          )))
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Date and Time:'),
+                                  Text(airtimePurchaseModel!.data!.dateAndTime!)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Old Balance:'),
+                                  Text(airtimePurchaseModel!.data!.oldBalance!)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('New Balance:'),
+                                  Text(airtimePurchaseModel!.data!.newBalance!)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Phone:'),
+                                  Text(airtimePurchaseModel!.data!.phoneNumber!)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Status:'),
+                                  Text(airtimePurchaseModel!.data!.status!)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Amount:'),
+                                  Text(airtimePurchaseModel!.data!.amount!)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text('Type:'),
+                                  Text(airtimePurchaseModel!.data!.type!)
+                                ]),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                            Divider(),
+                            SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                           
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-                Row(
-                  // Add more rows to display other transaction data
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Date and Time:'),
-                    Text(singleTransaction.data.dateAndTime),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Old Balance:'),
-                    Text(singleTransaction.data.oldBalance),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('New Balance:'),
-                    Text(singleTransaction.data.newBalance),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Phone:'),
-                    Text(singleTransaction.data.phoneNumber),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Status:'),
-                    Text(singleTransaction.data.status),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Amount:'),
-                    Text(singleTransaction.data.amount),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Type:'),
-                    Text(singleTransaction.data.type),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

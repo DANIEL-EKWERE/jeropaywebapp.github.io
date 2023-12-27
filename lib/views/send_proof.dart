@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../customizations/size_config.dart';
 import '../widget/snackbar.dart';
@@ -15,11 +16,11 @@ class SendPaymentProofToAdmin extends StatefulWidget {
   const SendPaymentProofToAdmin({super.key});
 
   @override
-  State<SendPaymentProofToAdmin> createState() => _CreatUserProfileState();
+  State<SendPaymentProofToAdmin> createState() => _SendPaymentProofToAdminState();
 }
 
-class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
-  
+class _SendPaymentProofToAdminState extends State<SendPaymentProofToAdmin> {
+  final Uri url = Uri.parse('https://wa.link/mkclts');
   String? selectedValue;
   // File? _imageFile;
   // File? pickedFile;
@@ -33,10 +34,10 @@ class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
     double sizeHorizontal = SizeConfig.blockSizeVertical!;
 
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         title: Text('Send Proof'),
         centerTitle: true,
-       ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
@@ -49,7 +50,7 @@ class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
               Text(
                 'Send proof of payment to the admin and you\'ll be created when received and validated',
                 style: kEncodeSansBold.copyWith(
-                    color: kGrey, fontSize: sizeHorizontal * 3.5),
+                    color: kGrey, fontSize: sizeHorizontal * 2.0),
               ),
               SizedBox(
                 height: sizeHorizontal * 3.5,
@@ -70,7 +71,9 @@ class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
                         )),
                     child: ElevatedButton(
                       onPressed: () async {
-                        
+                        if (!await launchUrl(url)) {
+                          throw Exception('could\'t load link $url');
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           elevation: 0,
@@ -85,7 +88,6 @@ class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
                   SizedBox(
                     height: sizeHorizontal * 3.5,
                   ),
-                  
                 ],
               ),
               SizedBox(
@@ -147,7 +149,6 @@ class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
               SizedBox(
                 height: sizeHorizontal * 3.5,
               ),
-
               Consumer<AuthenticationProvider>(
                 builder: (context, value, child) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -178,10 +179,10 @@ class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
                                 end: Alignment.bottomRight,
                               )),
                           child: ElevatedButton(
-                            onPressed: () async { 
-                                value.SendPaymentProof(
-                                    profile_picture: profileImage,
-                                    context: context);
+                            onPressed: () async {
+                              value.SendPaymentProof(
+                                  profile_picture: profileImage,
+                                  context: context);
                               // () async {
                             },
                             style: ElevatedButton.styleFrom(
@@ -210,7 +211,7 @@ class _CreatUserProfileState extends State<SendPaymentProofToAdmin> {
                                     ],
                                   )
                                 : Text(
-                                    'Complete Profile',
+                                    'Complete Submission',
                                     style: TextStyle(
                                         fontSize:
                                             SizeConfig.blockSizeHorizontal! *

@@ -1,4 +1,6 @@
 import 'package:databank/backend/provider/database/db_provider.dart';
+import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
+import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -59,43 +61,33 @@ class _DataTopUpState extends State<DataTopUp> {
   // Define your categories and subcategories here
   List<String> categories = ['MTN', 'AIRTEL', 'GLO', '9 MOBILE'];
   Map<String, List<String>> subcategories = {
-    'MTN': ['MTN(SME1)', 'MTN(SME2)', 'MTN(GIFTING)', 'MTN(COPORATE)'],
-    'AIRTEL': [
-      'AIRTEL(SME1)',
-      'AIRTEL(SME2)',
-      'AIRTEL(GIFTING)',
-      'AIRTEL(COPORATE)'
-    ],
-    'GLO': ['GLO(SME1)', 'GLO(SME2)', 'GLO(GIFTING)', 'GLO(COPORATE)'],
-    '9 MOBILE': [
-      '9 MOBILE(SME1)',
-      '9 MOBILE(SME2)',
-      '9 MOBILE(GIFTING)',
-      '9 MOBILE(COPORATE)'
-    ],
+    'MTN': ['SME', 'SME2', 'GIFTING', 'CORPORATE GIFTING'],
+    'AIRTEL': ['CORPORATE GIFTING'],
+    'GLO': ['CORPORATE GIFTING'],
+    '9 MOBILE': ['CORPORATE GIFTING'],
   };
 
   Map<String, Map<String, List<String>>> items = {
     'MTN': {
-      'MTN(SME1)': [
+      'SME': [
         'MTN 500MB - #150',
         'MTN 1GB - #230',
         'MTN 2GB - #460',
         'MTN 3GB - #590'
       ],
-      'MTN(SME2)': [
+      'SME2': [
         'MTN 500MB - #150',
         'MTN 1GB - #230',
         'MTN 2GB - #460',
         'MTN 3GB - #590'
       ],
-      'MTN(GIFTING)': [
+      'GIFTING': [
         'MTN 500MB - #150',
         'MTN 1GB - #230',
         'MTN 2GB - #460',
         'MTN 3GB - #590'
       ],
-      'MTN(COPORATE)': [
+      'CORPORATE GIFTING': [
         'MTN 500MB - #150',
         'MTN 1GB - #230',
         'MTN 2GB - #460',
@@ -103,82 +95,82 @@ class _DataTopUpState extends State<DataTopUp> {
       ],
     },
     'AIRTEL': {
-      'AIRTEL(SME1)': [
+      'CORPORATE GIFTING': [
         'AIRTEL 500MB - #150',
         'AIRTEL 1GB - #230',
         'AIRTEL 2GB - #460',
         'AIRTEL 3GB - #590'
       ],
-      'AIRTEL(SME2)': [
-        'AIRTEL 500MB - #150',
-        'AIRTEL 1GB - #230',
-        'AIRTEL 2GB - #460',
-        'AIRTEL 3GB - #590'
-      ],
-      'AIRTEL(GIFTING)': [
-        'AIRTEL 500MB - #150',
-        'AIRTEL 1GB - #230',
-        'AIRTEL 2GB - #460',
-        'AIRTEL 3GB - #590'
-      ],
-      'AIRTEL(COPORATE)': [
-        'AIRTEL 500MB - #150',
-        'AIRTEL 1GB - #230',
-        'AIRTEL 2GB - #460',
-        'AIRTEL 3GB - #590'
-      ],
+      // 'AIRTEL(SME2)': [
+      //   'AIRTEL 500MB - #150',
+      //   'AIRTEL 1GB - #230',
+      //   'AIRTEL 2GB - #460',
+      //   'AIRTEL 3GB - #590'
+      // ],
+      // 'AIRTEL(GIFTING)': [
+      //   'AIRTEL 500MB - #150',
+      //   'AIRTEL 1GB - #230',
+      //   'AIRTEL 2GB - #460',
+      //   'AIRTEL 3GB - #590'
+      // ],
+      // 'AIRTEL(COPORATE)': [
+      //   'AIRTEL 500MB - #150',
+      //   'AIRTEL 1GB - #230',
+      //   'AIRTEL 2GB - #460',
+      //   'AIRTEL 3GB - #590'
+      // ],
     },
     'GLO': {
-      'GLO(SME1)': [
+      'CORPORATE GIFTING': [
         'GLO 500MB - #150',
         'GLO 1GB - #230',
         'GLO 2GB - #460',
         'GLO 3GB - #590'
       ],
-      'GLO(SME2)': [
-        'GLO 500MB - #150',
-        'GLO 1GB - #230',
-        'GLO 2GB - #460',
-        'GLO 3GB - #590'
-      ],
-      'GLO(GIFTING)': [
-        'GLO 500MB - #150',
-        'GLO 1GB - #230',
-        'GLO 2GB - #460',
-        'GLO 3GB - #590'
-      ],
-      'GLO(COPORATE)': [
-        'GLO 500MB - #150',
-        'GLO 1GB - #230',
-        'GLO 2GB - #460',
-        'GLO 3GB - #590'
-      ],
+      // 'GLO(SME2)': [
+      //   'GLO 500MB - #150',
+      //   'GLO 1GB - #230',
+      //   'GLO 2GB - #460',
+      //   'GLO 3GB - #590'
+      // ],
+      // 'GLO(GIFTING)': [
+      //   'GLO 500MB - #150',
+      //   'GLO 1GB - #230',
+      //   'GLO 2GB - #460',
+      //   'GLO 3GB - #590'
+      // ],
+      // 'GLO(COPORATE)': [
+      //   'GLO 500MB - #150',
+      //   'GLO 1GB - #230',
+      //   'GLO 2GB - #460',
+      //   'GLO 3GB - #590'
+      // ],
     },
     '9 MOBILE': {
-      '9 MOBILE(SME1)': [
+      'CORPORATE GIFTING': [
         '9 MOBILE 500MB - #150',
         '9 MOBILE 1GB - #230',
         '9 MOBILE 2GB - #460',
         '9 MOBILE 3GB - #590'
       ],
-      '9 MOBILE(SME2)': [
-        '9 MOBILE 500MB - #150',
-        '9 MOBILE 1GB - #230',
-        '9 MOBILE 2GB - #460',
-        '9 MOBILE 3GB - #590'
-      ],
-      '9 MOBILE(GIFTING)': [
-        '9 MOBILE 500MB - #150',
-        '9 MOBILE 1GB - #230',
-        '9 MOBILE 2GB - #460',
-        '9 MOBILE 3GB - #590'
-      ],
-      '9 MOBILE(COPORATE)': [
-        '9 MOBILE 500MB - #150',
-        '9 MOBILE 1GB - #230',
-        '9 MOBILE 2GB - #460',
-        '9 MOBILE 3GB - #590'
-      ],
+      // '9 MOBILE(SME2)': [
+      //   '9 MOBILE 500MB - #150',
+      //   '9 MOBILE 1GB - #230',
+      //   '9 MOBILE 2GB - #460',
+      //   '9 MOBILE 3GB - #590'
+      // ],
+      // '9 MOBILE(GIFTING)': [
+      //   '9 MOBILE 500MB - #150',
+      //   '9 MOBILE 1GB - #230',
+      //   '9 MOBILE 2GB - #460',
+      //   '9 MOBILE 3GB - #590'
+      // ],
+      // '9 MOBILE(COPORATE)': [
+      //   '9 MOBILE 500MB - #150',
+      //   '9 MOBILE 1GB - #230',
+      //   '9 MOBILE 2GB - #460',
+      //   '9 MOBILE 3GB - #590'
+      // ],
     },
   };
   Map<String, String> getDataId = {
@@ -207,28 +199,89 @@ class _DataTopUpState extends State<DataTopUp> {
     '9 MOBILE 3GB - #590': '6e15da99-7706-4f80-99a7-b5d4af953723',
   };
 
-  // late BuildContext modalBottomSheetContext;
+  late BuildContext modalBottomSheetContext;
 
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   modalBottomSheetContext = context;
-  // }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    modalBottomSheetContext = context;
+  }
 
   bool _numberInputIsValid = true;
 
   TextEditingController phoneController = TextEditingController();
 
+  var username;
+  var baln;
+  var balance;
+  var price;
   @override
   void dispose() {
     super.dispose();
     phoneController.dispose();
   }
 
+  void username1() {
+    final x = gatherUserName();
+    setState(() {
+      username = x;
+    });
+  }
+
+  Future<void> prices() async {
+    final pricex = await TransactionsProvider().FetchPrices();
+    setState(() {
+      items = pricex;
+    });
+  }
+
+  Future<String> gatherUserName() async {
+    final usernamex = await DataBaseProvider().getUserName();
+    setState(() {
+      username = usernamex;
+    });
+    print("user name is $username method");
+    return usernamex;
+  }
+
+  // Future<void> userProfile() async {
+  //   final image = await UserDetails().getUserProfileImage();
+  //   setState(() {
+  //     proImg = image;
+  //   });
+  // }
+
+// final balance =
+  Future<void> gatherBalance() async {
+    final balancex = await UserDetails().getUserAccountBalanace();
+    setState(() {
+      balance = balancex;
+    });
+    print("balance is $balance method");
+    // return balancex;
+  }
+
+  Future<void> Balance() {
+    final bal = gatherBalance();
+    setState(() {
+      balance = bal;
+    });
+    return balance;
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    // ignore: avoid_print
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      baln = Provider.of<UserDetails>(context, listen: false);
+      baln.getUserAccountBalanace();
+    });
+    Balance();
+    gatherBalance();
+    username1();
+    gatherUserName();
+    prices();
   }
 
   @override
@@ -319,7 +372,7 @@ class _DataTopUpState extends State<DataTopUp> {
                             top: 10,
                             left: 18,
                             child: Text(
-                              'Hello,Daniel Ekwere',
+                              'Hello,\n$username',
                               style: kEncodeSansRegular.copyWith(
                                 color: kWhite,
                                 fontSize: SizeConfig.blockSizeHorizontal! * 2.0,
@@ -341,7 +394,7 @@ class _DataTopUpState extends State<DataTopUp> {
                             top: 30,
                             right: 18,
                             child: Text(
-                              '#500.00',
+                              '#$balance',
                               style: kEncodeSansRegular.copyWith(
                                 color: kWhite,
                                 fontSize: SizeConfig.blockSizeHorizontal! * 2.0,
@@ -779,15 +832,18 @@ class _DataTopUpState extends State<DataTopUp> {
                                                           )),
                                                   child: ElevatedButton(
                                                     onPressed: () async {
-                                                      if (selectedCategory!
-                                                              .isEmpty ||
-                                                          selectedSubCategory!
-                                                              .isEmpty ||
-                                                          selectedItem!
-                                                              .isEmpty) {
+                                                      if (selectedCategory ==
+                                                              '' ||
+                                                          selectedSubCategory ==
+                                                              '' ||
+                                                          selectedItem == '' ||
+                                                          phoneController
+                                                                  .text ==
+                                                              '') {
                                                         warning(
                                                             message:
-                                                                'fields cant\'t be empty!!!');
+                                                                'fields cant\'t be empty!!!',
+                                                            context: context);
                                                       } else {
                                                         showDialog<bool>(
                                                             context: context,
@@ -800,7 +856,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                 actions: [
                                                                   TextButton(
                                                                     onPressed:
-                                                                        () {
+                                                                        () async {
                                                                       Navigator.pop(
                                                                           context);
                                                                       final itemIndex =
@@ -817,7 +873,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                       final dataId =
                                                                           getDataId[
                                                                               item];
-                                                                       value.PurchaseData(
+                                                                      final dataPurchaseModel = await value.PurchaseData(
                                                                           context:
                                                                               context,
                                                                           dataId:
@@ -825,6 +881,104 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                           phone_number: phoneController
                                                                               .text
                                                                               .trim());
+
+                                                                      if (dataPurchaseModel !=
+                                                                          null) {
+                                                                        showModalBottomSheet(
+                                                                            showDragHandle:
+                                                                                true,
+                                                                            isDismissible:
+                                                                                false,
+                                                                            isScrollControlled:
+                                                                                true,
+
+                                                                            // anchorPoint: const Offset(5, 50),
+                                                                            useSafeArea:
+                                                                                true,
+                                                                            context:
+                                                                                modalBottomSheetContext,
+                                                                            builder: (context) =>
+                                                                                SingleChildScrollView(
+                                                                                  child: Padding(
+                                                                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      //  height: MediaQuery.of(context).size.height * 40,
+                                                                                      // color:
+                                                                                      //     kYellow,
+                                                                                      child: Column(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                        children: [
+                                                                                          Text('Transaction Receipt'),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('Details:'),
+                                                                                            FittedBox(
+                                                                                                child: Text(
+                                                                                              dataPurchaseModel.message!.detail,
+                                                                                              style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
+                                                                                            ))
+                                                                                          ]),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('Date and Time:'),
+                                                                                            Text(dataPurchaseModel.message!.dateAndTime)
+                                                                                          ]),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('Old Balance:'),
+                                                                                            Text(dataPurchaseModel.message!.oldBalance)
+                                                                                          ]),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('New Balance:'),
+                                                                                            Text(dataPurchaseModel.message!.newBalance)
+                                                                                          ]),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('Phone:'),
+                                                                                            Text(dataPurchaseModel.message!.phoneNumber)
+                                                                                          ]),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('Status:'),
+                                                                                            Text(dataPurchaseModel.message!.status)
+                                                                                          ]),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('Amount:'),
+                                                                                            Text(dataPurchaseModel.message!.amount)
+                                                                                          ]),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                                            const Text('Type:'),
+                                                                                            Text(dataPurchaseModel.message!.type)
+                                                                                          ]),
+                                                                                          Divider(),
+                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ));
+                                                                      }
 
                                                                       // showModalBottomSheet(
                                                                       //     showDragHandle:
@@ -1168,6 +1322,8 @@ class _DataTopUpState extends State<DataTopUp> {
                                                   2.3,
                                             ),
                                           ),
+
+                                         // Text('the price list is $price')
                                         ],
                                       ),
                                     );

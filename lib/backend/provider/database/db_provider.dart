@@ -334,7 +334,7 @@ class DataBaseProvider extends ChangeNotifier {
     }
   }
 
-  void logOut(BuildContext? context) async {
+  Future logOut(BuildContext? context) async {
     _isLoading = true;
     notifyListeners();
     final value = await _pref;

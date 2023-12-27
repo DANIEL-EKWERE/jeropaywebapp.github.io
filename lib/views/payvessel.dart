@@ -1,6 +1,8 @@
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/customizations/app_style.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../customizations/size_config.dart';
 
@@ -16,30 +18,24 @@ enum MenuAction { info }
 class _PayvesselState extends State<Payvessel> {
   dynamic accountNumber;
   dynamic accountName;
- dynamic bankName;
+  dynamic bankName;
   @override
   void initState() {
     super.initState();
-getUserAccountDetails();
+    getUserAccountDetails();
   }
 
+  Future<void> getUserAccountDetails() async {
+    final acctNum = await DataBaseProvider().getAcctNumber();
+    final acctName = await DataBaseProvider().getAcctName();
+    final bName = await DataBaseProvider().getBankName();
 
-
-Future<void> getUserAccountDetails() async {
-  final acctNum = await DataBaseProvider().getAcctNumber();
-  final acctName = await DataBaseProvider().getAcctName();
-  final bName = await DataBaseProvider().getBankName();
-
-  setState((){
-    accountNumber = acctNum;
-    accountName = acctName;
-    bankName = bName;
-  });
-
-}
-
-
-
+    setState(() {
+      accountNumber = acctNum;
+      accountName = acctName;
+      bankName = bName;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +109,28 @@ Future<void> getUserAccountDetails() async {
                 ),
                 Container(
                   width: double.infinity,
-                  height: sizeVertical * 50,
+                  height: sizeVertical * 25,
                   decoration: const BoxDecoration(
-                    color: kWhite,
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/splash (1).png'),
+                        colorFilter: ColorFilter.mode(
+                          Color(0xff6A6A6A),
+                          BlendMode.modulate,
+                        ),
+                        fit: BoxFit.cover),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 27, 20, 20),
+                        Color(0xff6A6A6A),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     borderRadius: BorderRadius.all(
                       Radius.circular(12),
                     ),
                   ),
-                  child:  Column(
+                  child: Column(
                     children: [
                       Expanded(
                         child: Column(
@@ -130,16 +140,75 @@ Future<void> getUserAccountDetails() async {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [const Text('Account Name'), Text(accountName)],
-                            ),
-                            Row(
                               children: [
-                                const Text('Account Number'),
-                                Text(accountNumber)
+                                Text('Virtual Account',
+                                    style: kEncodeSansBold.copyWith(
+                                        color: kWhite,
+                                        fontSize: sizeVertical * 1.5)),
+                                Text(bankName,
+                                    style: kEncodeSansBold.copyWith(
+                                        color: kWhite,
+                                        fontSize: sizeVertical * 1.5))
                               ],
                             ),
-                            Row(
-                              children: [const Text('Bank Name'), Text(bankName)],
+                            SizedBox(
+                  height: sizeVertical * 3,
+                ),
+                            Padding(
+                              padding: const EdgeInsets.only(left:20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // const Text('Account Number'),
+                                  // Text(accountNumber)
+                            
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 3),
+                                    decoration: BoxDecoration(
+                                        color: kLightGrey,
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8))),
+                                    child: Row(children: [
+                                      Text(accountNumber,
+                                          style: kEncodeSansRegular.copyWith(
+                                              color: kGrey,
+                                              fontSize: sizeVertical * 1.5)),
+                                      IconButton(
+                                          onPressed: () {
+                                            ClipboardData data = ClipboardData(
+                                                text: accountNumber);
+                            
+                                            Clipboard.setData(data);
+                            
+                                            successMessage(
+                                                context: context,
+                                                message:
+                                                    "Account copied to Clip Board!!!");
+                                          },
+                                          icon: Icon(Icons.copy))
+                                    ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                  height: sizeVertical * 3,
+                ),
+                            Padding(
+                              padding: const EdgeInsets.only(left:20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  //const Text('Bank Name'),
+                                  Text(accountName,
+                                      style: kEncodeSansBold.copyWith(
+                                          color: kWhite,
+                                          fontSize: sizeVertical * 1.5))
+                                ],
+                              ),
                             ),
                           ],
                         ),
