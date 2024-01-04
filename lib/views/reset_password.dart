@@ -47,110 +47,106 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 height: sizeHorizontal * 3.5,
               ),
-             
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Consumer<AuthenticationProvider>(
+                  builder: (context, value, child) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (value.reqMessage != '') {
+                        successMessage(
+                            message: value.reqMessage,
+                            x: value.color,
+                            context: context);
 
-
-Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Consumer<AuthenticationProvider>(
-                      builder: (context, value, child) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          if (value.reqMessage != '') {
-                            successMessage(
-                                message: value.reqMessage,
-                                x: value.color,
-                                context: context);
-
-                            value.clear();
-                          }
-                        });
-                        return Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xff373737),
-                                        Color(0xff6A6A6A),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    )),
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    if (textController1.text.isEmpty ||
-                                        textController2.text.isEmpty || textController3.text.isEmpty) {
-                                      warning(
-                                          message: 'fields cant\'t be empty',
-                                          context: context);
-                                    } else if (textController2.text != textController3.text) {
-                                       warning(
-                                          message: 'new password not the same as confirm password!!!',
-                                          context: context);
-                                    }else {
-value.changePassword(
-                                          old_password:
-                                             textController1.text.trim(),
-                                          new_password:
-                                             textController2.text.trim(),
-                                    );
-                                    }
-                                    // () async {
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      foregroundColor: kWhite,
-                                      backgroundColor: Colors.transparent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      )),
-                                  child: value.isLoading
-                                      ? const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            CircularProgressIndicator(
-                                              color: Colors.white,
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              'Loading please wait...',
-                                              style: TextStyle(color: kWhite),
-                                            )
-                                          ],
-                                        )
-                                      : Text(
-                                          'Log In',
-                                          style: TextStyle(
-                                              fontSize: SizeConfig
-                                                      .blockSizeHorizontal! *
-                                                  2.5,
-                                              color: kWhite),
+                        value.clear();
+                      }
+                    });
+                    return Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff373737),
+                                    Color(0xff6A6A6A),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                )),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (textController1.text.isEmpty ||
+                                    textController2.text.isEmpty ||
+                                    textController3.text.isEmpty) {
+                                  warning(
+                                      message: 'fields cant\'t be empty',
+                                      context: context);
+                                } else if (textController2.text !=
+                                    textController3.text) {
+                                  warning(
+                                      message:
+                                          'new password not the same as confirm password!!!',
+                                      context: context);
+                                } else {
+                                  final result = await value.changePassword(
+                                    old_password: textController1.text.trim(),
+                                    new_password: textController2.text.trim(),
+                                  );
+                                  if (result) {
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                            "/App_Layout", (route) => false);
+                                  }
+                                }
+                                // () async {
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  foregroundColor: kWhite,
+                                  backgroundColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              child: value.isLoading
+                                  ? const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator(
+                                          color: Colors.white,
                                         ),
-                                ),
-                              ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          'Loading please wait...',
+                                          style: TextStyle(color: kWhite),
+                                        )
+                                      ],
+                                    )
+                                  : Text(
+                                      'reset password',
+                                      style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  2.5,
+                                          color: kWhite),
+                                    ),
                             ),
-                          ],
-                        );
-                      },
-                    ),
-                    //
-                  ),
-
-
-
-
-
-
-
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                //
+              ),
             ],
           ),
         ),

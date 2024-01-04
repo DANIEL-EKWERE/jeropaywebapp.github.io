@@ -21,7 +21,9 @@ class AuthenticationProvider extends ChangeNotifier {
   String _reqMessage = '';
   Color? _color;
   bool _hasProfile = false;
+  List<String> _my_referee = [];
 
+  List<String> get my_referee => _my_referee;
   bool get hasProfile => _hasProfile;
   Color? get color => _color;
   bool get isLoading => _isLoading;
@@ -109,7 +111,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
   // update password
 
-  Future<void> changePassword(
+  Future<bool> changePassword(
       {required String old_password, required String new_password}) async {
     _isLoading = true;
     try {
@@ -124,35 +126,39 @@ class AuthenticationProvider extends ChangeNotifier {
         'new_password': new_password,
       };
       final url = '$requestBaseUrl/user/change-password/';
-      http.Response request = await http.post(Uri.parse(url),
+      http.Response request = await http.put(Uri.parse(url),
           headers: reqHeader, body: json.encode(body));
       if (request.statusCode == 200) {
         _isLoading = false;
+        _reqMessage = 'password updated successfully';
+        _color = const Color.fromARGB(255, 15, 175, 20);
 
-        final res = json.decode(request.body);
-        final image = res['message'];
-        DataBaseProvider().saveProfileImage(image);
         notifyListeners();
+        return true;
       } else if (request.statusCode == 400) {
         _isLoading = false;
         final res = json.decode(request.body);
         final image = res['old_password'];
         _reqMessage = image;
         notifyListeners();
-        throw Exception('Failed to load data ${request.statusCode}');
+        return false;
+        // throw Exception('Failed to load data ${request.statusCode}');
       } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
         _reqMessage = res;
         notifyListeners();
+        return false;
       }
     } catch (e) {
       _isLoading = false;
       _reqMessage = 'somthing went wrong ${e.toString()}';
       notifyListeners();
-      throw Exception('Failed to load data ${e.toString()} ');
+      // throw Exception('Failed to load data ${e.toString()} ');
+      return false;
     }
     //return _hasProfile;
+    return true;
   }
 
   // login user
@@ -186,6 +192,17 @@ class AuthenticationProvider extends ChangeNotifier {
         _reqMessage = 'Login Successfully!!!';
         _color = const Color.fromARGB(255, 15, 175, 20);
         //  print(isProfileCreated);
+        final my_recs = req['my_recs'];
+        // final List<Map<String, String?>> my_recs1;
+        List<String> my_referrer = [];
+        for (final x in my_recs) {
+          print(x['code']);
+          final referrer = x['code'];
+
+          my_referrer.add(referrer!);
+        }
+        _my_referee = my_referrer;
+        print(my_referrer);
         final deviceToken = await FirebaseMessaging.instance.getToken();
         final platform = 'android';
         print(deviceToken);
@@ -204,6 +221,7 @@ class AuthenticationProvider extends ChangeNotifier {
         final String bank_name = req['bank_name'].toString();
         final String account_number = req['account_number'].toString();
         final String account_name = req['account_name'].toString();
+        final String recommended_by = req['recommended_by'].toString();
 
         //   print(token);
         print(userId);
@@ -224,6 +242,7 @@ class AuthenticationProvider extends ChangeNotifier {
         DataBaseProvider().saveLastName(last_name);
         DataBaseProvider().saveBankName(bank_name);
         DataBaseProvider().saveAcctName(account_name);
+        DataBaseProvider().saveRecommendedBy(recommended_by);
         DataBaseProvider().saveAcctNumber(account_number);
         DataBaseProvider().getPhone().then((phone1) {
           if (phone1.isEmpty) {
@@ -272,6 +291,7 @@ class AuthenticationProvider extends ChangeNotifier {
       {required String location,
       required String phone,
       required String state,
+      required String recommended_by,
       File? profile_picture,
       required BuildContext? context}) async {
     _isLoading = true;
@@ -293,6 +313,7 @@ class AuthenticationProvider extends ChangeNotifier {
       res.fields['location'] = location;
       res.fields['phone'] = phone;
       res.fields['state'] = state;
+      res.fields['recommended_by'] = recommended_by;
 
       final pickedFileToFile = File(profile_picture!.path);
       final imageStream =

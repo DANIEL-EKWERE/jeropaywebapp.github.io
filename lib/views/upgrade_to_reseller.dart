@@ -14,7 +14,8 @@ class UpgradeToReseller extends StatefulWidget {
 }
 
 class _UpgradeToResellerState extends State<UpgradeToReseller> {
-  final Uri url = Uri.parse('https://wa.link/cd6sus');
+  // final Uri url = Uri.parse('https://wa.link/cd6sus');
+  final Uri url = Uri.parse('https://wa.link/6tuqxq');
   // String? selectedValue;
   // // File? _imageFile;
   // // File? pickedFile;

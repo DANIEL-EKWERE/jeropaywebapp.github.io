@@ -1299,9 +1299,14 @@ class Data {
 //             'amount': amount,
 //             'type': 'Electricity'
 
-List<ElectricSubscription> electricSubscriptionFromJson(String str) =>
-    List<ElectricSubscription>.from(
-        json.decode(str).map((x) => ElectricSubscription.fromJson(x)));
+// List<ElectricSubscription> electricSubscriptionFromJson(String str) =>
+//     List<ElectricSubscription>.from(
+//         json.decode(str).map((x) => ElectricSubscription.fromJson(x)));
+
+
+ElectricSubscription electricSubscriptionFromJson(String str) =>
+    ElectricSubscription.fromJson(json.decode(str));
+
 
 String electricSubscriptionToJson(List<ElectricSubscription> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));

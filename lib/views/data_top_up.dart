@@ -1,10 +1,14 @@
+import 'dart:developer';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'dart:convert';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
+import 'package:databank/backend/constant.dart';
 import '../backend/provider/purchase_provider/purchases_provider.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
@@ -26,6 +30,8 @@ class _DataTopUpState extends State<DataTopUp> {
   String? selectedValue;
   String? selectedValue2;
   String? selectedValue3;
+  String? selectedId;
+  var data;
   List<String> dropdownItems = [
     'MTN',
     'AIRTEL',
@@ -201,6 +207,8 @@ class _DataTopUpState extends State<DataTopUp> {
 
   late BuildContext modalBottomSheetContext;
 
+  String? selectePriceId;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -215,6 +223,7 @@ class _DataTopUpState extends State<DataTopUp> {
   var baln;
   var balance;
   var price;
+  String baseUrl = AppUrl.baseUrl;
   @override
   void dispose() {
     super.dispose();
@@ -228,8 +237,63 @@ class _DataTopUpState extends State<DataTopUp> {
     });
   }
 
+  Future<Map<String, Map<String, List<String>>>> FetchPrices() async {
+    print('callimg recent');
+    print('calling recent transactions');
+    String url = '$baseUrl/all-data-plans/';
+    // _isLoading = true;
+    // notifyListeners();
+
+    final access = await DataBaseProvider().getToken();
+    Map<String, String>? reqHeader = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $access',
+    };
+
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: reqHeader);
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+        print('from models===== $responseBody');
+        data = responseBody['data'];
+
+        final Map<String, Map<String, List<String>>> itemx = {};
+
+        for (final price in data) {
+          final network = price['network'];
+          final amount = price['price_desc'];
+          final plan_type = price['plan_type'];
+          if (!itemx.containsKey(network)) {
+            itemx[network!] = {};
+          }
+          if (!itemx[network]!.containsKey(plan_type)) {
+            itemx[network]![plan_type!] = [];
+          }
+          itemx[network]![plan_type]!.add(amount!);
+        }
+
+        print("===== $itemx");
+        return itemx;
+      } else {
+        print(response.body);
+        throw Exception('Failed to load data ${response.statusCode}');
+      }
+    } on SocketException catch (_) {
+      // _isLoading = false;
+      //_reqMessage = 'internet connection not available';
+      // notifyListeners();
+    } catch (e) {
+      // _isLoading = false;
+      // _reqMessage = 'An Error Occured $e';
+      throw Exception('Failed to make the request: $e');
+    }
+
+    throw Exception('Failed to load data');
+  }
+
   Future<void> prices() async {
-    final pricex = await TransactionsProvider().FetchPrices();
+    final pricex = await FetchPrices();
     setState(() {
       items = pricex;
     });
@@ -647,6 +711,23 @@ class _DataTopUpState extends State<DataTopUp> {
                                       bottom: sizeVertical * 3.5),
                                   child: DropdownButtonFormField<String>(
                                     value: selectedItem,
+                                    onChanged: (item) {
+                                      setState(() async {
+                                        selectedItem = item!;
+                                        print(selectedItem);
+                                        // final selectedPrice =
+                                        //  data =
+                                        //     TransactionsProvider().data;
+                                        //         .firstWhere((price) =>
+                                        //             price['price_desc'] ==
+                                        //             selectedItem);
+
+                                        // selectePriceId = selectedPrice['id'];
+                                        // print(selectePriceId);
+                                        // log(selectePriceId!);
+                                        // debugPrint(selectePriceId);
+                                      });
+                                    },
                                     items: items[selectedCategory!]
                                                 ?[selectedSubCategory!]!
                                             .map((item) {
@@ -656,11 +737,6 @@ class _DataTopUpState extends State<DataTopUp> {
                                           );
                                         }).toList() ??
                                         [],
-                                    onChanged: (item) {
-                                      setState(() {
-                                        selectedItem = item!;
-                                      });
-                                    },
                                     decoration: InputDecoration(
                                       focusedBorder: kInputBorder,
                                       fillColor: kLightGrey,
@@ -859,25 +935,46 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                         () async {
                                                                       Navigator.pop(
                                                                           context);
-                                                                      final itemIndex =
-                                                                          items[selectedCategory]![
-                                                                              selectedSubCategory];
-                                                                      final index =
-                                                                          itemIndex!
-                                                                              .indexOf(selectedItem!);
+                                                                      // final itemIndex =
+                                                                      //     items[selectedCategory]![
+                                                                      //         selectedSubCategory];
+                                                                      // final index =
+                                                                      //     itemIndex!
+                                                                      //         .indexOf(selectedItem!);
 
-                                                                      final item =
-                                                                          items[selectedCategory]![selectedSubCategory]![
-                                                                              index];
+                                                                      // final item =
+                                                                      //     items[selectedCategory]![selectedSubCategory]![
+                                                                      //         index];
 
-                                                                      final dataId =
-                                                                          getDataId[
-                                                                              item];
+                                                                      // final dataId =
+                                                                      //     getDataId[
+                                                                      //         item];
+
+                                                                      for (final x
+                                                                          in data) {
+                                                                        if (x['network'] == selectedCategory &&
+                                                                            x['plan_type'] ==
+                                                                                selectedSubCategory &&
+                                                                            x['price_desc'] ==
+                                                                                selectedItem) {
+                                                                          setState(
+                                                                              () {
+                                                                            selectedId =
+                                                                                x['id'];
+                                                                          });
+                                                                        }
+                                                                      }
+                                                                      ;
+                                                                      warning(
+                                                                          message:
+                                                                              selectedId,
+                                                                          context:
+                                                                              context);
                                                                       final dataPurchaseModel = await value.PurchaseData(
                                                                           context:
                                                                               context,
                                                                           dataId:
-                                                                              dataId!,
+                                                                              selectedId!,
                                                                           phone_number: phoneController
                                                                               .text
                                                                               .trim());
@@ -979,177 +1076,6 @@ class _DataTopUpState extends State<DataTopUp> {
                                                                                   ),
                                                                                 ));
                                                                       }
-
-                                                                      // showModalBottomSheet(
-                                                                      //     showDragHandle:
-                                                                      //         true,
-                                                                      //     isDismissible:
-                                                                      //         false,
-                                                                      //     isScrollControlled:
-                                                                      //         true,
-
-                                                                      //     // anchorPoint: const Offset(5, 50),
-                                                                      //     useSafeArea:
-                                                                      //         true,
-                                                                      //     context:
-                                                                      //         modalBottomSheetContext,
-                                                                      //     builder: (context) =>
-                                                                      //         SingleChildScrollView(
-                                                                      //           child: Padding(
-                                                                      //             padding: const EdgeInsets.symmetric(horizontal: 20),
-                                                                      //             child: Container(
-                                                                      //               width: double.infinity,
-                                                                      //               //  height: MediaQuery.of(context).size.height * 40,
-                                                                      //               // color:
-                                                                      //               //     kYellow,
-                                                                      //               child: Column(
-                                                                      //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                      //                 crossAxisAlignment: CrossAxisAlignment.center,
-                                                                      //                 children: [
-                                                                      //                   Text('Transaction Receipt'),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('Details:'),
-                                                                      //                     FittedBox(
-                                                                      //                         child: Text(
-                                                                      //                       dataPurchaseModel.message.detail,
-                                                                      //                       style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
-                                                                      //                     ))
-                                                                      //                   ]),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('Date and Time:'),
-                                                                      //                     Text(dataPurchaseModel.message.dateAndTime)
-                                                                      //                   ]),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('Old Balance:'),
-                                                                      //                     Text(dataPurchaseModel.message.oldBalance)
-                                                                      //                   ]),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('New Balance:'),
-                                                                      //                     Text(dataPurchaseModel.message.newBalance)
-                                                                      //                   ]),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('Phone:'),
-                                                                      //                     Text(dataPurchaseModel.message.phoneNumber)
-                                                                      //                   ]),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('Status:'),
-                                                                      //                     Text(dataPurchaseModel.message.status)
-                                                                      //                   ]),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('Amount:'),
-                                                                      //                     Text(dataPurchaseModel.message.amount)
-                                                                      //                   ]),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                      //                     const Text('Type:'),
-                                                                      //                     Text(dataPurchaseModel.message.type)
-                                                                      //                   ]),
-                                                                      //                   Divider(),
-                                                                      //                   SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                      //                   Row(
-                                                                      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      //                     crossAxisAlignment: CrossAxisAlignment.center,
-                                                                      //                     children: [
-                                                                      //                       Row(
-                                                                      //                         children: [
-                                                                      //                           Expanded(
-                                                                      //                             flex: 2,
-                                                                      //                             child: Container(
-                                                                      //                               decoration: const BoxDecoration(
-                                                                      //                                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                      //                                   gradient: LinearGradient(
-                                                                      //                                     colors: [
-                                                                      //                                       Color(0xff373737),
-                                                                      //                                       Color(0xff6A6A6A),
-                                                                      //                                     ],
-                                                                      //                                     begin: Alignment.topLeft,
-                                                                      //                                     end: Alignment.bottomRight,
-                                                                      //                                   )),
-                                                                      //                               child: ElevatedButton(
-                                                                      //                                 onPressed: () async {
-                                                                      //                                   // () async {
-                                                                      //                                 },
-                                                                      //                                 style: ElevatedButton.styleFrom(
-                                                                      //                                     elevation: 0,
-                                                                      //                                     foregroundColor: kWhite,
-                                                                      //                                     backgroundColor: Colors.transparent,
-                                                                      //                                     shape: RoundedRectangleBorder(
-                                                                      //                                       borderRadius: BorderRadius.circular(10),
-                                                                      //                                     )),
-                                                                      //                                 child: Text(
-                                                                      //                                   'Print',
-                                                                      //                                   style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
-                                                                      //                                 ),
-                                                                      //                               ),
-                                                                      //                             ),
-                                                                      //                           ),
-                                                                      //                         ],
-                                                                      //                       ),
-                                                                      //                       Row(
-                                                                      //                         children: [
-                                                                      //                           Expanded(
-                                                                      //                             flex: 2,
-                                                                      //                             child: Container(
-                                                                      //                               decoration: const BoxDecoration(
-                                                                      //                                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                      //                                   gradient: LinearGradient(
-                                                                      //                                     colors: [
-                                                                      //                                       Color(0xff373737),
-                                                                      //                                       Color(0xff6A6A6A),
-                                                                      //                                     ],
-                                                                      //                                     begin: Alignment.topLeft,
-                                                                      //                                     end: Alignment.bottomRight,
-                                                                      //                                   )),
-                                                                      //                               child: ElevatedButton(
-                                                                      //                                 onPressed: () async {
-                                                                      //                                   // () async {
-                                                                      //                                 },
-                                                                      //                                 style: ElevatedButton.styleFrom(
-                                                                      //                                     elevation: 0,
-                                                                      //                                     foregroundColor: kWhite,
-                                                                      //                                     backgroundColor: Colors.transparent,
-                                                                      //                                     shape: RoundedRectangleBorder(
-                                                                      //                                       borderRadius: BorderRadius.circular(10),
-                                                                      //                                     )),
-                                                                      //                                 child: Text(
-                                                                      //                                   'Download',
-                                                                      //                                   style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal! * 2.5, color: kWhite),
-                                                                      //                                 ),
-                                                                      //                               ),
-                                                                      //                             ),
-                                                                      //                           ),
-                                                                      //                         ],
-                                                                      //                       ),
-                                                                      //                     ],
-                                                                      //                   ),
-                                                                      //                 ],
-                                                                      //               ),
-                                                                      //             ),
-                                                                      //           ),
-                                                                      //         ));
                                                                     },
                                                                     child:
                                                                         const Text(
@@ -1323,7 +1249,7 @@ class _DataTopUpState extends State<DataTopUp> {
                                             ),
                                           ),
 
-                                         // Text('the price list is $price')
+                                          // Text('the price list is $price')
                                         ],
                                       ),
                                     );

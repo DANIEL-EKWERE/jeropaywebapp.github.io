@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
 
-    _profileImage();
+    // _profileImage();
     gatheUserName();
     gatheUserEmail();
     gatheUserPhoneNumber();
@@ -42,12 +42,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     gatheUserLastName();
   }
 
-  Future _profileImage() async {
-    final image = await DataBaseProvider().getProfileImage();
-    setState(() {
-      pImage = image;
-    });
-  }
+  // Future _profileImage() async {
+  //   final image = await DataBaseProvider().getProfileImage();
+  //   setState(() {
+  //     pImage = image;
+  //   });
+  // }
 
   Future gatheUserName() async {
     final username = await DataBaseProvider().getUserName();
@@ -148,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         if (pickedFile != null) {
                           // Navigator.pop(context, File(pickedFile.path));
                           setState(() {
-                            profileImage = File(pickedFile.path);
+                            pImage = File(pickedFile.path);
                           });
                           DataBaseProvider().saveProfileImage(profileImage);
                         }

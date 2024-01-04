@@ -1,3 +1,4 @@
+import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,9 @@ class ReferAndEarn extends StatefulWidget {
 class _ReferAndEarnState extends State<ReferAndEarn> {
   // UserDetails? baln;
   var balance;
+  var refCode;
+  var recommended_by;
+  List<String> referalsList = [];
   Future<String>? gatherBalance() async {
     final balancex = await UserDetails().getUserAccountBalanace();
     setState(() {
@@ -37,6 +41,35 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
     // return balancex;
   }
 
+  Future<void> getReferree() async {
+    final ref_list = await AuthenticationProvider().my_referee;
+    setState(() {
+      referalsList = ref_list;
+    });
+    // print("balance is $balance method");
+    return balance;
+    // return balancex;
+  }
+
+  Future<void> gatherRecommendedBy() async {
+    final recBy = await DataBaseProvider().getRecommendedBy();
+    setState(() {
+      recommended_by = recBy;
+    });
+    print("balance is $balance method");
+    //return balance;
+    // return balancex;
+  }
+
+  Future<String> gatherUserName() async {
+    final usernamex = await DataBaseProvider().getUserName();
+    setState(() {
+      refCode = usernamex;
+    });
+    print("user name is $refCode method");
+    return usernamex;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +80,9 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
 
     // baln!.getUserAccountBalanace();
     gatherBalance();
+    gatherUserName();
+    gatherRecommendedBy();
+    getReferree();
   }
 
   @override
@@ -57,7 +93,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
         actions: [
           IconButton(
               onPressed: () async {
-              await  context.read<DataBaseProvider>().logOut(context);
+                await context.read<DataBaseProvider>().logOut(context);
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(
                 //     content: Text('Log Out sucesful!!!'),
@@ -71,7 +107,10 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                 //       (route) => false);
                 // });
 
-                successMessage(context: context,message: 'Log Out sucesful!!!',x: Color.fromARGB(255, 15, 175, 20));
+                successMessage(
+                    context: context,
+                    message: 'Log Out sucesful!!!',
+                    x: Color.fromARGB(255, 15, 175, 20));
               },
               icon: const Icon(Icons.exit_to_app))
         ],
@@ -86,15 +125,10 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
             }
             //  final data = snapshot.data!.docs[0];
             final earnings = snapshot.data;
-            List<String> referalsList = [
-              'daniel',
-              'moses',
-              'victor',
-              'emmanuel',
-              'emeka'
-            ];
+           // referalsList = ['daniel', 'moses', 'victor', 'emmanuel', 'emeka'];
 
-            final refCode = 'danielekwere';
+            // refCode = 'admin';
+            // recommended_by = 'admin';
 
             return Container(
               padding: const EdgeInsets.all(10),
@@ -132,7 +166,28 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
 
                                     warning(
                                         context: context,
-                                        message: "Ref code copied");
+                                        message: "$refCode code copied");
+                                  },
+                                  icon: const Icon(Icons.copy)),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 3,
+                          ),
+                          Card(
+                            child: ListTile(
+                              title: const Text("Recommended By"),
+                              subtitle: Text(recommended_by),
+                              trailing: IconButton(
+                                  onPressed: () {
+                                    ClipboardData data =
+                                        ClipboardData(text: recommended_by);
+
+                                    Clipboard.setData(data);
+
+                                    warning(
+                                        context: context,
+                                        message: "$recommended_by copied");
                                   },
                                   icon: const Icon(Icons.copy)),
                             ),
@@ -146,7 +201,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                               const Padding(
                                 padding: EdgeInsets.all(20),
                                 child: Text(
-                                  "Invite your friends to our app and earn NGN 500 when they register with your referal code",
+                                  "Invite your friends to our app and earn NGN 50 when they register with your referal code",
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -154,7 +209,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                 child: TextButton(
                                     onPressed: () {
                                       String shareLink =
-                                          "Hey! use this app to do stuffs and earn NGN 500 after using my ref code ($refCode) ";
+                                          "Hey! use this app for your data top up,airtime and bill payments and earns bonuses after using my ref code ($refCode) Link:(app link here)";
 
                                       Share.share(shareLink);
                                     },

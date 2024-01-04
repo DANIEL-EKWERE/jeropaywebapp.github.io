@@ -3,6 +3,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/views/refer_and_earn.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 // import '../widget/snackbar.dart';
@@ -60,8 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ElectricBills(image: 'assets/images/IKEDC.png', name: 'Ikeja Electric'),
     ElectricBills(image: 'assets/images/JED.png', name: 'Jos Electric'),
     ElectricBills(image: 'assets/images/KAEDCO.png', name: 'Kaduna Electric'),
-    ElectricBills(image: 'assets/images/PHED.png', name: 'Port Harcourt Electric'),
-    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Benin Electric'),
+    ElectricBills(
+        image: 'assets/images/PHED.png', name: 'Port Harcourt Electric'),
+    ElectricBills(
+        image: 'assets/images/KAEDCO (1).png', name: 'Benin Electric'),
     ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Yola Electric'),
     ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Kano Electric'),
   ];
@@ -141,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
     //       ],
     //     )),
   ];
-  final Uri url = Uri.parse('https://wa.link/y4scus');
+  // final Uri url = Uri.parse('https://wa.link/y4scus');
+  final Uri url = Uri.parse('https://wa.link/q07ccc');
   bool _showBal = true;
   dynamic proImg =
       'https://www.bellanaija.com/wp-content/uploads/2021/07/Linda-Osifo-2.jpg';
@@ -150,6 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var devicToken;
   var baln;
   var devicePlatform;
+  var tokenx;
   void gatherData() async {
     username = await DataBaseProvider().getUserName();
     balance = await UserDetails().getUserAccountBalanace();
@@ -203,7 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.instance.getToken().then((token) {
       print('device token is $token check1');
       var app = Firebase.app();
-
+      setState(() {
+        tokenx = token;
+      });
       final platform = app.options.projectId;
       print('the device platform is $platform');
       UserDetails().createOrUpdateDeviceTokenAndPlatform(
@@ -300,7 +307,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        title: const Text('Notification Centre'),
+                        content: Text(
+                            'You currently do not have any notifications for now, please check back later!!!'),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.pop(context);
+                            },
+                            child: Text('ok'),
+                          )
+                        ]);
+                  });
+            },
             icon: const Icon(
               Icons.notifications,
               color: kWhite,
@@ -880,6 +904,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               bill.name,
+                              style: kEncodeSansSemiBold.copyWith(
+                                  color: kDarkGrey,
+                                  fontSize:
+                                      SizeConfig.blockSizeHorizontal! * 1.5),
                             ),
                           ],
                         ),
@@ -981,7 +1009,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
+                  Text(tokenx),
+                  
+IconButton(
+                                  onPressed: () {
+                                    ClipboardData data =
+                                        ClipboardData(text: tokenx);
+
+                                    Clipboard.setData(data);
+
+                                    warning(
+                                        context: context,
+                                        message: " token copied");
+                                  },
+                                  icon: const Icon(Icons.copy)),
               SizedBox(height: SizeConfig.blockSizeVertical! * 15),
+
             ],
           ),
         ),

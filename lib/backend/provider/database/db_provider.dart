@@ -10,6 +10,8 @@ class DataBaseProvider extends ChangeNotifier {
 
   String _confirmTransactionPin = '';
 
+  String _recommended_by = '';
+
   String _reqMessage = '';
 
   Color? _color;
@@ -39,6 +41,8 @@ class DataBaseProvider extends ChangeNotifier {
   String _first_name = '';
 
   String _last_name = '';
+
+  String get recommended_by => _recommended_by;
 
   String get token => _token;
 
@@ -79,9 +83,17 @@ class DataBaseProvider extends ChangeNotifier {
     value.setString('token', token);
   }
 
-  void saveTransactionPin(String transactionPin) async {
+  Future<bool> saveTransactionPin(String transactionPin) async {
     SharedPreferences value = await _pref;
-    value.setString('transactionPin', transactionPin);
+    if (await value.setString('transactionPin', transactionPin)) {
+      return true;
+    }
+    return false;
+  }
+
+  void saveRecommendedBy(String recommended_by) async {
+    SharedPreferences value = await _pref;
+    value.setString('recommended_by', recommended_by);
   }
 
   void saveUserName(String userName) async {
@@ -204,6 +216,21 @@ class DataBaseProvider extends ChangeNotifier {
 
     if (value.containsKey('userName')) {
       String data = value.getString('userName')!;
+      _userName = data;
+      notifyListeners();
+      return data;
+    } else {
+      _userName = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
+  Future<String> getRecommendedBy() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('recommended_by')) {
+      String data = value.getString('recommended_by')!;
       _userName = data;
       notifyListeners();
       return data;

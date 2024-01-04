@@ -94,62 +94,60 @@ class _AddMoneyState extends State<AddMoney> {
           //   },
           // )
 
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.of(context).push(
+          //         CupertinoPageRoute(
+          //           builder: (context) => const MonnifyAccts(),
+          //         ),
+          //       );
+          //     },
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         Container(
+          //           padding: const EdgeInsets.symmetric(
+          //             horizontal: 24,
+          //           ),
+          //           width: double.infinity,
+          //           height: SizeConfig.blockSizeVertical! * 13,
+          //           decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(20),
+          //               color: kWhite,
+          //               boxShadow: [
+          //                 BoxShadow(
+          //                   blurRadius: 10,
+          //                   spreadRadius: 2,
+          //                   color: kGrey.withOpacity(0.2),
+          //                   offset: const Offset(0, 5),
+          //                 )
+          //               ]),
+          //           child: Row(
+          //               crossAxisAlignment: CrossAxisAlignment.center,
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               children: [
+          //                 SizedBox(
+          //                   width: sizeVertical * 5,
+          //                   height: sizeVertical * 5,
+          //                   child: const Image(
+          //                     image: AssetImage(
+          //                         'assets/images/Monnify - logo.png'),
+          //                   ),
+          //                 ),
+          //                 SizedBox(
+          //                   width: sizeVertical * 3,
+          //                 ),
+          //                 const Text('Monnify'),
+          //               ]),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  CupertinoPageRoute(
-                    builder: (context) => const MonnifyAccts(),
-                  ),
-                );
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                    ),
-                    width: double.infinity,
-                    height: SizeConfig.blockSizeVertical! * 13,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: kWhite,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                            color: kGrey.withOpacity(0.2),
-                            offset: const Offset(0, 5),
-                          )
-                        ]),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: sizeVertical * 5,
-                            height: sizeVertical * 5,
-                            child: const Image(
-                              image: AssetImage(
-                                  'assets/images/Monnify - logo.png'),
-                            ),
-                          ),
-                          SizedBox(
-                            width: sizeVertical * 3,
-                          ),
-                          const Text('Monnify'),
-                        ]),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-
-
-        Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
             child: GestureDetector(
               onTap: () {
@@ -187,8 +185,7 @@ class _AddMoneyState extends State<AddMoney> {
                             width: sizeVertical * 5,
                             height: sizeVertical * 5,
                             child: const Image(
-                              image: AssetImage(
-                                  'assets/images/payvessel.png'),
+                              image: AssetImage('assets/images/payvessel.png'),
                             ),
                           ),
                           SizedBox(
@@ -202,67 +199,63 @@ class _AddMoneyState extends State<AddMoney> {
             ),
           ),
 
-
-
-
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
-            child: GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                    //  showDragHandle: true,
-                    isDismissible: false,
-                    isScrollControlled: true,
-                    // anchorPoint: const Offset(5, 50),
-                    useSafeArea: true,
-                    context: context,
-                    builder: (context) => const PaymentScreen(
-                          name: 'PayStack',
-                          image: 'assets/images/paystack.png',
-                        ));
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                    ),
-                    width: double.infinity,
-                    height: SizeConfig.blockSizeVertical! * 13,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: kWhite,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                            color: kGrey.withOpacity(0.2),
-                            offset: const Offset(0, 5),
-                          )
-                        ]),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: sizeVertical * 5,
-                            height: sizeVertical * 5,
-                            child: const Image(
-                              image: AssetImage('assets/images/paystack.png'),
-                            ),
-                          ),
-                          SizedBox(
-                            width: sizeVertical * 3,
-                          ),
-                          const Text('PayStack'),
-                        ]),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       showModalBottomSheet(
+          //           //  showDragHandle: true,
+          //           isDismissible: false,
+          //           isScrollControlled: true,
+          //           // anchorPoint: const Offset(5, 50),
+          //           useSafeArea: true,
+          //           context: context,
+          //           builder: (context) => const PaymentScreen(
+          //                 name: 'PayStack',
+          //                 image: 'assets/images/paystack.png',
+          //               ));
+          //     },
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         Container(
+          //           padding: const EdgeInsets.symmetric(
+          //             horizontal: 24,
+          //           ),
+          //           width: double.infinity,
+          //           height: SizeConfig.blockSizeVertical! * 13,
+          //           decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(20),
+          //               color: kWhite,
+          //               boxShadow: [
+          //                 BoxShadow(
+          //                   blurRadius: 10,
+          //                   spreadRadius: 2,
+          //                   color: kGrey.withOpacity(0.2),
+          //                   offset: const Offset(0, 5),
+          //                 )
+          //               ]),
+          //           child: Row(
+          //               crossAxisAlignment: CrossAxisAlignment.center,
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               children: [
+          //                 SizedBox(
+          //                   width: sizeVertical * 5,
+          //                   height: sizeVertical * 5,
+          //                   child: const Image(
+          //                     image: AssetImage('assets/images/paystack.png'),
+          //                   ),
+          //                 ),
+          //                 SizedBox(
+          //                   width: sizeVertical * 3,
+          //                 ),
+          //                 const Text('PayStack'),
+          //               ]),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
             child: GestureDetector(

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../customizations/size_config.dart';
 // import '../model/history.dart';
@@ -62,6 +63,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
     // Make API request using selectedDate
     AllTransactions2 newTransactions = await TransactionsProvider()
         .fetchTransactionsFromAPI(selectedDate: selectedDate);
+
+    // Use the TransactionProvider to update the state
+    Provider.of<TransactionsProvider>(context, listen: false)
+        .updateTransactions(newTransactions.data!);
+  }
+
+  Future<void> fetchTransactionsByRange(
+      String startDate, String endDate) async {
+    print('calling fetch ');
+    // Make API request using selectedDate
+    AllTransactions2 newTransactions = await TransactionsProvider()
+        .byRangeTransactions(start_date: selectedDate, end_date: endDate);
 
     // Use the TransactionProvider to update the state
     Provider.of<TransactionsProvider>(context, listen: false)
@@ -231,14 +244,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             // _pageController.position;
                             // TODO: this code below is to be considered
                             //  _pageController.jumpToPage(index);
-                            _pageController.page == index + 1
-                                //  _pageController.page == index + 2
-                                ? _pageController.previousPage(
-                                    duration: const Duration(milliseconds: 400),
-                                    curve: Curves.easeInOut)
-                                : _pageController.nextPage(
-                                    duration: const Duration(milliseconds: 400),
-                                    curve: Curves.easeInOut);
+                            // _pageController.page == index + 1
+                            //     //  _pageController.page == index + 2
+                            //     ? _pageController.previousPage(
+                            //         duration: const Duration(milliseconds: 400),
+                            //         curve: Curves.easeInOut)
+                            //     : _pageController.nextPage(
+                            //         duration: const Duration(milliseconds: 400),
+                            //         curve: Curves.easeInOut);
                           },
                           child: Container(
                             margin: EdgeInsets.only(
@@ -254,7 +267,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   ? null
                                   : Border.all(
                                       color: kLightGrey,
-                                      width: 1,
+                                      width: 1, 
                                     ),
                             ),
                             child: Row(
@@ -345,7 +358,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   focusedBorder: kInputBorder,
                                   fillColor: kWhite,
                                   filled: true,
-                                  labelText: 'Today',
+                                  labelText: 'Select Date',
                                   labelStyle: kEncodeSansSemiBold.copyWith(
                                       color: kDarkGrey,
                                       fontSize:
@@ -377,10 +390,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               height: sizeVertical * 3,
                             ),
                             IconButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(CupertinoPageRoute(
-                                      builder: ((context) =>
-                                          const DateRange())));
+                                onPressed: () async {
+                                  var result = await Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                          builder: ((context) =>
+                                              const DateRange())));
+
+                                  if (result != null &&
+                                      result is Map<String, dynamic>) {
+                                    final xS = result['startDate'];
+                                    final xE = result['endDate'];
+                                    final startDate =
+                                        DateFormat('yyyy-mm-dd').format(xS);
+                                    final endDate =
+                                        DateFormat('yyyy-mm-dd').format(xE);
+                                    print(startDate);
+                                    print(endDate);
+
+                                    fetchTransactionsByRange(
+                                        startDate, endDate);
+                                  }
                                 },
                                 icon: Icon(Icons.calendar_month))
                           ],
@@ -402,11 +431,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           : SizedBox(
                               height: double.maxFinite,
                               child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                  itemCount: transacts!.transaction!.length,
+                                  physics: BouncingScrollPhysics(),
+                                  itemCount: filterProducts.length,
+                                  // itemCount: transacts!.transaction!.length,
                                   itemBuilder: (context, index) {
-                                    Datum2 x = transacts!.transaction![index];
-                                    return transacts!.transaction!.isEmpty
+                                    Datum2 x = filterProducts[index];
+                                    // Datum2 x = transacts!.transaction![index];
+                                    return filterProducts.isEmpty
+                                        //  return transacts!.transaction!.isEmpty
                                         ? Center(
                                             child: Text(
                                                 'you\'ve not made any transactions yet!!!'),

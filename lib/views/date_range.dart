@@ -145,7 +145,9 @@ class _DateRangeState extends State<DateRange> {
                         end: Alignment.bottomRight,
                       )),
                   child: ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () {
+                      Navigator.pop(context,
+                          {'startDate': startDate, 'endDate': endDate});
                       // if (_userNameController!.text.isEmpty ||
                       //     _passwordController!.text.isEmpty) {
                       //   warning(

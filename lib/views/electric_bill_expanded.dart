@@ -16,15 +16,17 @@ class ElectricExpanded extends StatefulWidget {
 
 class _ElectricExpandedState extends State<ElectricExpanded> {
   final List<ElectricBills> opeSvg1 = <ElectricBills>[
-    ElectricBills(image: 'assets/images/AEDC.png', name: 'AEDC'),
-    ElectricBills(image: 'assets/images/EEDC.png', name: 'EEDC'),
-    ElectricBills(image: 'assets/images/EKEDC.png', name: 'EKEDC'),
-    ElectricBills(image: 'assets/images/IBEDC.png', name: 'IBEDC'),
-    ElectricBills(image: 'assets/images/IKEDC.png', name: 'IKEDC'),
-    ElectricBills(image: 'assets/images/JED.png', name: 'JED'),
-    ElectricBills(image: 'assets/images/KAEDCO.png', name: 'KAEDCO'),
-    ElectricBills(image: 'assets/images/PHED.png', name: 'PHED'),
-    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'KAEDCO'),
+    ElectricBills(image: 'assets/images/AEDC.png', name: 'Abuja Electric'),
+    ElectricBills(image: 'assets/images/EEDC.png', name: 'Enugu Electric'),
+    ElectricBills(image: 'assets/images/EKEDC.png', name: 'Eko Electric'),
+    ElectricBills(image: 'assets/images/IBEDC.png', name: 'Ibandan Electric'),
+    ElectricBills(image: 'assets/images/IKEDC.png', name: 'Ikeja Electric'),
+    ElectricBills(image: 'assets/images/JED.png', name: 'Jos Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO.png', name: 'Kaduna Electric'),
+    ElectricBills(image: 'assets/images/PHED.png', name: 'Port Harcourt Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Benin Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Yola Electric'),
+    ElectricBills(image: 'assets/images/KAEDCO (1).png', name: 'Kano Electric'),
   ];
 
   @override
@@ -128,10 +130,10 @@ class _ElectricExpandedState extends State<ElectricExpanded> {
                                 ),
                                 Text(
                                   bill1.name,
-                                  style: kEncodeSansRegular.copyWith(
+                                  style: kEncodeSansSemiBold.copyWith(
                                     color: kBlack,
                                     fontSize:
-                                        SizeConfig.blockSizeHorizontal! * 2.5,
+                                        SizeConfig.blockSizeHorizontal! * 1.5,
                                   ),
                                 )
                               ],

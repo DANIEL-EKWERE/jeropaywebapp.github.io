@@ -91,11 +91,26 @@ class SetTransactionPin extends StatelessWidget {
                                     textController3.text) {
                                   warning(
                                       message:
-                                          'new password not the same as confirm password!!!',
+                                          'new transaction not the same as confirm transaction pin!!!',
                                       context: context);
                                 } else {
-                                  DataBaseProvider()
+                                  final x = await DataBaseProvider()
                                       .saveTransactionPin(textController3.text);
+                                  if (x) {
+                                    successMessage(
+                                        context: context,
+                                        message:
+                                            'Transaction Pin Set Successfully!!!',
+                                        x: const Color.fromARGB(
+                                            255, 15, 175, 20));
+                                  } else {
+                                    successMessage(
+                                        context: context,
+                                        message: 'Transaction pin not set!!!',
+                                        x: Color(0xfff33225));
+                                  }
+                                  Navigator.pop(context);
+
 // value.changePassword(
 //                                           old_password:
 //                                              textController1.text.trim(),
@@ -132,7 +147,7 @@ class SetTransactionPin extends StatelessWidget {
                                       ],
                                     )
                                   : Text(
-                                      'Log In',
+                                      'set pin',
                                       style: TextStyle(
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *

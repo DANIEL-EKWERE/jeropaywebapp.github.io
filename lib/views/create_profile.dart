@@ -24,6 +24,17 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
   final TextEditingController textController2 = TextEditingController();
 
   final TextEditingController textController3 = TextEditingController();
+  final TextEditingController textController4 = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    textController1.dispose();
+    textController2.dispose();
+    textController3.dispose();
+    textController4.dispose();
+  }
+
   bool _numberInputIsValid = true;
   String? selectedValue;
   // File? _imageFile;
@@ -275,8 +286,34 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                 ],
               ),
               SizedBox(
-                height: sizeHorizontal * 3.5,
-              ),
+                    height: sizeHorizontal * 3.5,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.text,
+                    controller: textController4,
+                    decoration: InputDecoration(
+                      prefixIcon: const IconTheme(
+                          data: IconThemeData(color: kDarkGrey),
+                          child: Icon(Icons.person_add_rounded)),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 18),
+                      hintText: 'Enter Admin if none',
+                      label: Text(
+                        ' Enter Referral Code - Optional',
+                        style: kEncodeSansSemiBold.copyWith(
+                            color: kDarkGrey,
+                            fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+                      ),
+                      //errorText: 'please enter the meter type!',
+                      focusedBorder: kInputBorder,
+                      border: kInputBorder,
+                      filled: true,
+                      fillColor: kLightGrey,
+                    ),
+                  ),
+                  SizedBox(
+                    height: sizeHorizontal * 3.5,
+                  ),
 
               Consumer<AuthenticationProvider>(
                 builder: (context, value, child) {
@@ -311,15 +348,15 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                             onPressed: () async {
                               if (selectedValue!.isEmpty ||
                                   selectedValue2!.isEmpty ||
-                                  textController3.text.isEmpty) {
+                                  textController3.text.isEmpty || textController4.text.isEmpty) {
                                 warning(message: 'fields can\'t be empty!');
                               } else {
-                                
                                 value.CreateUserProfile(
                                     location: selectedValue!,
                                     phone: textController3.text.trim(),
                                     state: selectedValue2!,
                                     profile_picture: profileImage,
+                                    recommended_by: textController1.text.trim(),
                                     context: context);
                               }
                               // () async {

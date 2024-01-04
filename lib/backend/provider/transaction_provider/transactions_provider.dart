@@ -20,7 +20,8 @@ class TransactionsProvider extends ChangeNotifier {
     'Deposit'
   ];
   List<dynamic> selectedCategories = [];
-
+  dynamic _data = {};
+  dynamic get data => _data;
   AllTransactions2 allTran =
       AllTransactions2(status: '', totalAmount: 0.0, data: []);
   // setter
@@ -141,7 +142,7 @@ class TransactionsProvider extends ChangeNotifier {
         _reqMessage = 'price updated';
         final responseBody = jsonDecode(response.body);
         print('from models===== $responseBody');
-        final data = responseBody['data'];
+        _data = responseBody['data'];
         print('not from models===== $recentTransacts');
         _reqMessage = responseBody['status'];
         print(recentTransacts.status);
@@ -671,7 +672,7 @@ class TransactionsProvider extends ChangeNotifier {
     }
   }
 
-  void byRangeTransactions(
+  Future<AllTransactions2> byRangeTransactions(
       {required String start_date, required String end_date}) async {
     String url = '$baseUrl/transactions/$start_date/$end_date/';
     _isLoading = true;
@@ -682,23 +683,37 @@ class TransactionsProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $access',
     };
-
+    print('outside trry block');
     try {
+      print('inside try block');
       http.Response response =
           await http.get(Uri.parse(url), headers: reqHeader);
       if (response.statusCode == 200) {
         _isLoading = false;
         _reqMessage = 'transaction retrieved';
-        print(response.body);
-        final byRangeTransac = json.decode(response.body);
-        print(byRangeTransac);
-        _isLoading = byRangeTransac['status'];
+        print('the whole body ${response.body}');
+        final allTransac = json.decode(response.body);
+        print('======================');
+        print('NOT FROM MODEL $allTransac');
+        final lastMonthTransac = json.decode(response.body);
+        print('NOT FROM MODEL 2 $lastMonthTransac');
+        print('======================');
+        AllTransactions2 allTransactions =
+            allTransactionsFromJson2(response.body);
+        print('======================');
+        print(allTransactions.data);
+        print('FROM MODEL $allTransactions');
+        print(allTransactions.status);
+        _reqMessage = lastMonthTransac['status'];
         notifyListeners();
+        return allTransactions;
       } else {
         print(response.body);
         _isLoading = false;
         _reqMessage = 'error loading this receipt ${response.statusCode}';
         notifyListeners();
+        // return allTransactions;
+        throw Exception('Failed to load data ${response.statusCode}');
       }
     } on SocketException catch (_) {
       _isLoading = false;
@@ -707,7 +722,10 @@ class TransactionsProvider extends ChangeNotifier {
     } catch (e) {
       _isLoading = false;
       _reqMessage = 'An Error Occured $e';
+      throw Exception('Failed to make the request: $e');
     }
+
+    throw Exception('Failed to load data ');
   }
 
   void filterPhoneNumberFromTransactions() async {

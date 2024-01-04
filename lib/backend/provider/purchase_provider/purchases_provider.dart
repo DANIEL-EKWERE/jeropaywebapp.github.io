@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
 import 'package:flutter/cupertino.dart';
 
-
 // 923cdea0-feec-4e3a-9e2e-e0edc76c8aec giting mtn
 class PurchaseProvider extends ChangeNotifier {
   final baseUrl = AppUrl.baseUrl;
@@ -25,7 +24,10 @@ class PurchaseProvider extends ChangeNotifier {
   String get regMessage => _reqMessage;
   bool get isLoading => _isLoading;
   Color? get color => _color;
-
+  ElectricSubscription? x;
+  ElectricSubscription? x1;
+  ElectricSubscription? electricityPurchaseModel;
+  ElectricSubscription? cablePurchaseModel;
   BuildContext? modalBottomSheetContext;
   AirtimePurchaseModel? airtimePurchaseModel;
   // Message message = Message(amount: '',id: '', dateAndTime: DateTime.now(),detail: '', oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'');
@@ -62,6 +64,7 @@ class PurchaseProvider extends ChangeNotifier {
       required BuildContext? context}) async {
     String url = '$baseUrl/purchase/data/$dataId/';
     _isLoading = true;
+    print('calling purchase');
     notifyListeners();
     final access = await DataBaseProvider().getToken();
     Map<String, String>? reqHeader = {
@@ -74,6 +77,7 @@ class PurchaseProvider extends ChangeNotifier {
     };
 
     try {
+      print('in try block');
       http.Response response = await http.post(Uri.parse(url),
           body: json.encode(body), headers: reqHeader);
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -85,7 +89,6 @@ class PurchaseProvider extends ChangeNotifier {
         _reqMessage = 'your purchase was successful';
         print(dataPurchaseModel);
         _color = const Color.fromARGB(255, 15, 175, 20);
-     
 
         notifyListeners();
       } else if (response.statusCode == 401) {
@@ -124,7 +127,7 @@ class PurchaseProvider extends ChangeNotifier {
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else if (response.statusCode == 400) {
-       // final res = json.decode(response.body);
+        // final res = json.decode(response.body);
         dataPurchaseModel = null;
         _isLoading = false;
         _reqMessage = 'insufficient balance';
@@ -234,7 +237,7 @@ class PurchaseProvider extends ChangeNotifier {
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else if (request.statusCode == 400) {
-      //  final res = json.decode(request.body);
+        //  final res = json.decode(request.body);
         _isLoading = false;
         _reqMessage = 'insufficient balance';
         airtimePurchaseModel = null;
@@ -265,7 +268,7 @@ class PurchaseProvider extends ChangeNotifier {
     return airtimePurchaseModel!;
   }
 
-  Future<void> electricSub(
+  Future<ElectricSubscription> electricSub(
       {required number,
       required type,
       required disco,
@@ -293,28 +296,27 @@ class PurchaseProvider extends ChangeNotifier {
 
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
-        final electricityPurchaseModel =
-            ElectricSubscription.fromJson(json.decode(request.body));
+        electricityPurchaseModel = electricSubscriptionFromJson(request.body);
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
 
-        showModalBottomSheet(
-            showDragHandle: true,
-            isDismissible: false,
-            isScrollControlled: true,
-            // anchorPoint: const Offset(5, 50),
-            useSafeArea: true,
-            context: context!,
-            builder: (context) => Receipt(
-                  details: electricityPurchaseModel.detail,
-                  date_and_time: dateAndTime.toIso8601String(),
-                  old_balance: electricityPurchaseModel.oldBalance,
-                  new_balance: electricityPurchaseModel.newBalance,
-                  phone_number: electricityPurchaseModel.phoneNumber,
-                  status: electricityPurchaseModel.status,
-                  type: electricityPurchaseModel.type,
-                  amout: electricityPurchaseModel.amount,
-                ));
+        // showModalBottomSheet(
+        //     showDragHandle: true,
+        //     isDismissible: false,
+        //     isScrollControlled: true,
+        //     // anchorPoint: const Offset(5, 50),
+        //     useSafeArea: true,
+        //     context: context!,
+        //     builder: (context) => Receipt(
+        //           details: electricityPurchaseModel.detail,
+        //           date_and_time: dateAndTime.toIso8601String(),
+        //           old_balance: electricityPurchaseModel.oldBalance,
+        //           new_balance: electricityPurchaseModel.newBalance,
+        //           phone_number: electricityPurchaseModel.phoneNumber,
+        //           status: electricityPurchaseModel.status,
+        //           type: electricityPurchaseModel.type,
+        //           amout: electricityPurchaseModel.amount,
+        //         ));
 
         notifyListeners();
       } else if (request.statusCode == 401) {
@@ -322,6 +324,7 @@ class PurchaseProvider extends ChangeNotifier {
         final res = json.decode(request.body);
         _reqMessage = res['message'];
         _color = const Color(0xfff33225);
+        electricityPurchaseModel = null;
         notifyListeners();
         showDialog<bool>(
             context: context!,
@@ -347,19 +350,23 @@ class PurchaseProvider extends ChangeNotifier {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
+        electricityPurchaseModel = null;
         notifyListeners();
       }
     } on SocketException catch (_) {
       _isLoading = false;
       _reqMessage = 'internet connection is not available ';
       _color = const Color(0xfff33225);
+      electricityPurchaseModel = null;
       notifyListeners();
     } catch (e) {
       _isLoading = false;
       _reqMessage = "something went wrong $e";
       _color = const Color(0xfff33225);
+      electricityPurchaseModel = null;
       notifyListeners();
     }
+    return electricityPurchaseModel!;
   }
 
   Future<void> purchaseExamEPin(
@@ -457,7 +464,7 @@ class PurchaseProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> validateMeterNumber(
+  Future<ElectricSubscription?> validateMeterNumber(
       {required number,
       required type,
       required disco,
@@ -490,17 +497,19 @@ class PurchaseProvider extends ChangeNotifier {
 
         // call the electric sub function upoun validation
 
-        electricSub(
+        x = await electricSub(
             number: number,
             type: type,
             disco: disco,
             amount: amount,
             context: context);
+        notifyListeners();
       } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
         _reqMessage = res['message'];
         _color = const Color(0xfff33225);
+        x = null;
         notifyListeners();
         showDialog<bool>(
             context: context!,
@@ -526,22 +535,26 @@ class PurchaseProvider extends ChangeNotifier {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
+        x = null;
         notifyListeners();
       }
     } on SocketException catch (_) {
       _isLoading = false;
       _reqMessage = 'internet connection is not available ';
       _color = const Color(0xfff33225);
+      x = null;
       notifyListeners();
     } catch (e) {
       _isLoading = false;
       _reqMessage = "something went wrong $e";
       _color = const Color(0xfff33225);
+      x = null;
       notifyListeners();
     }
+    return x!;
   }
 
-  Future<void> cableSub(
+  Future<ElectricSubscription> cableSub(
       {required String iuc,
       required String cableProvider,
       required String cableUuid,
@@ -566,28 +579,28 @@ class PurchaseProvider extends ChangeNotifier {
 
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
-        final cablePurchaseModel =
+        cablePurchaseModel =
             ElectricSubscription.fromJson(json.decode(request.body));
         _reqMessage = 'cable purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
         notifyListeners();
-        showModalBottomSheet(
-            showDragHandle: true,
-            isDismissible: false,
-            isScrollControlled: true,
-            // anchorPoint: const Offset(5, 50),
-            useSafeArea: true,
-            context: context!,
-            builder: (context) => Receipt(
-                  details: cablePurchaseModel.detail,
-                  date_and_time: cablePurchaseModel.date_and_time,
-                  old_balance: cablePurchaseModel.oldBalance,
-                  new_balance: cablePurchaseModel.newBalance,
-                  phone_number: cablePurchaseModel.phoneNumber,
-                  status: cablePurchaseModel.status,
-                  type: cablePurchaseModel.type,
-                  amout: cablePurchaseModel.amount,
-                ));
+        // showModalBottomSheet(
+        //     showDragHandle: true,
+        //     isDismissible: false,
+        //     isScrollControlled: true,
+        //     // anchorPoint: const Offset(5, 50),
+        //     useSafeArea: true,
+        //     context: context!,
+        //     builder: (context) => Receipt(
+        //           details: cablePurchaseModel.detail,
+        //           date_and_time: cablePurchaseModel.date_and_time,
+        //           old_balance: cablePurchaseModel.oldBalance,
+        //           new_balance: cablePurchaseModel.newBalance,
+        //           phone_number: cablePurchaseModel.phoneNumber,
+        //           status: cablePurchaseModel.status,
+        //           type: cablePurchaseModel.type,
+        //           amout: cablePurchaseModel.amount,
+        //         ));
 
         notifyListeners();
       } else if (request.statusCode == 401) {
@@ -595,6 +608,7 @@ class PurchaseProvider extends ChangeNotifier {
         final res = json.decode(request.body);
         _reqMessage = res['message'];
         _color = const Color(0xfff33225);
+        cablePurchaseModel = null;
         notifyListeners();
         showDialog<bool>(
             context: context!,
@@ -620,22 +634,26 @@ class PurchaseProvider extends ChangeNotifier {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
+        cablePurchaseModel = null;
         notifyListeners();
       }
     } on SocketException catch (_) {
       _isLoading = false;
       _reqMessage = 'internet connection is not available';
       _color = const Color(0xfff33225);
+      cablePurchaseModel = null;
       notifyListeners();
     } catch (e) {
       _isLoading = false;
       _reqMessage = "something went wrong $e";
       _color = const Color(0xfff33225);
+      cablePurchaseModel = null;
       notifyListeners();
     }
+    return cablePurchaseModel!;
   }
 
-  Future<void> validateCableNumber(
+  Future<ElectricSubscription?> validateCableNumber(
       {required String iuc,
       required String cableProvider,
       required String cableUuid,
@@ -667,7 +685,7 @@ class PurchaseProvider extends ChangeNotifier {
 
 // call the cable subscription function upon validation
 
-        cableSub(
+        x1 = await cableSub(
             iuc: iuc,
             cableProvider: cableProvider,
             cableUuid: cableUuid,
@@ -677,6 +695,7 @@ class PurchaseProvider extends ChangeNotifier {
         final res = json.decode(request.body);
         _reqMessage = res['message'];
         _color = const Color(0xfff33225);
+        x1 = null;
         notifyListeners();
         showDialog<bool>(
             context: context!,
@@ -702,19 +721,23 @@ class PurchaseProvider extends ChangeNotifier {
         _isLoading = false;
         _reqMessage = 'something went wrong ${request.statusCode}';
         _color = _color = const Color(0xfff33225);
+        x1 = null;
         notifyListeners();
       }
     } on SocketException catch (_) {
       _isLoading = false;
       _reqMessage = 'internet connection is not available ';
       _color = const Color(0xfff33225);
+      x1 = null;
       notifyListeners();
     } catch (e) {
       _isLoading = false;
       _reqMessage = "something went wrong $e";
       _color = const Color(0xfff33225);
+      x1 = null;
       notifyListeners();
     }
+    return x1;
   }
 
   void clear() {

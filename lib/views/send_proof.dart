@@ -20,7 +20,8 @@ class SendPaymentProofToAdmin extends StatefulWidget {
 }
 
 class _SendPaymentProofToAdminState extends State<SendPaymentProofToAdmin> {
-  final Uri url = Uri.parse('https://wa.link/mkclts');
+  // final Uri url = Uri.parse('https://wa.link/mkclts');
+  final Uri url = Uri.parse('https://wa.link/1sglpx');
   String? selectedValue;
   // File? _imageFile;
   // File? pickedFile;
