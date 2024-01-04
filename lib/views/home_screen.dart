@@ -1,6 +1,7 @@
 // import 'package:animated_radial_menu/animated_radial_menu.dart';
 // import 'package: marquee/marquee.dart';
 // ignore_for_file: prefer_typing_uninitialized_variables
+import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/views/refer_and_earn.dart';
 import 'package:databank/widget/snackbar.dart';
@@ -155,11 +156,21 @@ class _HomeScreenState extends State<HomeScreen> {
   var baln;
   var devicePlatform;
   var tokenx;
+  var annouce =
+      'MTN Network is now back online you can now resume transactions!!!';
   void gatherData() async {
     username = await DataBaseProvider().getUserName();
     balance = await UserDetails().getUserAccountBalanace();
     print("balance is $balance check2");
     print("user name is $username check2");
+  }
+
+  Future<void> announcement() async {
+    final result = await AuthenticationProvider().Announcement();
+
+    setState(() {
+      annouce = result;
+    });
   }
 
   @override
@@ -554,8 +565,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         decelerationDuration:
                                             const Duration(milliseconds: 500),
                                         decelerationCurve: Curves.easeOut,
-                                        text:
-                                            'MTN Network is now back online you can now resume transactions!!!',
+                                        text: annouce,
                                         style: kEncodeSansRegular.copyWith(
                                           color: kWhite,
                                           fontSize:
@@ -1009,22 +1019,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
-                  Text(tokenx),
-                  
-IconButton(
-                                  onPressed: () {
-                                    ClipboardData data =
-                                        ClipboardData(text: tokenx);
+              Text(tokenx),
+              IconButton(
+                  onPressed: () {
+                    ClipboardData data = ClipboardData(text: tokenx);
 
-                                    Clipboard.setData(data);
+                    Clipboard.setData(data);
 
-                                    warning(
-                                        context: context,
-                                        message: " token copied");
-                                  },
-                                  icon: const Icon(Icons.copy)),
+                    warning(context: context, message: " token copied");
+                  },
+                  icon: const Icon(Icons.copy)),
               SizedBox(height: SizeConfig.blockSizeVertical! * 15),
-
             ],
           ),
         ),

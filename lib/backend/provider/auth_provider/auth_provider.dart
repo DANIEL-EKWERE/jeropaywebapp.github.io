@@ -5,6 +5,7 @@ import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/backend/provider/user_details/user_details.dart';
 // import 'package:databank/views/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 // import 'package:databank/firebase_options.dart';
@@ -28,6 +29,8 @@ class AuthenticationProvider extends ChangeNotifier {
   Color? get color => _color;
   bool get isLoading => _isLoading;
   String get reqMessage => _reqMessage;
+
+  String? announcement;
 
 // register user
 
@@ -159,6 +162,54 @@ class AuthenticationProvider extends ChangeNotifier {
     }
     //return _hasProfile;
     return true;
+  }
+
+  Future<String> Announcement() async {
+    _isLoading = true;
+    try {
+      final access = await DataBaseProvider().getToken();
+      Map<String, String>? reqHeader = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $access',
+      };
+
+      final url = '$requestBaseUrl/AnnouncementApiView/';
+      http.Response request = await http.put(
+        Uri.parse(url),
+        headers: reqHeader,
+      );
+      if (request.statusCode == 200) {
+        _isLoading = false;
+        _reqMessage = 'password updated successfully';
+        final res = json.decode(request.body);
+        announcement = res['announcement'];
+        _color = const Color.fromARGB(255, 15, 175, 20);
+
+        notifyListeners();
+      } else if (request.statusCode == 400) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        final image = res['old_password'];
+        _reqMessage = image;
+        notifyListeners();
+        announcement = null;
+        // throw Exception('Failed to load data ${request.statusCode}');
+      } else if (request.statusCode == 401) {
+        _isLoading = false;
+        final res = json.decode(request.body);
+        _reqMessage = res;
+        notifyListeners();
+        announcement = null;
+      }
+    } catch (e) {
+      _isLoading = false;
+      _reqMessage = 'somthing went wrong ${e.toString()}';
+      notifyListeners();
+      // throw Exception('Failed to load data ${e.toString()} ');
+      announcement = null;
+    }
+    //return _hasProfile;
+    return announcement!;
   }
 
   // login user
