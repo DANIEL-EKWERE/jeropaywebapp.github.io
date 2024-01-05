@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 import '../widget/fab.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ResultChecker extends StatefulWidget {
   ResultChecker({
@@ -23,6 +24,7 @@ class _ResultCheckerState extends State<ResultChecker> {
   List<String> subCategory = ['WAEC', 'NECO'];
   String? selectedValue;
   String? selectedValue2;
+  final Uri url = Uri.parse('https://wa.link/q07ccc');
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
@@ -447,19 +449,35 @@ class _ResultCheckerState extends State<ResultChecker> {
                                                         actions: [
                                                           TextButton(
                                                             onPressed: () {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              value.purchaseExamEPin(
-                                                                  network:
-                                                                      selectedValue,
-                                                                  examName:
-                                                                      selectedValue2,
-                                                                  quantity:
-                                                                      _phoneController
-                                                                          .text
-                                                                          .trim(),
-                                                                  context:
-                                                                      context);
+                                                              showDialog<
+                                                                        bool>(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return AlertDialog(
+                                                                          title: const Text(
+                                                                              'Service Unavailable'),
+                                                                          content:
+                                                                              Text('The service you seek is currently unavailable, please contact admin to place the order manaully!!!'),
+                                                                          actions: [
+                                                                            TextButton(
+                                                                              onPressed: () async {
+                                                                                if (!await launchUrl(url)) {
+                                                                                  throw Exception('could\'t load link $url');
+                                                                                }
+                                                                              },
+                                                                              child: Text('ok'),
+                                                                            ),
+                                                                            TextButton(
+                                                                              onPressed: () async {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: Text('No'),
+                                                                            )
+                                                                          ]);
+                                                                    });
+
                                                             },
                                                             child: const Text(
                                                                 'Ok'),

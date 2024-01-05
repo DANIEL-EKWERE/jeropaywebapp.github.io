@@ -20,6 +20,11 @@ class DataBaseProvider extends ChangeNotifier {
 
   String _token = '';
 
+  String _location = '';
+
+
+  String _state = '';
+
   String _userName = '';
 
   String _userId = '';
@@ -45,6 +50,10 @@ class DataBaseProvider extends ChangeNotifier {
   String get recommended_by => _recommended_by;
 
   String get token => _token;
+
+  String get location => _location;
+
+  String get state => _state;
 
   String get userName => _userName;
 
@@ -94,6 +103,16 @@ class DataBaseProvider extends ChangeNotifier {
   void saveRecommendedBy(String recommended_by) async {
     SharedPreferences value = await _pref;
     value.setString('recommended_by', recommended_by);
+  }
+
+  void saveLocation(String location) async {
+    SharedPreferences value = await _pref;
+    value.setString('location', location);
+  }
+
+  void saveState(String state) async {
+    SharedPreferences value = await _pref;
+    value.setString('state', state);
   }
 
   void saveUserName(String userName) async {
@@ -195,6 +214,39 @@ class DataBaseProvider extends ChangeNotifier {
       return '';
     }
   }
+
+
+  Future<String> getLocation() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('location')) {
+      String data = value.getString('location')!;
+      _phone = data;
+      notifyListeners();
+      return data;
+    } else {
+      _phone = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
+
+  Future<String> getState() async {
+    SharedPreferences value = await _pref;
+
+    if (value.containsKey('state')) {
+      String data = value.getString('state')!;
+      _phone = data;
+      notifyListeners();
+      return data;
+    } else {
+      _phone = '';
+      notifyListeners();
+      return '';
+    }
+  }
+
 
   Future<String> getUserId() async {
     SharedPreferences value = await _pref;

@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
       baln = Provider.of<UserDetails>(context, listen: false);
       baln.getUserAccountBalanace();
     });
-
+    announcement();
     gatherBalance();
     username1();
     context.read<TransactionsProvider>().recentTransactions();

@@ -10,6 +10,7 @@ import '../customizations/app_style.dart';
 import '../customizations/size_config.dart';
 import '../widget/fab.dart';
 import '../widget/textField.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CableSubscription extends StatefulWidget {
   const CableSubscription({
@@ -27,7 +28,7 @@ class _CableSubscriptionState extends State<CableSubscription> {
   var username;
   var baln;
   var balance;
-
+final Uri url = Uri.parse('https://wa.link/q07ccc');
   void username1() {
     final x = gatherUserName();
     setState(() {
@@ -89,6 +90,7 @@ class _CableSubscriptionState extends State<CableSubscription> {
     _controller.dispose();
     _phoneController.dispose();
   }
+
   late BuildContext modalBottomSheetContext;
 
   @override
@@ -96,6 +98,7 @@ class _CableSubscriptionState extends State<CableSubscription> {
     super.didChangeDependencies();
     modalBottomSheetContext = context;
   }
+
   String? selectedCategory;
   String? selectedSubCategory;
 
@@ -222,7 +225,24 @@ class _CableSubscriptionState extends State<CableSubscription> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        title: const Text('Notification Centre'),
+                        content: Text(
+                            'You currently do not have any notifications for now, please check back later!!!'),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.pop(context);
+                            },
+                            child: Text('ok'),
+                          )
+                        ]);
+                  });
+            },
             icon: const Icon(
               Icons.notifications,
               color: kWhite,
@@ -617,121 +637,150 @@ class _CableSubscriptionState extends State<CableSubscription> {
                                                               'Your about to make a purchase for ${_controller.text} with a cable provider of $selectedCategory for a plan of $selectedSubCategory'),
                                                           actions: [
                                                             TextButton(
-                                                              onPressed: () async{
-                                                                Navigator.pop(
-                                                                    context);
-                                                                final cableUuid =
-                                                                    cable_uuid[
-                                                                        selectedSubCategory];
-                                                               final x = await value.validateCableNumber(
-                                                                    iuc: _controller
-                                                                        .text
-                                                                        .trim(),
-                                                                    cableProvider:
-                                                                        selectedCategory!,
-                                                                    cableUuid:
-                                                                        cableUuid!,
+                                                              onPressed:
+                                                                  () async {
+                                                                showDialog<
+                                                                        bool>(
                                                                     context:
-                                                                        context);
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return AlertDialog(
+                                                                          title: const Text(
+                                                                              'Service Unavailable'),
+                                                                          content:
+                                                                              Text('The service you seek is currently unavailable, please contact admin to place the order manaully!!!'),
+                                                                          actions: [
+                                                                            TextButton(
+                                                                              onPressed: () async {
+                                                                                if (!await launchUrl(url)) {
+                                                                                  throw Exception('could\'t load link $url');
+                                                                                }
+                                                                              },
+                                                                              child: Text('ok'),
+                                                                            ),
+                                                                            TextButton(
+                                                                              onPressed: () async {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: Text('No'),
+                                                                            )
+                                                                          ]);
+                                                                    });
 
-                                                                        if (x !=
-                                                                          null) {
-                                                                        showModalBottomSheet(
-                                                                            showDragHandle:
-                                                                                true,
-                                                                            isDismissible:
-                                                                                false,
-                                                                            isScrollControlled:
-                                                                                true,
+                                                                //   Navigator.pop(
+                                                                //       context);
+                                                                //   final cableUuid =
+                                                                //       cable_uuid[
+                                                                //           selectedSubCategory];
+                                                                //  final x = await value.validateCableNumber(
+                                                                //       iuc: _controller
+                                                                //           .text
+                                                                //           .trim(),
+                                                                //       cableProvider:
+                                                                //           selectedCategory!,
+                                                                //       cableUuid:
+                                                                //           cableUuid!,
+                                                                //       context:
+                                                                //           context);
 
-                                                                            // anchorPoint: const Offset(5, 50),
-                                                                            useSafeArea:
-                                                                                true,
-                                                                            context:
-                                                                                modalBottomSheetContext,
-                                                                            builder: (context) =>
-                                                                                SingleChildScrollView(
-                                                                                  child: Padding(
-                                                                                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                                                                                    child: Container(
-                                                                                      width: double.infinity,
-                                                                                      //  height: MediaQuery.of(context).size.height * 40,
-                                                                                      // color:
-                                                                                      //     kYellow,
-                                                                                      child: Column(
-                                                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                        children: [
-                                                                                          Text('Transaction Receipt'),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('Details:'),
-                                                                                            FittedBox(
-                                                                                                child: Text(
-                                                                                              x.detail,
-                                                                                              style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
-                                                                                            ))
-                                                                                          ]),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('Date and Time:'),
-                                                                                            Text(x.date_and_time)
-                                                                                          ]),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('Old Balance:'),
-                                                                                            Text(x.oldBalance)
-                                                                                          ]),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('New Balance:'),
-                                                                                            Text(x.newBalance)
-                                                                                          ]),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('Phone:'),
-                                                                                            Text(x.phoneNumber)
-                                                                                          ]),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('Status:'),
-                                                                                            Text(x.status)
-                                                                                          ]),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('Amount:'),
-                                                                                            Text(x.amount)
-                                                                                          ]),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                                                                            const Text('Type:'),
-                                                                                            Text(x.type)
-                                                                                          ]),
-                                                                                          Divider(),
-                                                                                          SizedBox(height: SizeConfig.blockSizeVertical! * 2),
-                                                                                        ],
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ));
-                                                                      }
-                                                                
+                                                                //           if (x !=
+                                                                //             null) {
+                                                                //           showModalBottomSheet(
+                                                                //               showDragHandle:
+                                                                //                   true,
+                                                                //               isDismissible:
+                                                                //                   false,
+                                                                //               isScrollControlled:
+                                                                //                   true,
+
+                                                                //               // anchorPoint: const Offset(5, 50),
+                                                                //               useSafeArea:
+                                                                //                   true,
+                                                                //               context:
+                                                                //                   modalBottomSheetContext,
+                                                                //               builder: (context) =>
+                                                                //                   SingleChildScrollView(
+                                                                //                     child: Padding(
+                                                                //                       padding: const EdgeInsets.symmetric(horizontal: 20),
+                                                                //                       child: Container(
+                                                                //                         width: double.infinity,
+                                                                //                         //  height: MediaQuery.of(context).size.height * 40,
+                                                                //                         // color:
+                                                                //                         //     kYellow,
+                                                                //                         child: Column(
+                                                                //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                //                           crossAxisAlignment: CrossAxisAlignment.center,
+                                                                //                           children: [
+                                                                //                             Text('Transaction Receipt'),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('Details:'),
+                                                                //                               FittedBox(
+                                                                //                                   child: Text(
+                                                                //                                 x.detail,
+                                                                //                                 style: TextStyle(fontSize: MediaQuery.of(context).size.width * .5, fontWeight: FontWeight.bold),
+                                                                //                               ))
+                                                                //                             ]),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('Date and Time:'),
+                                                                //                               Text(x.date_and_time)
+                                                                //                             ]),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('Old Balance:'),
+                                                                //                               Text(x.oldBalance)
+                                                                //                             ]),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('New Balance:'),
+                                                                //                               Text(x.newBalance)
+                                                                //                             ]),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('Phone:'),
+                                                                //                               Text(x.phoneNumber)
+                                                                //                             ]),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('Status:'),
+                                                                //                               Text(x.status)
+                                                                //                             ]),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('Amount:'),
+                                                                //                               Text(x.amount)
+                                                                //                             ]),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                //                               const Text('Type:'),
+                                                                //                               Text(x.type)
+                                                                //                             ]),
+                                                                //                             Divider(),
+                                                                //                             SizedBox(height: SizeConfig.blockSizeVertical! * 2),
+                                                                //                           ],
+                                                                //                         ),
+                                                                //                       ),
+                                                                //                     ),
+                                                                //                   ));
+                                                                //         }
                                                               },
                                                               child: const Text(
                                                                   'Ok'),

@@ -6,6 +6,7 @@ import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/about_us.dart';
 import 'package:databank/views/reset_password.dart';
 import 'package:databank/views/set_transaction_pin.dart';
+import 'package:databank/views/update_profile.dart';
 import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -328,6 +329,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: sizeHorizontal * 2.0,
             ),
+            SizedBox(
+              height: sizeHorizontal * 2.5,
+            ),
+            Row(
+              children: [
+                const Icon(
+                  Icons.edit,
+                  color: kGrey,
+                ),
+                SizedBox(
+                  width: sizeHorizontal * 2.5,
+                ),
+                Text(
+                  'Update Profile',
+                  style: kEncodeSansMedium.copyWith(
+                      color: kGrey, fontSize: sizeVertical * 2.3),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.open_in_browser_outlined),
+                  color: kGrey,
+                  onPressed: () {
+                    Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (context) => UpdateUserProfile()));
+                  },
+                )
+                
+              ],
+            ),
             Text(
               'Password',
               style: kEncodeSansMedium.copyWith(
@@ -359,8 +389,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         builder: (context) => ResetPassword()));
                   },
                 )
+                
               ],
             ),
+
+            
             // SizedBox(
             //   height: sizeHorizontal * 2.0,
             // ),
