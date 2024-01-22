@@ -332,6 +332,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: sizeHorizontal * 2.5,
             ),
+            const Divider(),
             Row(
               children: [
                 const Icon(
@@ -355,9 +356,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         builder: (context) => UpdateUserProfile()));
                   },
                 )
-                
               ],
             ),
+            const Divider(),
             Text(
               'Password',
               style: kEncodeSansMedium.copyWith(
@@ -389,11 +390,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         builder: (context) => ResetPassword()));
                   },
                 )
-                
               ],
             ),
 
-            
             // SizedBox(
             //   height: sizeHorizontal * 2.0,
             // ),
@@ -528,7 +527,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     //     backgroundColor: Colors.green,
                                     //   ),
                                     // );
-                                    successMessage(context: context,message: 'Log Out sucesful!!!',x: Color.fromARGB(255, 15, 175, 20));
+                                    successMessage(
+                                        context: context,
+                                        message: 'Log Out sucesful!!!',
+                                        x: Color.fromARGB(255, 15, 175, 20));
                                   },
                                   child: Text('yes'),
                                 ),
@@ -540,8 +542,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ]);
                         });
-
-                    context.read<DataBaseProvider>().logOut(context);
+                    Future.delayed(
+                      const Duration(seconds: 5),
+                    ).then((value) => context.read<DataBaseProvider>().logOut(context));
+                    
                   },
                   child: Text(
                     'Log Out',

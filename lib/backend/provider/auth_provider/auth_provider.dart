@@ -71,7 +71,7 @@ class AuthenticationProvider extends ChangeNotifier {
         notifyListeners();
         Navigator.of(context!)
             .pushNamedAndRemoveUntil("/CreatUserProfile", (route) => false);
-      } else {
+      } else if( res.statusCode == 400){
         final req = json.decode(res.body);
         _isLoading = false;
         final message = req['data'];
@@ -80,6 +80,14 @@ class AuthenticationProvider extends ChangeNotifier {
         _color = const Color(0xfff33225);
         notifyListeners();
         print(req);
+      }else{
+        final req = json.decode(res.body);
+        _isLoading = false;
+        final message = req['data'];
+        final status = req['status'];
+        _reqMessage = '$status \n $message';
+        _color = const Color(0xfff33225);
+        notifyListeners();
       }
     } on SocketException catch (_) {
       _isLoading = false;
@@ -427,7 +435,7 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
-void UpdateUserProfile(
+  void UpdateUserProfile(
       {required String location,
       required String phone,
       required String state,
@@ -465,8 +473,9 @@ void UpdateUserProfile(
       res.files.add(imageUpload);
       var response = await res.send();
       if (response.statusCode == 201 || response.statusCode == 200) {
+        DataBaseProvider().updateUserP(context);
         _isLoading = false;
-        _reqMessage = 'Profile Created Successfully';
+        _reqMessage = 'Profile Updated Successfully';
         _color = const Color.fromARGB(255, 15, 175, 20);
         await DataBaseProvider().saveProfileId(phone);
         // await UserDetails().getUserAccountDetails();
@@ -517,8 +526,6 @@ void UpdateUserProfile(
       notifyListeners();
     }
   }
-
-
 
   void SendPaymentProof(
       {required File? profile_picture, required BuildContext? context}) async {

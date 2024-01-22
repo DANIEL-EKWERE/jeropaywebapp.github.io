@@ -66,7 +66,7 @@ class _PayvesselState extends State<Payvessel> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: sizeVertical * 2,
+                        height: sizeVertical * 1,
                       ),
                       SizedBox(
                           width: sizeHorizontal * 5,
@@ -76,7 +76,7 @@ class _PayvesselState extends State<Payvessel> {
                         height: sizeVertical * 2,
                       ),
                       const Text(
-                        'Send money to this accounts, and you\'ll be credited automatically. \n thanks for using DataBank, with love from Payvessel!!! \n\n a Transaction fee however for Automatic Funding is #50 you can wactch a short video ads to pay #25 instead!',
+                        'Send money to this accounts, and you\'ll be credited automatically. \n thanks for using DataBank, with love from Payvessel!!!',
                         textAlign: TextAlign.center,
                         style: TextStyle(),
                       ),
@@ -90,23 +90,23 @@ class _PayvesselState extends State<Payvessel> {
                 SizedBox(
                   height: sizeVertical * 3,
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.play_arrow),
-                    label: const Text('Watch ADS -#25'),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.info_outline),
-                    color: kGrey,
-                    onPressed: () {
-                      showInfoDialogue(context);
-                    },
-                  ),
-                ]),
-                SizedBox(
-                  height: sizeVertical * 3,
-                ),
+                // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                //   TextButton.icon(
+                //     onPressed: () {},
+                //     icon: const Icon(Icons.play_arrow),
+                //     label: const Text('Watch ADS -#25'),
+                //   ),
+                //   IconButton(
+                //     icon: const Icon(Icons.info_outline),
+                //     color: kGrey,
+                //     onPressed: () {
+                //       showInfoDialogue(context);
+                //     },
+                //   ),
+                // ]),
+                // SizedBox(
+                //   height: sizeVertical * 3,
+                // ),
                 Container(
                   width: double.infinity,
                   height: sizeVertical * 25,
@@ -152,24 +152,27 @@ class _PayvesselState extends State<Payvessel> {
                               ],
                             ),
                             SizedBox(
-                  height: sizeVertical * 3,
-                ),
+                              height: sizeVertical * 3,
+                            ),
                             Padding(
-                              padding: const EdgeInsets.only(left:20),
+                              padding: const EdgeInsets.only(left: 20),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                // mainAxisAlignment: MainAxisAlignment.start,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   // const Text('Account Number'),
                                   // Text(accountNumber)
-                            
+
                                   Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 5, vertical: 3),
                                     decoration: BoxDecoration(
                                         color: kLightGrey,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(8))),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8))),
                                     child: Row(children: [
                                       Text(accountNumber,
                                           style: kEncodeSansRegular.copyWith(
@@ -179,9 +182,9 @@ class _PayvesselState extends State<Payvessel> {
                                           onPressed: () {
                                             ClipboardData data = ClipboardData(
                                                 text: accountNumber);
-                            
+
                                             Clipboard.setData(data);
-                            
+
                                             successMessage(
                                                 context: context,
                                                 message:
@@ -190,14 +193,18 @@ class _PayvesselState extends State<Payvessel> {
                                           icon: Icon(Icons.copy))
                                     ]),
                                   ),
+                                  Text('Charge:1%',
+                                    style: kEncodeSansBold.copyWith(
+                                        color: kWhite,
+                                        fontSize: sizeVertical * 1.5)),
                                 ],
                               ),
                             ),
                             SizedBox(
-                  height: sizeVertical * 3,
-                ),
+                              height: sizeVertical * 3,
+                            ),
                             Padding(
-                              padding: const EdgeInsets.only(left:20),
+                              padding: const EdgeInsets.only(left: 20),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,

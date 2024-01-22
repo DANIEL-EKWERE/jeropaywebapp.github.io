@@ -409,7 +409,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                                     ],
                                   )
                                 : Text(
-                                    'Complete Profile',
+                                    'Update Profile',
                                     style: TextStyle(
                                         fontSize:
                                             SizeConfig.blockSizeHorizontal! *

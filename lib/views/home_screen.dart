@@ -108,10 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
         svg: 'assets/images/graduation-cap.png',
         name: 'Result Checker',
         screen: ResultChecker()),
-    VtuOperations(
-        svg: 'assets/images/data-pin.png',
-        name: 'Scan to Load Card',
-        screen: const ScanToLoad()),
+    // VtuOperations(
+    //     svg: 'assets/images/data-pin.png',
+    //     name: 'Scan to Load Card',
+    //     screen: const ScanToLoad()),
     // VtuOperations(
     //     svg: 'assets/images/metaverse.png',
     //     name: 'Airtime To Cash \n not available',
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var devicePlatform;
   var tokenx;
   var annouce =
-      'MTN Network is now back online you can now resume transactions!!!';
+      'Welcome to the data bank mobile application,glad you got onboard!!!';
   void gatherData() async {
     username = await DataBaseProvider().getUserName();
     balance = await UserDetails().getUserAccountBalanace();
@@ -1019,16 +1019,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
-              Text(tokenx),
-              IconButton(
-                  onPressed: () {
-                    ClipboardData data = ClipboardData(text: tokenx);
+              // Text(tokenx),
+              // IconButton(
+              //     onPressed: () {
+              //       ClipboardData data = ClipboardData(text: tokenx);
 
-                    Clipboard.setData(data);
+              //       Clipboard.setData(data);
 
-                    warning(context: context, message: " token copied");
-                  },
-                  icon: const Icon(Icons.copy)),
+              //       warning(context: context, message: " token copied");
+              //     },
+              //     icon: const Icon(Icons.copy)),
               SizedBox(height: SizeConfig.blockSizeVertical! * 15),
             ],
           ),

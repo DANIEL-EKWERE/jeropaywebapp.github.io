@@ -92,25 +92,47 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
         title: const Text("earnings page"),
         actions: [
           IconButton(
-              onPressed: () async {
-                await context.read<DataBaseProvider>().logOut(context);
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   const SnackBar(
-                //     content: Text('Log Out sucesful!!!'),
-                //     backgroundColor: Colors.green,
-                //   ),
-                // );
-                // auth.signOut().then((value) {
-                //   Navigator.pushAndRemoveUntil(
-                //       context,
-                //       CupertinoPageRoute(builder: (context) => LoginScreen()),
-                //       (route) => false);
-                // });
-
-                successMessage(
+              onPressed: () {
+                showDialog<bool>(
                     context: context,
-                    message: 'Log Out sucesful!!!',
-                    x: Color.fromARGB(255, 15, 175, 20));
+                    builder: (context) {
+                      return AlertDialog(
+                          title: const Text('Confirm Log Out'),
+                          content: Text(
+                              'Your sure you want to log out of your data bank account?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Future.delayed(
+                                  const Duration(seconds: 5),
+                                ).then((value) => context
+                                    .read<DataBaseProvider>()
+                                    .logOut(context));
+                                
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   const SnackBar(
+                                //     content: Text('Log Out sucesful!!!'),
+                                //     backgroundColor: Colors.green,
+                                //   ),
+                                // );
+
+                                successMessage(
+                                    context: context,
+                                    message: 'Log Out sucesful!!!',
+                                    x: Color.fromARGB(255, 15, 175, 20));
+                              },
+                              child: Text('yes'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                Navigator.pop(context);
+                              },
+                              child: Text('cancel'),
+                            ),
+                          ]);
+                    });
+
+                context.read<DataBaseProvider>().logOut(context);
               },
               icon: const Icon(Icons.exit_to_app))
         ],
@@ -125,7 +147,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
             }
             //  final data = snapshot.data!.docs[0];
             final earnings = snapshot.data;
-           // referalsList = ['daniel', 'moses', 'victor', 'emmanuel', 'emeka'];
+            // referalsList = ['daniel', 'moses', 'victor', 'emmanuel', 'emeka'];
 
             // refCode = 'admin';
             // recommended_by = 'admin';

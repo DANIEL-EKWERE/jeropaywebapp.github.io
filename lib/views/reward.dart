@@ -1,17 +1,41 @@
+import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
-import 'package:databank/widget/history_card.dart';
-// import 'package:flutter/cupertino.dart';
+import 'package:databank/views/refer_and_earn.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
-import '../model/reward.dart';
 import '../widget/drawer_widget.dart';
 
-class RewardScreen extends StatelessWidget {
+class RewardScreen extends StatefulWidget {
   const RewardScreen({super.key, required this.openDrawer});
   final VoidCallback openDrawer;
+
+  @override
+  State<RewardScreen> createState() => _RewardScreenState();
+}
+
+class _RewardScreenState extends State<RewardScreen> {
+  var total_tansactions;
+  var total_deposits;
+  var total_purchase;
+
+  Future<void> walletstats() async {
+    final ws = await TransactionsProvider().walletStatistics();
+    setState(() {
+      total_tansactions = ws.total_transactions;
+      total_deposits = ws.total_deposit;
+      total_purchase = ws.total_purchase;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    walletstats();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -24,7 +48,7 @@ class RewardScreen extends StatelessWidget {
         elevation: 0,
         //foregroundColor: Colors.white10,
         leading: DrawerMenueWidget(
-          onClicked: openDrawer,
+          onClicked: widget.openDrawer,
           color: kGrey,
         ),
         iconTheme: const IconThemeData(color: kDarkBrown),
@@ -78,7 +102,7 @@ class RewardScreen extends StatelessWidget {
                       SizedBox(
                         width: sizeVertical * 1.5,
                       ),
-                      const Text('rewards'),
+                      const Text('Earnings'),
                     ],
                   ),
                   const Spacer(),
@@ -98,7 +122,7 @@ class RewardScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Text('Check In Today'),
+                          const Text('Active Status'),
                           Checkbox(value: true, onChanged: (newValue) {})
                         ],
                       )
@@ -134,6 +158,13 @@ class RewardScreen extends StatelessWidget {
                     ]),
                 child: ListTile(
                   // selectedColor: kYellow,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        builder: (context) => const ReferAndEarn(),
+                      ),
+                    );
+                  },
                   leading: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -149,12 +180,12 @@ class RewardScreen extends StatelessWidget {
                     ),
                   ),
                   title: Text(
-                    'Daily Reward',
+                    'Refer And Earn',
                     style: kEncodeSansMedium.copyWith(
                         color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
                   ),
                   subtitle: Text(
-                    'Check in and get #1-#20 \n Reward to be used at Random',
+                    'refer and earn #500  when they upgrade to affiliate or top user\n Reward to be used at Random',
                     style: kEncodeSansRegular.copyWith(
                         color: kGrey, fontSize: sizeVertical * 1.8),
                   ),
@@ -165,7 +196,7 @@ class RewardScreen extends StatelessWidget {
                 height: sizeVertical * 4.0,
               ),
               Text(
-                'Daily Bonus',
+                'Wallet Statistics',
                 style: kEncodeSansMedium.copyWith(
                     color: kGrey,
                     fontSize: SizeConfig.blockSizeHorizontal! * 2.3),
@@ -173,109 +204,89 @@ class RewardScreen extends StatelessWidget {
               SizedBox(
                 height: sizeVertical * 4.0,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: reward.length,
-                itemBuilder: ((context, index) {
-                  // Reward x = reward[index];
-                  return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: sizeVertical * 5),
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Container(
                       decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 0.8,
-                            color: kLightGrey,
-                            style: BorderStyle.solid),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(12),
-                        ),
+                        borderRadius: BorderRadius.circular(20),
                         color: kWhite,
                         boxShadow: [
                           BoxShadow(
-                            blurRadius: 5,
-                            spreadRadius: 1,
-                            color: kDarkBrown.withOpacity(0.05),
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            color: kGrey.withOpacity(0.2),
                             offset: const Offset(0, 5),
-                          ),
+                          )
                         ],
                       ),
-
-// modifying this part of the code
-
-                      // child: ListTile(
-                      //   onTap: () {
-                      //     Navigator.of(context).push(CupertinoPageRoute(
-                      //         builder: ((context) => x.screen!)));
-                      //   },
-                      //   leading: Container(
-                      //     padding: const EdgeInsets.all(12),
-                      //     decoration: BoxDecoration(
-                      //       color: x.bcolor,
-                      //       shape: BoxShape.rectangle,
-                      //       borderRadius: const BorderRadius.all(
-                      //         Radius.circular(12),
-                      //       ),
-                      //     ),
-                      //     child: Icon(
-                      //       Icons.mobile_screen_share_rounded,
-                      //       color: x.fcolor,
-                      //     ),
-                      //   ),
-                      //   title: Text(
-                      //     x.title,
-                      //     style: kEncodeSansMedium.copyWith(
-                      //         color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
-                      //   ),
-                      //   subtitle: Text(
-                      //     x.subTitle,
-                      //     style: kEncodeSansRegular.copyWith(
-                      //         color: kGrey, fontSize: sizeVertical * 1.8),
-                      //   ),
-                      //   trailing: const Icon(Icons.diamond),
-                      // ),
-
-                  child:  const Column(children: [
-                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
-                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
-                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
-                    PriceListCard(fiveHundredMb: '1',oneGb: '1',twoGb: '1',threeGb: '1',fiveGb: '1',tenGb: '1',image: 'assets/images/mtn.png',),
-                    ],) 
-
-// thie code above is to be modified
-
-                      // child: ListTile(
-                      //   onTap: () {
-                      //     Navigator.of(context).push(CupertinoPageRoute(
-                      //         builder: ((context) => x.screen!)));
-                      //   },
-                      //   leading: Container(
-                      //     padding: const EdgeInsets.all(12),
-                      //     decoration: BoxDecoration(
-                      //       color: x.bcolor,
-                      //       shape: BoxShape.rectangle,
-                      //       borderRadius: const BorderRadius.all(
-                      //         Radius.circular(12),
-                      //       ),
-                      //     ),
-                      //     child: Icon(
-                      //       Icons.mobile_screen_share_rounded,
-                      //       color: x.fcolor,
-                      //     ),
-                      //   ),
-                      //   title: Text(
-                      //     x.title,
-                      //     style: kEncodeSansMedium.copyWith(
-                      //         color: kDarkBrown, fontSize: sizeHorizontal * 2.0),
-                      //   ),
-                      //   subtitle: Text(
-                      //     x.subTitle,
-                      //     style: kEncodeSansRegular.copyWith(
-                      //         color: kGrey, fontSize: sizeVertical * 1.8),
-                      //   ),
-                      //   trailing: const Icon(Icons.diamond),
-                      // ),
-                      );
-                }),
+                      child: Row(children: [
+                        Text(total_tansactions),
+                        Text(': Total Transactions')
+                      ]),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: sizeVertical * 5.0,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: sizeVertical * 5),
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: kWhite,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            color: kGrey.withOpacity(0.2),
+                            offset: const Offset(0, 5),
+                          )
+                        ],
+                      ),
+                      child: Row(children: [
+                        Text(total_deposits),
+                        Text(': Total deposits')
+                      ]),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: sizeVertical * 5.0,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: sizeVertical * 5),
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: kWhite,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            color: kGrey.withOpacity(0.2),
+                            offset: const Offset(0, 5),
+                          )
+                        ],
+                      ),
+                      child: Row(children: [
+                        Text(total_purchase),
+                        Text(': Total purchase')
+                      ]),
+                    )
+                  ],
+                ),
               ),
               SizedBox(
                 height: sizeVertical * 14.0,
@@ -294,7 +305,7 @@ class RewardScreen extends StatelessWidget {
           return AlertDialog(
             title: const Text('Info'),
             content: const Text(
-                'this is about how to earn reward with the DataBank App \n\n\n you simply log in everyday to to watch a short vidoe ads and cleam your daily reward'),
+                'this is about how to earn reward with the DataBank App \n\n\n you simply login navigate to the earnings page and copy your referal code and click the link button to share the app url for download!!!'),
             actions: [
               TextButton(
                 onPressed: () {

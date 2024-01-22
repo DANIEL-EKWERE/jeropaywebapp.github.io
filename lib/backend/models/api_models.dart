@@ -1076,7 +1076,8 @@ class Transaction {
 
 enum Status { SUCCESS, PENDING }
 
-final statusValues = EnumValues({"Success": Status.SUCCESS, "Pending": Status.PENDING});
+final statusValues =
+    EnumValues({"Success": Status.SUCCESS, "Pending": Status.PENDING});
 
 // enum Type { AIRTIME, DATA, ELECTRICITY, CABLE}
 
@@ -1303,10 +1304,8 @@ class Data {
 //     List<ElectricSubscription>.from(
 //         json.decode(str).map((x) => ElectricSubscription.fromJson(x)));
 
-
 ElectricSubscription electricSubscriptionFromJson(String str) =>
     ElectricSubscription.fromJson(json.decode(str));
-
 
 String electricSubscriptionToJson(List<ElectricSubscription> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -1667,7 +1666,6 @@ class Data1 {
 //   }
 // }
 
-
 // status code for wrong inputs 404
 // {
 //   "status": "error",
@@ -1678,14 +1676,32 @@ class Data1 {
 //   }
 // }
 
-
 // {status: success, total_amount: 16000.0, data: [{id: 01242804-2685-4aaa-ba20-fd8d2b948dcb, detail: you have purchase elelctricity, date_and_time: Nov. 28, 2023, old_balance: 1500.00, new_balance: 700.00, phone_number: 07013116710, status: Success, amount: 3000.00, type: Electricity}, {id: 4ec26dee-0b39-4e74-8fd6-6a77eaaf9cee, detail: you have purchase cable sub, date_and_time: Nov. 28, 2023, old_balance: 1200.00, new_balance: 600.00, phone_number: 07013116710, status: Success, amount: 600.00, type: Cable}, {id: 6923e465-aa60-4b52-931d-3056b5cd35f1, detail: you have purchase airtime, date_and_time: Nov. 28, 2023, old_balance: 900.00, new_balance: 800.00, phone_number: 07013116710, status: Success, amount: 3000.00, type: Airtime}, {id: 6df7ef7b-8975-46ff-903f-1ee7576ce427, detail: you have purchase airtime, date_and_time: Nov. 28, 2023, old_balance: 800.00, new_balance: 700.00, phone_number: 07013116710, status: Success, amount: 3000.00, type: Airtime}, {id: 5336ef4a-63b7-4509-9b07-1beb2caf8af1},
 
+class WalletStatistics {
+  final String total_transactions;
+  final String total_deposit;
+  final String total_purchase;
 
+  WalletStatistics({
+    required this.total_transactions,
+    required this.total_deposit,
+    required this.total_purchase,
+  });
 
+  factory WalletStatistics.fromJson(Map<String, dynamic> json) =>
+      WalletStatistics(
+        total_transactions: json["total_transactions"],
+        total_deposit: json["total_deposit"],
+        total_purchase: json["total_purchase"],
+      );
 
-
-
+  Map<String, dynamic> toJson() => {
+        "total_transactions": total_transactions,
+        "total_deposit": total_deposit,
+        "total_purchase": total_purchase
+      };
+}
 
 
 

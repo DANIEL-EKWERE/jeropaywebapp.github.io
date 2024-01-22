@@ -413,6 +413,20 @@ class DataBaseProvider extends ChangeNotifier {
     }
   }
 
+  Future updateUserP(BuildContext? context) async {
+    _isLoading = true;
+    notifyListeners();
+    final value = await _pref;
+    value.clear();
+    notifyListeners();
+    _isLoading = false;
+    _reqMessage = 'Log Out Successfull';
+    _color = _color = const Color.fromARGB(255, 15, 175, 20);
+    notifyListeners();
+    // Navigator.of(context!)
+    //     .pushNamedAndRemoveUntil("/OnboardingPage", (route) => false);
+  }
+
   Future logOut(BuildContext? context) async {
     _isLoading = true;
     notifyListeners();

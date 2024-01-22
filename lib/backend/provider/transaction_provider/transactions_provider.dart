@@ -31,6 +31,7 @@ class TransactionsProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   String _reqMessage = '';
+  WalletStatistics walletStats = WalletStatistics(total_deposit: '0.0',total_purchase: '0.0',total_transactions: '0.0');
   AllTransactions2 allTransac =
       AllTransactions2(status: '', totalAmount: 0.0, data: []);
   SingleTransaction singleTransaction = SingleTransaction(
@@ -287,6 +288,63 @@ class TransactionsProvider extends ChangeNotifier {
       _isLoading = false;
       _reqMessage = 'An Error Occured $e';
     }
+  }
+
+  Future<WalletStatistics> walletStatistics() async {
+    String url = '$baseUrl/transactions/wallet-statistic/';
+    _isLoading = true;
+    notifyListeners();
+
+    final access = await DataBaseProvider().getToken();
+    Map<String, String>? reqHeader = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $access',
+    };
+
+    try {
+      http.Response response =
+          await http.get(Uri.parse(url), headers: reqHeader);
+      if (response.statusCode == 200) {
+        _isLoading = false;
+        _reqMessage = 'all transaction retrieved';
+        print(response.body);
+        final allTransac = json.decode(response.body);
+        final walletStats = WalletStatistics.fromJson(allTransac);
+        print(walletStats);
+        print(walletStats);
+        // showModalBottomSheet(
+        //     showDragHandle: true,
+        //     isDismissible: false,
+        //     isScrollControlled: true,
+        //     // anchorPoint: const Offset(5, 50),
+        //     useSafeArea: true,
+        //     context: context!,
+        //     builder: (context) => Receipt(
+        //           details: allTransactions.detail,
+        //           date_and_time: dateAndTime.toIso8601String(),
+        //           old_balance: allTransactions.oldBalance,
+        //           new_balance: allTransactions.newBalance,
+        //           phone_number: allTransactions.phoneNumber,
+        //           status: allTransactions.status,
+        //           type: allTransactions.type,
+        //           amout: allTransactions.amount,
+        //         ));
+        notifyListeners();
+      } else {
+        print(response.body);
+        _isLoading = false;
+        _reqMessage = 'error loading history ${response.statusCode}';
+        notifyListeners();
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _reqMessage = 'internet connection not available';
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _reqMessage = 'An Error Occured $e';
+    }
+    return walletStats;
   }
 
   Future<SingleTransaction> singleTransactions(
