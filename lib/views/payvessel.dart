@@ -53,7 +53,7 @@ class _PayvesselState extends State<Payvessel> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: sizeVertical * 35,
+                  height: sizeVertical * 20,
                   decoration: BoxDecoration(
                     color: kYellow.withOpacity(0.6),
                     borderRadius: const BorderRadius.all(
@@ -157,11 +157,11 @@ class _PayvesselState extends State<Payvessel> {
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
                               child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                // mainAxisAlignment:
+                                //     MainAxisAlignment.spaceAround,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   // const Text('Account Number'),
                                   // Text(accountNumber)
@@ -193,10 +193,7 @@ class _PayvesselState extends State<Payvessel> {
                                           icon: Icon(Icons.copy))
                                     ]),
                                   ),
-                                  Text('Charge:1%',
-                                    style: kEncodeSansBold.copyWith(
-                                        color: kWhite,
-                                        fontSize: sizeVertical * 1.5)),
+                                  
                                 ],
                               ),
                             ),
@@ -206,14 +203,18 @@ class _PayvesselState extends State<Payvessel> {
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   //const Text('Bank Name'),
                                   Text(accountName,
                                       style: kEncodeSansBold.copyWith(
                                           color: kWhite,
-                                          fontSize: sizeVertical * 1.5))
+                                          fontSize: sizeVertical * 1.5)),
+                                          Text('Charge: 1%',
+                                    style: kEncodeSansBold.copyWith(
+                                        color: kWhite,
+                                        fontSize: sizeVertical * 1.5)),
                                 ],
                               ),
                             ),

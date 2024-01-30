@@ -205,8 +205,10 @@ class _RewardScreenState extends State<RewardScreen> {
                 height: sizeVertical * 4.0,
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: sizeVertical * 5),
+               // margin: EdgeInsets.symmetric(vertical: sizeVertical * 5),
+                padding: EdgeInsets.symmetric(vertical: sizeVertical * 3),
                 width: double.infinity,
+               // height: sizeVertical * 5.0,
                 child: Column(
                   children: [
                     Container(
@@ -224,7 +226,7 @@ class _RewardScreenState extends State<RewardScreen> {
                       ),
                       child: Row(children: [
                         Text(total_tansactions),
-                        Text(': Total Transactions')
+                        Text(': Total Transactions'),
                       ]),
                     )
                   ],
@@ -234,8 +236,9 @@ class _RewardScreenState extends State<RewardScreen> {
                 height: sizeVertical * 5.0,
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: sizeVertical * 5),
+                padding: EdgeInsets.symmetric(vertical: sizeVertical * 3),
                 width: double.infinity,
+              //  height: sizeVertical * 5.0,
                 child: Column(
                   children: [
                     Container(
@@ -253,7 +256,7 @@ class _RewardScreenState extends State<RewardScreen> {
                       ),
                       child: Row(children: [
                         Text(total_deposits),
-                        Text(': Total deposits')
+                        Text(': Total deposits'),
                       ]),
                     )
                   ],
@@ -263,8 +266,9 @@ class _RewardScreenState extends State<RewardScreen> {
                 height: sizeVertical * 5.0,
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: sizeVertical * 5),
+                padding: EdgeInsets.symmetric(vertical: sizeVertical * 3),
                 width: double.infinity,
+              //  height: sizeVertical * 5.0,
                 child: Column(
                   children: [
                     Container(
@@ -280,7 +284,9 @@ class _RewardScreenState extends State<RewardScreen> {
                           )
                         ],
                       ),
-                      child: Row(children: [
+                      child: Row(
+                        
+                        children: [
                         Text(total_purchase),
                         Text(': Total purchase')
                       ]),

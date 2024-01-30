@@ -2,12 +2,35 @@ import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:databank/model/drawer_items.dart';
 import 'package:flutter/material.dart';
-
+import 'package:databank/backend/provider/database/db_provider.dart';
 import '../model/drawer_item.dart';
 
-class BuildDrawer extends StatelessWidget {
+class BuildDrawer extends StatefulWidget {
   const BuildDrawer({super.key, required this.onSelectedItem});
   final ValueChanged<DrawerItem> onSelectedItem;
+
+  @override
+  State<BuildDrawer> createState() => _BuildDrawerState();
+}
+
+class _BuildDrawerState extends State<BuildDrawer> {
+  var username;
+
+  Future<String> gatherUserName() async {
+    final usernamex = await DataBaseProvider().getUserName();
+    setState(() {
+      username = usernamex;
+    });
+    print("user name is $username method");
+    return usernamex;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    gatherUserName();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,7 +48,7 @@ class BuildDrawer extends StatelessWidget {
               height: 15,
             ),
             Text(
-              'Daniel Ekwere',
+              '$username',
               style: kEncodeSansMedium.copyWith(
                   color: kWhite,
                   fontSize: SizeConfig.blockSizeHorizontal! * 3.0),
@@ -46,7 +69,7 @@ class BuildDrawer extends StatelessWidget {
               (e) => ListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                onTap: () => onSelectedItem(e),
+                onTap: () => widget.onSelectedItem(e),
                 leading: Icon(
                   e.icon,
                   color: kWhite,

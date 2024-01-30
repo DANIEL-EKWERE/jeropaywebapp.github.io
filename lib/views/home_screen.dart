@@ -345,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 20,
               backgroundColor: kGrey,
               backgroundImage: NetworkImage(
-                  "https://databank-api-h413.onrender.com/media/profile-pic$proImg")
+                  "https://data-bank.com.ng/media/profile-pic$proImg")
               //  : Image.asset("assets/images/pic-2.png"),
               ),
           const SizedBox(

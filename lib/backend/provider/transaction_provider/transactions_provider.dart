@@ -309,40 +309,27 @@ class TransactionsProvider extends ChangeNotifier {
         _reqMessage = 'all transaction retrieved';
         print(response.body);
         final allTransac = json.decode(response.body);
-        final walletStats = WalletStatistics.fromJson(allTransac);
+        walletStats = WalletStatistics.fromJson(allTransac);
         print(walletStats);
         print(walletStats);
-        // showModalBottomSheet(
-        //     showDragHandle: true,
-        //     isDismissible: false,
-        //     isScrollControlled: true,
-        //     // anchorPoint: const Offset(5, 50),
-        //     useSafeArea: true,
-        //     context: context!,
-        //     builder: (context) => Receipt(
-        //           details: allTransactions.detail,
-        //           date_and_time: dateAndTime.toIso8601String(),
-        //           old_balance: allTransactions.oldBalance,
-        //           new_balance: allTransactions.newBalance,
-        //           phone_number: allTransactions.phoneNumber,
-        //           status: allTransactions.status,
-        //           type: allTransactions.type,
-        //           amout: allTransactions.amount,
-        //         ));
         notifyListeners();
       } else {
         print(response.body);
         _isLoading = false;
         _reqMessage = 'error loading history ${response.statusCode}';
+       // walletStats = null;
         notifyListeners();
       }
     } on SocketException catch (_) {
       _isLoading = false;
       _reqMessage = 'internet connection not available';
+     // walletStats = null;
       notifyListeners();
     } catch (e) {
       _isLoading = false;
       _reqMessage = 'An Error Occured $e';
+     // walletStats = null;
+      notifyListeners();
     }
     return walletStats;
   }

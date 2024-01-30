@@ -31,7 +31,24 @@ class _AddMoneyState extends State<AddMoney> {
             const Color.fromARGB(0, 255, 255, 255).withOpacity(0.9),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        title: const Text('Notification Centre'),
+                        content: Text(
+                            'You currently do not have any notifications for now, please check back later!!!'),
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.pop(context);
+                            },
+                            child: Text('ok'),
+                          )
+                        ]);
+                  });
+            },
             icon: const Icon(
               Icons.notifications,
               color: kBlack,
