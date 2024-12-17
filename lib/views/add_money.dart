@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../customizations/app_style.dart';
-import '../widget/make_payment.dart';
 import 'Manual_funding.dart';
-import 'monnify_accts.dart';
 
 class AddMoney extends StatefulWidget {
   const AddMoney({super.key});

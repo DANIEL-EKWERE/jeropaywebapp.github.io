@@ -181,7 +181,7 @@ class _ScanToLoadState extends State<ScanToLoad> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Scrollbar(
-                child: ButtonBar(
+                child: OverflowBar(
               children: [
                 ElevatedButton(
                     onPressed: () => _textOcr(),

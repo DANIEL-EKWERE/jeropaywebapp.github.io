@@ -1,4 +1,4 @@
-package com.daniel.databank
+package com.danielekwere.danopay
 
 import io.flutter.embedding.android.FlutterActivity
 

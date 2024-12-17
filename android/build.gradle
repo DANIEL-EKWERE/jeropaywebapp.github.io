@@ -1,31 +1,80 @@
+
+
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = "1.8.20" // Update to the latest version
+
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "com.android.tools.build:gradle:8.1.2" // Use latest gradle version
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        
     }
 }
+
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+        // maven {
+        //     url "http://download.flutter.io"
+        //     allowInsecureProtocol=true
+        // }
     }
 }
 
-rootProject.buildDir = '../build'
+
+// android {
+//     compileSdkVersion 34
+// }
+
+// apply plugin: 'com.android.library'
+// apply plugin: 'kotlin-android'
+
+rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    project.evaluationDependsOn(":app")
 }
 
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
-}
+// tasks.register("clean", Delete) {
+//     delete rootProject.buildDir
+// }
+
+// dependencies {
+//   api "io.flutter:flutter_embedding_debug:1.0.0-f16e757d5d68c164d084b61d84e3b7cd14eacba9"
+// }
+
+
+// buildscript {
+//     ext.kotlin_version = "1.9.10" // Update to the latest version
+
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+
+//     dependencies {
+//         classpath "com.android.tools.build:gradle:8.1.2" // Use latest gradle version
+//         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//     }
+// }
+// // plugins {
+// //    // id 'com.android.application' version '7.4.2' apply false
+// //     id 'com.android.library' version '7.4.2' apply false
+// //     id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
+// //     id 'com.google.dagger.hilt.android' version '2.45' apply false
+// // }
+
+// allprojects {
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+// }

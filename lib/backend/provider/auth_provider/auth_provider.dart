@@ -5,7 +5,6 @@ import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/backend/provider/user_details/user_details.dart';
 // import 'package:databank/views/app_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 // import 'package:databank/firebase_options.dart';

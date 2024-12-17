@@ -1,7 +1,6 @@
 import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/widget/snackbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';

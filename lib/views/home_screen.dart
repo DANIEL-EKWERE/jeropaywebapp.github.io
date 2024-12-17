@@ -4,7 +4,6 @@
 import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
 import 'package:databank/views/refer_and_earn.dart';
-import 'package:databank/widget/snackbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 // import '../widget/snackbar.dart';
@@ -17,7 +16,6 @@ import 'package:databank/views/cable_subscription.dart';
 import 'package:databank/views/upgrade_to_reseller.dart';
 // import 'package:databank/views/history.dart';
 import 'package:databank/views/result_checker.dart';
-import 'package:databank/views/scan_to_load.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
