@@ -50,7 +50,7 @@ class _MonnifyAcctsState extends State<MonnifyAccts> {
                       height: sizeVertical * 2,
                     ),
                     const Text(
-                      'Send money to one of these accounts, and you\'ll be credited automatically. \n thanks for using DataBank, with love from monnify!!! \n\n a Transaction fee however for Automatic Funding is #50 you can wactch a short video ads to pay #30 instead!',
+                      'Send money to one of these accounts, and you\'ll be credited automatically. \n thanks for using Jero Pay, with love from monnify!!! \n\n a Transaction fee however for Automatic Funding is #50 you can wactch a short video ads to pay #30 instead!',
                       textAlign: TextAlign.center,
                       style: TextStyle(),
                     ),
@@ -61,7 +61,7 @@ class _MonnifyAcctsState extends State<MonnifyAccts> {
                 height: sizeVertical * 3,
               ),
               const Text(
-                  'Select Acct to fund and start using the DATABANK app'),
+                  'Select Acct to fund and start using the Jero Pay app'),
               SizedBox(
                 height: sizeVertical * 3,
               ),

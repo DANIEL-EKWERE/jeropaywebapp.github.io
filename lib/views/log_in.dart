@@ -61,7 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: sizeHorizontal * 5,
                   ),
-                  SvgPicture.asset('assets/images/logo-1.svg'),
+                  Image.asset(
+              'assets/images/logo-1.png',
+              fit: BoxFit.cover,
+              width: SizeConfig.blockSizeHorizontal! * 27,
+              height: SizeConfig.blockSizeVertical! * 10,
+            ),
                   SizedBox(
                     height: sizeHorizontal * 5,
                   ),

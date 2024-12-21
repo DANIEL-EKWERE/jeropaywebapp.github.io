@@ -83,7 +83,7 @@ class UserDetails extends ChangeNotifier {
 //                 "bankCode": "120001",
 //                 "bankName": "9Payment Service Bank",
 //                 "accountNumber": "5121627127",
-//                 "accountName": "DATABANK-Daniel Ekwere",
+//                 "accountName": "databank-Daniel Ekwere",
 //                 "trackingReference": "UBKJ41WDPH42F823079YVD35"
 //             }
 //         ]

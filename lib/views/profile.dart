@@ -484,7 +484,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: kGrey,
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
-                        builder: (context) => const ContactDataBank()));
+                        builder: (context) => const Contactdatabank()));
                   },
                 ),
               ],

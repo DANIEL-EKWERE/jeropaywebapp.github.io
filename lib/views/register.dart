@@ -76,7 +76,12 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: sizeHorizontal * 4,
                   ),
-                  SvgPicture.asset('assets/images/logo-1.svg'),
+                  Image.asset(
+              'assets/images/logo-1.png',
+              fit: BoxFit.cover,
+              width: SizeConfig.blockSizeHorizontal! * 27,
+              height: SizeConfig.blockSizeVertical! * 10,
+            ),
                   SizedBox(
                     height: sizeHorizontal * 4,
                   ),
@@ -354,7 +359,7 @@ class _RegisterState extends State<Register> {
                       SizedBox(
                         width: 200,
                         child: Text(
-                          'By Proceeding you agree to the DataBank Privacy Policy',
+                          'By Proceeding you agree to the Jero Pay Privacy Policy',
                           style: kEncodeSansMedium.copyWith(
                             color: kDarkGrey,
                             fontSize: SizeConfig.blockSizeHorizontal! * 1.8,

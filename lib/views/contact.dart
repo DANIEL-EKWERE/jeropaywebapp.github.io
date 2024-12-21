@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../customizations/size_config.dart';
 
-class ContactDataBank extends StatelessWidget {
-  const ContactDataBank({super.key, required this.openDrawer});
+class Contactdatabank extends StatelessWidget {
+  const Contactdatabank({super.key, required this.openDrawer});
   final VoidCallback openDrawer;
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ContactDataBank extends StatelessWidget {
             IconButton(onPressed: openDrawer, icon: const Icon(Icons.menu)),
         centerTitle: true,
         title: Text(
-          'Contact Data Bank',
+          'Contact jero pay',
           style: kEncodeSansRegular.copyWith(
               color: kGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
         ),
@@ -110,7 +110,7 @@ class ContactDataBank extends StatelessWidget {
                           width: sizeHorizontal * 2.5,
                         ),
                         Text(
-                          'databank8@gmail.com',
+                          'Jero Pay8@gmail.com',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
                               fontSize: SizeConfig.blockSizeHorizontal! * 1.8),

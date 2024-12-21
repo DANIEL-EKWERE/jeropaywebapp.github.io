@@ -55,8 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.cover),
           gradient: const LinearGradient(
             colors: [
-              Color(0xff373737),
-              Color(0xff6A6A6A),
+              Color(0xFFB0FFC1),
+              Color(0xFFB3C2FF),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

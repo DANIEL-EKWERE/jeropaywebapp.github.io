@@ -76,7 +76,7 @@ class _PayvesselState extends State<Payvessel> {
                         height: sizeVertical * 2,
                       ),
                       const Text(
-                        'Send money to this accounts, and you\'ll be credited automatically. \n thanks for using DataBank, with love from Payvessel!!!',
+                        'Send money to this accounts, and you\'ll be credited automatically. \n thanks for using Jero Pay, with love from Payvessel!!!',
                         textAlign: TextAlign.center,
                         style: TextStyle(),
                       ),
@@ -86,7 +86,7 @@ class _PayvesselState extends State<Payvessel> {
                 SizedBox(
                   height: sizeVertical * 3,
                 ),
-                const Text('Account to fund and start using the DATABANK app'),
+                const Text('Account to fund and start using the Jero Pay app'),
                 SizedBox(
                   height: sizeVertical * 3,
                 ),

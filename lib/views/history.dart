@@ -99,7 +99,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     transacts = Provider.of<TransactionsProvider>(context);
     final filterProducts = transacts!.transaction!.where((product) {
       return transacts!.selectedCategories.isEmpty ||
-          transacts!.selectedCategories.contains(product.type);
+          transacts!.selectedCategories.contains(product?.type);
     }).toList();
     //.fetchTransactionsFromAPI(selectedDate: selectedDate);
 
@@ -712,4 +712,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ));
   }
+}
+
+extension on Object? {
+  Object? get type => null;
 }

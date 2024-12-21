@@ -311,7 +311,7 @@ class _RewardScreenState extends State<RewardScreen> {
           return AlertDialog(
             title: const Text('Info'),
             content: const Text(
-                'this is about how to earn reward with the DataBank App \n\n\n you simply login navigate to the earnings page and copy your referal code and click the link button to share the app url for download!!!'),
+                'this is about how to earn reward with the databank App \n\n\n you simply login navigate to the earnings page and copy your referal code and click the link button to share the app url for download!!!'),
             actions: [
               TextButton(
                 onPressed: () {

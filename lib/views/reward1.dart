@@ -139,7 +139,7 @@ class _RewardScreen1State extends State<RewardScreen1> {
       case DrawerItems.history:
         return HistoryScreen(openDrawer: openDrawer);
       case DrawerItems.contact:
-        return ContactDataBank(openDrawer: openDrawer);
+        return Contactdatabank(openDrawer: openDrawer);
       case DrawerItems.about:
         return const AboutUs();
       default:

@@ -51,7 +51,7 @@ class _ManualFundingState extends State<ManualFunding> {
                       height: sizeVertical * 1,
                     ),
                     const Text(
-                      'Send money to the designated account, then send payment prove to the us, and you\'ll be credited as soon as we verify your payment. \n\n thanks for using DataBank🤝!!! ',
+                      'Send money to the designated account, then send payment prove to the us, and you\'ll be credited as soon as we verify your payment. \n\n thanks for using Jero Pay🤝!!! ',
                       textAlign: TextAlign.center,
                       style: TextStyle(),
                     ),

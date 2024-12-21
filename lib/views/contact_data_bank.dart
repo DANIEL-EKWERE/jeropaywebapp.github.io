@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../customizations/size_config.dart';
 
-class ContactDataBank extends StatelessWidget {
-  const ContactDataBank({super.key});
+class Contactdatabank extends StatelessWidget {
+  const Contactdatabank({super.key});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

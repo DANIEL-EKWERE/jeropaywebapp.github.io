@@ -12,7 +12,7 @@ class AboutUs extends StatelessWidget {
     double sizeHorizontal = SizeConfig.blockSizeHorizontal!;
     return  Scaffold(
       appBar: AppBar(
-        title: Text('About DATABANK',style:TextStyle(color:kWhite),),
+        title: Text('About Jero Pay',style:TextStyle(color:kWhite),),
         centerTitle: true,
         iconTheme: IconThemeData(color: kWhite),
 flexibleSpace: Container(
@@ -32,7 +32,7 @@ flexibleSpace: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children:[
-                Text('Welcome to DATABANK',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
+                Text('Welcome to Jero Pay',style: kEncodeSansSemiBold.copyWith(color: kYellow,fontSize: sizeHorizontal*2.5),),
             SizedBox(height: sizeVertical*2,),
             Text('Data bank is a registered telecommunication company that offers instant Data top-up,Airtime Recharge,Cable TV subscription (DSTV,GOtv,StarTimes),Electricity Bill Payment,Airtime to Cash Bulk SMS,Data Card Pin generation and more. \n we have one of the best telecommunication platforms in Nigeria with a detailed API documentation, swift multi-wallet funding channels and a robust customer service unit.'),
             SizedBox(height: sizeVertical*3,),
