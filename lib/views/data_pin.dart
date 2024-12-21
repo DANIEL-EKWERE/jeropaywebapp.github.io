@@ -1,4 +1,4 @@
-import 'package:cool_alert/cool_alert.dart';
+// import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -478,34 +478,34 @@ class _DataPinState extends State<DataPin> {
                                             if (selectedCategory == '' ||
                                                 selectedValue2 == '' ||
                                                 _controller.text == '') {
-                                              CoolAlert.show(
-                                                context: context,
-                                                title: 'Empty Selections!!!',
-                                                text:
-                                                    'input fields cannot be empty,please fill in the fields and try again!',
-                                                type: CoolAlertType.error,
-                                                animType:
-                                                    CoolAlertAnimType.rotate,
-                                              );
+                                              // CoolAlert.show(
+                                              //   context: context,
+                                              //   title: 'Empty Selections!!!',
+                                              //   text:
+                                              //       'input fields cannot be empty,please fill in the fields and try again!',
+                                              //   type: CoolAlertType.error,
+                                              //   animType:
+                                              //       CoolAlertAnimType.rotate,
+                                           //   );
                                             } else {
-                                              CoolAlert.show(
-                                                context: context,
-                                                type: CoolAlertType.confirm,
-                                                title: 'Confirm Purchase!!!',
-                                                text:
-                                                    'your about to make purchase of $selectedCategory  airtime to the number ${_numberController.text}',
-                                                onConfirmBtnTap: () async {
-                                                  print(
-                                                      'loading please wait...');
+                                              // CoolAlert.show(
+                                              //   context: context,
+                                              //   type: CoolAlertType.confirm,
+                                              //   title: 'Confirm Purchase!!!',
+                                              //   text:
+                                              //       'your about to make purchase of $selectedCategory  airtime to the number ${_numberController.text}',
+                                              //   onConfirmBtnTap: () async {
+                                              //     print(
+                                              //         'loading please wait...');
 
-                                                  const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: Colors.red,
-                                                    ),
-                                                  );
-                                                },
-                                              );
+                                              //     const Center(
+                                              //       child:
+                                              //           CircularProgressIndicator(
+                                              //         color: Colors.red,
+                                              //       ),
+                                              //     );
+                                              //   },
+                                              // );
                                             }
                                             const Center(
                                               child: CircularProgressIndicator(

@@ -1,3 +1,3 @@
 class AppUrl {
-  static String baseUrl = "https://data-bank.com.ng/api";
+  static String baseUrl = "https://jeropay-api.onrender.com/api";
 }

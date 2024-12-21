@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 // import 'package:databank/firebase_options.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:databank/views/log_in.dart';
 import 'package:path/path.dart';
 
@@ -255,12 +255,12 @@ class AuthenticationProvider extends ChangeNotifier {
         }
         _my_referee = my_referrer;
         print(my_referrer);
-        final deviceToken = await FirebaseMessaging.instance.getToken();
+        // final deviceToken = await FirebaseMessaging.instance.getToken();
         final platform = 'android';
-        print(deviceToken);
+      //  print(deviceToken);
         print(platform);
-        await UserDetails().createOrUpdateDeviceTokenAndPlatform(
-            platform: 'android', token: deviceToken);
+        // await UserDetails().createOrUpdateDeviceTokenAndPlatform(
+        //     platform: 'android', token: deviceToken);
         notifyListeners();
         final String token = req['token'];
         final String userId = req['user_id'].toString();
