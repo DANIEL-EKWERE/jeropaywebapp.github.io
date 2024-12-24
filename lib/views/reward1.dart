@@ -51,7 +51,7 @@ class _RewardScreen1State extends State<RewardScreen1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kGrey,
+      backgroundColor: purple,
       body: Stack(
         children: [
           SafeArea(

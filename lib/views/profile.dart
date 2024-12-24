@@ -106,11 +106,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Text(
           'Profile',
           style: kEncodeSansMedium.copyWith(
-              color: kGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
+              color: purple, fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
         ),
         leading: DrawerMenueWidget(
           onClicked: widget.openDrawer,
-          color: kGrey,
+          color: purple,
         ),
       ),
       body: SingleChildScrollView(
@@ -124,13 +124,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 // Text(
                 //   'Personal Info',
                 //   style: kEncodeSansMedium.copyWith(
-                //       color: kGrey, fontSize: sizeVertical * 1.8),
+                //       color: purple, fontSize: sizeVertical * 1.8),
                 // ),
                 const Spacer(),
 
                 CircleAvatar(
                   radius: 60,
-                  backgroundColor: kGrey,
+                  backgroundColor: purple,
                   backgroundImage:
                       AssetImage(pImage ?? 'assets/images/pic-2.png'),
                 ),
@@ -175,7 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               'User Infomation',
               style: kEncodeSansSemiBold.copyWith(
-                  color: kGrey, fontSize: sizeVertical * 2.3),
+                  color: purple, fontSize: sizeVertical * 2.3),
             ),
             SizedBox(
               height: sizeHorizontal * 2.5,
@@ -184,7 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.person_rounded,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -193,13 +193,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: TextSpan(
                       text: 'First Name: ',
                       style: kEncodeSansMedium.copyWith(
-                          color: kGrey,
+                          color: purple,
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: firstName,
                           style: kEncodeSansBold.copyWith(
-                              color: kGrey,
+                              color: purple,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
@@ -213,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.person_rounded,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -222,13 +222,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: TextSpan(
                       text: 'Last Name: ',
                       style: kEncodeSansMedium.copyWith(
-                          color: kGrey,
+                          color: purple,
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: lastName,
                           style: kEncodeSansBold.copyWith(
-                              color: kGrey,
+                              color: purple,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
@@ -242,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.person_rounded,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -251,13 +251,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: TextSpan(
                       text: 'User Name: ',
                       style: kEncodeSansMedium.copyWith(
-                          color: kGrey,
+                          color: purple,
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: userName,
                           style: kEncodeSansBold.copyWith(
-                              color: kGrey,
+                              color: purple,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
@@ -271,7 +271,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.email,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -280,13 +280,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: TextSpan(
                       text: 'Email: ',
                       style: kEncodeSansMedium.copyWith(
-                          color: kGrey,
+                          color: purple,
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: email,
                           style: kEncodeSansBold.copyWith(
-                              color: kGrey,
+                              color: purple,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
@@ -300,7 +300,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.phone,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -309,13 +309,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: TextSpan(
                       text: 'Phone Number: ',
                       style: kEncodeSansMedium.copyWith(
-                          color: kGrey,
+                          color: purple,
                           fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                       children: <TextSpan>[
                         TextSpan(
                           text: phone,
                           style: kEncodeSansBold.copyWith(
-                              color: kGrey,
+                              color: purple,
                               fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                         ),
                       ]),
@@ -337,7 +337,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.edit,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -345,12 +345,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   'Update Profile',
                   style: kEncodeSansMedium.copyWith(
-                      color: kGrey, fontSize: sizeVertical * 2.3),
+                      color: purple, fontSize: sizeVertical * 2.3),
                 ),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.open_in_browser_outlined),
-                  color: kGrey,
+                  color: purple,
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => UpdateUserProfile()));
@@ -362,7 +362,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               'Password',
               style: kEncodeSansMedium.copyWith(
-                  color: kGrey, fontSize: sizeVertical * 2.3),
+                  color: purple, fontSize: sizeVertical * 2.3),
             ),
             SizedBox(
               height: sizeHorizontal * 2.5,
@@ -371,7 +371,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.edit,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -379,12 +379,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   'Reset Password',
                   style: kEncodeSansMedium.copyWith(
-                      color: kGrey, fontSize: sizeVertical * 2.3),
+                      color: purple, fontSize: sizeVertical * 2.3),
                 ),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.open_in_browser_outlined),
-                  color: kGrey,
+                  color: purple,
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => ResetPassword()));
@@ -400,7 +400,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.edit,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -408,12 +408,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   'Set Transaction Pin',
                   style: kEncodeSansMedium.copyWith(
-                      color: kGrey, fontSize: sizeVertical * 2.3),
+                      color: purple, fontSize: sizeVertical * 2.3),
                 ),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.open_in_browser_outlined),
-                  color: kGrey,
+                  color: purple,
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => SetTransactionPin()));
@@ -431,7 +431,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               'App Info',
               style: kEncodeSansMedium.copyWith(
-                  color: kGrey, fontSize: sizeVertical * 2.3),
+                  color: purple, fontSize: sizeVertical * 2.3),
             ),
             SizedBox(
               height: sizeHorizontal * 2.5,
@@ -440,20 +440,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.book_sharp,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
                 ),
                 Text(
-                  'About Data Bank',
+                  'About Jero Pay',
                   style: kEncodeSansMedium.copyWith(
-                      color: kGrey, fontSize: sizeVertical * 2.3),
+                      color: purple, fontSize: sizeVertical * 2.3),
                 ),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.open_in_browser_outlined),
-                  color: kGrey,
+                  color: purple,
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => const AboutUs()));
@@ -468,20 +468,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.contact_emergency,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
                 ),
                 Text(
-                  'Contact Data Bank',
+                  'Contact Jero Pay',
                   style: kEncodeSansMedium.copyWith(
-                      color: kGrey, fontSize: sizeVertical * 2.3),
+                      color: purple, fontSize: sizeVertical * 2.3),
                 ),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.open_in_browser_outlined),
-                  color: kGrey,
+                  color: purple,
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => const Contactdatabank()));
@@ -501,7 +501,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Icon(
                   Icons.logout,
-                  color: kGrey,
+                  color: purple,
                 ),
                 SizedBox(
                   width: sizeHorizontal * 2.5,
@@ -514,7 +514,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return AlertDialog(
                               title: const Text('Confirm Log Out'),
                               content: Text(
-                                  'Your sure you want to log out of your data bank account?'),
+                                  'Your sure you want to log out of your Jero Pay account?'),
                               actions: [
                                 TextButton(
                                   onPressed: () async {
@@ -550,7 +550,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text(
                     'Log Out',
                     style: kEncodeSansMedium.copyWith(
-                        color: kGrey, fontSize: sizeVertical * 2.3),
+                        color: purple, fontSize: sizeVertical * 2.3),
                   ),
                 ),
               ],

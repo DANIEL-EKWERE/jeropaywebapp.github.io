@@ -75,7 +75,7 @@ class _ResultCheckerState extends State<ResultChecker> {
           ),
           const CircleAvatar(
             radius: 20,
-            backgroundColor: kGrey,
+            backgroundColor: purple,
             backgroundImage: AssetImage('assets/images/pic-2.png'),
           ),
           const SizedBox(
@@ -85,8 +85,8 @@ class _ResultCheckerState extends State<ResultChecker> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-            Color(0xff6A6A6A),
-            Color.fromARGB(255, 63, 62, 62),
+               Color(0xFFB0FFC1),
+                    Color(0xFFB3C2FF),
           ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -111,8 +111,8 @@ class _ResultCheckerState extends State<ResultChecker> {
                           ),
                           gradient: LinearGradient(
                             colors: [
-                              Color(0xff6A6A6A),
-                              Color(0xff373737),
+                                 Color(0xFFB0FFC1),
+                    Color(0xFFB3C2FF),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -241,11 +241,11 @@ class _ResultCheckerState extends State<ResultChecker> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(width: 5, color: kBlack),
+                                    border: Border.all(width: 5, color: purple),
                                     shape: BoxShape.circle),
                                 child: const CircleAvatar(
                                   radius: 40,
-                                  backgroundColor: kGrey,
+                                  backgroundColor: purple,
                                   backgroundImage: AssetImage(
                                     'assets/images/graduation-cap.png',
                                   ),
@@ -273,12 +273,18 @@ class _ResultCheckerState extends State<ResultChecker> {
                                     });
                                   },
                                   decoration: InputDecoration(
+                                       enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                                     focusedBorder: kInputBorder,
                                     fillColor: kLightGrey,
                                     filled: true,
                                     labelText: 'Select a network',
                                     labelStyle: kEncodeSansSemiBold.copyWith(
-                                        color: kDarkGrey,
+                                        color: purple,
                                         fontSize:
                                             SizeConfig.blockSizeHorizontal! *
                                                 2.0),
@@ -318,12 +324,18 @@ class _ResultCheckerState extends State<ResultChecker> {
                                     });
                                   },
                                   decoration: InputDecoration(
+                                       enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                                     focusedBorder: kInputBorder,
                                     fillColor: kLightGrey,
                                     filled: true,
                                     labelText: 'Select an amount',
                                     labelStyle: kEncodeSansSemiBold.copyWith(
-                                        color: kDarkGrey,
+                                        color: purple,
                                         fontSize:
                                             SizeConfig.blockSizeHorizontal! *
                                                 2.0),
@@ -355,8 +367,14 @@ class _ResultCheckerState extends State<ResultChecker> {
                                   // scrollPhysics: const BouncingScrollPhysics(),
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
+                                       enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                                     prefixIcon: const IconTheme(
-                                        data: IconThemeData(color: kDarkGrey),
+                                        data: IconThemeData(color: purple),
                                         child: Icon(Icons.phone)),
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 18),
@@ -364,7 +382,7 @@ class _ResultCheckerState extends State<ResultChecker> {
                                     label: Text(
                                       'Enter quantity',
                                       style: kEncodeSansSemiBold.copyWith(
-                                          color: kDarkGrey,
+                                          color: purple,
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *
                                                   2.0),
@@ -422,8 +440,7 @@ class _ResultCheckerState extends State<ResultChecker> {
                                                   Radius.circular(10)),
                                               gradient: LinearGradient(
                                                 colors: [
-                                                  Color(0xff373737),
-                                                  Color(0xff6A6A6A),
+                                                purple,purple
                                                 ],
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight,

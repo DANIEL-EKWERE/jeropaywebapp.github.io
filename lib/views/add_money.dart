@@ -54,7 +54,7 @@ class _AddMoneyState extends State<AddMoney> {
           ),
           const CircleAvatar(
             radius: 20,
-            backgroundColor: kGrey,
+            backgroundColor: purple,
             backgroundImage: AssetImage('assets/images/pic-2.png'),
           ),
           const SizedBox(
@@ -81,7 +81,7 @@ class _AddMoneyState extends State<AddMoney> {
               Text(
                 'Add money to your wallet',
                 style: kEncodeSansSemiBold.copyWith(
-                    color: kGrey,
+                    color: purple,
                     fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
               ),
               Padding(
@@ -89,7 +89,7 @@ class _AddMoneyState extends State<AddMoney> {
                 child: Text(
                   'Select from these list of options and add money to your wallet',
                   style: kEncodeSansRegular.copyWith(
-                      color: kGrey,
+                      color: purple,
                       fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
                   textAlign: TextAlign.center,
                 ),
@@ -135,7 +135,7 @@ class _AddMoneyState extends State<AddMoney> {
           //                 BoxShadow(
           //                   blurRadius: 10,
           //                   spreadRadius: 2,
-          //                   color: kGrey.withOpacity(0.2),
+          //                   color: purple.withOpacity(0.2),
           //                   offset: const Offset(0, 5),
           //                 )
           //               ]),
@@ -188,7 +188,7 @@ class _AddMoneyState extends State<AddMoney> {
                           BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 2,
-                            color: kGrey.withOpacity(0.2),
+                            color: purple.withOpacity(0.2),
                             offset: const Offset(0, 5),
                           )
                         ]),
@@ -246,7 +246,7 @@ class _AddMoneyState extends State<AddMoney> {
           //                 BoxShadow(
           //                   blurRadius: 10,
           //                   spreadRadius: 2,
-          //                   color: kGrey.withOpacity(0.2),
+          //                   color: purple.withOpacity(0.2),
           //                   offset: const Offset(0, 5),
           //                 )
           //               ]),
@@ -297,7 +297,7 @@ class _AddMoneyState extends State<AddMoney> {
                           BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 2,
-                            color: kGrey.withOpacity(0.2),
+                            color: purple.withOpacity(0.2),
                             offset: const Offset(0, 5),
                           )
                         ]),

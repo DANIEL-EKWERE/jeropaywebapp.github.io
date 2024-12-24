@@ -49,12 +49,14 @@ class _PasswordResetState extends State<PasswordReset> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: sizeHorizontal * 5,
-                  ),
-                  SvgPicture.asset('assets/images/logo-1.svg'),
-                  SizedBox(
-                    height: sizeHorizontal * 5,
+                  Transform.scale(
+                    scale: 0.5,
+                    child: Image.asset(
+                                  'assets/images/logo-1.png',
+                                  fit: BoxFit.cover,
+                                  width: SizeConfig.blockSizeHorizontal! * 35,
+                                  height: SizeConfig.blockSizeVertical! * 30,
+                                ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -116,8 +118,7 @@ class _PasswordResetState extends State<PasswordReset> {
                                       BorderRadius.all(Radius.circular(10)),
                                   gradient: LinearGradient(
                                     colors: [
-                                      Color(0xff373737),
-                                      Color(0xff6A6A6A),
+                                     purple,purple
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,

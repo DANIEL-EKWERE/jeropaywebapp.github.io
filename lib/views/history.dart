@@ -112,8 +112,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-                Color(0xff6A6A6A),
-                Color.fromARGB(255, 79, 78, 78),
+              //  Color(0xFFB0FFC1),
+              //       Color(0xFFB3C2FF),
+              purple,purple
               ], begin: Alignment.topLeft, end: Alignment.bottomRight),
             ),
           ),
@@ -132,7 +133,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             const CircleAvatar(
               radius: 20,
-              backgroundColor: kGrey,
+              backgroundColor: purple,
               backgroundImage: AssetImage('assets/images/pic-2.png'),
             ),
             const SizedBox(
@@ -159,14 +160,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         Expanded(
                           child: TextField(
                             style: kEncodeSansRegular.copyWith(
-                              color: kDarkGrey,
+                              color: purple,
                               fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
                             ),
                             decoration: InputDecoration(
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 13),
                                 prefixIcon: const IconTheme(
-                                    data: IconThemeData(color: kDarkGrey),
+                                    data: IconThemeData(color: purple),
                                     child: Icon(Icons.search)),
                                 hintText: 'Search for transactions...',
                                 border: kInputBorder,
@@ -176,7 +177,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 focusedErrorBorder: kInputBorder,
                                 enabledBorder: kInputBorder,
                                 hintStyle: kEncodeSansRegular.copyWith(
-                                  color: kDarkGrey,
+                                  color: purple,
                                   fontSize:
                                       SizeConfig.blockSizeHorizontal! * 2.5,
                                 )),
@@ -190,7 +191,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           width: SizeConfig.blockSizeHorizontal! * 6.8,
                           height: SizeConfig.blockSizeVertical! * 6.8,
                           decoration: const BoxDecoration(
-                              color: kBlack,
+                              color: purple,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: const Icon(
@@ -262,7 +263,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             height: 36,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: current == index ? kBrown : kWhite,
+                              color: current == index ? purple : kWhite,
                               border: current == index
                                   ? null
                                   : Border.all(
@@ -355,12 +356,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   fetchTransactions(selectedDate);
                                 },
                                 decoration: InputDecoration(
+                                    enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                                   focusedBorder: kInputBorder,
                                   fillColor: kWhite,
                                   filled: true,
                                   labelText: 'Select Date',
                                   labelStyle: kEncodeSansSemiBold.copyWith(
-                                      color: kDarkGrey,
+                                      color: purple,
                                       fontSize:
                                           SizeConfig.blockSizeHorizontal! *
                                               2.0),
@@ -411,7 +418,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         startDate, endDate);
                                   }
                                 },
-                                icon: Icon(Icons.calendar_month))
+                                icon: Icon(Icons.calendar_month,color: purple,))
                           ],
                         ),
                       ],

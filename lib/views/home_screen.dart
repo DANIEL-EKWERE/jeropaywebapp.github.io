@@ -87,8 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
     //     // screen: const DataPin(),
     //     screen: AlertDialog(
     //       title: const Text('Currently Unavailable'),
-    //       content: const Text(
-    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+    //       content: const Text(j
+    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Jero Pay😍'),
     //       actions: [
     //         TextButton(
     //           onPressed: () {
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //     screen: AlertDialog(
     //       title: const Text('Currently Unavailable'),
     //       content: const Text(
-    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Jero Pay😍'),
     //       actions: [
     //         TextButton(
     //           onPressed: () {
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //     screen: AlertDialog(
     //       title: const Text('Currently Unavailable'),
     //       content: const Text(
-    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Data Bank😍'),
+    //           'the page your trying to access isn\'t available at the moment but we\'re working on it \n \t properbly will be available on the next release. Before then you can as well checkout our other services available at your disposal. \' With Love From Jero Pay😍'),
     //       actions: [
     //         TextButton(
     //           onPressed: () {
@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var devicePlatform;
   var tokenx;
   var annouce =
-      'Welcome to the data bank mobile application,glad you got onboard!!!';
+      'Welcome to the Jero Pay mobile application,glad you got onboard!!!';
   void gatherData() async {
     username = await DataBaseProvider().getUserName();
     balance = await UserDetails().getUserAccountBalanace();
@@ -295,14 +295,20 @@ class _HomeScreenState extends State<HomeScreen> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-            Color(0xff6A6A6A),
-            Color.fromARGB(255, 79, 78, 78),
+            // Color(0xff6A6A6A),
+            // Color.fromARGB(255, 79, 78, 78),
+
+            // Color(0xFFB0FFC1),
+            // Color(0xFFB3C2FF),
+
+            purple,purple
+
           ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
         ),
         elevation: 0,
         shadowColor: const Color.fromARGB(0, 255, 255, 255)..withOpacity(0.9),
         backgroundColor:
-            const Color.fromARGB(0, 255, 255, 255).withOpacity(0.9),
+            const Color.fromARGB(0, 43, 31, 31).withOpacity(0.9),
         actions: [
           IconButton(
             onPressed: () async {
@@ -341,9 +347,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           CircleAvatar(
               radius: 20,
-              backgroundColor: kGrey,
+              backgroundColor: purple,
               backgroundImage: NetworkImage(
-                  "https://data-bank.com.ng/media/profile-pic$proImg")
+                  "https://jeropay-api.onrender.com/media/profile-pic$proImg")
               //  : Image.asset("assets/images/pic-2.png"),
               ),
           const SizedBox(
@@ -374,8 +380,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xff6A6A6A),
-                          Color(0xff373737),
+                          // Color(0xff6A6A6A),
+                          // Color(0xff373737),
+
+                          //  Color(0xFFB0FFC1),
+                          //  Color(0xFFB3C2FF),
+                          purple,purple
+
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -483,7 +494,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       } else if (baln.isLoading) {
                                         // Show the loading indicator while the data is being fetched
                                         return const SpinKitWave(
-                                          color: kDarkGrey,
+                                          color:purple,
                                           size: 25,
                                         );
                                       }
@@ -513,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           right: SizeConfig.blockSizeHorizontal! * 10,
                           left: SizeConfig.blockSizeHorizontal! * 10,
                           child: SpinKitPulse(
-                            color: kDarkGrey.withOpacity(0.2),
+                            color: purple.withOpacity(0.2),
                             size: 400,
                             duration: const Duration(milliseconds: 300),
                           )),

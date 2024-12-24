@@ -11,8 +11,8 @@ FloatingActionButton fab() {
         Radius.circular(30),
       ),
     ),
-    foregroundColor: kBlack,
-    backgroundColor: kBlack,
+    foregroundColor: purple,
+    backgroundColor: purple,
     onPressed: () async {
       if (!await launchUrl(url)) {
                 throw Exception('could\'t load link $url');

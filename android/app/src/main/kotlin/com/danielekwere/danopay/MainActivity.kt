@@ -1,4 +1,4 @@
-package com.danielekwere.danopay
+package com.danielekwere.jeropay
 
 import io.flutter.embedding.android.FlutterActivity
 

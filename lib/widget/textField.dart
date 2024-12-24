@@ -14,12 +14,18 @@ TextField textField(
     // keyboardType: TextInputType.number,
     controller: textController,
     decoration: InputDecoration(
+       enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
       hintText: hintText,
       label: Text(
         label,
         style: kEncodeSansSemiBold.copyWith(
-            color: kDarkGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+            color: purple, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
       ),
       //errorText: 'please enter the meter type!',
       focusedBorder: kInputBorder,
@@ -41,14 +47,20 @@ TextField textFieldEmail(
     keyboardType: TextInputType.emailAddress,
     controller: textController,
     decoration: InputDecoration(
+      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
       prefixIcon: const IconTheme(
-          data: IconThemeData(color: kDarkGrey), child: Icon(Icons.email)),
+          data: IconThemeData(color: purple), child: Icon(Icons.email)),
       contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
       hintText: hintText,
       label: Text(
         label,
         style: kEncodeSansSemiBold.copyWith(
-            color: kDarkGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+            color: purple, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
       ),
       //errorText: 'please enter the meter type!',
       focusedBorder: kInputBorder,
@@ -70,12 +82,18 @@ TextField textFieldNumber(label1, hintText1, textController, newValue) {
     // scrollPhysics: const BouncingScrollPhysics(),
     keyboardType: TextInputType.number,
     decoration: InputDecoration(
+       enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
       hintText: hintText,
       label: Text(
         label,
         style: kEncodeSansSemiBold.copyWith(
-            color: kDarkGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+            color: purple, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
       ),
       //errorText: 'please enter the meter type!',
       focusedBorder: kInputBorder,
@@ -117,14 +135,20 @@ TextField textFieldPhoneNumber(label1, hintText1, textController) {
     controller: textController,
     keyboardType: TextInputType.phone,
     decoration: InputDecoration(
+       enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
       prefixIcon: const IconTheme(
-          data: IconThemeData(color: kDarkGrey), child: Icon(Icons.phone)),
+          data: IconThemeData(color: purple), child: Icon(Icons.phone)),
       contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
       hintText: hintText,
       label: Text(
         label,
         style: kEncodeSansSemiBold.copyWith(
-            color: kDarkGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
+            color: purple, fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
       ),
       //errorText: 'please enter the meter type!',
       focusedBorder: kInputBorder,

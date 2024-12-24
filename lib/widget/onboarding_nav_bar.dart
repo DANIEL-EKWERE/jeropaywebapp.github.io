@@ -21,7 +21,7 @@ class OnboardingNavBar extends StatelessWidget {
         child: Text(
           name,
           
-          style: kEncodeSansMedium.copyWith(color: kBlack),
+          style: kEncodeSansMedium.copyWith(color: purple),
         ),
       ),
     );

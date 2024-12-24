@@ -260,8 +260,8 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
         flexibleSpace: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-            Color(0xff6A6A6A),
-            Color.fromARGB(255, 63, 62, 62),
+                   Color(0xFFB0FFC1),
+                    Color(0xFFB3C2FF),
           ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -286,8 +286,8 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
                           ),
                           gradient: LinearGradient(
                             colors: [
-                              Color(0xff6A6A6A),
-                              Color(0xff373737),
+                                     Color(0xFFB0FFC1),
+                    Color(0xFFB3C2FF),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -416,11 +416,11 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(width: 5, color: kBlack),
+                                    border: Border.all(width: 5, color: purple),
                                     shape: BoxShape.circle),
                                 child: const CircleAvatar(
                                   radius: 40,
-                                  backgroundColor: kGrey,
+                                  backgroundColor: purple,
                                   backgroundImage: AssetImage(
                                     'assets/images/cable.jpg',
                                   ),
@@ -449,12 +449,18 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
                                     });
                                   },
                                   decoration: InputDecoration(
+                                    enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                                     focusedBorder: kInputBorder,
                                     fillColor: kLightGrey,
                                     filled: true,
                                     labelText: 'Select Cable',
                                     labelStyle: kEncodeSansSemiBold.copyWith(
-                                        color: kDarkGrey,
+                                        color: purple,
                                         fontSize:
                                             SizeConfig.blockSizeHorizontal! *
                                                 2.0),
@@ -497,12 +503,18 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
                                       });
                                     },
                                     decoration: InputDecoration(
+                                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                                       focusedBorder: kInputBorder,
                                       fillColor: kLightGrey,
                                       filled: true,
                                       labelText: 'Select Cable Plan',
                                       labelStyle: kEncodeSansSemiBold.copyWith(
-                                          color: kDarkGrey,
+                                          color: purple,
                                           fontSize:
                                               SizeConfig.blockSizeHorizontal! *
                                                   2.0),
@@ -543,8 +555,14 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
                                   // scrollPhysics: const BouncingScrollPhysics(),
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
+                                    enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                                     prefixIcon: const IconTheme(
-                                        data: IconThemeData(color: kDarkGrey),
+                                        data: IconThemeData(color: purple),
                                         child: Icon(Icons.phone)),
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 18),
@@ -609,8 +627,7 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
                                                     Radius.circular(10)),
                                                 gradient: LinearGradient(
                                                   colors: [
-                                                    Color(0xff373737),
-                                                    Color(0xff6A6A6A),
+                                                   purple,purple
                                                   ],
                                                   begin: Alignment.topLeft,
                                                   end: Alignment.bottomRight,

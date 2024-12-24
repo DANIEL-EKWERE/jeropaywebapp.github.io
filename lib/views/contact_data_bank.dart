@@ -14,7 +14,7 @@ class Contactdatabank extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Contact Data Bank',
+          'Contact Jero Pay',
           style: kEncodeSansRegular.copyWith(
               color: kGrey, fontSize: SizeConfig.blockSizeHorizontal! * 2.5),
         ),
@@ -29,7 +29,16 @@ class Contactdatabank extends StatelessWidget {
                 width: double.infinity,
                 height: sizeHorizontal * 35,
                 decoration: const BoxDecoration(
-                    color: kGrey,
+                    gradient: LinearGradient(
+                            colors: [
+                    //          Color(0xFFB0FFC1),
+                    // Color(0xFFB3C2FF),
+
+                    purple,purple
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 child: Column(
                   children: [
@@ -65,7 +74,7 @@ class Contactdatabank extends StatelessWidget {
                           width: sizeHorizontal * 2.5,
                         ),
                         Text(
-                          '07013116710',
+                          '07013715767',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
                               fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
@@ -86,7 +95,7 @@ class Contactdatabank extends StatelessWidget {
                           width: sizeHorizontal * 2.5,
                         ),
                         Text(
-                          'N0. 13 Brooke Str uyo,aks',
+                          'Elelewon, Port Harcourt',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
                               fontSize: SizeConfig.blockSizeHorizontal! * 1.8),
@@ -107,7 +116,7 @@ class Contactdatabank extends StatelessWidget {
                           width: sizeHorizontal * 2.5,
                         ),
                         Text(
-                          'databank8@gmail.com',
+                          'jeropay8@gmail.com',
                           style: kEncodeSansSemiBold.copyWith(
                               color: kWhite,
                               fontSize: SizeConfig.blockSizeHorizontal! * 1.8),

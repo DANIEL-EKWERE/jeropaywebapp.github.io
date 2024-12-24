@@ -125,10 +125,20 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
               // SizedBox(
               //   height: sizeHorizontal * 5,
               // ),
-              SvgPicture.asset('assets/images/logo-1.svg'),
-              SizedBox(
-                height: sizeHorizontal * 5,
-              ),
+              Center(
+                child: Transform.scale(
+                    scale: 0.5,
+                    child: Image.asset(
+                                  'assets/images/logo-1.png',
+                                  fit: BoxFit.cover,
+                                  width: SizeConfig.blockSizeHorizontal! * 35,
+                                  height: SizeConfig.blockSizeVertical! * 30,
+                                ),
+                  ),
+                ),
+              // SizedBox(
+              //   height: sizeHorizontal * 5,
+              // ),
               Text(
                 'Create User Profile',
                 style: kEncodeSansBold.copyWith(
@@ -156,14 +166,14 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                   filled: true,
                   labelText: 'Select Location',
                   labelStyle: kEncodeSansSemiBold.copyWith(
-                      color: kDarkGrey,
+                      color: purple,
                       fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                   hintStyle: kEncodeSansSemiBold.copyWith(
                       color: kLightGrey,
                       fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
-                  border: const OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: kBrown,
+                      color: purple,
                     ),
                     borderRadius: BorderRadius.all(
                       Radius.circular(12),
@@ -193,14 +203,14 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                   filled: true,
                   labelText: 'Select State',
                   labelStyle: kEncodeSansSemiBold.copyWith(
-                      color: kDarkGrey,
+                      color: purple,
                       fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                   hintStyle: kEncodeSansSemiBold.copyWith(
                       color: kLightGrey,
                       fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
-                  border: const OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: kBrown,
+                      color: purple,
                     ),
                     borderRadius: BorderRadius.all(
                       Radius.circular(12),
@@ -212,13 +222,24 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                 height: sizeHorizontal * 3.5,
               ),
               TextField(
+                
                 controller: textController3,
                 maxLength: 11,
                 // scrollPhysics: const BouncingScrollPhysics(),
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
+
+
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: purple,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
                   prefixIcon: const IconTheme(
-                      data: IconThemeData(color: kDarkGrey),
+                      data: IconThemeData(color: purple),
                       child: Icon(Icons.phone)),
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
@@ -226,7 +247,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                   label: Text(
                     'Enter Phone',
                     style: kEncodeSansSemiBold.copyWith(
-                        color: kDarkGrey,
+                        color: purple,
                         fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                   ),
                   errorText: _numberInputIsValid
@@ -237,6 +258,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                   filled: true,
                   fillColor: kLightGrey,
                 ),
+                
                 onChanged: (value) {
                   final v = int.tryParse(value);
                   if (v == null) {
@@ -261,8 +283,9 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xff373737),
-                            Color(0xff6A6A6A),
+                            // Color(0xff373737),
+                            // Color(0xff6A6A6A),
+                            purple,purple
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -313,8 +336,16 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                 keyboardType: TextInputType.text,
                 controller: textController4,
                 decoration: InputDecoration(
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: purple,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
                   prefixIcon: const IconTheme(
-                      data: IconThemeData(color: kDarkGrey),
+                      data: IconThemeData(color: purple),
                       child: Icon(Icons.person_add_rounded)),
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
@@ -322,7 +353,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                   label: Text(
                     ' Enter Referral Code - Optional',
                     style: kEncodeSansSemiBold.copyWith(
-                        color: kDarkGrey,
+                        color: purple,
                         fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                   ),
                   //errorText: 'please enter the meter type!',
@@ -359,8 +390,10 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                                   BorderRadius.all(Radius.circular(10)),
                               gradient: LinearGradient(
                                 colors: [
-                                  Color(0xff373737),
-                                  Color(0xff6A6A6A),
+                                  // Color(0xff373737),
+                                  // Color(0xff6A6A6A),
+
+                                  purple,purple
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
