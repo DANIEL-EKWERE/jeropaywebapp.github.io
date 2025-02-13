@@ -76,7 +76,7 @@ class _PayvesselState extends State<Payvessel> {
                         height: sizeVertical * 2,
                       ),
                       const Text(
-                        'Send money to this accounts, and you\'ll be credited automatically. \n thanks for using Jero Pay, with love from Payvessel!!!',
+                        'Send money to this accounts, and you\'ll be credited automatically. \n thanks for using Jero Pay, with love from BillStack',
                         textAlign: TextAlign.center,
                         style: TextStyle(),
                       ),
@@ -98,7 +98,7 @@ class _PayvesselState extends State<Payvessel> {
                 //   ),
                 //   IconButton(
                 //     icon: const Icon(Icons.info_outline),
-                //     color: kGrey,
+                //     color: purple,
                 //     onPressed: () {
                 //       showInfoDialogue(context);
                 //     },
@@ -120,8 +120,10 @@ class _PayvesselState extends State<Payvessel> {
                         fit: BoxFit.cover),
                     gradient: LinearGradient(
                       colors: [
-                        Color.fromARGB(255, 27, 20, 20),
-                        Color(0xff6A6A6A),
+              //          Color(0xFFB0FFC1),
+              // Color(0xFFB3C2FF),
+
+              purple,purple
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -137,19 +139,22 @@ class _PayvesselState extends State<Payvessel> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text('Virtual Account',
-                                    style: kEncodeSansBold.copyWith(
-                                        color: kWhite,
-                                        fontSize: sizeVertical * 1.5)),
-                                Text(bankName,
-                                    style: kEncodeSansBold.copyWith(
-                                        color: kWhite,
-                                        fontSize: sizeVertical * 1.5))
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Virtual Account',
+                                      style: kEncodeSansBold.copyWith(
+                                          color: kWhite,
+                                          fontSize: sizeVertical * 1.5)),
+                                  Text(bankName,
+                                      style: kEncodeSansBold.copyWith(
+                                          color: kWhite,
+                                          fontSize: sizeVertical * 1.5))
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height: sizeVertical * 3,
@@ -176,7 +181,7 @@ class _PayvesselState extends State<Payvessel> {
                                     child: Row(children: [
                                       Text(accountNumber,
                                           style: kEncodeSansRegular.copyWith(
-                                              color: kGrey,
+                                              color: purple,
                                               fontSize: sizeVertical * 1.5)),
                                       IconButton(
                                           onPressed: () {
@@ -201,7 +206,7 @@ class _PayvesselState extends State<Payvessel> {
                               height: sizeVertical * 3,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -215,6 +220,7 @@ class _PayvesselState extends State<Payvessel> {
                                     style: kEncodeSansBold.copyWith(
                                         color: kWhite,
                                         fontSize: sizeVertical * 1.5)),
+                                      //  SizedBox(width: 1,)
                                 ],
                               ),
                             ),

@@ -17,14 +17,17 @@ Padding button({required text1, required isLoading1, required tap}) {
           child: Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xff373737),
-                    Color(0xff6A6A6A),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )),
+                // gradient: LinearGradient(
+                //   colors: [
+                //     Color(0xff373737),
+                //     Color(0xff6A6A6A),
+                //   ],
+                //   begin: Alignment.topLeft,
+                //   end: Alignment.bottomRight,
+                // ),
+
+                color: Colors.deepPurple
+                ),
             child: ElevatedButton(
               onPressed: tap,
               style: ElevatedButton.styleFrom(

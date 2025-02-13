@@ -101,13 +101,15 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           child: Column(
             children: [
-              // SizedBox(
-              //   height: sizeHorizontal * 5,
-              // ),
-              SvgPicture.asset('assets/images/logo-1.svg'),
-              SizedBox(
-                height: sizeHorizontal * 5,
-              ),
+             Transform.scale(
+                    scale: 0.5,
+                    child: Image.asset(
+                                  'assets/images/logo-1.png',
+                                  fit: BoxFit.cover,
+                                  width: SizeConfig.blockSizeHorizontal! * 35,
+                                  height: SizeConfig.blockSizeVertical! * 30,
+                                ),
+                  ),
               Text(
                 'Create User Profile',
                 style: kEncodeSansBold.copyWith(
@@ -130,12 +132,18 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                   });
                 },
                 decoration: InputDecoration(
+                  enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                   focusedBorder: kInputBorder,
                   fillColor: kLightGrey,
                   filled: true,
                   labelText: 'Select Location',
                   labelStyle: kEncodeSansSemiBold.copyWith(
-                      color: kDarkGrey,
+                      color: purple,
                       fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                   hintStyle: kEncodeSansSemiBold.copyWith(
                       color: kLightGrey,
@@ -167,12 +175,18 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                   });
                 },
                 decoration: InputDecoration(
+                  enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                   focusedBorder: kInputBorder,
                   fillColor: kLightGrey,
                   filled: true,
                   labelText: 'Select State',
                   labelStyle: kEncodeSansSemiBold.copyWith(
-                      color: kDarkGrey,
+                      color: purple,
                       fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                   hintStyle: kEncodeSansSemiBold.copyWith(
                       color: kLightGrey,
@@ -196,8 +210,14 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                 // scrollPhysics: const BouncingScrollPhysics(),
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
+                  enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                   prefixIcon: const IconTheme(
-                      data: IconThemeData(color: kDarkGrey),
+                      data: IconThemeData(color: purple),
                       child: Icon(Icons.phone)),
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
@@ -205,7 +225,7 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                   label: Text(
                     'Enter Phone',
                     style: kEncodeSansSemiBold.copyWith(
-                        color: kDarkGrey,
+                        color: purple,
                         fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                   ),
                   errorText: _numberInputIsValid
@@ -240,8 +260,7 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xff373737),
-                            Color(0xff6A6A6A),
+                           purple,purple
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -292,8 +311,14 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                     keyboardType: TextInputType.text,
                     controller: textController4,
                     decoration: InputDecoration(
+                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                       prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
+                          data: IconThemeData(color: purple),
                           child: Icon(Icons.person_add_rounded)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 18),
@@ -301,7 +326,7 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                       label: Text(
                         ' Enter Referral Code - Optional',
                         style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
+                            color: purple,
                             fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                       ),
                       //errorText: 'please enter the meter type!',
@@ -338,8 +363,7 @@ class _CreatUserProfileState extends State<CreatUserProfile> {
                                   BorderRadius.all(Radius.circular(10)),
                               gradient: LinearGradient(
                                 colors: [
-                                  Color(0xff373737),
-                                  Color(0xff6A6A6A),
+                                purple,purple
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,

@@ -4,6 +4,7 @@ import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/database/db_provider.dart';
 import 'package:databank/views/log_in.dart';
 import 'package:databank/widget/receipt.dart';
+import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:databank/backend/constant.dart';
@@ -29,36 +30,36 @@ class PurchaseProvider extends ChangeNotifier {
   ElectricSubscription? electricityPurchaseModel;
   ElectricSubscription? cablePurchaseModel;
   BuildContext? modalBottomSheetContext;
-  AirtimePurchaseModel? airtimePurchaseModel;
+  //AirtimePurchaseModel? airtimePurchaseModel;
   // Message message = Message(amount: '',id: '', dateAndTime: DateTime.now(),detail: '', oldBalance: '',newBalance:'',phoneNumber: '',status: '',type:'');
-  // AirtimePurchaseModel airtimePurchaseModel = AirtimePurchaseModel(
-  //     data: Data(
-  //         id: '',
-  //         detail: '',
-  //         dateAndTime: '',
-  //         oldBalance: '',
-  //         newBalance: '',
-  //         phoneNumber: '',
-  //         status: '',
-  //         type: '',
-  //         amount: ''),
-  //     status: '');
-  DataPurchaseModel? dataPurchaseModel;
-  // DataPurchaseModel dataPurchaseModel = DataPurchaseModel(
-  //   status: '',
-  //   message: Message(
-  //       amount: '',
-  //       id: '',
-  //       dateAndTime: '',
-  //       detail: '',
-  //       oldBalance: '',
-  //       newBalance: '',
-  //       phoneNumber: '',
-  //       status: '',
-  //       type: ''),
-  // );
+  AirtimePurchaseModel airtimePurchaseModel = AirtimePurchaseModel(
+      data: Data(
+          id: '',
+          detail: '',
+          dateAndTime: '',
+          oldBalance: '',
+          newBalance: '',
+          phoneNumber: '',
+          status: '',
+          type: '',
+          amount: ''),
+      status: '');
+//  DataPurchaseModel? dataPurchaseModel;
+  DataPurchaseModel dataPurchaseModel = DataPurchaseModel(
+    status: '',
+    message: Message(
+        amount: '',
+        id: '',
+        dateAndTime: '',
+        detail: '',
+        oldBalance: '',
+        newBalance: '',
+        phoneNumber: '',
+        status: '',
+        type: ''),
+  );
   get dateAndTime => null;
-  Future<DataPurchaseModel>? PurchaseData(
+  Future<DataPurchaseModel> PurchaseData(
       {required String dataId,
       required String phone_number,
       required BuildContext? context}) async {
@@ -91,11 +92,12 @@ class PurchaseProvider extends ChangeNotifier {
         _color = const Color.fromARGB(255, 15, 175, 20);
 
         notifyListeners();
+        return dataPurchaseModel;
       } else if (response.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(response.body);
         _reqMessage = res['message'];
-        dataPurchaseModel = null;
+        //dataPurchaseModel = null;
         _color = const Color(0xfff33225);
         notifyListeners();
         showDialog<bool>(
@@ -121,14 +123,14 @@ class PurchaseProvider extends ChangeNotifier {
       } else if (response.statusCode == 404) {
         final res = json.decode(response.body);
         _isLoading = false;
-        dataPurchaseModel = null;
+       // dataPurchaseModel = null;
         _reqMessage =
             '${res['details']['phone_number'][0]} ${response.statusCode}';
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else if (response.statusCode == 400) {
         // final res = json.decode(response.body);
-        dataPurchaseModel = null;
+      //  dataPurchaseModel = null;
         _isLoading = false;
         _reqMessage = 'insufficient balance';
         _color = _color = const Color(0xfff33225);
@@ -139,22 +141,26 @@ class PurchaseProvider extends ChangeNotifier {
             'something went wrong ${response.statusCode} ${response.body}';
         _color = _color = const Color(0xfff33225);
         notifyListeners();
+        
       }
     } on SocketException catch (_) {
       _isLoading = false;
-      dataPurchaseModel = null;
+   //   dataPurchaseModel = null;
       _reqMessage = 'internet connection is not available ';
       _color = const Color(0xfff33225);
       notifyListeners();
+      throw Exception('Network Error: $_reqMessage');
     } catch (e) {
-      dataPurchaseModel = null;
+    //  dataPurchaseModel = null;
       _isLoading = false;
       _reqMessage = 'something went wrong $e';
       print(e);
       _color = const Color(0xfff33225);
       notifyListeners();
+      throw Exception('Error: $_reqMessage $e');
     }
-    return dataPurchaseModel!;
+   throw Exception('Error: $_reqMessage');
+  //return dataPurchaseModel;
   }
 
   Future<AirtimePurchaseModel>? AirtimePurchase(
@@ -180,20 +186,21 @@ class PurchaseProvider extends ChangeNotifier {
     try {
       http.Response request = await http.post(Uri.parse(url),
           body: json.encode(body), headers: reqHeader);
-
+        print(request.body);
+        print(request.statusCode);
       if (request.statusCode == 200 || request.statusCode == 201) {
         _isLoading = false;
         airtimePurchaseModel = airtimePurchaseFromJson(request.body);
         _reqMessage = 'purchase successful';
         _color = const Color.fromARGB(255, 15, 175, 20);
-        print(airtimePurchaseModel!.data!.detail!);
-        print(airtimePurchaseModel!.data!.amount!);
-        print(airtimePurchaseModel!.data!.dateAndTime!);
-        print(airtimePurchaseModel!.data!.newBalance!);
-        print(airtimePurchaseModel!.data!.oldBalance!);
-        print(airtimePurchaseModel!.data!.phoneNumber!);
-        print(airtimePurchaseModel!.data!.status!);
-        print(airtimePurchaseModel!.data!.type!);
+        // print(airtimePurchaseModel!.data!.detail!);
+        // print(airtimePurchaseModel!.data!.amount!);
+        // print(airtimePurchaseModel!.data!.dateAndTime!);
+        // print(airtimePurchaseModel!.data!.newBalance!);
+        // print(airtimePurchaseModel!.data!.oldBalance!);
+        // print(airtimePurchaseModel!.data!.phoneNumber!);
+        // print(airtimePurchaseModel!.data!.status!);
+        // print(airtimePurchaseModel!.data!.type!);
 
         // Navigator.of(context!).push(
         //                 CupertinoPageRoute(
@@ -202,12 +209,13 @@ class PurchaseProvider extends ChangeNotifier {
         //               );
 
         notifyListeners();
+        return airtimePurchaseModel;
       } else if (request.statusCode == 401) {
         _isLoading = false;
         final res = json.decode(request.body);
         _reqMessage = res['message']['error'][0];
         _color = const Color(0xfff33225);
-        airtimePurchaseModel = null;
+      //  airtimePurchaseModel = null;
         notifyListeners();
         showDialog<bool>(
             context: context!,
@@ -232,7 +240,7 @@ class PurchaseProvider extends ChangeNotifier {
       } else if (request.statusCode == 404) {
         final res = json.decode(request.body);
         _isLoading = false;
-        airtimePurchaseModel = null;
+      //  airtimePurchaseModel = null;j
         _reqMessage = res['details']['phone_number'][0];
         _color = _color = const Color(0xfff33225);
         notifyListeners();
@@ -240,32 +248,39 @@ class PurchaseProvider extends ChangeNotifier {
         //  final res = json.decode(request.body);
         _isLoading = false;
         _reqMessage = 'insufficient balance';
-        airtimePurchaseModel = null;
+     //   airtimePurchaseModel = null;
         //res['message']['error'][0];
         _color = _color = const Color(0xfff33225);
         notifyListeners();
       } else {
         _isLoading = false;
         _reqMessage = 'something went wrong';
-        airtimePurchaseModel = null;
+      //  airtimePurchaseModel = null;
         _color = _color = const Color(0xfff33225);
+        final res = json.decode(request.body);
+        _reqMessage = res['message']['error'][0];
+        print(res);
         notifyListeners();
+        warning(message: 'network error');
       }
     } on SocketException catch (_) {
       _isLoading = false;
-      airtimePurchaseModel = null;
+   //   airtimePurchaseModel = null;
       _reqMessage = 'internet connection is not available ';
       _color = const Color(0xfff33225);
       notifyListeners();
+      throw Exception('Network Error: $_reqMessage');
     } catch (e) {
       _isLoading = false;
-      airtimePurchaseModel = null;
+   //   airtimePurchaseModel = null;
       _reqMessage =
-          "something went wrong $e ${airtimePurchaseModel!.data!.detail!} ${airtimePurchaseModel!.data!.amount!} ${airtimePurchaseModel!.data!.dateAndTime!} ${airtimePurchaseModel!.data!.newBalance!} ${airtimePurchaseModel!.data!.oldBalance!} ${airtimePurchaseModel!.data!.phoneNumber!} ${airtimePurchaseModel!.data!.status!} ${airtimePurchaseModel!.data!.type!}";
+          "something went wrong $e ";
       _color = const Color(0xfff33225);
       notifyListeners();
+      throw Exception('Error: $_reqMessage');
     }
-    return airtimePurchaseModel!;
+    throw Exception('Error: $_reqMessage');
+   // return airtimePurchaseModel;
   }
 
   Future<ElectricSubscription> electricSub(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:databank/backend/provider/auth_provider/auth_provider.dart';
 import 'package:databank/customizations/app_style.dart';
 // import 'package:databank/widget/textField.dart';
@@ -73,18 +75,21 @@ class _RegisterState extends State<Register> {
                         color: kBlack,
                         fontSize: SizeConfig.blockSizeHorizontal! * 3),
                   ),
-                  SizedBox(
-                    height: sizeHorizontal * 4,
+                  // SizedBox(
+                  //   height: sizeHorizontal * 4,
+                  // ),
+                  Transform.scale(
+                    scale: 0.5,
+                    child: Image.asset(
+                                  'assets/images/logo-1.png',
+                                  fit: BoxFit.cover,
+                                  width: SizeConfig.blockSizeHorizontal! * 35,
+                                  height: SizeConfig.blockSizeVertical! * 30,
+                                ),
                   ),
-                  Image.asset(
-              'assets/images/logo-1.png',
-              fit: BoxFit.cover,
-              width: SizeConfig.blockSizeHorizontal! * 27,
-              height: SizeConfig.blockSizeVertical! * 10,
-            ),
-                  SizedBox(
-                    height: sizeHorizontal * 4,
-                  ),
+                  // SizedBox(
+                  //   height: sizeHorizontal * 4,
+                  // ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -110,8 +115,14 @@ class _RegisterState extends State<Register> {
                     controller: _userNameController,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
+                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                       prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
+                          data: IconThemeData(color: purple),
                           child: Icon(Icons.person)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 18),
@@ -119,7 +130,7 @@ class _RegisterState extends State<Register> {
                       label: Text(
                         'Enter User Name',
                         style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
+                            color: purple,
                             fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                       ),
                       errorText: _usernameInputIsValid
@@ -153,8 +164,14 @@ class _RegisterState extends State<Register> {
                     controller: _firstNameController,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
+                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                       prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
+                          data: IconThemeData(color: purple),
                           child: Icon(Icons.person)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 18),
@@ -162,7 +179,7 @@ class _RegisterState extends State<Register> {
                       label: Text(
                         'Enter First Name',
                         style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
+                            color: purple,
                             fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                       ),
                       errorText: _firstNameInputIsValid
@@ -196,8 +213,14 @@ class _RegisterState extends State<Register> {
                     controller: _lastNameController,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
+                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                       prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
+                          data: IconThemeData(color: purple),
                           child: Icon(Icons.person)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 18),
@@ -205,7 +228,7 @@ class _RegisterState extends State<Register> {
                       label: Text(
                         'Enter last Name',
                         style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
+                            color: purple,
                             fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                       ),
                       errorText: _lastNameInputIsValid
@@ -239,8 +262,14 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     decoration: InputDecoration(
+                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                       prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
+                          data: IconThemeData(color:purple),
                           child: Icon(Icons.email)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 18),
@@ -248,7 +277,7 @@ class _RegisterState extends State<Register> {
                       label: Text(
                         'Enter Email Address',
                         style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
+                            color: purple,
                             fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                       ),
                       //errorText: 'please enter the meter type!',
@@ -266,8 +295,14 @@ class _RegisterState extends State<Register> {
                     obscureText: !_passwordVisible,
                     controller: _passwordController,
                     decoration: InputDecoration(
+                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                       suffixIcon: IconTheme(
-                        data: const IconThemeData(color: kDarkGrey),
+                        data: const IconThemeData(color: purple),
                         child: IconButton(
                           onPressed: () {
                             setState(() {
@@ -275,12 +310,12 @@ class _RegisterState extends State<Register> {
                             });
                           },
                           icon: _passwordVisible
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.remove_red_eye),
+                              ? const Icon(Icons.visibility_off,color: purple,)
+                              : const Icon(Icons.remove_red_eye,color: purple,),
                         ),
                       ),
                       prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
+                          data: IconThemeData(color: purple),
                           child: Icon(Icons.security)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 18),
@@ -288,7 +323,7 @@ class _RegisterState extends State<Register> {
                       label: Text(
                         'Enter Password',
                         style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
+                            color: purple,
                             fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                       ),
                       //errorText: 'please enter the meter type!',
@@ -306,8 +341,14 @@ class _RegisterState extends State<Register> {
                     obscureText: !_passwordVisible1,
                     controller: _confirmPasswordController,
                     decoration: InputDecoration(
+                      enabledBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: purple
+                        )
+                      ),
                       suffixIcon: IconTheme(
-                        data: const IconThemeData(color: kDarkGrey),
+                        data: const IconThemeData(color: purple),
                         child: IconButton(
                           onPressed: () {
                             setState(() {
@@ -315,12 +356,12 @@ class _RegisterState extends State<Register> {
                             });
                           },
                           icon: _passwordVisible1
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.remove_red_eye),
+                              ? const Icon(Icons.visibility_off,color: purple,)
+                              : const Icon(Icons.remove_red_eye,color: purple,),
                         ),
                       ),
                       prefixIcon: const IconTheme(
-                          data: IconThemeData(color: kDarkGrey),
+                          data: IconThemeData(color: purple),
                           child: Icon(Icons.security)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 18),
@@ -328,7 +369,7 @@ class _RegisterState extends State<Register> {
                       label: Text(
                         'Confirm Password',
                         style: kEncodeSansSemiBold.copyWith(
-                            color: kDarkGrey,
+                            color: purple,
                             fontSize: SizeConfig.blockSizeHorizontal! * 2.0),
                       ),
                       //errorText: 'please enter the meter type!',
@@ -344,6 +385,7 @@ class _RegisterState extends State<Register> {
                   Row(
                     children: [
                       Checkbox(
+                        side: BorderSide(color: purple,width: 2),
                           // value: false,
                           onChanged: (newValue) {
                             if (newValue != null) {
@@ -396,8 +438,7 @@ class _RegisterState extends State<Register> {
                                       BorderRadius.all(Radius.circular(10)),
                                   gradient: LinearGradient(
                                     colors: [
-                                      Color(0xff373737),
-                                      Color(0xff6A6A6A),
+                                   purple,purple
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,

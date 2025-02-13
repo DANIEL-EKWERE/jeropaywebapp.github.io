@@ -70,19 +70,22 @@ class _SplashScreenState extends State<SplashScreen> {
               height: SizeConfig.blockSizeVertical! * 30,
             ),
             Center(
-                child: Image.asset(
-              'assets/images/logo-1.png',
-              fit: BoxFit.cover,
-              width: SizeConfig.blockSizeHorizontal! * 32,
-              height: SizeConfig.blockSizeVertical! * 15,
-            )
+                child: Transform.scale(
+                    scale: 0.5,
+                    child: Image.asset(
+                                  'assets/images/logo-1.png',
+                                  fit: BoxFit.cover,
+                                  width: SizeConfig.blockSizeHorizontal! * 35,
+                                  height: SizeConfig.blockSizeVertical! * 30,
+                                ),
+                  ),
                 ),
             SizedBox(
               height: SizeConfig.blockSizeVertical! * 30,
             ),
             const SpinKitSpinningLines(
-              duration: Duration(milliseconds: 5000),
-              color: Color(0xfffE8C61E),
+              duration: Duration(milliseconds: 3500),
+              color: Colors.purple,
               itemCount: 7,
             ),
           ],

@@ -25,7 +25,7 @@ class ResetPassword extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Reset Password',
+                'Reset Password.',
                 style: kEncodeSansBold.copyWith(
                     color: kGrey, fontSize: sizeHorizontal * 3.5),
               ),
@@ -71,8 +71,7 @@ class ResetPassword extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(10)),
                                 gradient: LinearGradient(
                                   colors: [
-                                    Color(0xff373737),
-                                    Color(0xff6A6A6A),
+                                 purple,purple
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,

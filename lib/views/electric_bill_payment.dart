@@ -171,8 +171,8 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-            Color(0xff6A6A6A),
-            Color.fromARGB(255, 63, 62, 62),
+               Color(0xFFB0FFC1),
+                    Color(0xFFB3C2FF),
           ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -197,8 +197,8 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                           ),
                           gradient: LinearGradient(
                             colors: [
-                              Color(0xff6A6A6A),
-                              Color(0xff373737),
+                             Color(0xFFB0FFC1),
+                    Color(0xFFB3C2FF),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -327,11 +327,11 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(width: 5, color: kBlack),
+                                    border: Border.all(width: 5, color: purple),
                                     shape: BoxShape.circle),
                                 child: CircleAvatar(
                                   radius: 40,
-                                  backgroundColor: kGrey,
+                                  backgroundColor: purple,
                                   backgroundImage: AssetImage(
                                     widget.image,
                                   ),
@@ -402,8 +402,7 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
                                                     Radius.circular(10)),
                                                 gradient: LinearGradient(
                                                   colors: [
-                                                    Color(0xff373737),
-                                                    Color(0xff6A6A6A),
+                                                  purple,purple
                                                   ],
                                                   begin: Alignment.topLeft,
                                                   end: Alignment.bottomRight,

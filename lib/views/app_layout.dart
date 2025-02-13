@@ -50,19 +50,20 @@ class _AppLayoutState extends State<AppLayout> {
               ],
               borderRadius: BorderRadius.circular(30)),
           child: GNav(
-            rippleColor: Colors.grey[800]!,
-            hoverColor: Colors.grey[700]!,
+          //  Color.fromARGB(255, 58, 71, 183)
+            rippleColor: const Color.fromARGB(255, 58, 71, 183),
+            hoverColor: const Color.fromARGB(255, 58, 71, 183),
             haptic: true,
             tabBorderRadius: 15,
-            tabActiveBorder: Border.all(color: Colors.grey[500]!, width: 1),
+            tabActiveBorder: Border.all(color: Colors.blue[500]!, width: 1),
             tabBorder: Border.all(color: Colors.white, width: 1),
             curve: Curves.easeOutExpo,
             duration: const Duration(milliseconds: 900),
             gap: 3,
-            color: Colors.grey[800],
-            activeColor: Colors.grey,
+            color: Colors.blue[800],
+            activeColor: Colors.blue,
             iconSize: 24,
-            tabBackgroundColor: Colors.grey.withOpacity(0.3),
+            tabBackgroundColor: Colors.blue.withOpacity(0.3),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             tabs: const [
               GButton(

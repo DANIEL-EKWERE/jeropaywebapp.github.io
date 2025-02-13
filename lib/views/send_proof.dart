@@ -64,8 +64,7 @@ class _SendPaymentProofToAdminState extends State<SendPaymentProofToAdmin> {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xff373737),
-                            Color(0xff6A6A6A),
+                           purple,purple
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -173,8 +172,7 @@ class _SendPaymentProofToAdminState extends State<SendPaymentProofToAdmin> {
                                   BorderRadius.all(Radius.circular(10)),
                               gradient: LinearGradient(
                                 colors: [
-                                  Color(0xff373737),
-                                  Color(0xff6A6A6A),
+                                  purple,purple
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,

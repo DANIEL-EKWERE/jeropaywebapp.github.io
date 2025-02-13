@@ -2,15 +2,25 @@ import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const Color kBrown = Color(0xFFB0FFC1);
-const Color kDarkBrown =Color(0xFFB3C2FF);
+// const Color kBrown = Color(0xFFB0FFC1);
+// const Color kDarkBrown =Color(0xFFB3C2FF);
 
-// const Color kGrey = Color.fromARGB(255, 100, 105, 108);
-// const Color kDarkGrey = Color(0xff878787);
+// // const Color kGrey = Color.fromARGB(255, 100, 105, 108);
+// // const Color kDarkGrey = Color(0xff878787);
 
 
-const Color kGrey = Color(0xFFB0FFC1);
-const Color kDarkGrey = Color(0xFFB3C2FF);
+const Color color1 = Color(0xFFB0FFC1);
+const Color color2 = Color(0xFFB3C2FF);
+
+const Color purple = Color.fromARGB(255, 58, 71, 183);
+
+
+
+const Color kBrown = Color(0xff292526);
+const Color kDarkBrown = Color(0xff1b2028);
+
+const Color kGrey = Color.fromARGB(255, 100, 105, 108);
+const Color kDarkGrey = Color(0xff878787);
 
 const Color kLightGrey = Color(0xffededed);
 
@@ -35,7 +45,7 @@ const double kPaddingHorizontal = 24.0;
 final kInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(kBorderRadius),
   borderSide: const BorderSide(
-    color: kLightGrey,
+    color: purple,
   ),
 );
 

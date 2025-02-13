@@ -22,7 +22,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: 8,
       width: currentPage == index ? 24 : 8,
       decoration: BoxDecoration(
-        color: currentPage == index ? kGrey : kLightGrey,
+        color: currentPage == index ? purple : kLightGrey,
         borderRadius: BorderRadius.circular(8),
         shape: BoxShape.rectangle,
       ),

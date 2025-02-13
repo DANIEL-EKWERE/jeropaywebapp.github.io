@@ -47,7 +47,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => TransactionsProvider()),
       ],
       child: MaterialApp(
-        title: 'Data Bank',
+        title: 'Jero Pay',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           drawerTheme: const DrawerThemeData(backgroundColor: kWhite),

@@ -55,7 +55,7 @@ class _AnimatedDrawerState extends State<AnimatedDrawer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kGrey,
+      backgroundColor: purple,
       body: Stack(
         children: [
           SafeArea(
