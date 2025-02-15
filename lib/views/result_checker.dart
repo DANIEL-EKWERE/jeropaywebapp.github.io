@@ -1,4 +1,5 @@
 import 'package:databank/backend/provider/purchase_provider/purchases_provider.dart';
+import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:databank/widget/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,11 +29,30 @@ class _ResultCheckerState extends State<ResultChecker> {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
+dynamic proImg = '';
+
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
     _phoneController.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+              final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
+  }
+
+    Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
   }
 
   @override
@@ -73,11 +93,13 @@ class _ResultCheckerState extends State<ResultChecker> {
               color: kWhite,
             ),
           ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: purple,
-            backgroundImage: AssetImage('assets/images/pic-2.png'),
-          ),
+          CircleAvatar(
+                                radius: 20,
+                                backgroundColor: purple,
+                                backgroundImage: NetworkImage(
+                    "https://jeropay.com.ng$proImg")
+                                //  : Image.asset("assets/images/pic-2.png"),
+                                ),
           const SizedBox(
             width: 24,
           )

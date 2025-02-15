@@ -73,14 +73,16 @@ class _ManualFundingState extends State<ManualFunding> {
                     child: Container(
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xff373737),
-                              Color.fromARGB(255, 135, 135, 135),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          )),
+                          // gradient: LinearGradient(
+                          //   colors: [
+                          //     Color(0xff373737),
+                          //     Color.fromARGB(255, 135, 135, 135),
+                          //   ],
+                          //   begin: Alignment.topLeft,
+                          //   end: Alignment.bottomRight,
+                          // )
+                          color: purple
+                          ),
                       child: ElevatedButton(
                         onPressed: () async {
                           Navigator.of(context).push(
@@ -128,7 +130,7 @@ class _ManualFundingState extends State<ManualFunding> {
                       children: [
                         const Icon(
                           Icons.home_filled,
-                          color: kGrey,
+                         color: purple
                         ),
                         SizedBox(
                           width: sizeHorizontal * 2.5,
@@ -137,14 +139,14 @@ class _ManualFundingState extends State<ManualFunding> {
                           text: TextSpan(
                               text: 'Bank Name: ',
                               style: kEncodeSansMedium.copyWith(
-                                  color: kGrey,
+                                 color: purple,
                                   fontSize:
                                       SizeConfig.blockSizeHorizontal! * 2.2),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: 'Opay',
                                   style: kEncodeSansBold.copyWith(
-                                      color: kGrey,
+                                     color: purple,
                                       fontSize:
                                           SizeConfig.blockSizeHorizontal! *
                                               2.8),
@@ -161,7 +163,7 @@ class _ManualFundingState extends State<ManualFunding> {
                       children: [
                         const Icon(
                           Icons.person,
-                          color: kGrey,
+                          color: purple,
                         ),
                         SizedBox(
                           width: sizeHorizontal * 2.5,
@@ -170,14 +172,14 @@ class _ManualFundingState extends State<ManualFunding> {
                           text: TextSpan(
                               text: 'Acct Name: ',
                               style: kEncodeSansMedium.copyWith(
-                                  color: kGrey,
+                                  color: purple,
                                   fontSize:
                                       SizeConfig.blockSizeHorizontal! * 2.2),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Daniel Ekwere',
+                                  text: 'EFE JERO',
                                   style: kEncodeSansBold.copyWith(
-                                      color: kGrey,
+                                      color: purple,
                                       fontSize:
                                           SizeConfig.blockSizeHorizontal! *
                                               2.8),
@@ -194,7 +196,7 @@ class _ManualFundingState extends State<ManualFunding> {
                       children: [
                         const Icon(
                           Icons.confirmation_number,
-                          color: kGrey,
+                          color: purple,
                         ),
                         SizedBox(
                           width: sizeHorizontal * 2.5,
@@ -203,14 +205,14 @@ class _ManualFundingState extends State<ManualFunding> {
                           text: TextSpan(
                               text: 'Acct No.: ',
                               style: kEncodeSansMedium.copyWith(
-                                  color: kGrey,
+                                  color: purple,
                                   fontSize:
                                       SizeConfig.blockSizeHorizontal! * 2.2),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: '7034194111',
+                                  text: '7013715767',
                                   style: kEncodeSansBold.copyWith(
-                                      color: kGrey,
+                                      color: purple,
                                       fontSize:
                                           SizeConfig.blockSizeHorizontal! *
                                               2.8),

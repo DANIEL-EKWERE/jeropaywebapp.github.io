@@ -1,3 +1,4 @@
+import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/payvessel.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,9 +12,33 @@ class AddMoney extends StatefulWidget {
 
   @override
   State<AddMoney> createState() => _AddMoneyState();
+  
 }
 
+
+
 class _AddMoneyState extends State<AddMoney> {
+
+dynamic proImg = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // ignore: avoid_print
+          final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
+  }
+
+
+  Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -52,11 +77,13 @@ class _AddMoneyState extends State<AddMoney> {
               color: kBlack,
             ),
           ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: purple,
-            backgroundImage: AssetImage('assets/images/pic-2.png'),
-          ),
+          CircleAvatar(
+                                radius: 20,
+                                backgroundColor: purple,
+                                backgroundImage: NetworkImage(
+                    "https://jeropay.com.ng$proImg")
+                                //  : Image.asset("assets/images/pic-2.png"),
+                                ),
           const SizedBox(
             width: 24,
           )

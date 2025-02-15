@@ -144,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //     )),
   ];
   // final Uri url = Uri.parse('https://wa.link/y4scus');
-  final Uri url = Uri.parse('https://wa.link/q07ccc');
+  final Uri url = Uri.parse('https://wa.me/message/ANY4CTLLYEJBF1');
   bool _showBal = true;
   dynamic proImg =
       'https://www.bellanaija.com/wp-content/uploads/2021/07/Linda-Osifo-2.jpg';
@@ -349,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 20,
               backgroundColor: purple,
               backgroundImage: NetworkImage(
-                  "https://jeropay-api.onrender.com/media/profile-pic$proImg")
+                  "https://jeropay.com.ng$proImg")
               //  : Image.asset("assets/images/pic-2.png"),
               ),
           const SizedBox(
@@ -494,7 +494,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       } else if (baln.isLoading) {
                                         // Show the loading indicator while the data is being fetched
                                         return const SpinKitWave(
-                                          color:purple,
+                                          color: kWhite,
                                           size: 25,
                                         );
                                       }

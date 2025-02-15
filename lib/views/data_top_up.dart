@@ -330,7 +330,7 @@ class _DataTopUpState extends State<DataTopUp> {
     });
     return balance;
   }
-
+dynamic proImg = '';
   @override
   void initState() {
     super.initState();
@@ -344,6 +344,18 @@ class _DataTopUpState extends State<DataTopUp> {
     username1();
     gatherUserName();
     prices();
+            final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
+  }
+
+
+    Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
   }
 
   @override
@@ -399,11 +411,13 @@ class _DataTopUpState extends State<DataTopUp> {
               color: kWhite,
             ),
           ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: kGrey,
-            backgroundImage: AssetImage('assets/images/pic-2.png'),
-          ),
+          CircleAvatar(
+                                radius: 20,
+                                backgroundColor: purple,
+                                backgroundImage: NetworkImage(
+                    "https://jeropay.com.ng$proImg")
+                                //  : Image.asset("assets/images/pic-2.png"),
+                                ),
           const SizedBox(
             width: 24,
           )

@@ -1,3 +1,4 @@
+import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:databank/model/drawer_items.dart';
@@ -25,10 +26,22 @@ class _BuildDrawerState extends State<BuildDrawer> {
     return usernamex;
   }
 
+  dynamic proImg = '';
   @override
   void initState() {
     super.initState();
     gatherUserName();
+    final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
+  }
+
+  Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
   }
 
   @override
@@ -39,11 +52,12 @@ class _BuildDrawerState extends State<BuildDrawer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
-              radius: 60,
-              backgroundColor: kGrey,
-              backgroundImage: AssetImage('assets/images/pic-2.png'),
-            ),
+            CircleAvatar(
+                radius: 60,
+                backgroundColor: purple,
+                backgroundImage: NetworkImage("https://jeropay.com.ng$proImg")
+                //  : Image.asset("assets/images/pic-2.png"),
+                ),
             const SizedBox(
               height: 15,
             ),

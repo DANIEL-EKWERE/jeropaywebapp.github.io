@@ -83,6 +83,8 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
     // return balancex;
   }
 
+  dynamic proImg = '';
+
   Future<void> Balance() {
     final bal = gatherBalance();
     setState(() {
@@ -103,6 +105,19 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
     gatherBalance();
     username1();
     gatherUserName();
+
+        final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
+  }
+
+
+  Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
   }
 
   @override
@@ -159,11 +174,12 @@ class _ElectricBillPaymentState extends State<ElectricBillPayment> {
               color: kWhite,
             ),
           ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: kGrey,
-            backgroundImage: AssetImage('assets/images/pic-2.png'),
-          ),
+          CircleAvatar(
+                radius: 20,
+                backgroundColor: purple,
+                backgroundImage: NetworkImage("https://jeropay.com.ng$proImg")
+                //  : Image.asset("assets/images/pic-2.png"),
+                ),
           const SizedBox(
             width: 24,
           )

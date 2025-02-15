@@ -118,6 +118,8 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
     return balance;
   }
 
+  dynamic proImg = '';
+
   @override
   void initState() {
     super.initState();
@@ -130,7 +132,19 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
     gatherBalance();
     username1();
     gatherUserName();
+          final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
   }
+
+  Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -188,11 +202,13 @@ class _AirtimeTopUpState extends State<AirtimeTopUp> {
               color: kWhite,
             ),
           ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: kGrey,
-            backgroundImage: AssetImage('assets/images/pic-2.png'),
-          ),
+          CircleAvatar(
+                                radius: 20,
+                                backgroundColor: purple,
+                                backgroundImage: NetworkImage(
+                    "https://jeropay.com.ng$proImg")
+                                //  : Image.asset("assets/images/pic-2.png"),
+                                ),
           const SizedBox(
             width: 24,
           )

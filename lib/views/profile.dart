@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:databank/backend/provider/database/db_provider.dart';
+import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:databank/customizations/app_style.dart';
 import 'package:databank/customizations/size_config.dart';
 import 'package:databank/views/about_us.dart';
@@ -26,6 +27,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   var pImage;
+  dynamic proImg = '';
   var firstName;
   var lastName;
   var email;
@@ -41,6 +43,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     gatheUserPhoneNumber();
     gatheUserfirstName();
     gatheUserLastName();
+        final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
   }
 
   // Future _profileImage() async {
@@ -49,6 +55,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //     pImage = image;
   //   });
   // }
+
+  Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
+  }
 
   Future gatheUserName() async {
     final username = await DataBaseProvider().getUserName();
@@ -120,6 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Text(
                 //   'Personal Info',
@@ -128,41 +142,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 // ),
                 const Spacer(),
 
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: purple,
-                  backgroundImage:
-                      AssetImage(pImage ?? 'assets/images/pic-2.png'),
+                Center(
+                  child: CircleAvatar(
+                                radius: 60,
+                                backgroundColor: purple,
+                                backgroundImage: NetworkImage(
+                    "https://jeropay.com.ng$proImg")
+                                //  : Image.asset("assets/images/pic-2.png"),
+                                ),
                 ),
-                SizedBox(
-                  width: sizeHorizontal * 2.0,
-                ),
-                TextButton.icon(
-                    style: const ButtonStyle(
-                        // padding:
-                        ),
-                    onPressed: () async {
-                      // final picker = ImagePicker();
-                      try {
-                        final pickedFile = await _picker.pickImage(
-                            source: ImageSource.gallery);
-                        if (pickedFile != null) {
-                          // Navigator.pop(context, File(pickedFile.path));
-                          setState(() {
-                            pImage = File(pickedFile.path);
-                          });
-                          DataBaseProvider().saveProfileImage(profileImage);
-                        }
-                      } catch (e) {
-                        print(e);
-                        Navigator.pop(context, null);
-                      }
-                    },
-                    icon: const Icon(
-                      Icons.edit,
-                      size: 15,
-                    ),
-                    label: const Text('Edit'))
+                       const Spacer(),
+
+                // TextButton.icon(
+                //     style: const ButtonStyle(
+                //         // padding:
+                //         ),
+                //     onPressed: () async {
+                //       // final picker = ImagePicker();
+                //       try {
+                //         final pickedFile = await _picker.pickImage(
+                //             source: ImageSource.gallery);
+                //         if (pickedFile != null) {
+                //           // Navigator.pop(context, File(pickedFile.path));
+                //           setState(() {
+                //             pImage = File(pickedFile.path);
+                //           });
+                //           DataBaseProvider().saveProfileImage(profileImage);
+                //         }
+                //       } catch (e) {
+                //         print(e);
+                //         Navigator.pop(context, null);
+                //       }
+                //     },
+                //     icon: const Icon(
+                //       Icons.edit,
+                //       size: 15,
+                //     ),
+                //     label: const Text('Edit'))
               ],
             ),
             SizedBox(

@@ -1,5 +1,6 @@
 import 'package:databank/backend/models/api_models.dart';
 import 'package:databank/backend/provider/transaction_provider/transactions_provider.dart';
+import 'package:databank/backend/provider/user_details/user_details.dart';
 import 'package:databank/views/date_range.dart';
 // import 'package:databank/views/log_in.dart';
 // import 'package:databank/widget/button.dart';
@@ -57,7 +58,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     initialPage: 0,
     //  viewportFraction: 2,
   );
-
+dynamic proImg = '';
   Future<void> fetchTransactions(String selectedDate) async {
     print('calling fetch ');
     // Make API request using selectedDate
@@ -89,8 +90,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       transacts = Provider.of<TransactionsProvider>(context, listen: false);
     });
+            final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
   }
-
+  Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -131,11 +141,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 color: kWhite,
               ),
             ),
-            const CircleAvatar(
-              radius: 20,
-              backgroundColor: purple,
-              backgroundImage: AssetImage('assets/images/pic-2.png'),
-            ),
+            //  CircleAvatar(
+            //                     radius: 60,
+            //                     backgroundColor: purple,
+            //                     backgroundImage: NetworkImage(
+            //         "https://jeropay.com.ng$proImg")
+            //                     //  : Image.asset("assets/images/pic-2.png"),
+            //                     ),
             const SizedBox(
               width: 24,
             )

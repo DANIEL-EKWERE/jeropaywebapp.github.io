@@ -21,7 +21,7 @@ class SendPaymentProofToAdmin extends StatefulWidget {
 
 class _SendPaymentProofToAdminState extends State<SendPaymentProofToAdmin> {
   // final Uri url = Uri.parse('https://wa.link/mkclts');
-  final Uri url = Uri.parse('https://wa.link/1sglpx');
+  final Uri url = Uri.parse('https://wa.me/message/ANY4CTLLYEJBF1');
   String? selectedValue;
   // File? _imageFile;
   // File? pickedFile;
@@ -44,7 +44,11 @@ class _SendPaymentProofToAdminState extends State<SendPaymentProofToAdmin> {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           child: Column(
             children: [
-              SvgPicture.asset('assets/images/logo-1.svg'),
+              // SvgPicture.asset('assets/images/logo-1.svg'),
+              Container(
+                width:100,
+                height:100,
+                child: Image.asset('assets/images/logo-1.png')),
               SizedBox(
                 height: sizeHorizontal * 5,
               ),

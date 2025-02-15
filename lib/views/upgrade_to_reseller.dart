@@ -38,7 +38,11 @@ class _UpgradeToResellerState extends State<UpgradeToReseller> {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           child: Column(
             children: [
-              SvgPicture.asset('assets/images/logo-1.svg'),
+              // SvgPicture.asset('assets/images/logo-1.svg'),
+              Container(
+                width: 100,
+                height: 100,
+                child: Image.asset('assets/images/logo-1.png')),
               SizedBox(
                 height: sizeHorizontal * 5,
               ),
@@ -56,14 +60,16 @@ class _UpgradeToResellerState extends State<UpgradeToReseller> {
                   Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xff373737),
-                            Color(0xff6A6A6A),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        )),
+                        // gradient: LinearGradient(
+                        //   colors: [
+                        //     Color(0xff373737),
+                        //     Color(0xff6A6A6A),
+                        //   ],
+                        //   begin: Alignment.topLeft,
+                        //   end: Alignment.bottomRight,
+                        // )
+                        color: purple,
+                        ),
                     child: ElevatedButton(
                       onPressed: () async {
                         if (!await launchUrl(url)) {

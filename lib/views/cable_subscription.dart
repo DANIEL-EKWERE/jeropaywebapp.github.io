@@ -70,6 +70,8 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
     return balance;
   }
 
+dynamic proImg = '';
+
   @override
   void initState() {
     super.initState();
@@ -82,6 +84,11 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
     gatherBalance();
     username1();
     gatherUserName();
+        gatherUserName();
+          final img = userProfile();
+    setState(() {
+      proImg = img;
+    });
   }
 
   @override
@@ -192,6 +199,15 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
 
   bool _numberInputIsValid = true;
 
+  Future<void> userProfile() async {
+    final image = await UserDetails().getUserProfileImage();
+    setState(() {
+      proImg = image;
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -248,11 +264,13 @@ final Uri url = Uri.parse('https://wa.link/q07ccc');
               color: kWhite,
             ),
           ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: kGrey,
-            backgroundImage: AssetImage('assets/images/pic-2.png'),
-          ),
+          CircleAvatar(
+                                radius: 20,
+                                backgroundColor: purple,
+                                backgroundImage: NetworkImage(
+                    "https://jeropay.com.ng$proImg")
+                                //  : Image.asset("assets/images/pic-2.png"),
+                                ),
           const SizedBox(
             width: 24,
           )
